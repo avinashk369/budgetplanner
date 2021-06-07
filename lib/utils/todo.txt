@@ -1,0 +1,4 @@
+---------------------7th june------------------
+firebase_auth
+firebase_core
+firebase_cloudstore
