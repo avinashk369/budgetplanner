@@ -35,6 +35,11 @@ dependencies:
   super_tooltip: ^1.0.1
   sleek_circular_slider: ^2.0.0
 
+  # lib. to manage firebase config.
+  firebase_core: ^1.2.1
+  cloud_firestore: ^2.2.1
+  firebase_auth: ^1.4.1
+
   # lib. to manage http call and state managemnet using bloc pattern
   retrofit: ^2.0.0
   logger: any
