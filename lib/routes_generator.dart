@@ -1,5 +1,8 @@
+import 'package:budgetplanner/SlideRightRoute.dart';
+import 'package:budgetplanner/screens/user/email_signin.dart';
+import 'package:budgetplanner/screens/user/poc.dart';
+import 'package:budgetplanner/screens/user/singin.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 
 import 'screens/welcome.dart';
 import 'utils/route_constants.dart';
@@ -8,22 +11,14 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
-    print(args.toString());
+    print("${settings.name} settings route name");
     switch (settings.name) {
       case homeRoute:
         //Welcome()
-        return PageTransition(
-          child: Welcome(),
-          type: PageTransitionType.fade,
-          settings: settings,
-          reverseDuration: Duration(seconds: 1),
-        );
+        return SlideRightRoute(page: Poc());
       case loginRoute:
-        return PageTransition(
-          child: Welcome(),
-          type: PageTransitionType.fade,
-          settings: settings,
-          reverseDuration: Duration(seconds: 1),
+        return SlideRightRoute(
+          page: Welcome(),
         );
 
       // case dashboardRoute:

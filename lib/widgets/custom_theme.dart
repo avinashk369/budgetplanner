@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 
 class CustomTheme with ChangeNotifier {
-  static bool _isDarkTheme = true;
+  static bool _isDarkTheme = false;
   ThemeMode get currentTheme => _isDarkTheme ? ThemeMode.dark : ThemeMode.light;
 
   void toggleTheme() {
@@ -17,6 +17,7 @@ class CustomTheme with ChangeNotifier {
         //2
         primaryColor: kBGreen,
         scaffoldBackgroundColor: Colors.white,
+        backgroundColor: bulbcolor,
         fontFamily: 'Montserrat', //3
         textTheme: TextTheme(
             headline1: TextStyle(
@@ -41,7 +42,8 @@ class CustomTheme with ChangeNotifier {
   static ThemeData get darkTheme {
     return ThemeData(
         primaryColor: bulbcolor,
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: kDarkGrey,
+        backgroundColor: orange,
         fontFamily: 'Montserrat',
         textTheme: TextTheme(
           headline1: TextStyle(
