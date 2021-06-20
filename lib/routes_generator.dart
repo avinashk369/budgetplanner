@@ -1,4 +1,5 @@
 import 'package:budgetplanner/SlideRightRoute.dart';
+import 'package:budgetplanner/screens/crud/fire_crud.dart';
 import 'package:budgetplanner/screens/user/email_signin.dart';
 import 'package:budgetplanner/screens/user/poc.dart';
 import 'package:budgetplanner/screens/user/singin.dart';
@@ -15,7 +16,7 @@ class RouteGenerator {
     switch (settings.name) {
       case homeRoute:
         //Welcome()
-        return SlideRightRoute(page: Poc());
+        return SlideRightRoute(page: FireCrud());
       case loginRoute:
         return SlideRightRoute(
           page: Welcome(),

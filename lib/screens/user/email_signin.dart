@@ -109,7 +109,7 @@ class _EmailSigninState extends State<EmailSignin> with WidgetsBindingObserver {
                     User? user = await Authentication.signinWithEmailPassword(
                       context: context,
                       email: emailController.text.toString(),
-                      password: "password1",
+                      password: "password",
                     );
                     print("${user!.email} registerd user email");
                   },

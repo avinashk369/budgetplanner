@@ -1,3 +1,4 @@
+import 'package:budgetplanner/models/address.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'PaginationMeta.dart';
@@ -49,6 +50,8 @@ class CaffairModel {
   late int? to;
   @JsonKey(name: 'total')
   late int? total;
+  @JsonKey(name: "address")
+  Address? address;
 
   CaffairModel();
   factory CaffairModel.fromJson(Map<String, dynamic> json) =>

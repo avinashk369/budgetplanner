@@ -1,0 +1,71 @@
+import 'package:budgetplanner/models/BaseModel.dart';
+import 'package:budgetplanner/models/CaffairModel.dart';
+import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+class FireCrud extends StatefulWidget {
+  const FireCrud({Key? key}) : super(key: key);
+
+  @override
+  _FireCrudState createState() => _FireCrudState();
+}
+
+class _FireCrudState extends State<FireCrud> {
+  List<String> actions = ['create', 'update', 'read', 'delete'];
+  UserRepositoryImpl userRepositoryImpl = UserRepositoryImpl();
+  DataRepositoryImpl dataRepositoryImpl = DataRepositoryImpl();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+      ),
+      body: GridView.builder(
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          itemCount: actions.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.all(5),
+              height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                color: kDarkGrey,
+              ),
+              child: Center(
+                child: ElevatedButton(
+                  child: Text(actions[index]),
+                  onPressed: () {
+                    action(actions[index]);
+                  },
+                ),
+              ),
+            );
+          }),
+    );
+  }
+
+  void action(String name) async {
+    switch (name) {
+      case "create":
+        // User? user;
+
+        // userRepositoryImpl.testingConnection("Avinash", "33");
+        dataRepositoryImpl.createSavingCategory();
+        break;
+      case "read":
+        BaseModel<CaffairModel> records =
+            await userRepositoryImpl.readCollections();
+        //print(records.data!.title);
+        break;
+      case "update":
+        break;
+      case "delete":
+        dataRepositoryImpl.clear('savingCategory');
+        break;
+    }
+  }
+}

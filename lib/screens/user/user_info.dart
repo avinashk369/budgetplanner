@@ -41,7 +41,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   void initState() {
     _user = widget._user;
-
+    print("${_user.email} wait getting data");
     super.initState();
   }
 
@@ -98,7 +98,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               ),
               SizedBox(height: 8.0),
               Text(
-                _user.displayName!,
+                _user.displayName ?? _user.email!,
                 style: TextStyle(
                   color: yellow,
                   fontSize: 26,

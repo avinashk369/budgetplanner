@@ -33,7 +33,10 @@ CaffairModel _$CaffairModelFromJson(Map<String, dynamic> json) {
     ..perPage = json['per_page'] as int?
     ..prevPageUrl = json['prev_page_url'] as String?
     ..to = json['to'] as int?
-    ..total = json['total'] as int?;
+    ..total = json['total'] as int?
+    ..address = json['address'] == null
+        ? null
+        : Address.fromJson(json['address'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$CaffairModelToJson(CaffairModel instance) =>
@@ -60,4 +63,5 @@ Map<String, dynamic> _$CaffairModelToJson(CaffairModel instance) =>
       'prev_page_url': instance.prevPageUrl,
       'to': instance.to,
       'total': instance.total,
+      'address': instance.address,
     };
