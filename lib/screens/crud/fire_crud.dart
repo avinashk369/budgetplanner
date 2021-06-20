@@ -1,7 +1,9 @@
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/CaffairModel.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/resources/firestore/image_data.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
+import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,7 @@ class _FireCrudState extends State<FireCrud> {
               ),
               child: Center(
                 child: ElevatedButton(
-                  child: Text(actions[index]),
+                  child: Icon(dataRepositoryImpl.iconUrl(travel)!.iconName),
                   onPressed: () {
                     action(actions[index]);
                   },
@@ -51,10 +53,12 @@ class _FireCrudState extends State<FireCrud> {
   void action(String name) async {
     switch (name) {
       case "create":
-        // User? user;
-
-        // userRepositoryImpl.testingConnection("Avinash", "33");
-        dataRepositoryImpl.createSavingCategory();
+        await dataRepositoryImpl.createBudgetCategory();
+        await dataRepositoryImpl.createExpenseType();
+        await dataRepositoryImpl.createIncomeCategory();
+        await dataRepositoryImpl.createRecurrenceType();
+        await dataRepositoryImpl.createSavingCategory();
+        await dataRepositoryImpl.createTransactionType();
         break;
       case "read":
         BaseModel<CaffairModel> records =
@@ -62,9 +66,15 @@ class _FireCrudState extends State<FireCrud> {
         //print(records.data!.title);
         break;
       case "update":
+        dataRepositoryImpl.iconUrl('health');
         break;
       case "delete":
-        dataRepositoryImpl.clear('savingCategory');
+        await dataRepositoryImpl.clear(budgetCategory);
+        await dataRepositoryImpl.clear(incomeCategory);
+        await dataRepositoryImpl.clear(expenseType);
+        await dataRepositoryImpl.clear(recurranceCategory);
+        await dataRepositoryImpl.clear(transactionType);
+        await dataRepositoryImpl.clear(savingCategory);
         break;
     }
   }

@@ -1,4 +1,7 @@
+import 'package:budgetplanner/resources/firestore/image_data.dart';
+import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 import 'dataRepository.dart';
 
@@ -8,122 +11,121 @@ class DataRepositoryImpl implements DataRepository {
     _firestore = FirebaseFirestore.instance;
   }
   @override
-  void createBudgetCategory() async {
+  Future createBudgetCategory() async {
     List<Map<String, String>> budgetCat = [
-      {'name': 'Travel'},
-      {'name': 'Food & Drink'},
-      {'name': 'Shopping'},
-      {'name': 'Transport'},
-      {'name': 'Home'},
-      {'name': 'Bills & Fees'},
-      {'name': 'Entertainment'},
-      {'name': 'Car & Motors'},
-      {'name': 'Personal'},
-      {'name': 'HealthCare'},
-      {'name': 'Education'},
-      {'name': 'Groceries'},
-      {'name': 'Gift'},
-      {'name': 'Sports'},
-      {'name': 'Beauty'},
-      {'name': 'Business'},
-      {'name': 'Others'},
+      {'name': travel},
+      {'name': foodNDrink},
+      {'name': shopping},
+      {'name': transport},
+      {'name': home},
+      {'name': billNFee},
+      {'name': entertainment},
+      {'name': carNMotors},
+      {'name': personal},
+      {'name': healthcare},
+      {'name': education},
+      {'name': groceries},
+      {'name': gift},
+      {'name': sports},
+      {'name': beauty},
+      {'name': business},
+      {'name': others},
     ];
 
     var batch = _firestore.batch();
     budgetCat.forEach((element) {
-      var _mainCollection = _firestore.collection('budgetCategory').doc();
+      var _mainCollection = _firestore.collection(budgetCategory).doc();
       batch.set(_mainCollection, element);
-      print("Saving document");
     });
     return batch.commit();
   }
 
   @override
-  void createIncomeCategory() async {
+  Future createIncomeCategory() async {
     List<Map<String, String>> incomeCat = [
-      {'name': 'Salary'},
-      {'name': 'Business'},
-      {'name': 'Gifts'},
-      {'name': 'Transport'},
-      {'name': 'Extra Income'},
-      {'name': 'Loan'},
-      {'name': 'Insurance Payout'},
-      {'name': 'Others'},
+      {'name': salary},
+      {'name': business},
+      {'name': gift},
+      {'name': transport},
+      {'name': extraIncome},
+      {'name': loan},
+      {'name': insurancePayout},
+      {'name': others},
     ];
 
     var batch = _firestore.batch();
     incomeCat.forEach((element) {
-      var _mainCollection = _firestore.collection('incomeCategory').doc();
+      var _mainCollection = _firestore.collection(incomeCategory).doc();
       batch.set(_mainCollection, element);
     });
     return batch.commit();
   }
 
   @override
-  void createExpenseType() async {
+  Future createExpenseType() async {
     List<Map<String, String>> expensetype = [
-      {'name': 'Need'},
-      {'name': 'Want'},
+      {'name': need},
+      {'name': want},
     ];
 
     var batch = _firestore.batch();
     expensetype.forEach((element) {
-      var _mainCollection = _firestore.collection('expenseType').doc();
+      var _mainCollection = _firestore.collection(expenseType).doc();
       batch.set(_mainCollection, element);
     });
     return batch.commit();
   }
 
   @override
-  void createRecurrenceType() async {
+  Future createRecurrenceType() async {
     List<Map<String, String>> recurranceCat = [
-      {'name': 'Never'},
-      {'name': 'Everyday'},
-      {'name': 'Every Week'},
-      {'name': 'Every 3 Months'},
-      {'name': 'Every 6 Months'},
-      {'name': 'Every Year'},
+      {'name': never},
+      {'name': everyDay},
+      {'name': everyWeek},
+      {'name': everyThreeMonth},
+      {'name': everySixMonth},
+      {'name': everyYear},
     ];
 
     var batch = _firestore.batch();
     recurranceCat.forEach((element) {
-      var _mainCollection = _firestore.collection('recurranceCategory').doc();
+      var _mainCollection = _firestore.collection(recurranceCategory).doc();
       batch.set(_mainCollection, element);
     });
     return batch.commit();
   }
 
   @override
-  void createSavingCategory() async {
+  Future createSavingCategory() async {
     List<Map<String, String>> savingCat = [
-      {'name': 'Brokerage'},
-      {'name': 'Retirement'},
-      {'name': 'Health'},
-      {'name': 'Education'},
-      {'name': 'Wedding'},
-      {'name': 'Emergency'},
-      {'name': 'Others'},
+      {'name': brokerage},
+      {'name': retirement},
+      {'name': health},
+      {'name': education},
+      {'name': wedding},
+      {'name': emergencyFund},
+      {'name': others},
     ];
 
     var batch = _firestore.batch();
     savingCat.forEach((element) {
-      var _mainCollection = _firestore.collection('savingCategory').doc();
+      var _mainCollection = _firestore.collection(savingCategory).doc();
       batch.set(_mainCollection, element);
     });
     return batch.commit();
   }
 
   @override
-  void createTransactionType() async {
-    List<Map<String, String>> transactionType = [
-      {'name': 'Income'},
-      {'name': 'Expense'},
-      {'name': 'Saving'},
+  Future createTransactionType() async {
+    List<Map<String, String>> transactionTypeList = [
+      {'name': income},
+      {'name': expense},
+      {'name': saving},
     ];
 
     var batch = _firestore.batch();
-    transactionType.forEach((element) {
-      var _mainCollection = _firestore.collection('transactionType').doc();
+    transactionTypeList.forEach((element) {
+      var _mainCollection = _firestore.collection(transactionType).doc();
 
       batch.set(_mainCollection, element);
     });
@@ -131,7 +133,7 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  void clear(String collectionName) async {
+  Future clear(String collectionName) async {
     var batch = _firestore.batch();
 
     var response = await _firestore.collection(collectionName).get();
@@ -139,5 +141,16 @@ class DataRepositoryImpl implements DataRepository {
       batch.delete(_firestore.collection(collectionName).doc(element.id));
     });
     batch.commit();
+  }
+
+  ImageData? iconUrl(String name) {
+    ImageData? imageData;
+    ImageData.getBudgetCategoryImageList().forEach((element) {
+      if (element.name == name) {
+        imageData = element;
+      }
+    });
+
+    return imageData;
   }
 }

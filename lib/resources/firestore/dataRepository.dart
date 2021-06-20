@@ -1,9 +1,9 @@
 abstract class DataRepository {
-  void createBudgetCategory();
-  void createIncomeCategory();
-  void createTransactionType();
-  void createExpenseType();
-  void createSavingCategory();
-  void createRecurrenceType();
-  void clear(String collectionName);
+  Future createBudgetCategory();
+  Future createIncomeCategory();
+  Future createTransactionType();
+  Future createExpenseType();
+  Future createSavingCategory();
+  Future createRecurrenceType();
+  Future clear(String collectionName);
 }
