@@ -1,5 +1,5 @@
 //app constants
-const String appname = "Nesteia";
+const String appname = "Budget Planner";
 const String tab_doctors = "Doctors";
 const String tab_facility = "Facility";
 const String tab_pharmacy = "Pharmacy";
