@@ -1,11 +1,9 @@
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/CaffairModel.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
-import 'package:budgetplanner/resources/firestore/image_data.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FireCrud extends StatefulWidget {
