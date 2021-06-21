@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.budgetplanner">
+    package="com.finance.budgetplanner">
    <application
         android:label="budgetplanner"
         android:icon="@mipmap/ic_launcher">
