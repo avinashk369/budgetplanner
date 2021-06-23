@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'routes_generator.dart';
+import 'utils/PreferenceUtils.dart';
 import 'utils/route_constants.dart';
 import 'widgets/config.dart';
 import 'widgets/custom_theme.dart';
@@ -14,6 +15,7 @@ GlobalKey navBarGlobalKey = GlobalKey(debugLabel: 'bottomAppBar');
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await PreferenceUtils.getInstance();
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

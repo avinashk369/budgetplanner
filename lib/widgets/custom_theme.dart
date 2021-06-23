@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 
 class CustomTheme with ChangeNotifier {
-  static bool _isDarkTheme = false;
+  static bool _isDarkTheme = true;
   ThemeMode get currentTheme => _isDarkTheme ? ThemeMode.dark : ThemeMode.light;
 
   void toggleTheme() {
@@ -15,15 +15,61 @@ class CustomTheme with ChangeNotifier {
     //1
     return ThemeData(
         //2
-        primaryColor: kBGreen,
-        scaffoldBackgroundColor: Colors.white,
-        backgroundColor: bulbcolor,
-        fontFamily: 'Montserrat', //3
+        primaryColor: whiteColor,
+        scaffoldBackgroundColor: whiteColor,
+        backgroundColor: whiteColor,
+        inputDecorationTheme: InputDecorationTheme(
+          focusedBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: darkColor)),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: darkColor),
+          ),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(color: darkColor),
+          ),
+        ),
+        hintColor: darkColor,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          selectedLabelStyle: TextStyle(
+            color: orange,
+            fontSize: 14,
+          ),
+          unselectedLabelStyle: TextStyle(
+            color: kDarkGrey,
+            fontSize: 12,
+          ),
+          backgroundColor: whiteColor,
+          elevation: 0,
+          selectedItemColor: orange,
+          unselectedItemColor: kGrey,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+          unselectedIconTheme: IconThemeData(
+            color: kGrey,
+            size: 20,
+          ),
+          selectedIconTheme: IconThemeData(
+            color: orange,
+            size: 22,
+          ),
+        ),
+        brightness: Brightness.light,
+        fontFamily: 'Montserrat',
         textTheme: TextTheme(
-            headline1: TextStyle(
-          color: blue,
-          fontSize: 16,
-        )),
+          headline1: TextStyle(
+            color: darkColor,
+            fontSize: 16,
+          ),
+          bodyText1: TextStyle(
+            color: darkColor,
+            fontSize: 18,
+          ),
+          subtitle1: TextStyle(
+            color: darkColor,
+            fontSize: 14,
+          ),
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -41,21 +87,58 @@ class CustomTheme with ChangeNotifier {
 
   static ThemeData get darkTheme {
     return ThemeData(
-        primaryColor: bulbcolor,
-        scaffoldBackgroundColor: kDarkGrey,
-        backgroundColor: orange,
+        primaryColor: darkColor,
+        scaffoldBackgroundColor: darkColor,
+        backgroundColor: darkColor,
+        hintColor: whiteColor,
+        inputDecorationTheme: InputDecorationTheme(
+          focusedBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: whiteColor)),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: whiteColor),
+          ),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(color: whiteColor),
+          ),
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          selectedLabelStyle: TextStyle(
+            color: whiteColor,
+            fontSize: 14,
+          ),
+          unselectedLabelStyle: TextStyle(
+            color: kGrey,
+            fontSize: 12,
+          ),
+          backgroundColor: darkColor,
+          elevation: 0,
+          selectedItemColor: whiteColor,
+          unselectedItemColor: kGrey,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+          unselectedIconTheme: IconThemeData(
+            color: kGrey,
+            size: 20,
+          ),
+          selectedIconTheme: IconThemeData(
+            color: whiteColor,
+            size: 22,
+          ),
+        ),
+        brightness: Brightness.dark,
         fontFamily: 'Montserrat',
         textTheme: TextTheme(
           headline1: TextStyle(
-            color: kGrey,
+            color: whiteColor,
             fontSize: 16,
           ),
           bodyText1: TextStyle(
-            color: kDark,
+            color: whiteColor,
             fontSize: 18,
           ),
           subtitle1: TextStyle(
-            color: kDarkGrey,
+            color: whiteColor,
             fontSize: 14,
           ),
         ),

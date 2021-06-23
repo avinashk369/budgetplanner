@@ -1,3 +1,5 @@
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -11,10 +13,17 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int _currentIndex = 1;
-  int userId = 0;
+  String? userId;
+  @override
+  void initState() {
+    userId = PreferenceUtils.getString(user_id);
+    // TODO: implement initState
+    super.initState();
+  }
+
   //On Home Page, for account icon pressed
   Future<void> checkCredsAndNavigate(int index) async {
-    bool loggedIn = (userId > 0)
+    bool loggedIn = (userId != '')
         ? true
         : false; // this might be a function that gets status of user login, you can fetch from prefs, state, etc.
     if (!loggedIn && (index >= 0)) {
@@ -28,49 +37,34 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabNavigationItem.items[_currentIndex].page,
-      // body: IndexedStack(
-      //   index: _currentIndex,
-      //   children: <Widget>[
-      //     for (final tabItem in TabNavigationItem.items) tabItem.page,
-      //   ],
-      // ),
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-            // sets the background color of the `BottomNavigationBar`
-            canvasColor: kWhite,
-            // sets the active color of the `BottomNavigationBar` if `Brightness` is light
-            primaryColor: maincolor,
-            textTheme: Theme.of(context).textTheme.copyWith(
-                caption: new TextStyle(
-                    color:
-                        kGrey))), // sets the inactive color of the `BottomNavigationBar`
-
-        child: BottomNavigationBar(
-          backgroundColor: kWhite,
-          selectedItemColor: orange,
-          unselectedItemColor: kGrey,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-          unselectedIconTheme: IconThemeData(
-            color: kGrey,
-            size: 20,
-          ),
-          selectedIconTheme: IconThemeData(
-            color: orange,
-            size: 22,
-          ),
-          currentIndex: _currentIndex,
-          onTap: (int index) {
-            checkCredsAndNavigate(index);
-          },
-          items: <BottomNavigationBarItem>[
-            for (final tabItem in TabNavigationItem.items)
-              BottomNavigationBarItem(
-                icon: tabItem.icon,
-                label: tabItem.title,
-              ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+          boxShadow: [
+            BoxShadow(
+                color: Theme.of(context).hintColor.withOpacity(0.5),
+                spreadRadius: 0,
+                blurRadius: 10),
           ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15.0),
+            topRight: Radius.circular(15.0),
+          ),
+          child: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (int index) {
+              checkCredsAndNavigate(index);
+            },
+            items: <BottomNavigationBarItem>[
+              for (final tabItem in TabNavigationItem.items)
+                BottomNavigationBarItem(
+                  icon: tabItem.icon,
+                  label: tabItem.title,
+                ),
+            ],
+          ),
         ),
       ),
     );

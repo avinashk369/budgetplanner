@@ -1,6 +1,12 @@
 import 'package:budgetplanner/screens/user/signin_button.dart';
 import 'package:budgetplanner/screens/user/signup_button.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/authentication.dart';
+import 'package:budgetplanner/utils/route_constants.dart';
+import 'package:budgetplanner/widgets/config.dart';
+import 'package:budgetplanner/widgets/loading_dialog.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +70,7 @@ class _EmailSigninState extends State<EmailSignin> with WidgetsBindingObserver {
     }
   }
 
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   var _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   @override
@@ -79,46 +86,64 @@ class _EmailSigninState extends State<EmailSignin> with WidgetsBindingObserver {
               children: [
                 TextFormField(
                   controller: emailController,
+                  cursorColor: Theme.of(context).hintColor,
                   keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
+                    color: Theme.of(context).hintColor,
+                  ),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter email name!';
                     }
                     return null;
                   },
-                  decoration: InputDecoration(hintText: 'Email'),
+                  decoration: const InputDecoration(
+                    hintText: 'Email',
+                  ),
                 ),
-                SignUpButton(
-                  regsiterUser: () async {
-                    if (!_formKey.currentState!.validate()) {
-                      return;
-                    }
-                    User? user = await Authentication.registerWithEmailPassword(
-                      context: context,
-                      email: emailController.text.toString(),
-                      password: "password",
-                    );
-                    print("${user!.email} registerd user email");
-                  },
-                ),
+                // SignUpButton(
+                //   regsiterUser: () async {
+                //     if (!_formKey.currentState!.validate()) {
+                //       return;
+                //     }
+                //     User? user = await Authentication.registerWithEmailPassword(
+                //       context: context,
+                //       email: emailController.text.toString(),
+                //       password: "password",
+                //     );
+                //     print("${user!.email} registerd user email");
+                //   },
+                // ),
                 SigninButton(
                   signinUser: () async {
+                    LoadingDialog.showLoadingDialog(context, _keyLoader);
                     if (!_formKey.currentState!.validate()) {
                       return;
                     }
-                    User? user = await Authentication.signinWithEmailPassword(
+                    Authentication.signinWithEmailPassword(
                       context: context,
                       email: emailController.text.toString(),
                       password: "password",
-                    );
-                    print("${user!.email} registerd user email");
+                    ).then((value) {
+                      print("${value!.uid} registerd user id");
+                      PreferenceUtils.putString(user_id, value.uid);
+                      PreferenceUtils.putString(creation_time,
+                          value.metadata.creationTime.toString());
+                      PreferenceUtils.putString(sign_in_time,
+                          value.metadata.lastSignInTime.toString());
+                      Navigator.of(_keyLoader.currentContext!,
+                              rootNavigator: true)
+                          .pop();
+                      Navigator.popAndPushNamed(context, dashboardRoute);
+                    });
                   },
                 ),
-                TextButton(
-                    onPressed: () async {
-                      await Authentication.sendSigninLink();
-                    },
-                    child: Text("send link"))
+                // TextButton(
+                //   onPressed: () async {
+                //     await Authentication.sendSigninLink();
+                //   },
+                //   child: Text("send link"),
+                // )
               ],
             ),
           )),

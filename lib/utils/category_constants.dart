@@ -37,11 +37,16 @@ const String health = "Health";
 const String vacation = "Vacation";
 const String wedding = "Wedding";
 const String emergencyFund = "Emergency Fund";
+const String cash = "Cash";
+const String accounts = "Accounts";
+const String creditCard = "Credit Card";
 
 // collection name
 const String budgetCategory = "budgetCategory";
 const String incomeCategory = "incomeCategory";
 const String expenseType = "expenseType";
+const String expenseSource = "expenseSource";
 const String recurranceCategory = "recurranceCategory";
 const String savingCategory = "savingCategory";
 const String transactionType = "transactionType";
+const String user = "users";

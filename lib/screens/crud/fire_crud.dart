@@ -57,6 +57,7 @@ class _FireCrudState extends State<FireCrud> {
         await dataRepositoryImpl.createRecurrenceType();
         await dataRepositoryImpl.createSavingCategory();
         await dataRepositoryImpl.createTransactionType();
+        await dataRepositoryImpl.createExpenseSource();
         break;
       case "read":
         BaseModel<CaffairModel> records =
@@ -73,6 +74,7 @@ class _FireCrudState extends State<FireCrud> {
         await dataRepositoryImpl.clear(recurranceCategory);
         await dataRepositoryImpl.clear(transactionType);
         await dataRepositoryImpl.clear(savingCategory);
+        await dataRepositoryImpl.clear(expenseSource);
         break;
     }
   }

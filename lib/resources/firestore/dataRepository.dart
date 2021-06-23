@@ -5,5 +5,6 @@ abstract class DataRepository {
   Future createExpenseType();
   Future createSavingCategory();
   Future createRecurrenceType();
+  Future createExpenseSource();
   Future clear(String collectionName);
 }

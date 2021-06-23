@@ -1,16 +1,13 @@
 //app constants
 const String appname = "Budget Planner";
-const String tab_doctors = "Doctors";
-const String tab_facility = "Facility";
-const String tab_pharmacy = "Pharmacy";
-const String tab_senior_care = "Senior Care";
+
 const String access_token = "access token";
 const String user_id = "user_id";
 const String has_seen = "has_seen";
 const String user_email = "user_email";
 const String user_type = "user_type";
-const String user_lat = "user_lat";
-const String user_lng = "user_lng";
+const String creation_time = "creation_time";
+const String sign_in_time = "sign_in_time";
 const String def_val_sf = "NA";
 //"http://192.168.43.170:8888/tda_app/api/";
 //"http:///tdaacademy.in/tda_api/api/";

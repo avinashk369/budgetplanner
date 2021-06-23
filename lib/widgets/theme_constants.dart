@@ -124,3 +124,11 @@ const Duration kLoginAnimationDuration = Duration(milliseconds: 1500);
 
 // Assets
 const String kGoogleLogoPath = 'assets/images/google_logo.png';
+
+// pallet color
+const darkColor = Color(0xFF22232E);
+const whiteColor = Color(0xfffdfffc);
+const tealColor = Color(0xff2ec4b6);
+const redColor = Color(0xffe71d36);
+const heenColor = Color(0xffff9f1c);
+const greyColor = Color(0xffe2e2df);

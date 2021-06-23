@@ -5,7 +5,11 @@ import 'package:budgetplanner/exception/bad_requrest.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/CaffairModel.dart';
 import 'package:budgetplanner/models/PaginationMeta.dart';
+import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepository.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/category_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -20,8 +24,19 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  void createUserInDatabaseWithGoogleProvider(User user) {
-    // TODO: implement createUserInDatabaseWithGoogleProvider
+  void createUserInDatabaseWithGoogleProvider(User firebaseUser) async {
+    await _firestore
+        .collection(user)
+        .doc(firebaseUser.uid)
+        .set({
+          name: firebaseUser.displayName ?? firebaseUser.email,
+          email: firebaseUser.email,
+        })
+        .whenComplete(() => print(
+            'Created user in database with Google Provider. Name: ${firebaseUser.displayName} | Email: ${firebaseUser.email}'))
+        .catchError((error) {
+          print(error.toString());
+        });
   }
 
   @override
@@ -129,6 +144,18 @@ class UserRepositoryImpl implements UserRepository {
     // } else {
     //   print("doc no found");
     // }
+
+    return BaseModel()..data = records;
+  }
+
+  @override
+  Future<BaseModel<UserModel>> getUser(String uid) async {
+    UserModel records = UserModel();
+
+    var response = await _firestore.collection(user).doc(uid).get();
+    if (response.exists) {
+      records = UserModel.fromJson(response.data() as Map<String, dynamic>);
+    } else {}
 
     return BaseModel()..data = records;
   }

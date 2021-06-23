@@ -153,4 +153,20 @@ class DataRepositoryImpl implements DataRepository {
 
     return imageData;
   }
+
+  @override
+  Future createExpenseSource() async {
+    List<Map<String, String>> expenseSourceData = [
+      {'name': cash},
+      {'name': accounts},
+      {'name': creditCard},
+    ];
+
+    var batch = _firestore.batch();
+    expenseSourceData.forEach((element) {
+      var _mainCollection = _firestore.collection(expenseSource).doc();
+      batch.set(_mainCollection, element);
+    });
+    return batch.commit();
+  }
 }

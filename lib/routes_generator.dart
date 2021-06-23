@@ -1,9 +1,12 @@
 import 'package:budgetplanner/SlideRightRoute.dart';
 import 'package:budgetplanner/screens/crud/fire_crud.dart';
+import 'package:budgetplanner/screens/dashboard.dart';
+import 'package:budgetplanner/screens/onboard/onboard_screens.dart';
 import 'package:budgetplanner/screens/user/email_signin.dart';
 import 'package:budgetplanner/screens/user/poc.dart';
 import 'package:budgetplanner/screens/user/singin.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'screens/welcome.dart';
 import 'utils/route_constants.dart';
@@ -16,19 +19,12 @@ class RouteGenerator {
     switch (settings.name) {
       case homeRoute:
         //Welcome()
-        return SlideRightRoute(page: FireCrud());
+        return SlideRightRoute(page: Welcome());
       case loginRoute:
-        return SlideRightRoute(
-          page: Welcome(),
-        );
+        return SlideRightRoute(page: EmailSignin());
 
-      // case dashboardRoute:
-      //   late UserMaster um;
-      //   if (args is UserMaster) um = args;
-      //   return SlideRightRoute(
-      //       page: Dashboard(
-      //     userMaster: um,
-      //   ));
+      case dashboardRoute:
+        return SlideRightRoute(page: Dashboard());
       // case allCourse:
       //   return SlideRightRoute(page: Courses());
 
