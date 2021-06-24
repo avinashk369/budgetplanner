@@ -1,13 +1,9 @@
 import 'package:budgetplanner/screens/user/signin_button.dart';
-import 'package:budgetplanner/screens/user/signup_button.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/authentication.dart';
 import 'package:budgetplanner/utils/route_constants.dart';
-import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -116,10 +112,10 @@ class _EmailSigninState extends State<EmailSignin> with WidgetsBindingObserver {
                 // ),
                 SigninButton(
                   signinUser: () async {
-                    LoadingDialog.showLoadingDialog(context, _keyLoader);
                     if (!_formKey.currentState!.validate()) {
                       return;
                     }
+                    LoadingDialog.showLoadingDialog(context, _keyLoader);
                     Authentication.signinWithEmailPassword(
                       context: context,
                       email: emailController.text.toString(),

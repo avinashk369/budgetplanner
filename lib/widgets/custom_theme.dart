@@ -19,14 +19,17 @@ class CustomTheme with ChangeNotifier {
         scaffoldBackgroundColor: whiteColor,
         backgroundColor: whiteColor,
         inputDecorationTheme: InputDecorationTheme(
-          focusedBorder:
-              UnderlineInputBorder(borderSide: BorderSide(color: darkColor)),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: darkColor),
-          ),
           border: UnderlineInputBorder(
             borderSide: BorderSide(color: darkColor),
           ),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: darkColor.withOpacity(.12))),
+          errorBorder: OutlineInputBorder(borderSide: BorderSide(color: kred)),
+          focusedBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: darkColor)),
+          focusedErrorBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: kred)),
+          fillColor: Colors.transparent,
         ),
         hintColor: darkColor,
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -92,14 +95,17 @@ class CustomTheme with ChangeNotifier {
         backgroundColor: darkColor,
         hintColor: whiteColor,
         inputDecorationTheme: InputDecorationTheme(
-          focusedBorder:
-              UnderlineInputBorder(borderSide: BorderSide(color: whiteColor)),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: whiteColor),
-          ),
           border: UnderlineInputBorder(
             borderSide: BorderSide(color: whiteColor),
           ),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: whiteColor.withOpacity(.12))),
+          errorBorder: OutlineInputBorder(borderSide: BorderSide(color: kred)),
+          focusedBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: whiteColor)),
+          focusedErrorBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: kred)),
+          fillColor: Colors.transparent,
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           selectedLabelStyle: TextStyle(

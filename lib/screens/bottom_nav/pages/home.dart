@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                 List<BudgetCategoryModel> categories =
                     await controller1.getBudgetCategories();
                 categories.forEach((element) {
-                  print("Id ${element.id} name ${element.name}");
+                  //print("Id ${element.id} name ${element.name}");
                 });
                 BudgetCategoryModel catModel = await controller1.getCategory();
                 print("Id ${catModel.id} name ${catModel.name}");

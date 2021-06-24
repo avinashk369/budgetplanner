@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SigninButton extends StatefulWidget {
+class SigninButton extends GetView {
   final Function() signinUser;
   const SigninButton({Key? key, required this.signinUser}) : super(key: key);
 
-  @override
-  _SigninButtonState createState() => _SigninButtonState();
-}
-
-class _SigninButtonState extends State<SigninButton> {
-  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => widget.signinUser(),
+      onTap: () => signinUser(),
       child: Container(
         margin: EdgeInsets.only(
             left: Get.height * .03,

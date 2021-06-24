@@ -176,6 +176,9 @@ class DataRepositoryImpl implements DataRepository {
     return batch.commit();
   }
 
+  /**
+   * get list of categories frorm firestore
+   */
   @override
   Future<BaseModel<List<BudgetCategoryModel>>> getBudgetCategories() async {
     // TODO: implement testingConnection
@@ -197,6 +200,9 @@ class DataRepositoryImpl implements DataRepository {
     return BaseModel()..data = budgetCategories;
   }
 
+  /**
+   * get category document by docId
+   */
   @override
   Future<BaseModel<BudgetCategoryModel>> getBudgetCategory(String docId) async {
     // TODO: implement testingConnection

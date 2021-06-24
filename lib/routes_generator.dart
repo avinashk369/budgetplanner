@@ -3,6 +3,7 @@ import 'package:budgetplanner/screens/crud/fire_crud.dart';
 import 'package:budgetplanner/screens/dashboard.dart';
 import 'package:budgetplanner/screens/onboard/onboard_screens.dart';
 import 'package:budgetplanner/screens/user/email_signin.dart';
+import 'package:budgetplanner/screens/user/login.dart';
 import 'package:budgetplanner/screens/user/poc.dart';
 import 'package:budgetplanner/screens/user/singin.dart';
 import 'package:flutter/material.dart';
