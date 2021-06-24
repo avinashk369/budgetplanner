@@ -1,10 +1,15 @@
+import 'package:budgetplanner/controllers/test_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
+import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/widgets/config.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,10 +18,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   UserRepositoryImpl userRepositoryImpl = UserRepositoryImpl();
+  TestController controller = Get.find<TestController>();
+  TestController controller1 = Get.find<TestController>(tag: "buttonEvent");
+  UserModel? userModel;
   @override
   void initState() {
     // TODO: implement initState
+    getUserData();
     super.initState();
+  }
+
+  void getUserData() async {
+    userModel = await controller.getUserDetail();
+    print("User info ${userModel!.email}");
   }
 
   Future<UserModel> getUser() async {
@@ -72,11 +86,27 @@ class _HomePageState extends State<HomePage> {
           children: [
             ElevatedButton(
               child: const Text('Patrol'),
-              onPressed: () => setState(() {}),
+              onPressed: () async {
+                List<BudgetCategoryModel> categories =
+                    await controller1.getBudgetCategories();
+                categories.forEach((element) {
+                  print("Id ${element.id} name ${element.name}");
+                });
+                BudgetCategoryModel catModel = await controller1.getCategory();
+                print("Id ${catModel.id} name ${catModel.name}");
+              },
             ),
             Text(
               "Hello",
               style: Theme.of(context).textTheme.subtitle1,
+            ),
+            Obx(
+              () => (controller.isLoading())
+                  ? CircularProgressIndicator(
+                      color: Theme.of(context).hintColor,
+                      strokeWidth: 2,
+                    )
+                  : Text('${userModel!.email}'),
             ),
           ],
         ),

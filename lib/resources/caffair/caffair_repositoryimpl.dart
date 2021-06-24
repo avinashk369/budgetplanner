@@ -32,6 +32,7 @@ class CaffairRepositoryImpl implements CaffairRepository {
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       //print(error.toString());
+      BaseModel()..setErrorMessage("message");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = blogList;

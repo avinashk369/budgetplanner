@@ -30,16 +30,29 @@ class _WelcomeState extends State<Welcome> {
     // TODO: implement initState
     hasSeen = PreferenceUtils.getBool(has_seen);
     user = FirebaseAuth.instance.currentUser;
+    // Create anonymous function:
     if (user != null) {
-      getUser(user!.uid).then((value) {
-        userModel = value;
-        if (userModel!.email != null) {
-          print(userModel!.name);
+      () async {
+        BaseModel<UserModel> userData =
+            await userRepositoryImpl.getUser(user!.uid);
+        if (userData.data!.email != null) {
+          print("Avinash ${userData.data!.name}");
         } else {
           userRepositoryImpl.createUserInDatabaseWithGoogleProvider(user!);
         }
-      });
+      }();
     }
+
+    // if (user != null) {
+    //   getUser(user!.uid).then((value) {
+    //     userModel = value;
+    //     if (userModel!.email != null) {
+    //       print(userModel!.name);
+    //     } else {
+    //       userRepositoryImpl.createUserInDatabaseWithGoogleProvider(user!);
+    //     }
+    //   });
+    // }
     userId = PreferenceUtils.getString(user_id);
     creationTime = PreferenceUtils.getString(creation_time);
     lastSignInTime = PreferenceUtils.getString(sign_in_time);
@@ -52,10 +65,6 @@ class _WelcomeState extends State<Welcome> {
     BaseModel<UserModel> user = await userRepositoryImpl.getUser(uid);
 
     return user.data!;
-  }
-
-  void getyser(String userId) async {
-    userModel = await getUser("user!.uid");
   }
 
   @override

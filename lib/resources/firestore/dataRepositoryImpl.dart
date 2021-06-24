@@ -1,7 +1,8 @@
+import 'package:budgetplanner/models/BaseModel.dart';
+import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/resources/firestore/image_data.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 import 'dataRepository.dart';
 
@@ -35,6 +36,7 @@ class DataRepositoryImpl implements DataRepository {
     var batch = _firestore.batch();
     budgetCat.forEach((element) {
       var _mainCollection = _firestore.collection(budgetCategory).doc();
+      element['id'] = _mainCollection.id;
       batch.set(_mainCollection, element);
     });
     return batch.commit();
@@ -56,6 +58,7 @@ class DataRepositoryImpl implements DataRepository {
     var batch = _firestore.batch();
     incomeCat.forEach((element) {
       var _mainCollection = _firestore.collection(incomeCategory).doc();
+      element['id'] = _mainCollection.id;
       batch.set(_mainCollection, element);
     });
     return batch.commit();
@@ -71,6 +74,7 @@ class DataRepositoryImpl implements DataRepository {
     var batch = _firestore.batch();
     expensetype.forEach((element) {
       var _mainCollection = _firestore.collection(expenseType).doc();
+      element['id'] = _mainCollection.id;
       batch.set(_mainCollection, element);
     });
     return batch.commit();
@@ -90,6 +94,7 @@ class DataRepositoryImpl implements DataRepository {
     var batch = _firestore.batch();
     recurranceCat.forEach((element) {
       var _mainCollection = _firestore.collection(recurranceCategory).doc();
+      element['id'] = _mainCollection.id;
       batch.set(_mainCollection, element);
     });
     return batch.commit();
@@ -110,6 +115,7 @@ class DataRepositoryImpl implements DataRepository {
     var batch = _firestore.batch();
     savingCat.forEach((element) {
       var _mainCollection = _firestore.collection(savingCategory).doc();
+      element['id'] = _mainCollection.id;
       batch.set(_mainCollection, element);
     });
     return batch.commit();
@@ -126,7 +132,7 @@ class DataRepositoryImpl implements DataRepository {
     var batch = _firestore.batch();
     transactionTypeList.forEach((element) {
       var _mainCollection = _firestore.collection(transactionType).doc();
-
+      element['id'] = _mainCollection.id;
       batch.set(_mainCollection, element);
     });
     return batch.commit();
@@ -168,5 +174,35 @@ class DataRepositoryImpl implements DataRepository {
       batch.set(_mainCollection, element);
     });
     return batch.commit();
+  }
+
+  @override
+  Future<BaseModel<List<BudgetCategoryModel>>> getBudgetCategories() async {
+    // TODO: implement testingConnection
+
+    List<BudgetCategoryModel> budgetCategories = [];
+
+    var response = await _firestore.collection(budgetCategory).get();
+    budgetCategories = response.docs
+        .map((e) => BudgetCategoryModel.fromJson(e.data()))
+        .toList();
+
+    // response.docs.forEach((element) async {
+    //   BudgetCategoryModel records =
+    //       BudgetCategoryModel.fromJson(element.data());
+    //   records.id = element.id;
+    //   budgetCategories.add(records);
+    // });
+
+    return BaseModel()..data = budgetCategories;
+  }
+
+  @override
+  Future<BaseModel<BudgetCategoryModel>> getBudgetCategory(String docId) async {
+    // TODO: implement testingConnection
+
+    var response = await _firestore.collection(budgetCategory).doc(docId).get();
+
+    return BaseModel()..data = BudgetCategoryModel.fromJson(response.data()!);
   }
 }

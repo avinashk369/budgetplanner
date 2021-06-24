@@ -1,9 +1,11 @@
+import 'package:budgetplanner/controllers/all_controllers_binding.dart';
 import 'package:budgetplanner/screens/user/poc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'routes_generator.dart';
 import 'utils/PreferenceUtils.dart';
 import 'utils/route_constants.dart';
@@ -47,7 +49,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      //smartManagement: SmartManagement.full,
+      initialBinding: AllControllersBinding(),
       initialRoute: homeRoute,
       //home: Poc(),
       onGenerateRoute: RouteGenerator.generateRoute,
