@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/user_model.dart';
@@ -31,6 +33,24 @@ class TestController extends GetxController {
 
   Future<List<BudgetCategoryModel>> getBudgetCategories() async {
     BaseModel<List<BudgetCategoryModel>>? budgetCategories;
+    List<BudgetCategoryModel> demo = [
+      BudgetCategoryModel()..id = "1",
+      BudgetCategoryModel()..id = "2",
+      BudgetCategoryModel()..id = "3",
+      BudgetCategoryModel()..id = "4",
+      BudgetCategoryModel()..id = "5",
+      BudgetCategoryModel()..id = "6",
+      BudgetCategoryModel()..id = "7",
+    ];
+
+    print(" json string value ${jsonEncode(demo)}");
+
+    List<BudgetCategoryModel> demo1;
+    demo1 = (jsonDecode(jsonEncode(demo)) as List)
+        .map((i) => BudgetCategoryModel.fromJson(i))
+        .toList();
+
+    print("json decode list size ${demo1.length}");
     try {
       isLoading(true);
 

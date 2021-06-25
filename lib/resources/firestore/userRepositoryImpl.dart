@@ -25,12 +25,26 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   void createUserInDatabaseWithGoogleProvider(User firebaseUser) async {
+    // var newDocRef = _firestore.collection(user).doc(firebaseUser.uid);
+    // newDocRef
+    //     .set({
+    //       name: firebaseUser.displayName ?? firebaseUser.email,
+    //       email: firebaseUser.email,
+    //       id: newDocRef.id
+    //     })
+    //     .whenComplete(() => print(
+    //         'Created user in database with Google Provider. Name: ${firebaseUser.displayName} | Email: ${firebaseUser.email}'))
+    //     .catchError((error) {
+    //       print(error.toString());
+    //     });
+
     await _firestore
         .collection(user)
         .doc(firebaseUser.uid)
         .set({
           name: firebaseUser.displayName ?? firebaseUser.email,
           email: firebaseUser.email,
+          id: firebaseUser.uid
         })
         .whenComplete(() => print(
             'Created user in database with Google Provider. Name: ${firebaseUser.displayName} | Email: ${firebaseUser.email}'))

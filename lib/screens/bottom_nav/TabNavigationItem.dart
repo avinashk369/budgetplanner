@@ -1,3 +1,4 @@
+import 'package:budgetplanner/screens/bottom_nav/pages/transaction/transaction.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,7 @@ class TabNavigationItem {
           title: "Timer",
         ),
         TabNavigationItem(
-          page: HomePage(),
+          page: Transaction(),
           icon: Icon(Icons.badge),
           title: "Challenges",
         ),

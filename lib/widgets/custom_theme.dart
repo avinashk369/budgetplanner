@@ -18,6 +18,11 @@ class CustomTheme with ChangeNotifier {
         primaryColor: whiteColor,
         scaffoldBackgroundColor: whiteColor,
         backgroundColor: whiteColor,
+        accentColor: redColor,
+        tabBarTheme: TabBarTheme(
+          unselectedLabelColor: kGrey,
+          labelColor: redColor,
+        ),
         inputDecorationTheme: InputDecorationTheme(
           border: UnderlineInputBorder(
             borderSide: BorderSide(color: darkColor),
@@ -34,7 +39,7 @@ class CustomTheme with ChangeNotifier {
         hintColor: darkColor,
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           selectedLabelStyle: TextStyle(
-            color: orange,
+            color: redColor,
             fontSize: 14,
           ),
           unselectedLabelStyle: TextStyle(
@@ -43,7 +48,7 @@ class CustomTheme with ChangeNotifier {
           ),
           backgroundColor: whiteColor,
           elevation: 0,
-          selectedItemColor: orange,
+          selectedItemColor: redColor,
           unselectedItemColor: kGrey,
           showSelectedLabels: true,
           showUnselectedLabels: true,
@@ -94,6 +99,11 @@ class CustomTheme with ChangeNotifier {
         scaffoldBackgroundColor: darkColor,
         backgroundColor: darkColor,
         hintColor: whiteColor,
+        accentColor: heenColor,
+        tabBarTheme: TabBarTheme(
+          unselectedLabelColor: kGrey,
+          labelColor: heenColor,
+        ),
         inputDecorationTheme: InputDecorationTheme(
           border: UnderlineInputBorder(
             borderSide: BorderSide(color: whiteColor),
