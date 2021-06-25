@@ -1,3 +1,4 @@
+import 'package:budgetplanner/controllers/income_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/resources/firestore/image_data.dart';
 import 'package:budgetplanner/screens/user/signin_button.dart';
@@ -10,8 +11,12 @@ import 'package:get/get.dart';
 class AddIncome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TransactionEntryController controller =
-        Get.find<TransactionEntryController>(tag: incomeController);
+    // TransactionEntryController controller =
+    //     Get.find<TransactionEntryController>(tag: incomeController);
+    IncomeController controller =
+        Get.find<IncomeController>(tag: incomeController);
+    if (!controller.isLoading())
+      print("cat list size ${controller.catList.length}");
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: kSpaceS, vertical: kSpaceM),
       child: CustomScrollView(
@@ -23,6 +28,14 @@ class AddIncome extends StatelessWidget {
               key: controller.incomeKey,
               child: Column(
                 children: [
+                  Obx(
+                    () => (controller.isLoading())
+                        ? CircularProgressIndicator(
+                            color: Theme.of(context).hintColor,
+                            strokeWidth: 2,
+                          )
+                        : Text('${controller.catList.length}'),
+                  ),
                   TransactionHeader(
                     imageUrl:
                         "https://image.freepik.com/free-vector/stock-market-investing-online-monetization-remote-job-freelance-work_335657-3022.jpg",

@@ -1,4 +1,5 @@
 import 'package:budgetplanner/controllers/transaction_controller.dart';
+import 'package:budgetplanner/resources/firestore/image_data.dart';
 import 'package:budgetplanner/screens/user/signin_button.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -62,7 +63,12 @@ class AddExpense extends StatelessWidget {
                     height: 10,
                   ),
                   SigninButton(
-                    signinUser: () => controller.checkLogin(context),
+                    signinUser: () => controller.modalBottomSheetMenu(
+                        context, ImageData.getBudgetCategoryImageList(),
+                        (value) {
+                      Navigator.of(context).pop();
+                      print("Call back function $value");
+                    }),
                   ),
                 ],
               ),
