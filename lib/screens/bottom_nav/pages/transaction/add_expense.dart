@@ -122,42 +122,48 @@ class AddExpense extends StatelessWidget {
                             width: 1),
                         borderRadius: BorderRadius.all(Radius.circular(5))),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Expense type:',
+                          'Expense type',
                         ), //Text
-                        SizedBox(width: 10), //SizedBox
-                        /** Checkbox Widget **/
-                        Obx(
-                          () => controller.isWant()
-                              ? Checkbox(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3.0)),
-                                  checkColor: whiteColor,
-                                  activeColor: redColor,
-                                  value: controller.isWant(),
-                                  onChanged: (bool? value) {
-                                    print(value);
-                                    controller.isWant(value);
-                                  },
-                                )
-                              : Checkbox(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3.0)),
-                                  checkColor: Theme.of(context).hintColor,
-                                  activeColor: Theme.of(context).hintColor,
-                                  value: controller.isWant(),
-                                  onChanged: (bool? value) {
-                                    print(value);
-                                    controller.isWant(value);
-                                  },
-                                ),
-                        ),
-                        //Text
 
-                        Text(
-                          'Want/Need',
-                        ),
+                        Row(
+                          children: [
+                            Obx(
+                              () => controller.isWant()
+                                  ? Checkbox(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(3.0)),
+                                      checkColor: whiteColor,
+                                      activeColor: redColor,
+                                      value: controller.isWant(),
+                                      onChanged: (bool? value) {
+                                        print(value);
+                                        controller.isWant(value);
+                                      },
+                                    )
+                                  : Checkbox(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(3.0)),
+                                      checkColor: Theme.of(context).hintColor,
+                                      activeColor: Theme.of(context).hintColor,
+                                      value: controller.isWant(),
+                                      onChanged: (bool? value) {
+                                        print(value);
+                                        controller.isWant(value);
+                                      },
+                                    ),
+                            ),
+                            //Text
+
+                            Text(
+                              'Want/Need',
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),

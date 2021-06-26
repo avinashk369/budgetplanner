@@ -19,7 +19,7 @@ class CategoryChooser extends GetView {
       decoration: BoxDecoration(
           border: Border.all(
               color: Theme.of(context).hintColor.withOpacity(.12), width: 1),
-          borderRadius: BorderRadius.all(Radius.circular(5))),
+          borderRadius: BorderRadius.all(Radius.circular(4))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
