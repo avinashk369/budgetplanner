@@ -1,6 +1,11 @@
 import 'package:budgetplanner/controllers/income_controller.dart';
+import 'package:budgetplanner/controllers/login_controller.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
+import 'package:budgetplanner/widgets/category_choser.dart';
+import 'package:budgetplanner/widgets/custom_input.dart';
+import 'package:budgetplanner/widgets/dashed_rect.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:budgetplanner/widgets/transaction_header.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +15,7 @@ class AddIncome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = IncomeController.tagged(incomeController);
-    if (!controller.isLoading())
-      print("cat list size ${controller.catList.length}");
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: kSpaceS, vertical: kSpaceM),
       child: CustomScrollView(
@@ -38,81 +42,79 @@ class AddIncome extends StatelessWidget {
                         },
                       );
                     },
-                    child: Container(
-                      height: 56,
-                      width: Get.width,
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color:
-                                  Theme.of(context).hintColor.withOpacity(.12),
-                              width: 2),
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: Obx(() => Text(
-                                controller.incomeModel.value.name ??
-                                    "Select category")),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: Obx(
-                                () => controller.incomeModel.value.name != null
-                                    ? Icon(
-                                        DataRepositoryImpl()
-                                            .iconUrl(controller
-                                                .incomeModel.value.name!)!
-                                            .iconName,
-                                        color: whiteColor,
-                                      )
-                                    : Icon(Icons.ac_unit)),
-                          ),
-                        ],
+                    child: CategoryChooser(
+                      leftRowData: Obx(() => Text(
+                          controller.incomeModel.value.name ??
+                              select_income_source)),
+                      rightRowData: Obx(
+                        () => controller.incomeModel.value.name != null
+                            ? Icon(
+                                DataRepositoryImpl()
+                                    .iconUrl(
+                                        controller.incomeModel.value.name!)!
+                                    .iconName,
+                                color: Theme.of(context).hintColor,
+                              )
+                            : Container(
+                                height: 35,
+                                width: 35,
+                                child: DashedRect(
+                                  color: Theme.of(context).hintColor,
+                                  strokeWidth: 1.0,
+                                  gap: 2.0,
+                                ),
+                              ),
                       ),
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    controller: controller.emailController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      return controller.validateEmail(value!);
-                    },
-                    cursorColor: Theme.of(context).hintColor,
-                    keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(
-                      color: Theme.of(context).hintColor,
-                    ),
-                    decoration: const InputDecoration(
-                      hintText: 'Email',
-                    ),
+                  CustomInput(
+                    controller: controller.amountController,
+                    hintText: amount,
+                    validator: (value) => controller.validateAmount(value!),
+                    textInputType: TextInputType.number,
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    controller: controller.passwordController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      return controller.validatePassword(value!);
-                    },
-                    cursorColor: Theme.of(context).hintColor,
-                    keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(
-                      color: Theme.of(context).hintColor,
-                    ),
-                    decoration: const InputDecoration(
-                      hintText: 'Password',
-                    ),
+                  CustomInput(
+                    controller: controller.notesController,
+                    hintText: notes,
+                    validator: (value) => controller.validatePassword(value!),
                   ),
                   SizedBox(
                     height: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      controller.recurranceModal(
+                        context,
+                        controller.recurranceList,
+                        (value) {
+                          Navigator.of(context).pop();
+                          controller.recurranceModel(value);
+                          print("Call back function ${value.name}");
+                        },
+                      );
+                    },
+                    child: CategoryChooser(
+                      leftRowData: Text(recurrance),
+                      rightRowData: Obx(
+                        () => Text(controller.recurranceModel.value.name ??
+                            def_recurrance),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      controller.submitIncomeRecord(context);
+                    },
+                    child: Text("Submit"),
                   ),
                 ],
               ),

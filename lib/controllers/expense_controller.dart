@@ -1,19 +1,45 @@
 import 'package:budgetplanner/controllers/base_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
+import 'package:budgetplanner/models/expense_source_model.dart';
 import 'package:budgetplanner/models/income_model.dart';
+import 'package:budgetplanner/models/recurrance_model.dart';
+import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/category_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/_ModalBottomSheetLayout.dart';
+import 'package:budgetplanner/widgets/expense_source_list.dart';
+import 'package:budgetplanner/widgets/loading_dialog.dart';
+import 'package:budgetplanner/widgets/recurrance_list.dart';
+import 'package:budgetplanner/widgets/snack_bar.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ExpenseController extends BaseController {
   var isLoading = true.obs;
+  var isWant = false.obs;
+  var isNeed = false.obs;
   final GlobalKey<FormState> expenseKey = GlobalKey<FormState>();
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  late TextEditingController emailController, passwordController;
+  final GlobalKey<State> keyLoader = new GlobalKey<State>();
+  late TextEditingController amountController, notesController;
   late List<BudgetCategoryModel> catList;
+  late List<ExpenseSourceModel> expenseSourceList;
+
+  late List<RecurranceModel> recurranceList;
+  var expenseSourceModel = ExpenseSourceModel().obs;
+
+  var budgetCatModel = BudgetCategoryModel().obs;
+  var recurranceModel = RecurranceModel().obs;
+
+  setExpenseSource(ExpenseSourceModel expenseSource) =>
+      expenseSourceModel(expenseSource);
+  setExpenseMode(BudgetCategoryModel income) => budgetCatModel(income);
+  setRecurranceModeel(RecurranceModel recurrance) =>
+      recurranceModel(recurrance);
   static ExpenseController get to => Get.find<ExpenseController>();
   static ExpenseController tagged(String name) =>
       Get.find<ExpenseController>(tag: name);
@@ -22,11 +48,14 @@ class ExpenseController extends BaseController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    emailController = TextEditingController(text: "a@a.col");
-    passwordController = TextEditingController(text: "password");
+    amountController = TextEditingController(text: "100");
+    notesController = TextEditingController(text: "test transaction");
     () async {
       catList = await getBudgetCategories();
+      recurranceList = await getRecurranceList();
+      expenseSourceList = await getExpenseSourceList();
     }();
+    super.onInit();
   }
 
   @override
@@ -39,12 +68,12 @@ class ExpenseController extends BaseController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    emailController.dispose();
-    passwordController.dispose();
+    amountController.dispose();
+    notesController.dispose();
   }
 
-  String? validateEmail(String email) {
-    if (!GetUtils.isEmail(email)) {
+  String? validateAmount(String amount) {
+    if (amount.length < 1) {
       return "Please enter email";
     }
     return null;
@@ -55,6 +84,49 @@ class ExpenseController extends BaseController {
       return "Password must be of 6 characters";
     }
     return null;
+  }
+
+  void submitIncomeRecord(BuildContext context) async {
+    final isValid = expenseKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    if (GetUtils.isNull(budgetCatModel.value.name)) {
+      print("Please select income");
+      SnackBarDialog.displaySnackbar(
+        "Expense",
+        "Please select expense source",
+      );
+
+      return;
+    }
+    if (recurranceModel.value.name == null) print("Please select recurrance");
+    if (expenseKey.currentState!.validate()) {
+      print(amountController.text);
+      print(notesController.text);
+      print(recurranceModel.value.name ?? recurrance);
+      print(budgetCatModel.value.name);
+      try {
+        isLoading(true);
+        TransactionModel transactionModel = TransactionModel();
+        transactionModel.amount = double.parse(amountController.text);
+        transactionModel.catName = budgetCatModel.value.name;
+        transactionModel.transactionType = expense;
+        transactionModel.expenseType = (isWant()) ? want : need;
+        transactionModel.expenseSource =
+            expenseSourceModel.value.name ?? def_source;
+        transactionModel.createdOn = DateTime.now().toString();
+        transactionModel.recurrance = def_recurrance;
+        transactionModel.userId = PreferenceUtils.getString(user_id);
+        await DataRepositoryImpl().saveTransaction(transactionModel);
+      } catch (e) {} finally {
+        isLoading(false);
+      }
+    }
+    LoadingDialog.showLoadingDialog(context, keyLoader);
+    Future.delayed(Duration(seconds: 3), () async {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+    });
   }
 
   Future<List<BudgetCategoryModel>> getBudgetCategories() async {
@@ -72,6 +144,40 @@ class ExpenseController extends BaseController {
     }
 
     return budgetCategories!.data!;
+  }
+
+  Future<List<RecurranceModel>> getRecurranceList() async {
+    BaseModel<List<RecurranceModel>>? recurranceList;
+
+    try {
+      isLoading(true);
+
+      recurranceList = await DataRepositoryImpl().getRecurranceType();
+      print("object ${recurranceList.data!.length}");
+    } catch (e) {} finally {
+      Future.delayed(Duration(seconds: 1), () async {
+        isLoading(false);
+      });
+    }
+
+    return recurranceList!.data!;
+  }
+
+  Future<List<ExpenseSourceModel>> getExpenseSourceList() async {
+    BaseModel<List<ExpenseSourceModel>>? expenseSourceList;
+
+    try {
+      isLoading(true);
+
+      expenseSourceList = await DataRepositoryImpl().getExpenseSource();
+      print("object ${expenseSourceList.data!.length}");
+    } catch (e) {} finally {
+      Future.delayed(Duration(seconds: 1), () async {
+        isLoading(false);
+      });
+    }
+
+    return expenseSourceList!.data!;
   }
 
   void modalBottomSheetMenu(
@@ -122,7 +228,7 @@ class ExpenseController extends BaseController {
                               ),
                               onPressed: () {
                                 //Navigator.of(context).pop();
-
+                                setExpenseMode(imageList[index]);
                                 iconClicked(imageList[index]);
                               },
                             ),
@@ -144,5 +250,65 @@ class ExpenseController extends BaseController {
           );
         },
         statusBarHeight: Get.height * .5);
+  }
+
+  void recurranceModal(BuildContext context, List<RecurranceModel> imageList,
+      Function(RecurranceModel recurranceModel) iconClicked) {
+    showModalBottomSheetApp(
+      dismissOnTap: true,
+      context: context,
+      builder: (builder) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 10),
+            Flexible(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Obx(() => (isLoading())
+                    ? Center(child: CircularProgressIndicator())
+                    : RecurranceList(recurranceList, iconClicked)),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            )
+          ],
+        );
+      },
+      statusBarHeight: Get.height * .5,
+    );
+  }
+
+  void expenseSourceModal(
+      BuildContext context,
+      List<ExpenseSourceModel> imageList,
+      Function(ExpenseSourceModel recurranceModel) iconClicked) {
+    showModalBottomSheetApp(
+      dismissOnTap: true,
+      context: context,
+      builder: (builder) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 10),
+            Flexible(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Obx(() => (isLoading())
+                    ? Center(child: CircularProgressIndicator())
+                    : ExpenseSourceList(expenseSourceList, iconClicked)),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            )
+          ],
+        );
+      },
+      statusBarHeight: Get.height * .5,
+    );
   }
 }

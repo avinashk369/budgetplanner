@@ -1,6 +1,7 @@
 import 'package:budgetplanner/controllers/saving_controller.dart';
 import 'package:budgetplanner/screens/user/signin_button.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/widgets/custom_input.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:budgetplanner/widgets/transaction_header.dart';
 import 'package:flutter/material.dart';
@@ -24,38 +25,20 @@ class AddSaving extends StatelessWidget {
                     imageUrl:
                         "https://image.freepik.com/free-vector/rich-people-keeping-cash-clocks-piggy-bank-vector-illustration-time-is-money-business-time-management-wealth-concept_74855-13218.jpg",
                   ),
-                  TextFormField(
+                  CustomInput(
+                    hintText: "Email",
                     controller: controller.emailController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      return controller.validateEmail(value!);
-                    },
-                    cursorColor: Theme.of(context).hintColor,
-                    keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(
-                      color: Theme.of(context).hintColor,
-                    ),
-                    decoration: const InputDecoration(
-                      hintText: 'Email',
-                    ),
+                    validator: (value) => controller.validateEmail(value!),
+                    textInputType: TextInputType.emailAddress,
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
+                  CustomInput(
                     controller: controller.passwordController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      return controller.validatePassword(value!);
-                    },
-                    cursorColor: Theme.of(context).hintColor,
-                    keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(
-                      color: Theme.of(context).hintColor,
-                    ),
-                    decoration: const InputDecoration(
-                      hintText: 'Password',
-                    ),
+                    hintText: 'Password',
+                    validator: (value) => controller.validatePassword(value!),
+                    isPassword: true,
                   ),
                   SizedBox(
                     height: 10,

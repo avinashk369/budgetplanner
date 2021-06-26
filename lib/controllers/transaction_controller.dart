@@ -1,30 +1,27 @@
-import 'dart:math';
-
-import 'package:budgetplanner/resources/firestore/image_data.dart';
-import 'package:budgetplanner/utils/authentication.dart';
-import 'package:budgetplanner/utils/route_constants.dart';
-import 'package:budgetplanner/utils/styles.dart';
-import 'package:budgetplanner/widgets/_ModalBottomSheetLayout.dart';
-import 'package:budgetplanner/widgets/loading_dialog.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
+import 'package:budgetplanner/models/BaseModel.dart';
+import 'package:budgetplanner/models/transaction_model.dart';
+import 'package:budgetplanner/models/transaction_type_model.dart';
+import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TransactionEntryController extends GetxController {
-  final GlobalKey<FormState> incomeKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> expenseKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> savingKey = GlobalKey<FormState>();
-
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  late TextEditingController emailController, passwordController;
-
+  late List<TransactionType> transactionTypeList;
+  var isLoading = true.obs;
+  late List<TransactionModel> transactionModel;
+  static TransactionEntryController get to =>
+      Get.find<TransactionEntryController>();
   @override
   void onInit() {
     // TODO: implement onInit
+    () async {
+      transactionTypeList = await getTransactionTypeList();
+      transactionModel = await getTransactionList();
+      //if (!isLoading())
+      print("transaction list lengh ${transactionModel.length}");
+    }();
     super.onInit();
-    emailController = TextEditingController(text: "a@a.col");
-    passwordController = TextEditingController(text: "password");
   }
 
   @override
@@ -37,125 +34,66 @@ class TransactionEntryController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
-    emailController.dispose();
-    passwordController.dispose();
   }
 
-  String? validateEmail(String email) {
-    if (!GetUtils.isEmail(email)) {
-      return "Please enter email";
+  Future<List<TransactionType>> getTransactionTypeList() async {
+    BaseModel<List<TransactionType>>? incomeCategories;
+    try {
+      isLoading(true);
+      incomeCategories = await DataRepositoryImpl().getTransactionType();
+    } catch (e) {} finally {
+      isLoading(false);
     }
-    return null;
+
+    return incomeCategories!.data!;
   }
 
-  String? validatePassword(String password) {
-    if (password.length <= 6) {
-      return "Password must be of 6 characters";
+  Future<List<TransactionModel>> getTransactionList() async {
+    BaseModel<List<TransactionModel>>? transactionList;
+    try {
+      isLoading(true);
+      transactionList = await DataRepositoryImpl().getTransactions();
+    } catch (e) {} finally {
+      isLoading(false);
     }
-    return null;
+
+    return transactionList!.data!;
   }
 
   void checkLogin(BuildContext context) {
-    final isValid = incomeKey.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
-    LoadingDialog.showLoadingDialog(context, _keyLoader);
-    Authentication.signinWithEmailPassword(
-      context: context,
-      email: emailController.text.toString(),
-      password: "password",
-    ).then((value) {
-      print("${value!.uid} registerd user id ${value.emailVerified}");
-      Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
-      // if (!value.emailVerified) {
-      //   Get.dialog(
-      //     MyAlertDialog(
-      //       title: Container(),
-      //       content: Text('verification-email-sent-message'.tr),
-      //       actions: [
-      //         TextButton(
-      //           onPressed: () => Get.back(),
-      //           child: Text(
-      //             'Ok',
-      //             style: TextStyle(
-      //               color: Color(0xFF39bc26),
-      //             ),
-      //           ),
-      //         )
-      //       ],
-      //     ),
-      //   );
-      // } else {
-      Navigator.popAndPushNamed(context, dashboardRoute);
-      //}
-    });
-  }
-
-  void modalBottomSheetMenu(
-      BuildContext context, List<ImageData> imageList, Function iconClicked) {
-    ;
-    Random random = new Random();
-    showModalBottomSheetApp(
-        dismissOnTap: true,
-        context: context,
-        builder: (builder) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10),
-              Flexible(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio: 30 / 27,
-                    ),
-                    itemCount: imageList.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Container(
-                            height: 55,
-                            width: 55,
-                            margin: EdgeInsets.only(bottom: 5),
-                            decoration: BoxDecoration(
-                              color: imageList[index].colorName,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
-                            ),
-                            child: IconButton(
-                              padding: EdgeInsets.all(0),
-                              icon: Icon(
-                                imageList[index].iconName,
-                                size: 35,
-                                color: whiteColor,
-                              ),
-                              onPressed: () {
-                                //Navigator.of(context).pop();
-                                iconClicked(imageList[index].name);
-                              },
-                            ),
-                          ),
-                          Text(
-                            imageList[index].name,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              )
-            ],
-          );
-        },
-        statusBarHeight: Get.height * .5);
+    // final isValid = incomeKey.currentState!.validate();
+    // if (!isValid) {
+    //   return;
+    // }
+    // LoadingDialog.showLoadingDialog(context, _keyLoader);
+    // Authentication.signinWithEmailPassword(
+    //   context: context,
+    //   email: emailController.text.toString(),
+    //   password: "password",
+    // ).then((value) {
+    //   print("${value!.uid} registerd user id ${value.emailVerified}");
+    //   Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
+    // if (!value.emailVerified) {
+    //   Get.dialog(
+    //     MyAlertDialog(
+    //       title: Container(),
+    //       content: Text('verification-email-sent-message'.tr),
+    //       actions: [
+    //         TextButton(
+    //           onPressed: () => Get.back(),
+    //           child: Text(
+    //             'Ok',
+    //             style: TextStyle(
+    //               color: Color(0xFF39bc26),
+    //             ),
+    //           ),
+    //         )
+    //       ],
+    //     ),
+    //   );
+    // } else {
+    //Navigator.popAndPushNamed(context, dashboardRoute);
+    //}
+    //});
   }
 }

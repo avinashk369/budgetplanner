@@ -1,7 +1,11 @@
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
+import 'package:budgetplanner/models/expense_source_model.dart';
 import 'package:budgetplanner/models/income_model.dart';
+import 'package:budgetplanner/models/recurrance_model.dart';
 import 'package:budgetplanner/models/saving_category.dart';
+import 'package:budgetplanner/models/transaction_model.dart';
+import 'package:budgetplanner/models/transaction_type_model.dart';
 
 abstract class DataRepository {
   Future createBudgetCategory();
@@ -16,4 +20,9 @@ abstract class DataRepository {
   Future<BaseModel<List<IncomeModel>>> getIncomeCategories();
   Future<BaseModel<List<SavingCategory>>> getSavingCategories();
   Future<BaseModel<BudgetCategoryModel>> getBudgetCategory(String docId);
+  Future<BaseModel<List<RecurranceModel>>> getRecurranceType();
+  Future<BaseModel<List<TransactionType>>> getTransactionType();
+  Future<BaseModel<List<ExpenseSourceModel>>> getExpenseSource();
+  Future<BaseModel<List<TransactionModel>>> getTransactions();
+  Future saveTransaction(TransactionModel transactionModel);
 }

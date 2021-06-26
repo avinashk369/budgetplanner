@@ -50,3 +50,4 @@ const String recurranceCategory = "recurranceCategory";
 const String savingCategory = "savingCategory";
 const String transactionType = "transactionType";
 const String user = "users";
+const String transaction = "transaction";

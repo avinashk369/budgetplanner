@@ -1,4 +1,5 @@
 import 'package:budgetplanner/controllers/test_controller.dart';
+import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/user_model.dart';
@@ -18,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   UserRepositoryImpl userRepositoryImpl = UserRepositoryImpl();
+  final controller2 = TransactionEntryController.to;
   TestController controller = Get.find<TestController>();
   TestController controller1 = Get.find<TestController>(tag: "buttonEvent");
   UserModel? userModel;

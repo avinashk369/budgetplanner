@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
+import 'package:get/get.dart';
 
 class CustomTheme with ChangeNotifier {
   static bool _isDarkTheme = true;
@@ -78,6 +79,16 @@ class CustomTheme with ChangeNotifier {
             fontSize: 14,
           ),
         ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+            style: OutlinedButton.styleFrom(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+          minimumSize: Size(Get.height * .2, Get.height * .07),
+          //elevation: 1,
+          textStyle: TextStyle(fontSize: 18),
+          primary: darkColor,
+          side: BorderSide(color: heenColor, width: 1),
+        )),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -95,80 +106,91 @@ class CustomTheme with ChangeNotifier {
 
   static ThemeData get darkTheme {
     return ThemeData(
-        primaryColor: darkColor,
-        scaffoldBackgroundColor: darkColor,
+      primaryColor: darkColor,
+      scaffoldBackgroundColor: darkColor,
+      backgroundColor: darkColor,
+      hintColor: whiteColor,
+      accentColor: heenColor,
+      tabBarTheme: TabBarTheme(
+        unselectedLabelColor: kGrey,
+        labelColor: heenColor,
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: whiteColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: whiteColor.withOpacity(.12))),
+        errorBorder: OutlineInputBorder(borderSide: BorderSide(color: kred)),
+        focusedBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: whiteColor)),
+        focusedErrorBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: kred)),
+        fillColor: Colors.transparent,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedLabelStyle: TextStyle(
+          color: whiteColor,
+          fontSize: 14,
+        ),
+        unselectedLabelStyle: TextStyle(
+          color: kGrey,
+          fontSize: 12,
+        ),
         backgroundColor: darkColor,
-        hintColor: whiteColor,
-        accentColor: heenColor,
-        tabBarTheme: TabBarTheme(
-          unselectedLabelColor: kGrey,
-          labelColor: heenColor,
+        elevation: 0,
+        selectedItemColor: whiteColor,
+        unselectedItemColor: kGrey,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        unselectedIconTheme: IconThemeData(
+          color: kGrey,
+          size: 20,
         ),
-        inputDecorationTheme: InputDecorationTheme(
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(color: whiteColor),
-          ),
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: whiteColor.withOpacity(.12))),
-          errorBorder: OutlineInputBorder(borderSide: BorderSide(color: kred)),
-          focusedBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: whiteColor)),
-          focusedErrorBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: kred)),
-          fillColor: Colors.transparent,
+        selectedIconTheme: IconThemeData(
+          color: whiteColor,
+          size: 22,
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          selectedLabelStyle: TextStyle(
-            color: whiteColor,
-            fontSize: 14,
-          ),
-          unselectedLabelStyle: TextStyle(
-            color: kGrey,
-            fontSize: 12,
-          ),
-          backgroundColor: darkColor,
-          elevation: 0,
-          selectedItemColor: whiteColor,
-          unselectedItemColor: kGrey,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-          unselectedIconTheme: IconThemeData(
-            color: kGrey,
-            size: 20,
-          ),
-          selectedIconTheme: IconThemeData(
-            color: whiteColor,
-            size: 22,
-          ),
+      ),
+      brightness: Brightness.dark,
+      fontFamily: 'Montserrat',
+      textTheme: TextTheme(
+        headline1: TextStyle(
+          color: whiteColor,
+          fontSize: 16,
         ),
-        brightness: Brightness.dark,
-        fontFamily: 'Montserrat',
-        textTheme: TextTheme(
-          headline1: TextStyle(
-            color: whiteColor,
-            fontSize: 16,
-          ),
-          bodyText1: TextStyle(
-            color: whiteColor,
-            fontSize: 18,
-          ),
-          subtitle1: TextStyle(
-            color: whiteColor,
-            fontSize: 14,
-          ),
+        bodyText1: TextStyle(
+          color: whiteColor,
+          fontSize: 18,
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
+        subtitle1: TextStyle(
+          color: whiteColor,
+          fontSize: 14,
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+        minimumSize: Size(Get.height * .2, Get.height * .07),
+        //elevation: 1,
+        textStyle: TextStyle(fontSize: 18),
+        primary: whiteColor,
+        side: BorderSide(color: heenColor, width: 1),
+      )),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+            textStyle: TextStyle(fontSize: 18),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0)),
-            primary: kBGreen,
-          ),
-        ),
-        buttonTheme: ButtonThemeData(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
-          buttonColor: kBGreen,
-        ));
+                borderRadius: BorderRadius.circular(3.0)),
+            primary: heenColor,
+            minimumSize: Size(Get.height * .2, Get.height * .07)),
+      ),
+      buttonTheme: ButtonThemeData(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+        buttonColor: kBGreen,
+      ),
+    );
   }
 }

@@ -1,9 +1,14 @@
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
+import 'package:budgetplanner/models/expense_source_model.dart';
 import 'package:budgetplanner/models/income_model.dart';
+import 'package:budgetplanner/models/recurrance_model.dart';
 import 'package:budgetplanner/models/saving_category.dart';
+import 'package:budgetplanner/models/transaction_model.dart';
+import 'package:budgetplanner/models/transaction_type_model.dart';
 import 'package:budgetplanner/resources/firestore/image_data.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'dataRepository.dart';
@@ -242,5 +247,70 @@ class DataRepositoryImpl implements DataRepository {
         response.docs.map((e) => SavingCategory.fromJson(e.data())).toList();
 
     return BaseModel()..data = incomeCatList;
+  }
+
+  @override
+  Future<BaseModel<List<TransactionType>>> getTransactionType() async {
+    // TODO: implement testingConnection
+
+    List<TransactionType> transactionTypeList = [];
+
+    var response = await _firestore.collection(transactionType).get();
+    transactionTypeList =
+        response.docs.map((e) => TransactionType.fromJson(e.data())).toList();
+
+    return BaseModel()..data = transactionTypeList;
+  }
+
+  @override
+  Future<BaseModel<List<RecurranceModel>>> getRecurranceType() async {
+    // TODO: implement testingConnection
+
+    List<RecurranceModel> recurranceTypeList = [];
+
+    var response = await _firestore.collection(recurranceCategory).get();
+    recurranceTypeList =
+        response.docs.map((e) => RecurranceModel.fromJson(e.data())).toList();
+
+    return BaseModel()..data = recurranceTypeList;
+  }
+
+  @override
+  Future saveTransaction(TransactionModel transactionModel) async {
+    var _mainCollection = _firestore.collection(transaction).doc();
+    transactionModel.id = _mainCollection.id;
+    await _mainCollection
+        .set(transactionModel.toJson())
+        .whenComplete(() => print('Transaction added successfully!'))
+        .catchError((error) {
+      print(error.toString());
+    });
+  }
+
+  @override
+  Future<BaseModel<List<ExpenseSourceModel>>> getExpenseSource() async {
+    // TODO: implement testingConnection
+
+    List<ExpenseSourceModel> expenseSourceList = [];
+
+    var response = await _firestore.collection(expenseSource).get();
+    expenseSourceList = response.docs
+        .map((e) => ExpenseSourceModel.fromJson(e.data()))
+        .toList();
+
+    return BaseModel()..data = expenseSourceList;
+  }
+
+  @override
+  Future<BaseModel<List<TransactionModel>>> getTransactions() async {
+    // TODO: implement testingConnection
+
+    List<TransactionModel> transactionList = [];
+
+    var response = await _firestore.collection(transaction).get();
+    transactionList =
+        response.docs.map((e) => TransactionModel.fromJson(e.data())).toList();
+
+    return BaseModel()..data = transactionList;
   }
 }

@@ -10,6 +10,12 @@ final kTitleStyle = GoogleFonts.oswald(
   height: 1.2,
 );
 
+final kQuoteStyle = GoogleFonts.poppins(
+    color: greyColor,
+    fontSize: 18.0,
+    letterSpacing: 0.4,
+    fontStyle: FontStyle.italic);
+
 final kSubtitleStyle = GoogleFonts.oswald(
   color: kGrey,
   fontSize: 18.0,
@@ -17,9 +23,9 @@ final kSubtitleStyle = GoogleFonts.oswald(
   height: 1.2,
 );
 
-final kLabelStyle = GoogleFonts.signika(
+final kLabelStyle = GoogleFonts.lato(
   color: kDarkGrey,
-  fontSize: 12.0,
+  fontSize: 14.0,
   letterSpacing: 0.4,
   height: 1.2,
 );
