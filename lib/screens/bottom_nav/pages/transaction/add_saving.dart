@@ -1,17 +1,14 @@
-import 'package:budgetplanner/controllers/transaction_controller.dart';
-import 'package:budgetplanner/resources/firestore/image_data.dart';
+import 'package:budgetplanner/controllers/saving_controller.dart';
 import 'package:budgetplanner/screens/user/signin_button.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:budgetplanner/widgets/transaction_header.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AddSaving extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TransactionEntryController controller =
-        Get.find<TransactionEntryController>(tag: savingController);
+    final controller = SavingController.tagged(savingController);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: kSpaceS, vertical: kSpaceM),
       child: CustomScrollView(
@@ -21,7 +18,6 @@ class AddSaving extends StatelessWidget {
           SliverToBoxAdapter(
             child: Form(
               key: controller.savingKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
                   TransactionHeader(
@@ -30,6 +26,7 @@ class AddSaving extends StatelessWidget {
                   ),
                   TextFormField(
                     controller: controller.emailController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       return controller.validateEmail(value!);
                     },
@@ -47,6 +44,7 @@ class AddSaving extends StatelessWidget {
                   ),
                   TextFormField(
                     controller: controller.passwordController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       return controller.validatePassword(value!);
                     },
@@ -64,8 +62,7 @@ class AddSaving extends StatelessWidget {
                   ),
                   SigninButton(
                     signinUser: () => controller.modalBottomSheetMenu(
-                        context, ImageData.getSavingCategoryImageList(),
-                        (value) {
+                        context, controller.catList, (value) {
                       Navigator.of(context).pop();
                       print("Call back function $value");
                     }),

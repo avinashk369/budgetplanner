@@ -1,5 +1,7 @@
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
+import 'package:budgetplanner/models/income_model.dart';
+import 'package:budgetplanner/models/saving_category.dart';
 import 'package:budgetplanner/resources/firestore/image_data.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -151,7 +153,11 @@ class DataRepositoryImpl implements DataRepository {
 
   ImageData? iconUrl(String name) {
     ImageData? imageData;
-    ImageData.getBudgetCategoryImageList().forEach((element) {
+    [
+      ...ImageData.getIncomeCategoryImageList(),
+      ...ImageData.getBudgetCategoryImageList(),
+      ...ImageData.getSavingCategoryImageList()
+    ].forEach((element) {
       if (element.name == name) {
         imageData = element;
       }
@@ -210,5 +216,31 @@ class DataRepositoryImpl implements DataRepository {
     var response = await _firestore.collection(budgetCategory).doc(docId).get();
 
     return BaseModel()..data = BudgetCategoryModel.fromJson(response.data()!);
+  }
+
+  @override
+  Future<BaseModel<List<IncomeModel>>> getIncomeCategories() async {
+    // TODO: implement testingConnection
+
+    List<IncomeModel> incomeCatList = [];
+
+    var response = await _firestore.collection(incomeCategory).get();
+    incomeCatList =
+        response.docs.map((e) => IncomeModel.fromJson(e.data())).toList();
+
+    return BaseModel()..data = incomeCatList;
+  }
+
+  @override
+  Future<BaseModel<List<SavingCategory>>> getSavingCategories() async {
+    // TODO: implement testingConnection
+
+    List<SavingCategory> incomeCatList = [];
+
+    var response = await _firestore.collection(savingCategory).get();
+    incomeCatList =
+        response.docs.map((e) => SavingCategory.fromJson(e.data())).toList();
+
+    return BaseModel()..data = incomeCatList;
   }
 }

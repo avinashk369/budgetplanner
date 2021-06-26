@@ -2,33 +2,31 @@ import 'package:budgetplanner/controllers/base_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/income_model.dart';
+import 'package:budgetplanner/models/saving_category.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/widgets/_ModalBottomSheetLayout.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class IncomeController extends BaseController {
+class SavingController extends BaseController {
   var isLoading = true.obs;
-  final GlobalKey<FormState> incomeKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> savingKey = GlobalKey<FormState>();
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   late TextEditingController emailController, passwordController;
-  late List<IncomeModel> catList;
-  static IncomeController get to => Get.find<IncomeController>();
-  static IncomeController tagged(String name) =>
-      Get.find<IncomeController>(tag: name);
-  var incomeModel = IncomeModel().obs;
-
-  setIncomeMode(IncomeModel income) => incomeModel(income);
+  late List<SavingCategory> catList;
+  static SavingController get to => Get.find<SavingController>();
+  static SavingController tagged(String name) =>
+      Get.find<SavingController>(tag: name);
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    emailController = TextEditingController(text: "a@a.col");
-    passwordController = TextEditingController(text: "password");
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
     () async {
-      catList = await getIncomeCategories();
+      catList = await getSavingCategories();
     }();
   }
 
@@ -54,32 +52,33 @@ class IncomeController extends BaseController {
   }
 
   String? validatePassword(String password) {
-    print("into here");
     if (password.length <= 6) {
       return "Password must be of 6 characters";
     }
     return null;
   }
 
-  Future<List<IncomeModel>> getIncomeCategories() async {
-    BaseModel<List<IncomeModel>>? incomeCategories;
+  Future<List<SavingCategory>> getSavingCategories() async {
+    BaseModel<List<SavingCategory>>? budgetCategories;
 
     try {
       isLoading(true);
 
-      incomeCategories = await DataRepositoryImpl().getIncomeCategories();
-      print("object ${incomeCategories.data!.length}");
+      budgetCategories = await DataRepositoryImpl().getSavingCategories();
+      print("object ${budgetCategories.data!.length}");
     } catch (e) {} finally {
       Future.delayed(Duration(seconds: 1), () async {
         isLoading(false);
       });
     }
 
-    return incomeCategories!.data!;
+    return budgetCategories!.data!;
   }
 
-  void modalBottomSheetMenu(BuildContext context, List<IncomeModel> imageList,
-      Function(IncomeModel incomeCategoryModel) iconClicked) {
+  void modalBottomSheetMenu(
+      BuildContext context,
+      List<SavingCategory> imageList,
+      Function(SavingCategory savingCategoryModel) iconClicked) {
     showModalBottomSheetApp(
         dismissOnTap: true,
         context: context,
@@ -124,7 +123,7 @@ class IncomeController extends BaseController {
                               ),
                               onPressed: () {
                                 //Navigator.of(context).pop();
-                                setIncomeMode(imageList[index]);
+
                                 iconClicked(imageList[index]);
                               },
                             ),

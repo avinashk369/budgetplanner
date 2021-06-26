@@ -1,3 +1,4 @@
+import 'package:budgetplanner/controllers/expense_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/resources/firestore/image_data.dart';
 import 'package:budgetplanner/screens/user/signin_button.dart';
@@ -10,8 +11,7 @@ import 'package:get/get.dart';
 class AddExpense extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TransactionEntryController controller =
-        Get.find<TransactionEntryController>(tag: expenseController);
+    final controller = ExpenseController.tagged(expenseController);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: kSpaceS, vertical: kSpaceM),
       child: CustomScrollView(
@@ -64,10 +64,9 @@ class AddExpense extends StatelessWidget {
                   ),
                   SigninButton(
                     signinUser: () => controller.modalBottomSheetMenu(
-                        context, ImageData.getBudgetCategoryImageList(),
-                        (value) {
+                        context, controller.catList, (value) {
                       Navigator.of(context).pop();
-                      print("Call back function $value");
+                      print("Call back function ${value.name}");
                     }),
                   ),
                 ],
