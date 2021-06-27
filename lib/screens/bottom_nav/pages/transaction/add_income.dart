@@ -127,7 +127,7 @@ class AddIncome extends StatelessWidget {
                     onPressed: () {
                       controller.submitIncomeRecord(context);
                     },
-                    child: Text("Submit"),
+                    child: Text(addIncome),
                   ),
                 ],
               ),

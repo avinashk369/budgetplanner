@@ -302,18 +302,25 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  Future<BaseModel<List<TransactionModel>>> getTransactions() async {
+  Future<BaseModel<List<TransactionModel>>> getTransactions(
+      String transactionType) async {
     // TODO: implement testingConnection
 
     List<TransactionModel> transactionList = [];
-
-    var response = await _firestore
-        .collection(transaction)
-        .where('transacion_type', isEqualTo: expense)
-        //.where('cat_name', isEqualTo: foodNDrink)
-        .get();
-    transactionList =
-        response.docs.map((e) => TransactionModel.fromJson(e.data())).toList();
+    try {
+      var response = await _firestore
+          .collection(transaction)
+          .where('transacion_type', isGreaterThanOrEqualTo: transactionType)
+          //.where('cat_name', isEqualTo: foodNDrink)
+          // .where('created_on', isLessThanOrEqualTo: DateTime.now().toString())
+          // .orderBy('created_on', descending: true)
+          .get();
+      transactionList = response.docs
+          .map((e) => TransactionModel.fromJson(e.data()))
+          .toList();
+    } catch (e) {
+      print("exception ${e.toString()}");
+    }
 
     return BaseModel()..data = transactionList;
   }

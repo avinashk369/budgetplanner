@@ -1,3 +1,5 @@
+import 'package:budgetplanner/screens/bottom_nav/pages/transaction/add_income.dart';
+
 const String name = "name";
 const String id = "id";
 const String email = "email";
@@ -16,3 +18,5 @@ const transactionTab = "Transaction";
 const addTab = "Add";
 const statsTab = "Stats";
 const settingsTab = "Settings";
+const addIncome = "Add Income";
+const addExpense = "Add Expense";

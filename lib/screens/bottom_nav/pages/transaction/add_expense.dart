@@ -1,8 +1,5 @@
 import 'package:budgetplanner/controllers/expense_controller.dart';
-import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
-import 'package:budgetplanner/resources/firestore/image_data.dart';
-import 'package:budgetplanner/screens/user/signin_button.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/category_choser.dart';
@@ -17,6 +14,7 @@ class AddExpense extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = ExpenseController.tagged(expenseController);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: kSpaceS, vertical: kSpaceM),
       child: CustomScrollView(
@@ -193,7 +191,7 @@ class AddExpense extends StatelessWidget {
                     onPressed: () {
                       controller.submitIncomeRecord(context);
                     },
-                    child: Text("Submit"),
+                    child: Text(addExpense),
                   ),
                 ],
               ),

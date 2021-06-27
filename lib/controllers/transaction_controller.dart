@@ -12,14 +12,15 @@ class TransactionEntryController extends GetxController {
   late List<TransactionModel> transactionModel;
   static TransactionEntryController get to =>
       Get.find<TransactionEntryController>();
+
   @override
   void onInit() {
     // TODO: implement onInit
     () async {
       transactionTypeList = await getTransactionTypeList();
-      transactionModel = await getTransactionList();
+      //transactionModel = await getTransactionList();
       //if (!isLoading())
-      print("transaction list lengh ${transactionModel.length}");
+      // print("transaction list lengh ${transactionModel.length}");
     }();
     super.onInit();
   }
@@ -48,11 +49,13 @@ class TransactionEntryController extends GetxController {
     return incomeCategories!.data!;
   }
 
-  Future<List<TransactionModel>> getTransactionList() async {
+  Future<List<TransactionModel>> getTransactionList(
+      String transactionType) async {
     BaseModel<List<TransactionModel>>? transactionList;
     try {
       isLoading(true);
-      transactionList = await DataRepositoryImpl().getTransactions();
+      transactionList =
+          await DataRepositoryImpl().getTransactions(transactionType);
     } catch (e) {} finally {
       isLoading(false);
     }

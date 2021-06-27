@@ -1,5 +1,6 @@
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -43,10 +44,10 @@ class TransactionList extends GetView {
               child: Row(
                 children: <Widget>[
                   Container(
-                    width: 60.0,
-                    height: 60,
+                    width: 50.0,
+                    height: 50,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
+                      borderRadius: BorderRadius.circular(25.0),
                       color: DataRepositoryImpl()
                           .iconUrl(transactionModel.catName!)!
                           .colorName,
@@ -88,7 +89,9 @@ class TransactionList extends GetView {
                             height: 3,
                           ),
                           Text(
-                            transactionModel.expenseType!,
+                            (transactionModel.transactionType == expense)
+                                ? transactionModel.expenseType ?? ""
+                                : income,
                           )
                         ],
                       ),
@@ -98,7 +101,9 @@ class TransactionList extends GetView {
                     "\u20B9 " + transactionModel.amount.toString(),
                     style: kLabelStyle.apply(
                       fontSizeFactor: 1.2,
-                      color: Theme.of(context).hintColor,
+                      color: (transactionModel.transactionType == expense)
+                          ? redColor
+                          : greenbuttoncolor,
                     ),
                   ),
                 ],
