@@ -24,6 +24,9 @@ class CustomTheme with ChangeNotifier {
           unselectedLabelColor: kGrey,
           labelColor: redColor,
         ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: redColor,
+        ),
         inputDecorationTheme: InputDecorationTheme(
           border: UnderlineInputBorder(
             borderSide: BorderSide(color: darkColor),
@@ -114,6 +117,9 @@ class CustomTheme with ChangeNotifier {
       tabBarTheme: TabBarTheme(
         unselectedLabelColor: kGrey,
         labelColor: heenColor,
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: heenColor,
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: UnderlineInputBorder(

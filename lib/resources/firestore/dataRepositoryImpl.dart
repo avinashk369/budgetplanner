@@ -307,7 +307,11 @@ class DataRepositoryImpl implements DataRepository {
 
     List<TransactionModel> transactionList = [];
 
-    var response = await _firestore.collection(transaction).get();
+    var response = await _firestore
+        .collection(transaction)
+        .where('transacion_type', isEqualTo: expense)
+        //.where('cat_name', isEqualTo: foodNDrink)
+        .get();
     transactionList =
         response.docs.map((e) => TransactionModel.fromJson(e.data())).toList();
 

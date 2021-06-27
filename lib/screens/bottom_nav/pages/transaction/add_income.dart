@@ -19,7 +19,7 @@ class AddIncome extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: kSpaceS, vertical: kSpaceM),
       child: CustomScrollView(
-        controller: ScrollController(),
+        //controller: ScrollController(),
         physics: BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverToBoxAdapter(
@@ -48,12 +48,25 @@ class AddIncome extends StatelessWidget {
                               select_income_source)),
                       rightRowData: Obx(
                         () => controller.incomeModel.value.name != null
-                            ? Icon(
-                                DataRepositoryImpl()
-                                    .iconUrl(
-                                        controller.incomeModel.value.name!)!
-                                    .iconName,
-                                color: Theme.of(context).hintColor,
+                            ? Container(
+                                height: 35,
+                                width: 35,
+                                margin: EdgeInsets.only(bottom: 5),
+                                decoration: BoxDecoration(
+                                  color: DataRepositoryImpl()
+                                      .iconUrl(
+                                          controller.incomeModel.value.name!)!
+                                      .colorName,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Icon(
+                                  DataRepositoryImpl()
+                                      .iconUrl(
+                                          controller.incomeModel.value.name!)!
+                                      .iconName,
+                                  color: Theme.of(context).hintColor,
+                                ),
                               )
                             : Container(
                                 height: 35,

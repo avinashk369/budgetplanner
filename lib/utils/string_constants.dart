@@ -10,7 +10,7 @@ const select_income_source = "Select income source";
 const select_expense_source = "Select expense source";
 const def_recurrance = "Never";
 const def_source = "Cash";
-
+const def_notes = "Adding notes give you more clarity of the transaction";
 const homeTab = "Home";
 const transactionTab = "Transaction";
 const addTab = "Add";

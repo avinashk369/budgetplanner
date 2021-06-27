@@ -4,6 +4,7 @@ import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
+import 'package:budgetplanner/widgets/snack_bar.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -86,18 +87,22 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            ElevatedButton(
-              child: const Text('Patrol'),
-              onPressed: () async {
-                List<BudgetCategoryModel> categories =
-                    await controller1.getBudgetCategories();
-                categories.forEach((element) {
-                  //print("Id ${element.id} name ${element.name}");
-                });
-                BudgetCategoryModel catModel = await controller1.getCategory();
-                print("Id ${catModel.id} name ${catModel.name}");
-              },
-            ),
+            // ElevatedButton(
+            //   child: Text('Patrol'),
+            //   onPressed: () async {
+            //     // List<BudgetCategoryModel> categories =
+            //     //     await controller1.getBudgetCategories();
+            //     // categories.forEach((element) {
+            //     //   //print("Id ${element.id} name ${element.name}");
+            //     // });
+            //     // BudgetCategoryModel catModel = await controller1.getCategory();
+            //     // print("Id ${catModel.id} name ${catModel.name}");
+            //     // SnackBarDialog.displaySuccessSnackbar(
+            //     //   "Transaction",
+            //     //   "Income added successfully!",
+            //     // );
+            //   },
+            // ),
             Text(
               "Hello",
               style: Theme.of(context).textTheme.subtitle1,

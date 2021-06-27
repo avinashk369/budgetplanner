@@ -9,7 +9,7 @@ class TransactionHeader extends StatelessWidget {
 
   const TransactionHeader({Key? key, required this.imageUrl}) : super(key: key);
   final String quote =
-      "I will tell you how to become rich. Close the doors. Be fearful when others are greedy. Be greedy when others are fearful.";
+      "\"I will tell you how to become rich. Close the doors. Be fearful when others are greedy. Be greedy when others are fearful.\"";
   final String author = "Warren Buffett";
   @override
   Widget build(BuildContext context) {

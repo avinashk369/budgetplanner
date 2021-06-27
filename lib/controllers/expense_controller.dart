@@ -108,8 +108,10 @@ class ExpenseController extends BaseController {
       print(budgetCatModel.value.name);
       try {
         isLoading(true);
+        LoadingDialog.showLoadingDialog(context, keyLoader);
         TransactionModel transactionModel = TransactionModel();
         transactionModel.amount = double.parse(amountController.text);
+        transactionModel.notes = notesController.text;
         transactionModel.catName = budgetCatModel.value.name;
         transactionModel.transactionType = expense;
         transactionModel.expenseType = (isWant()) ? want : need;
@@ -119,14 +121,23 @@ class ExpenseController extends BaseController {
         transactionModel.recurrance = def_recurrance;
         transactionModel.userId = PreferenceUtils.getString(user_id);
         await DataRepositoryImpl().saveTransaction(transactionModel);
-      } catch (e) {} finally {
+      } catch (e) {
+        Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+        SnackBarDialog.displaySnackbar(
+          "Transaction",
+          "Ooops!!!...transaction cancelled!",
+        );
+      } finally {
         isLoading(false);
+        Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+        SnackBarDialog.displaySuccessSnackbar(
+          "Transaction",
+          "Transaction completed successfully!",
+        );
       }
     }
-    LoadingDialog.showLoadingDialog(context, keyLoader);
-    Future.delayed(Duration(seconds: 3), () async {
-      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
-    });
+
+    Future.delayed(Duration(seconds: 3), () async {});
   }
 
   Future<List<BudgetCategoryModel>> getBudgetCategories() async {
@@ -249,7 +260,7 @@ class ExpenseController extends BaseController {
             ],
           );
         },
-        statusBarHeight: Get.height * .5);
+        statusBarHeight: Get.height * .8);
   }
 
   void recurranceModal(BuildContext context, List<RecurranceModel> imageList,

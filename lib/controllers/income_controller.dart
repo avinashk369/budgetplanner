@@ -96,22 +96,33 @@ class IncomeController extends BaseController {
       print(incomeModel.value.name);
       try {
         isLoading(true);
+        LoadingDialog.showLoadingDialog(context, keyLoader);
         TransactionModel transactionModel = TransactionModel();
         transactionModel.amount = double.parse(amountController.text);
+        transactionModel.notes = notesController.text;
         transactionModel.catName = incomeModel.value.name;
         transactionModel.transactionType = income;
         transactionModel.createdOn = DateTime.now().toString();
         transactionModel.recurrance = def_recurrance;
         transactionModel.userId = PreferenceUtils.getString(user_id);
         await DataRepositoryImpl().saveTransaction(transactionModel);
-      } catch (e) {} finally {
+      } catch (e) {
+        Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+        SnackBarDialog.displaySnackbar(
+          "Transaction",
+          "Ooops!!!...transaction cancelled!",
+        );
+      } finally {
         isLoading(false);
+        Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+        SnackBarDialog.displaySuccessSnackbar(
+          "Transaction",
+          "Transaction completed successfully!",
+        );
       }
     }
-    LoadingDialog.showLoadingDialog(context, keyLoader);
-    Future.delayed(Duration(seconds: 3), () async {
-      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
-    });
+
+    //Future.delayed(Duration(seconds: 3), () async {});
   }
 
   Future<List<IncomeModel>> getIncomeCategories() async {

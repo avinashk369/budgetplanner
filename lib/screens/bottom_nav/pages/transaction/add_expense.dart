@@ -20,7 +20,7 @@ class AddExpense extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: kSpaceS, vertical: kSpaceM),
       child: CustomScrollView(
-        controller: ScrollController(),
+        //controller: ScrollController(),
         physics: BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverToBoxAdapter(
@@ -50,12 +50,25 @@ class AddExpense extends StatelessWidget {
                               select_expense_category)),
                       rightRowData: Obx(
                         () => controller.budgetCatModel.value.name != null
-                            ? Icon(
-                                DataRepositoryImpl()
-                                    .iconUrl(
-                                        controller.budgetCatModel.value.name!)!
-                                    .iconName,
-                                color: Theme.of(context).hintColor,
+                            ? Container(
+                                height: 35,
+                                width: 35,
+                                margin: EdgeInsets.only(bottom: 5),
+                                decoration: BoxDecoration(
+                                  color: DataRepositoryImpl()
+                                      .iconUrl(controller
+                                          .budgetCatModel.value.name!)!
+                                      .colorName,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Icon(
+                                  DataRepositoryImpl()
+                                      .iconUrl(controller
+                                          .budgetCatModel.value.name!)!
+                                      .iconName,
+                                  color: Theme.of(context).hintColor,
+                                ),
                               )
                             : Container(
                                 height: 35,
@@ -126,39 +139,22 @@ class AddExpense extends StatelessWidget {
                       children: [
                         Text(
                           'Expense type',
-                        ), //Text
-
+                        ),
                         Row(
                           children: [
                             Obx(
-                              () => controller.isWant()
-                                  ? Checkbox(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(3.0)),
-                                      checkColor: whiteColor,
-                                      activeColor: redColor,
-                                      value: controller.isWant(),
-                                      onChanged: (bool? value) {
-                                        print(value);
-                                        controller.isWant(value);
-                                      },
-                                    )
-                                  : Checkbox(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(3.0)),
-                                      checkColor: Theme.of(context).hintColor,
-                                      activeColor: Theme.of(context).hintColor,
-                                      value: controller.isWant(),
-                                      onChanged: (bool? value) {
-                                        print(value);
-                                        controller.isWant(value);
-                                      },
-                                    ),
+                              () => Checkbox(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(3.0)),
+                                checkColor: whiteColor,
+                                activeColor: redColor,
+                                value: controller.isWant(),
+                                onChanged: (bool? value) {
+                                  print(value);
+                                  controller.isWant(value);
+                                },
+                              ),
                             ),
-                            //Text
-
                             Text(
                               'Want/Need',
                             ),

@@ -4,6 +4,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/home.dart';
+import 'pages/transaction/transaction_history.dart';
 
 class TabNavigationItem {
   final Widget page;
@@ -23,7 +24,7 @@ class TabNavigationItem {
           title: homeTab,
         ),
         TabNavigationItem(
-          page: HomePage(),
+          page: TransactionHistory(),
           icon: Icon(Icons.receipt_long),
           title: transactionTab,
         ),

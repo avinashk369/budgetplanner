@@ -29,6 +29,8 @@ class TransactionModel {
   String? expenseSource;
   @JsonKey(name: "expense_type")
   String? expenseType;
+  @JsonKey(name: "notes")
+  String? notes;
   TransactionModel();
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
       _$TransactionModelFromJson(json);
