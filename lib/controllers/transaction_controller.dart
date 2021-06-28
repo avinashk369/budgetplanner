@@ -9,18 +9,20 @@ import 'package:get/get.dart';
 class TransactionEntryController extends GetxController {
   late List<TransactionType> transactionTypeList;
   var isLoading = true.obs;
-  late List<TransactionModel> transactionModel;
   static TransactionEntryController get to =>
       Get.find<TransactionEntryController>();
+
+  List<TransactionModel> get transactionList => transactionModel.value!;
+
+  Rxn<List<TransactionModel>> transactionModel =
+      Rxn<List<TransactionModel>>([]);
 
   @override
   void onInit() {
     // TODO: implement onInit
     () async {
       transactionTypeList = await getTransactionTypeList();
-      transactionModel = await getTransactionList("");
-      //if (!isLoading())
-      print("transaction list lengh ${transactionModel.length}");
+      transactionModel.bindStream(getTransactionList("")!);
     }();
     super.onInit();
   }
@@ -49,18 +51,14 @@ class TransactionEntryController extends GetxController {
     return incomeCategories!.data!;
   }
 
-  Future<List<TransactionModel>> getTransactionList(
-      String transactionType) async {
+  Stream<List<TransactionModel>>? getTransactionList(String transactionType) {
     BaseModel<List<TransactionModel>>? transactionList;
     try {
       isLoading(true);
-      transactionList =
-          await DataRepositoryImpl().getTransactions(transactionType);
+      return DataRepositoryImpl().getTransactions(transactionType);
     } catch (e) {} finally {
       isLoading(false);
     }
-
-    return transactionList!.data!;
   }
 
   void checkLogin(BuildContext context) {

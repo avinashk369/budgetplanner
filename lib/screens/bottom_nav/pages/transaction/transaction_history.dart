@@ -23,17 +23,17 @@ class TransactionHistory extends GetView {
           () => controller.isLoading()
               ? Center(child: LoadingUI())
               : GroupedList(
-                  transactionModelList: controller.transactionModel,
+                  transactionModelList: controller.transactionList,
                 ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_list),
         onPressed: () {
-          () async {
-            controller.transactionModel =
-                await controller.getTransactionList(income);
-            print("Avinash ${controller.transactionModel.length}");
+          () {
+            controller.transactionModel
+                .bindStream(controller.getTransactionList(income)!);
+            print("Avinash ${controller.transactionModel.value!.length}");
           }();
         },
       ),

@@ -302,29 +302,20 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  Future<BaseModel<List<TransactionModel>>> getTransactions(
-      String transactionType) async {
-    // TODO: implement testingConnection
-
-    List<TransactionModel> transactionList = [];
+  Stream<List<TransactionModel>>? getTransactions(String transactionType) {
     try {
-      var response = await _firestore
+      return _firestore
           .collection(transaction)
           .where('transacion_type', isGreaterThanOrEqualTo: transactionType)
-          //.where('cat_name', isEqualTo: foodNDrink)
-          // .where('created_on', isLessThanOrEqualTo: DateTime.now().toString())
-          //.endBefore([DateTime.now()])
-          //.orderBy('created_on')
-          //.limit(10)
-          .get();
-      transactionList = response.docs
-          .map((e) => TransactionModel.fromJson(e.data()))
-          .toList();
+          .snapshots()
+          .map((query) {
+        return query.docs.map((doc) {
+          return TransactionModel.fromJson(doc.data());
+        }).toList();
+      });
     } catch (e) {
-      print("exception ${e.toString()}");
+      print(e.toString());
     }
-
-    return BaseModel()..data = transactionList;
   }
 
   @override
@@ -334,5 +325,42 @@ class DataRepositoryImpl implements DataRepository {
     double totalIncome = 0.0;
 
     return totalIncome;
+  }
+
+  Stream<BaseModel<List<TransactionModel>>> todoStream(
+      String transactionType) async* {
+    // TODO: implement testingConnection
+
+    List<TransactionModel> transactionList = [];
+    try {
+      var response = await _firestore
+          .collection(transaction)
+          .where('transacion_type', isGreaterThanOrEqualTo: transactionType)
+          .get();
+      transactionList = response.docs
+          .map((e) => TransactionModel.fromJson(e.data()))
+          .toList();
+      print("kumar ${transactionList.length}");
+    } catch (e) {
+      print("exception ${e.toString()}");
+    }
+
+    yield BaseModel()..data = transactionList;
+  }
+
+  Stream<List<TransactionModel>> getTodos() {
+    var date = DateTime.now();
+
+    return _firestore
+        .collection(transaction)
+        // .where('created_on',
+        //     isGreaterThanOrEqualTo: new DateTime(date.year, date.month, 1))
+        // .orderBy('created_on', descending: false)
+        .snapshots()
+        .map((query) {
+      return query.docs.map((doc) {
+        return TransactionModel.fromJson(doc.data());
+      }).toList();
+    });
   }
 }

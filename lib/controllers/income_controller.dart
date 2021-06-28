@@ -123,7 +123,6 @@ class IncomeController extends BaseController {
           "Transaction",
           "Transaction completed successfully!",
         );
-        controller.transactionModel = await controller.getTransactionList("");
       }
     }
 

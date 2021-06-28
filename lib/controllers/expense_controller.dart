@@ -138,7 +138,6 @@ class ExpenseController extends BaseController {
           "Transaction",
           "Transaction completed successfully!",
         );
-        controller.transactionModel = await controller.getTransactionList("");
       }
     }
 
