@@ -363,4 +363,26 @@ class DataRepositoryImpl implements DataRepository {
       }).toList();
     });
   }
+
+  @override
+  Future deleteTransaction(String id) async {
+    try {
+      _firestore.collection(transaction).doc(id).delete();
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<void> updateTransaction(TransactionModel transactionModel) async {
+    try {
+      _firestore
+          .collection(transaction)
+          .doc(transactionModel.id)
+          .update(transactionModel.toJson());
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
 }

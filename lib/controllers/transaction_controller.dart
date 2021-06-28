@@ -2,6 +2,7 @@ import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/models/transaction_type_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/widgets/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,6 +38,42 @@ class TransactionEntryController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+  }
+
+  Future deletetransaction(String id) async {
+    try {
+      isLoading(true);
+      await DataRepositoryImpl().deleteTransaction(id);
+    } catch (e) {
+      SnackBarDialog.displaySnackbar(
+        "Transaction",
+        "Ooops!!!...transaction not deleted!",
+      );
+    } finally {
+      isLoading(false);
+      SnackBarDialog.displaySuccessSnackbar(
+        "Transaction",
+        "Deleted Successfully!",
+      );
+    }
+  }
+
+  void updatetransaction(TransactionModel transactionModel) async {
+    try {
+      isLoading(true);
+      await DataRepositoryImpl().updateTransaction(transactionModel);
+    } catch (e) {
+      SnackBarDialog.displaySnackbar(
+        "Transaction",
+        "Ooops!!!...transaction not updated!",
+      );
+    } finally {
+      isLoading(false);
+      SnackBarDialog.displaySuccessSnackbar(
+        "Transaction",
+        "Updated Successfully!",
+      );
+    }
   }
 
   Future<List<TransactionType>> getTransactionTypeList() async {

@@ -26,4 +26,6 @@ abstract class DataRepository {
   Stream<List<TransactionModel>>? getTransactions(String transactionType);
   Future saveTransaction(TransactionModel transactionModel);
   Future<double> getTotalIncome(String monthName);
+  Future deleteTransaction(String id);
+  Future<void> updateTransaction(TransactionModel transactionModel);
 }

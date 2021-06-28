@@ -19,13 +19,17 @@ class TransactionHistory extends GetView {
         elevation: 0,
       ),
       body: Container(
-        child: Obx(
-          () => controller.isLoading()
-              ? Center(child: LoadingUI())
-              : GroupedList(
-                  transactionModelList: controller.transactionList,
-                ),
-        ),
+        child: Obx(() {
+          if (controller.transactionList.isEmpty) {
+            return Center(child: LoadingUI());
+          } else {
+            return controller.isLoading()
+                ? Center(child: LoadingUI())
+                : GroupedList(
+                    transactionModelList: controller.transactionList,
+                  );
+          }
+        }),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_list),

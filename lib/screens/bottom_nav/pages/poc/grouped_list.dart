@@ -1,10 +1,12 @@
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/screens/bottom_nav/pages/transaction/update_transaction.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/date_formatter.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 class GroupedList extends StatefulWidget {
@@ -67,7 +69,8 @@ class _GroupedListState extends State<GroupedList> {
         return InkWell(
           onTap: () {
             //open trainer detail screen
-            print(transactionModel.catName);
+            Get.to(UpdateTransaction(transactionModel: transactionModel));
+            print(transactionModel.id);
           },
           child: Column(
             children: [
