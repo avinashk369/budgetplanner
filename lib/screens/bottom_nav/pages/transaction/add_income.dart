@@ -66,7 +66,7 @@ class AddIncome extends StatelessWidget {
                                       .iconUrl(
                                           controller.incomeModel.value.name!)!
                                       .iconName,
-                                  color: Theme.of(context).hintColor,
+                                  color: whiteColor,
                                 ),
                               )
                             : Container(

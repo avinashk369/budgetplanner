@@ -66,7 +66,7 @@ class AddExpense extends StatelessWidget {
                                       .iconUrl(controller
                                           .budgetCatModel.value.name!)!
                                       .iconName,
-                                  color: Theme.of(context).hintColor,
+                                  color: whiteColor,
                                 ),
                               )
                             : Container(
