@@ -23,10 +23,10 @@ class DateFormatter {
         localDateTime.year == now.year) {
       return "Yesterday";
     }
-    if (now.difference(localDateTime).inDays < 4) {
-      String weekday = DateFormat('EEEE', 'EN').format(localDateTime);
-      return '$weekday';
-    }
+    // if (now.difference(localDateTime).inDays < 4) {
+    //   String weekday = DateFormat('EEEE', 'EN').format(localDateTime);
+    //   return '$weekday';
+    // }
     return '$dateString';
   }
 }

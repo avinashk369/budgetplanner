@@ -31,6 +31,8 @@ class TransactionModel {
   String? expenseType;
   @JsonKey(name: "notes")
   String? notes;
+  @JsonKey(name: "is_recurring")
+  bool? isRecurring;
   TransactionModel();
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
       _$TransactionModelFromJson(json);

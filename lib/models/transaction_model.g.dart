@@ -18,7 +18,8 @@ TransactionModel _$TransactionModelFromJson(Map<String, dynamic> json) {
     ..userId = json['user_id'] as String?
     ..expenseSource = json['expense_source'] as String?
     ..expenseType = json['expense_type'] as String?
-    ..notes = json['notes'] as String?;
+    ..notes = json['notes'] as String?
+    ..isRecurring = json['is_recurring'] as bool?;
 }
 
 Map<String, dynamic> _$TransactionModelToJson(TransactionModel instance) =>
@@ -34,4 +35,5 @@ Map<String, dynamic> _$TransactionModelToJson(TransactionModel instance) =>
       'expense_source': instance.expenseSource,
       'expense_type': instance.expenseType,
       'notes': instance.notes,
+      'is_recurring': instance.isRecurring,
     };

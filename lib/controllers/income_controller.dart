@@ -20,6 +20,7 @@ import 'package:get/get.dart';
 
 class IncomeController extends BaseController {
   var isLoading = true.obs;
+  var isRecurring = false.obs;
   final GlobalKey<FormState> incomeKey = GlobalKey<FormState>();
   final GlobalKey<State> keyLoader = new GlobalKey<State>();
   late TextEditingController amountController, notesController;
@@ -103,6 +104,7 @@ class IncomeController extends BaseController {
         transactionModel.amount = double.parse(amountController.text);
         transactionModel.notes = notesController.text;
         transactionModel.catName = incomeModel.value.name;
+        transactionModel.isRecurring = isRecurring();
         transactionModel.transactionType = income;
         transactionModel.createdOn = DateTime.now().toString();
         transactionModel.recurrance = def_recurrance;

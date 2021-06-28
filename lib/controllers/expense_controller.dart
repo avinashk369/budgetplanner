@@ -25,6 +25,7 @@ class ExpenseController extends BaseController {
   var isLoading = true.obs;
   var isWant = false.obs;
   var isNeed = false.obs;
+  var isRecurring = false.obs;
   final GlobalKey<FormState> expenseKey = GlobalKey<FormState>();
   final GlobalKey<State> keyLoader = new GlobalKey<State>();
   late TextEditingController amountController, notesController;
@@ -117,6 +118,7 @@ class ExpenseController extends BaseController {
         transactionModel.catName = budgetCatModel.value.name;
         transactionModel.transactionType = expense;
         transactionModel.expenseType = (isWant()) ? want : need;
+        transactionModel.isRecurring = isRecurring();
         transactionModel.expenseSource =
             expenseSourceModel.value.name ?? def_source;
         transactionModel.createdOn = DateTime.now().toString();

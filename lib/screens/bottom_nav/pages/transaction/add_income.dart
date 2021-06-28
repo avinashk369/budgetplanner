@@ -1,6 +1,7 @@
 import 'package:budgetplanner/controllers/income_controller.dart';
 import 'package:budgetplanner/controllers/login_controller.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/category_choser.dart';
@@ -108,6 +109,9 @@ class AddIncome extends StatelessWidget {
                         (value) {
                           Navigator.of(context).pop();
                           controller.recurranceModel(value);
+                          (controller.recurranceModel.value.name != never)
+                              ? controller.isRecurring(true)
+                              : controller.isRecurring(false);
                           print("Call back function ${value.name}");
                         },
                       );

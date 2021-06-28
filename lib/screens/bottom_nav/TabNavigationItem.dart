@@ -35,13 +35,13 @@ class TabNavigationItem {
         ),
         TabNavigationItem(
           page: HomePage(),
-          icon: Icon(Icons.show_chart),
-          title: statsTab,
+          icon: Icon(Icons.pie_chart),
+          title: budgetTab,
         ),
         TabNavigationItem(
           page: HomePage(),
-          icon: Icon(Icons.settings),
-          title: settingsTab,
+          icon: Icon(Icons.person),
+          title: profileTab,
         ),
       ];
 }

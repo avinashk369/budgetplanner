@@ -18,5 +18,7 @@ const transactionTab = "Transaction";
 const addTab = "Add";
 const statsTab = "Stats";
 const settingsTab = "Settings";
+const budgetTab = "Budget";
+const profileTab = "Profile";
 const addIncome = "Add Income";
 const addExpense = "Add Expense";
