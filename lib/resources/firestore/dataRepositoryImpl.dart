@@ -302,11 +302,14 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   @override
-  Stream<List<TransactionModel>>? getTransactions(String transactionType) {
+  Stream<List<TransactionModel>>? getTransactions(
+      String transactionType) async* {
     try {
-      return _firestore
+      yield* _firestore
           .collection(transaction)
           .where('transacion_type', isGreaterThanOrEqualTo: transactionType)
+          // .where('created_on', isLessThanOrEqualTo: DateTime.now())
+          // .orderBy('created_on')
           .snapshots()
           .map((query) {
         return query.docs.map((doc) {
