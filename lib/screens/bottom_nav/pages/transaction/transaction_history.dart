@@ -37,7 +37,7 @@ class TransactionHistory extends GetView {
           () {
             controller.transactionModel
                 .bindStream(controller.getTransactionList(income)!);
-            print("Avinash ${controller.transactionModel.value!.length}");
+            print("Avinash ${controller.transactionModel.value.length}");
           }();
         },
       ),

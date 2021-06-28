@@ -13,10 +13,9 @@ class TransactionEntryController extends GetxController {
   static TransactionEntryController get to =>
       Get.find<TransactionEntryController>();
 
-  List<TransactionModel> get transactionList => transactionModel.value!;
+  List<TransactionModel> get transactionList => transactionModel.value;
 
-  Rxn<List<TransactionModel>> transactionModel =
-      Rxn<List<TransactionModel>>([]);
+  Rx<List<TransactionModel>> transactionModel = Rx<List<TransactionModel>>([]);
 
   @override
   void onInit() {
