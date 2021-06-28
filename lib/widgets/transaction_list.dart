@@ -56,7 +56,7 @@ class TransactionList extends GetView {
                       DataRepositoryImpl()
                           .iconUrl(transactionModel.catName!)!
                           .iconName,
-                      color: Theme.of(context).hintColor,
+                      color: whiteColor,
                     ),
                   ),
                   SizedBox(

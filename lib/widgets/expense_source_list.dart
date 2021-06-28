@@ -41,7 +41,7 @@ class ExpenseSourceList extends GetView {
                 expSourceModel.name.toString(),
                 style: kLabelStyle.apply(
                   fontSizeFactor: 1.2,
-                  color: darkColor,
+                  color: Theme.of(context).hintColor,
                 ),
               ),
             ),

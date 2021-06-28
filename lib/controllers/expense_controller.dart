@@ -1,4 +1,5 @@
 import 'package:budgetplanner/controllers/base_controller.dart';
+import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/expense_source_model.dart';
@@ -13,6 +14,7 @@ import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/_ModalBottomSheetLayout.dart';
 import 'package:budgetplanner/widgets/expense_source_list.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
+import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/recurrance_list.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -34,7 +36,7 @@ class ExpenseController extends BaseController {
 
   var budgetCatModel = BudgetCategoryModel().obs;
   var recurranceModel = RecurranceModel().obs;
-
+  final controller = TransactionEntryController.to;
   setExpenseSource(ExpenseSourceModel expenseSource) =>
       expenseSourceModel(expenseSource);
   setExpenseMode(BudgetCategoryModel income) => budgetCatModel(income);
@@ -134,6 +136,7 @@ class ExpenseController extends BaseController {
           "Transaction",
           "Transaction completed successfully!",
         );
+        controller.transactionModel = await controller.getTransactionList("");
       }
     }
 
@@ -203,54 +206,72 @@ class ExpenseController extends BaseController {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10),
+              SizedBox(height: 15),
+              Center(
+                child: Container(
+                  width: 100,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(3),
+                    ),
+                    color: Theme.of(context).primaryColor.withOpacity(.12),
+                  ),
+                ),
+              ),
+              SizedBox(height: 25),
               Flexible(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio: 30 / 27,
-                    ),
-                    itemCount: imageList.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Container(
-                            height: 55,
-                            width: 55,
-                            margin: EdgeInsets.only(bottom: 5),
-                            decoration: BoxDecoration(
-                              color: DataRepositoryImpl()
-                                  .iconUrl(imageList[index].name!)!
-                                  .colorName,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
+                  child: Obx(
+                    () => (isLoading())
+                        ? Center(child: LoadingUI())
+                        : GridView.builder(
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              childAspectRatio: 30 / 27,
                             ),
-                            child: IconButton(
-                              padding: EdgeInsets.all(0),
-                              icon: Icon(
-                                DataRepositoryImpl()
-                                    .iconUrl(imageList[index].name!)!
-                                    .iconName,
-                                size: 35,
-                                color: whiteColor,
-                              ),
-                              onPressed: () {
-                                //Navigator.of(context).pop();
-                                setExpenseMode(imageList[index]);
-                                iconClicked(imageList[index]);
-                              },
-                            ),
+                            itemCount: imageList.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  Container(
+                                    height: 55,
+                                    width: 55,
+                                    margin: EdgeInsets.only(bottom: 5),
+                                    decoration: BoxDecoration(
+                                      color: DataRepositoryImpl()
+                                          .iconUrl(imageList[index].name!)!
+                                          .colorName,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(30)),
+                                    ),
+                                    child: IconButton(
+                                      padding: EdgeInsets.all(0),
+                                      icon: Icon(
+                                        DataRepositoryImpl()
+                                            .iconUrl(imageList[index].name!)!
+                                            .iconName,
+                                        size: 35,
+                                        color: whiteColor,
+                                      ),
+                                      onPressed: () {
+                                        //Navigator.of(context).pop();
+                                        setExpenseMode(imageList[index]);
+                                        iconClicked(imageList[index]);
+                                      },
+                                    ),
+                                  ),
+                                  Text(
+                                    imageList[index].name!,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              );
+                            },
                           ),
-                          Text(
-                            imageList[index].name!,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      );
-                    },
                   ),
                 ),
               ),
@@ -273,12 +294,25 @@ class ExpenseController extends BaseController {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 15),
+            Center(
+              child: Container(
+                width: 100,
+                height: 5,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(3),
+                  ),
+                  color: Theme.of(context).primaryColor.withOpacity(.12),
+                ),
+              ),
+            ),
+            SizedBox(height: 25),
             Flexible(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Obx(() => (isLoading())
-                    ? Center(child: CircularProgressIndicator())
+                    ? Center(child: LoadingUI())
                     : RecurranceList(recurranceList, iconClicked)),
               ),
             ),
@@ -304,12 +338,25 @@ class ExpenseController extends BaseController {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 15),
+            Center(
+              child: Container(
+                width: 100,
+                height: 5,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(3),
+                  ),
+                  color: Theme.of(context).primaryColor.withOpacity(.12),
+                ),
+              ),
+            ),
+            SizedBox(height: 25),
             Flexible(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Obx(() => (isLoading())
-                    ? Center(child: CircularProgressIndicator())
+                    ? Center(child: LoadingUI())
                     : ExpenseSourceList(expenseSourceList, iconClicked)),
               ),
             ),

@@ -43,7 +43,7 @@ class RecurranceList extends GetView {
                 recurrance.name.toString(),
                 style: kLabelStyle.apply(
                   fontSizeFactor: 1.2,
-                  color: darkColor,
+                  color: Theme.of(context).hintColor,
                 ),
               ),
             ),

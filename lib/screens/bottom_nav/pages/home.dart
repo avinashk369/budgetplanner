@@ -4,6 +4,7 @@ import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
+import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -109,10 +110,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Obx(
               () => (controller.isLoading())
-                  ? CircularProgressIndicator(
-                      color: Theme.of(context).hintColor,
-                      strokeWidth: 2,
-                    )
+                  ? LoadingUI()
                   : Text('${userModel!.email}'),
             ),
           ],

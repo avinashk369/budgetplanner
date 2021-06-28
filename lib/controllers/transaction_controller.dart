@@ -18,9 +18,9 @@ class TransactionEntryController extends GetxController {
     // TODO: implement onInit
     () async {
       transactionTypeList = await getTransactionTypeList();
-      //transactionModel = await getTransactionList();
+      transactionModel = await getTransactionList("");
       //if (!isLoading())
-      // print("transaction list lengh ${transactionModel.length}");
+      print("transaction list lengh ${transactionModel.length}");
     }();
     super.onInit();
   }

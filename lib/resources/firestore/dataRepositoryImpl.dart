@@ -313,7 +313,9 @@ class DataRepositoryImpl implements DataRepository {
           .where('transacion_type', isGreaterThanOrEqualTo: transactionType)
           //.where('cat_name', isEqualTo: foodNDrink)
           // .where('created_on', isLessThanOrEqualTo: DateTime.now().toString())
-          // .orderBy('created_on', descending: true)
+          //.endBefore([DateTime.now()])
+          //.orderBy('created_on')
+          //.limit(10)
           .get();
       transactionList = response.docs
           .map((e) => TransactionModel.fromJson(e.data()))
@@ -323,5 +325,14 @@ class DataRepositoryImpl implements DataRepository {
     }
 
     return BaseModel()..data = transactionList;
+  }
+
+  @override
+  Future<double> getTotalIncome(String monthName) async {
+    // TODO: implement testingConnection
+
+    double totalIncome = 0.0;
+
+    return totalIncome;
   }
 }

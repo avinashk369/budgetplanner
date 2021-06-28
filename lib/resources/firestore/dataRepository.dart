@@ -26,4 +26,5 @@ abstract class DataRepository {
   Future<BaseModel<List<TransactionModel>>> getTransactions(
       String transactionType);
   Future saveTransaction(TransactionModel transactionModel);
+  Future<double> getTotalIncome(String monthName);
 }

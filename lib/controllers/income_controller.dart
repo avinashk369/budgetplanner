@@ -1,4 +1,5 @@
 import 'package:budgetplanner/controllers/base_controller.dart';
+import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/income_model.dart';
 import 'package:budgetplanner/models/recurrance_model.dart';
@@ -10,6 +11,7 @@ import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/_ModalBottomSheetLayout.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
+import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/recurrance_list.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -28,7 +30,7 @@ class IncomeController extends BaseController {
       Get.find<IncomeController>(tag: name);
   var incomeModel = IncomeModel().obs;
   var recurranceModel = RecurranceModel().obs;
-
+  final controller = TransactionEntryController.to;
   setIncomeMode(IncomeModel income) => incomeModel(income);
   setRecurranceModeel(RecurranceModel recurrance) =>
       recurranceModel(recurrance);
@@ -119,6 +121,7 @@ class IncomeController extends BaseController {
           "Transaction",
           "Transaction completed successfully!",
         );
+        controller.transactionModel = await controller.getTransactionList("");
       }
     }
 
@@ -169,13 +172,26 @@ class IncomeController extends BaseController {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 15),
+            Center(
+              child: Container(
+                width: 100,
+                height: 5,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(3),
+                  ),
+                  color: Theme.of(context).primaryColor.withOpacity(.12),
+                ),
+              ),
+            ),
+            SizedBox(height: 25),
             Flexible(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Obx(
                   () => (isLoading())
-                      ? Center(child: CircularProgressIndicator())
+                      ? Center(child: LoadingUI())
                       : GridView.builder(
                           shrinkWrap: true,
                           gridDelegate:
@@ -245,12 +261,25 @@ class IncomeController extends BaseController {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 15),
+            Center(
+              child: Container(
+                width: 100,
+                height: 5,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(3),
+                  ),
+                  color: Theme.of(context).primaryColor.withOpacity(.12),
+                ),
+              ),
+            ),
+            SizedBox(height: 25),
             Flexible(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Obx(() => (isLoading())
-                    ? Center(child: CircularProgressIndicator())
+                    ? Center(child: LoadingUI())
                     : RecurranceList(recurranceList, iconClicked)),
               ),
             ),
