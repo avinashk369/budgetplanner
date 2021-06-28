@@ -12,7 +12,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int _currentIndex = 1;
+  int _currentIndex = 0;
   String? userId;
   @override
   void initState() {

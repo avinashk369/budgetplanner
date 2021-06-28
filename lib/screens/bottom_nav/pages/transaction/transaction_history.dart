@@ -1,11 +1,10 @@
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/poc/grouped_list.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
-import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
-import 'package:budgetplanner/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class TransactionHistory extends GetView {
@@ -31,15 +30,50 @@ class TransactionHistory extends GetView {
           }
         }),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.filter_list),
-        onPressed: () {
-          () {
-            controller.transactionModel
-                .bindStream(controller.getTransactionList(income)!);
-            print("Avinash ${controller.transactionModel.value.length}");
-          }();
-        },
+      floatingActionButton: Stack(
+        children: [
+          Obx(() {
+            return Positioned(
+              left: controller.position.value.dx,
+              top: controller.position.value.dy,
+              child: Draggable(
+                feedback: FloatingActionButton(
+                  child: Icon(Icons.filter_list),
+                  onPressed: () {
+                    () {
+                      controller.transactionModel
+                          .bindStream(controller.getTransactionList(income)!);
+                      print(
+                          "Avinash ${controller.transactionModel.value.length}");
+                    }();
+                  },
+                ),
+                child: FloatingActionButton(
+                  child: Icon(Icons.filter_list),
+                  onPressed: () {
+                    () {
+                      controller.transactionModel
+                          .bindStream(controller.getTransactionList(income)!);
+                      print(
+                          "Avinash ${controller.transactionModel.value.length}");
+                    }();
+                  },
+                ),
+                childWhenDragging: Container(),
+                onDragEnd: (details) {
+                  if (details.offset.dx <= Get.width * .82 &&
+                      details.offset.dy <= Get.height * .82 &&
+                      details.offset.dx >= 10 &&
+                      details.offset.dy >= 10)
+                    controller.setposition(details.offset);
+                  print(details.offset);
+                  print(details.offset.dx);
+                  print(details.offset.dy);
+                },
+              ),
+            );
+          }),
+        ],
       ),
     );
   }

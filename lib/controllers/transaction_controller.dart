@@ -16,7 +16,8 @@ class TransactionEntryController extends GetxController {
   List<TransactionModel> get transactionList => transactionModel.value;
 
   Rx<List<TransactionModel>> transactionModel = Rx<List<TransactionModel>>([]);
-
+  var position = Offset(Get.width * .83, Get.height * .83).obs;
+  setposition(Offset offset) => position(offset);
   @override
   void onInit() {
     // TODO: implement onInit
