@@ -1,5 +1,5 @@
 import 'package:budgetplanner/controllers/transaction_controller.dart';
-import 'package:budgetplanner/screens/bottom_nav/pages/poc/grouped_list.d.dart';
+import 'package:budgetplanner/screens/bottom_nav/pages/poc/grouped_list.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
