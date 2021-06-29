@@ -1,3 +1,5 @@
+import 'package:budgetplanner/models/budget_model.dart';
+import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +7,8 @@ import 'package:get/get.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class BudgetCard extends StatelessWidget {
-  const BudgetCard({Key? key}) : super(key: key);
+  final BudgetModel budgetModel;
+  const BudgetCard({Key? key, required this.budgetModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +70,8 @@ class BudgetCard extends StatelessWidget {
               vertical: 5,
             ),
             child: Text(
-              "Good & Drinks ",
-              style: kLabelStyle,
+              budgetModel.catName!,
+              style: kLabelStyleBold,
             ),
           ),
           Padding(
@@ -82,18 +85,30 @@ class BudgetCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "50000 ",
+                          "\u20B9" + budgetModel.amount.toString(),
                           style: kLabelStyle,
                         ),
                         Text(
-                          "50000 ",
+                          "\u20B9" + "50000 ",
                           style: kLabelStyle,
                         ),
                       ],
                     )),
-                Icon(
-                  Icons.ac_unit,
-                  color: darkColor,
+                Container(
+                  width: 40.0,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: DataRepositoryImpl()
+                        .iconUrl(budgetModel.catName!)!
+                        .colorName,
+                  ),
+                  child: Icon(
+                    DataRepositoryImpl()
+                        .iconUrl(budgetModel.catName!)!
+                        .iconName,
+                    color: whiteColor,
+                  ),
                 ),
               ],
             ),

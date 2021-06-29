@@ -1,21 +1,16 @@
 import 'package:budgetplanner/controllers/test_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
-import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
-import 'package:budgetplanner/screens/bottom_nav/pages/budget/budget_card.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/recent_transaction.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
-import 'package:budgetplanner/widgets/snack_bar.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
-import 'package:budgetplanner/widgets/config.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
@@ -28,11 +23,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   UserRepositoryImpl userRepositoryImpl = UserRepositoryImpl();
-  final controller2 = TransactionEntryController.to;
+  final transactionController = TransactionEntryController.to;
   TestController controller = Get.find<TestController>();
   TestController controller1 = Get.find<TestController>(tag: "buttonEvent");
   UserModel? userModel;
-
+  late String userId;
   late ScrollController _controller;
   bool silverCollapsed = false;
   String myTitle = "";
@@ -42,6 +37,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    userId = PreferenceUtils.getString(user_id);
+
+    transactionController.recentTransactionModel
+        .bindStream(transactionController.getRecentTransactionList(userId)!);
+    transactionController.budgetmodel
+        .bindStream(transactionController.getBudgetList(userId)!);
+
     // TODO: implement initState
     _controller = ScrollController();
 
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getUserData() async {
-    userModel = await controller.getUserDetail();
+    userModel = await controller.getUserDetail(userId);
     print("User info ${userModel!.email}");
   }
 
@@ -107,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                         child: Container(
                           width: Get.width,
                           height: Get.height,
-                          margin: EdgeInsets.only(bottom: 30),
+                          margin: EdgeInsets.only(bottom: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -127,13 +129,17 @@ class _HomePageState extends State<HomePage> {
                                       style: kTitleStyle,
                                     ),
                                     SizedBox(
-                                      height: 10,
+                                      height: 20,
                                     ),
-                                    Text("BALANCE"),
+                                    Text(
+                                      "BALANCE",
+                                      style: kLabelStyleBold.apply(
+                                          color: Theme.of(context).hintColor),
+                                    ),
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text("5500"),
+                                    Text("\u20B9" + "5500"),
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -144,11 +150,16 @@ class _HomePageState extends State<HomePage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text("INCOME"),
+                                              Text(
+                                                "INCOME",
+                                                style: kLabelStyleBold.apply(
+                                                    color: Theme.of(context)
+                                                        .hintColor),
+                                              ),
                                               SizedBox(
                                                 height: 5,
                                               ),
-                                              Text("5500"),
+                                              Text("\u20B9" + "5500"),
                                             ],
                                           ),
                                           SizedBox(
@@ -166,11 +177,16 @@ class _HomePageState extends State<HomePage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text("EXPENSE"),
+                                              Text(
+                                                "EXPENSE",
+                                                style: kLabelStyleBold.apply(
+                                                    color: Theme.of(context)
+                                                        .hintColor),
+                                              ),
                                               SizedBox(
                                                 height: 5,
                                               ),
-                                              Text("5500"),
+                                              Text("\u20B9" + "5500"),
                                             ],
                                           ),
                                         ],
@@ -249,7 +265,18 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.transparent, width: 0),
                       ),
-                      child: BudgetList(),
+                      child: Obx(() {
+                        if (transactionController
+                            .recentTransactionList.isEmpty) {
+                          return Center(child: Text("Please wait..."));
+                        } else {
+                          return controller.isLoading()
+                              ? Center(child: LoadingUI())
+                              : BudgetList(
+                                  budgetModel: transactionController.budgetList,
+                                );
+                        }
+                      }),
                     ),
                   ),
                 ],
@@ -264,7 +291,18 @@ class _HomePageState extends State<HomePage> {
               delegate: SliverChildListDelegate(
                 [
                   Container(
-                    child: RecentTransaction(),
+                    child: Obx(() {
+                      if (transactionController.recentTransactionList.isEmpty) {
+                        return Center(child: Text("Please wait..."));
+                      } else {
+                        return controller.isLoading()
+                            ? Center(child: LoadingUI())
+                            : RecentTransaction(
+                                transactionModelList:
+                                    transactionController.recentTransactionList,
+                              );
+                      }
+                    }),
                   )
                 ],
               ),

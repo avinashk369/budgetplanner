@@ -14,7 +14,7 @@ class TestController extends GetxController {
 
   void increment() => counter.value++;
 
-  Future<UserModel> getUserDetail() async {
+  Future<UserModel> getUserDetail(String userId) async {
     BaseModel<UserModel>? userData;
     try {
       isLoading(true);

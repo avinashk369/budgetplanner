@@ -87,7 +87,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "\u20B9 " + transactionModel.amount.toString(),
+                  "\u20B9" + transactionModel.amount.toString(),
                   style: kLabelStyle.apply(
                     fontSizeFactor: 1.2,
                     color: (transactionModel.transactionType == expense)

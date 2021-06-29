@@ -24,7 +24,10 @@ abstract class DataRepository {
   Future<BaseModel<List<RecurranceModel>>> getRecurranceType();
   Future<BaseModel<List<TransactionType>>> getTransactionType();
   Future<BaseModel<List<ExpenseSourceModel>>> getExpenseSource();
-  Stream<List<TransactionModel>>? getTransactions(String transactionType);
+  Stream<List<TransactionModel>>? getTransactions(
+      String userId, String transactionType);
+  Stream<List<TransactionModel>>? getRecentTransactions(String userId);
+  Stream<List<BudgetModel>>? getBudgetList(String userId);
   Future saveTransaction(TransactionModel transactionModel);
   Future saveBudget(BudgetModel budgetModel);
   Future<double> getTotalIncome(String monthName);

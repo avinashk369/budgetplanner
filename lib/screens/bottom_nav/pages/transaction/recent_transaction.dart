@@ -6,8 +6,8 @@ import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 
 class RecentTransaction extends StatefulWidget {
-  final List<TransactionModel>? transactionModelList;
-  RecentTransaction({this.transactionModelList});
+  final List<TransactionModel> transactionModelList;
+  RecentTransaction({required this.transactionModelList});
   @override
   _RecentTransactionState createState() => _RecentTransactionState();
 }
@@ -20,7 +20,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
         shrinkWrap: true,
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.vertical,
-        itemCount: 5,
+        itemCount: widget.transactionModelList.length,
         separatorBuilder: (context, index) => Padding(
               padding:
                   EdgeInsets.only(left: 70, bottom: kSpaceS, right: kSpaceS),
@@ -30,12 +30,9 @@ class _RecentTransactionState extends State<RecentTransaction> {
               ),
             ),
         itemBuilder: (BuildContext context, int position) {
-          //TransactionModel transactionModel = transactionModelList[position];
-          TransactionModel transactionModel = TransactionModel();
-          transactionModel.catName = "Others";
-          transactionModel.amount = 220;
-          transactionModel.notes = "Demo";
-          transactionModel.transactionType = "Income";
+          TransactionModel transactionModel =
+              widget.transactionModelList[position];
+
           return Padding(
               padding: EdgeInsets.all(5),
               child: TransactionCard(

@@ -1,5 +1,7 @@
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/poc/grouped_list.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,7 @@ class TransactionHistory extends GetView {
   @override
   Widget build(BuildContext context) {
     final controller = TransactionEntryController.to;
-
+    final String userId = PreferenceUtils.getString(user_id);
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -41,8 +43,8 @@ class TransactionHistory extends GetView {
                   child: Icon(Icons.filter_list),
                   onPressed: () {
                     () {
-                      controller.transactionModel
-                          .bindStream(controller.getTransactionList(income)!);
+                      controller.transactionModel.bindStream(
+                          controller.getTransactionList(userId, income)!);
                       print(
                           "Avinash ${controller.transactionModel.value.length}");
                     }();
@@ -52,8 +54,8 @@ class TransactionHistory extends GetView {
                   child: Icon(Icons.filter_list),
                   onPressed: () {
                     () {
-                      controller.transactionModel
-                          .bindStream(controller.getTransactionList(income)!);
+                      controller.transactionModel.bindStream(
+                          controller.getTransactionList(userId, income)!);
                       print(
                           "Avinash ${controller.transactionModel.value.length}");
                     }();

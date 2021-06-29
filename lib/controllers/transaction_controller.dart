@@ -1,7 +1,10 @@
 import 'package:budgetplanner/models/BaseModel.dart';
+import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/models/transaction_type_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +19,25 @@ class TransactionEntryController extends GetxController {
   List<TransactionModel> get transactionList => transactionModel.value;
 
   Rx<List<TransactionModel>> transactionModel = Rx<List<TransactionModel>>([]);
+
+  List<TransactionModel> get recentTransactionList =>
+      recentTransactionModel.value;
+  Rx<List<TransactionModel>> recentTransactionModel =
+      Rx<List<TransactionModel>>([]);
+
+  List<BudgetModel> get budgetList => budgetmodel.value;
+  Rx<List<BudgetModel>> budgetmodel = Rx<List<BudgetModel>>([]);
+
   var position = Offset(Get.width * .83, Get.height * .83).obs;
   setposition(Offset offset) => position(offset);
+  late String userId;
   @override
   void onInit() {
     // TODO: implement onInit
+    userId = PreferenceUtils.getString(user_id);
     () async {
       transactionTypeList = await getTransactionTypeList();
-      transactionModel.bindStream(getTransactionList("")!);
+      transactionModel.bindStream(getTransactionList(userId, "")!);
     }();
     super.onInit();
   }
@@ -88,11 +102,30 @@ class TransactionEntryController extends GetxController {
     return incomeCategories!.data!;
   }
 
-  Stream<List<TransactionModel>>? getTransactionList(String transactionType) {
+  Stream<List<TransactionModel>>? getTransactionList(
+      String userId, String transactionType) {
     BaseModel<List<TransactionModel>>? transactionList;
     try {
       isLoading(true);
-      return DataRepositoryImpl().getTransactions(transactionType);
+      return DataRepositoryImpl().getTransactions(userId, transactionType);
+    } catch (e) {} finally {
+      isLoading(false);
+    }
+  }
+
+  Stream<List<TransactionModel>>? getRecentTransactionList(String userId) {
+    try {
+      isLoading(true);
+      return DataRepositoryImpl().getRecentTransactions(userId);
+    } catch (e) {} finally {
+      isLoading(false);
+    }
+  }
+
+  Stream<List<BudgetModel>>? getBudgetList(String userId) {
+    try {
+      isLoading(true);
+      return DataRepositoryImpl().getBudgetList(userId);
     } catch (e) {} finally {
       isLoading(false);
     }

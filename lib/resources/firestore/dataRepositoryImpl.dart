@@ -304,11 +304,12 @@ class DataRepositoryImpl implements DataRepository {
 
   @override
   Stream<List<TransactionModel>>? getTransactions(
-      String transactionType) async* {
+      String userId, String transactionType) async* {
     try {
       yield* _firestore
           .collection(transaction)
-          .where('transacion_type', isGreaterThanOrEqualTo: transactionType)
+          //.where('transacion_type', isGreaterThanOrEqualTo: transactionType)
+          .where('user_id', isEqualTo: userId)
           // .where('created_on', isLessThanOrEqualTo: DateTime.now())
           // .orderBy('created_on')
           .snapshots()
@@ -400,5 +401,40 @@ class DataRepositoryImpl implements DataRepository {
         .catchError((error) {
       print(error.toString());
     });
+  }
+
+  @override
+  Stream<List<TransactionModel>>? getRecentTransactions(String userId) async* {
+    try {
+      yield* _firestore
+          .collection(transaction)
+          .where('user_id', isEqualTo: userId)
+          .limit(5)
+          .snapshots()
+          .map((query) {
+        return query.docs.map((doc) {
+          return TransactionModel.fromJson(doc.data());
+        }).toList();
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  @override
+  Stream<List<BudgetModel>>? getBudgetList(String userId) async* {
+    try {
+      yield* _firestore
+          .collection(userBudget)
+          .where('user_id', isEqualTo: userId)
+          .snapshots()
+          .map((query) {
+        return query.docs.map((doc) {
+          return BudgetModel.fromJson(doc.data());
+        }).toList();
+      });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

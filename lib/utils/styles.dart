@@ -30,10 +30,18 @@ final kSubtitleStyle = GoogleFonts.oswald(
   height: 1.2,
 );
 
-final kLabelStyle = GoogleFonts.lato(
+final kLabelStyle = GoogleFonts.poppins(
   color: kDarkGrey,
   fontSize: 14.0,
   letterSpacing: 0.4,
+  height: 1.2,
+);
+
+final kLabelStyleBold = GoogleFonts.poppins(
+  color: kDarkGrey,
+  fontSize: 14.0,
+  letterSpacing: 0.4,
+  fontWeight: FontWeight.bold,
   height: 1.2,
 );
 
