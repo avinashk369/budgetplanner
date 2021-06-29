@@ -51,3 +51,4 @@ const String savingCategory = "savingCategory";
 const String transactionType = "transactionType";
 const String user = "users";
 const String transaction = "transaction";
+const String userBudget = "budget";

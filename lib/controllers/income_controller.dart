@@ -106,7 +106,7 @@ class IncomeController extends BaseController {
         transactionModel.catName = incomeModel.value.name;
         transactionModel.isRecurring = isRecurring();
         transactionModel.transactionType = income;
-        transactionModel.createdOn = DateTime.now().toString();
+        transactionModel.createdOn = DateTime.now();
         transactionModel.recurrance = def_recurrance;
         transactionModel.userId = PreferenceUtils.getString(user_id);
         await DataRepositoryImpl().saveTransaction(transactionModel);

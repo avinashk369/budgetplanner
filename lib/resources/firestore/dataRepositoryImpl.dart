@@ -1,5 +1,6 @@
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
+import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/models/expense_source_model.dart';
 import 'package:budgetplanner/models/income_model.dart';
 import 'package:budgetplanner/models/recurrance_model.dart';
@@ -387,5 +388,17 @@ class DataRepositoryImpl implements DataRepository {
       print(e);
       rethrow;
     }
+  }
+
+  @override
+  Future saveBudget(BudgetModel budgetModel) async {
+    var _mainCollection = _firestore.collection(userBudget).doc();
+    budgetModel.id = _mainCollection.id;
+    await _mainCollection
+        .set(budgetModel.toJson())
+        .whenComplete(() => print('Transaction added successfully!'))
+        .catchError((error) {
+      print(error.toString());
+    });
   }
 }

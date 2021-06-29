@@ -6,8 +6,11 @@ import 'theme_constants.dart';
 
 class TransactionHeader extends StatelessWidget {
   final String imageUrl;
+  final bool? hasQuote;
 
-  const TransactionHeader({Key? key, required this.imageUrl}) : super(key: key);
+  const TransactionHeader(
+      {Key? key, required this.imageUrl, this.hasQuote = true})
+      : super(key: key);
   final String quote =
       "\"I will tell you how to become rich. Close the doors. Be fearful when others are greedy. Be greedy when others are fearful.\"";
   final String author = "Warren Buffett";
@@ -31,64 +34,66 @@ class TransactionHeader extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          height: Get.height * .25,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                kDarkGrey,
-                darkColor.withOpacity(.5),
-              ],
+        if (hasQuote!)
+          Container(
+            height: Get.height * .25,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  kDarkGrey,
+                  darkColor.withOpacity(.5),
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          height: Get.height * .25,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  quote,
-                  style: kQuoteStyle,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(right: 3),
-                      child: Container(
-                        width: 30,
-                        height: 2,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.red, width: 3),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(1.5),
-                              bottomRight: Radius.circular(1.5),
-                            ),
-                            color: Colors.red),
+        if (hasQuote!)
+          Container(
+            height: Get.height * .25,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    quote,
+                    style: kQuoteStyle,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(right: 3),
+                        child: Container(
+                          width: 30,
+                          height: 2,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.red, width: 3),
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(1.5),
+                                bottomRight: Radius.circular(1.5),
+                              ),
+                              color: Colors.red),
+                        ),
                       ),
-                    ),
-                    Text(
-                      author,
-                      textAlign: TextAlign.end,
-                      style: kLabelStyle.apply(color: whiteColor),
-                    ),
-                  ],
-                ),
-              ],
+                      Text(
+                        author,
+                        textAlign: TextAlign.end,
+                        style: kLabelStyle.apply(color: whiteColor),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        )
+          )
       ],
     );
   }

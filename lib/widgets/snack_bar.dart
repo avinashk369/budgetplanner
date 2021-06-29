@@ -8,6 +8,21 @@ class SnackBarDialog {
     return Get.snackbar(
       title,
       message,
+      colorText: whiteColor,
+      icon: Container(
+        margin: EdgeInsets.only(left: 5),
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          color: whiteColor,
+        ),
+        child: Icon(
+          Icons.warning,
+          color: redColor,
+          size: 20,
+        ),
+      ),
       snackPosition: SnackPosition.BOTTOM,
       margin: EdgeInsets.all(15),
       isDismissible: true,

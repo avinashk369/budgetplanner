@@ -1,5 +1,6 @@
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
+import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/models/expense_source_model.dart';
 import 'package:budgetplanner/models/income_model.dart';
 import 'package:budgetplanner/models/recurrance_model.dart';
@@ -25,6 +26,7 @@ abstract class DataRepository {
   Future<BaseModel<List<ExpenseSourceModel>>> getExpenseSource();
   Stream<List<TransactionModel>>? getTransactions(String transactionType);
   Future saveTransaction(TransactionModel transactionModel);
+  Future saveBudget(BudgetModel budgetModel);
   Future<double> getTotalIncome(String monthName);
   Future deleteTransaction(String id);
   Future<void> updateTransaction(TransactionModel transactionModel);

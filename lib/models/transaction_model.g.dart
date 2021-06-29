@@ -13,8 +13,12 @@ TransactionModel _$TransactionModelFromJson(Map<String, dynamic> json) {
     ..amount = (json['amount'] as num?)?.toDouble()
     ..recurrance = json['recurrance'] as String?
     ..transactionType = json['transacion_type'] as String?
-    ..createdOn = json['created_on'] as String?
-    ..updatedOn = json['updated_on'] as String?
+    ..createdOn = json['created_on'] == null
+        ? null
+        : DateTime.parse(json['created_on'] as String)
+    ..updatedOn = json['updated_on'] == null
+        ? null
+        : DateTime.parse(json['updated_on'] as String)
     ..userId = json['user_id'] as String?
     ..expenseSource = json['expense_source'] as String?
     ..expenseType = json['expense_type'] as String?
@@ -29,8 +33,8 @@ Map<String, dynamic> _$TransactionModelToJson(TransactionModel instance) =>
       'amount': instance.amount,
       'recurrance': instance.recurrance,
       'transacion_type': instance.transactionType,
-      'created_on': instance.createdOn,
-      'updated_on': instance.updatedOn,
+      'created_on': instance.createdOn?.toIso8601String(),
+      'updated_on': instance.updatedOn?.toIso8601String(),
       'user_id': instance.userId,
       'expense_source': instance.expenseSource,
       'expense_type': instance.expenseType,

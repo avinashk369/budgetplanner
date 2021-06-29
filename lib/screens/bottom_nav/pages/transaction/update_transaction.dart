@@ -31,6 +31,7 @@ class UpdateTransaction extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               transactionModel.amount = 299;
+              transactionModel.updatedOn = DateTime.now();
               controller.updatetransaction(transactionModel);
             },
             child: Text("Update"),

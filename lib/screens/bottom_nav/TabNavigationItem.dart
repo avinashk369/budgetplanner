@@ -1,3 +1,4 @@
+import 'package:budgetplanner/screens/bottom_nav/pages/budget/add_budget.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/transaction.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -34,7 +35,7 @@ class TabNavigationItem {
           title: addTab,
         ),
         TabNavigationItem(
-          page: HomePage(),
+          page: AddBudget(),
           icon: Icon(Icons.pie_chart),
           title: budgetTab,
         ),

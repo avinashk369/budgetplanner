@@ -20,9 +20,9 @@ class TransactionModel {
           "transacion_type") // this can be set using model class and same can be accessed using model class as well
   String? transactionType;
   @JsonKey(name: "created_on")
-  String? createdOn;
+  DateTime? createdOn;
   @JsonKey(name: "updated_on")
-  String? updatedOn;
+  DateTime? updatedOn;
   @JsonKey(name: "user_id")
   String? userId;
   @JsonKey(name: "expense_source")

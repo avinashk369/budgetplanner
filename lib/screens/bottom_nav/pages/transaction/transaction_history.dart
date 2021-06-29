@@ -20,7 +20,7 @@ class TransactionHistory extends GetView {
       body: Container(
         child: Obx(() {
           if (controller.transactionList.isEmpty) {
-            return Center(child: LoadingUI());
+            return Center(child: Text("Please wait..."));
           } else {
             return controller.isLoading()
                 ? Center(child: LoadingUI())

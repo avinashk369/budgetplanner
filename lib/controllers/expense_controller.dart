@@ -121,7 +121,7 @@ class ExpenseController extends BaseController {
         transactionModel.isRecurring = isRecurring();
         transactionModel.expenseSource =
             expenseSourceModel.value.name ?? def_source;
-        transactionModel.createdOn = DateTime.now().toString();
+        transactionModel.createdOn = DateTime.now();
         transactionModel.recurrance = def_recurrance;
         transactionModel.userId = PreferenceUtils.getString(user_id);
         await DataRepositoryImpl().saveTransaction(transactionModel);

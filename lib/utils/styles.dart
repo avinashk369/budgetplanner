@@ -9,6 +9,13 @@ final kTitleStyle = GoogleFonts.oswald(
   letterSpacing: 0.4,
   height: 1.2,
 );
+final kTitleStyleSmall = GoogleFonts.oswald(
+  color: kPink,
+  fontSize: 30.0,
+  fontWeight: FontWeight.bold,
+  letterSpacing: 0.4,
+  height: 1.2,
+);
 
 final kQuoteStyle = GoogleFonts.poppins(
     color: greyColor,

@@ -1,3 +1,4 @@
+import 'package:budgetplanner/controllers/budget_controller.dart';
 import 'package:budgetplanner/controllers/expense_controller.dart';
 import 'package:budgetplanner/controllers/income_controller.dart';
 import 'package:budgetplanner/controllers/login_controller.dart';
@@ -13,6 +14,9 @@ class AllControllersBinding implements Bindings {
     // TODO: implement dependencies
     Get.lazyPut<TestController>(() => TestController());
     Get.lazyPut<TransactionEntryController>(() => TransactionEntryController());
+    Get.lazyPut<BudgetController>(() => BudgetController(),
+        tag: budgetController);
+    Get.lazyPut<BudgetController>(() => BudgetController());
     Get.lazyPut<IncomeController>(() => IncomeController(),
         tag: incomeController);
     Get.lazyPut<ExpenseController>(() => ExpenseController(),
