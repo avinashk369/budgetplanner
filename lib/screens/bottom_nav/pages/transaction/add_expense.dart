@@ -3,6 +3,7 @@ import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
+import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/category_choser.dart';
 import 'package:budgetplanner/widgets/custom_input.dart';
 import 'package:budgetplanner/widgets/dashed_rect.dart';
@@ -23,15 +24,35 @@ class AddExpense extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverToBoxAdapter(
+            child: Container(
+              margin: EdgeInsets.only(left: 8, top: 20),
+              height: Get.height * .15,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Add your daily",
+                    style:
+                        kLabelStyle.apply(color: Theme.of(context).hintColor),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    "Expense",
+                    style: kTitleStyle,
+                  )
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
             child: Form(
               key: controller.expenseKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
-                  TransactionHeader(
-                    imageUrl:
-                        "https://image.freepik.com/free-vector/tiny-people-trap-credit-card-debt-flat-illustration_74855-11110.jpg",
-                  ),
                   InkWell(
                     onTap: () {
                       controller.modalBottomSheetMenu(

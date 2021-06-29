@@ -49,8 +49,7 @@ class AddBudget extends StatelessWidget {
                           ),
                           Text(
                             "Budget",
-                            style: kTitleStyle.apply(
-                                color: Theme.of(context).hintColor),
+                            style: kTitleStyle,
                           )
                         ],
                       ),

@@ -4,6 +4,7 @@ import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
+import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/category_choser.dart';
 import 'package:budgetplanner/widgets/custom_input.dart';
 import 'package:budgetplanner/widgets/dashed_rect.dart';
@@ -24,14 +25,34 @@ class AddIncome extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverToBoxAdapter(
+            child: Container(
+              margin: EdgeInsets.only(left: 8, top: 20),
+              height: Get.height * .15,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Add your daily",
+                    style:
+                        kLabelStyle.apply(color: Theme.of(context).hintColor),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    "Income",
+                    style: kTitleStyle,
+                  )
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
             child: Form(
               key: controller.incomeKey,
               child: Column(
                 children: [
-                  TransactionHeader(
-                    imageUrl:
-                        "https://image.freepik.com/free-vector/stock-market-investing-online-monetization-remote-job-freelance-work_335657-3022.jpg",
-                  ),
                   InkWell(
                     onTap: () {
                       controller.modalBottomSheetMenu(

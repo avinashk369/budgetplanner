@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              expandedHeight: MediaQuery.of(context).size.height * .40,
+              expandedHeight: MediaQuery.of(context).size.height * .35,
               floating: false,
               pinned: true,
               elevation: 0,
@@ -107,29 +107,29 @@ class _HomePageState extends State<HomePage> {
                         child: Container(
                           width: Get.width,
                           height: Get.height,
+                          margin: EdgeInsets.only(bottom: 30),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Flexible(
                                 flex: 2,
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       DateFormat('LLLL')
                                               .format(DateTime.now()) +
                                           " " +
-                                          DateFormat('y')
-                                              .format(DateTime.now())
-                                              .toString()
-                                              .substring(2),
+                                          DateFormat('d')
+                                              .format(DateTime.now()),
                                       style: kTitleStyle,
                                     ),
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    Text("Balance"),
+                                    Text("BALANCE"),
                                     SizedBox(
                                       height: 5,
                                     ),
@@ -141,8 +141,10 @@ class _HomePageState extends State<HomePage> {
                                       child: Row(
                                         children: [
                                           Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Text("Income"),
+                                              Text("INCOME"),
                                               SizedBox(
                                                 height: 5,
                                               ),
@@ -161,8 +163,10 @@ class _HomePageState extends State<HomePage> {
                                             width: 10,
                                           ),
                                           Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Text("Expense"),
+                                              Text("EXPENSE"),
                                               SizedBox(
                                                 height: 5,
                                               ),
@@ -175,44 +179,48 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                               ),
-                              SleekCircularSlider(
-                                key: Key("fasting_progress"),
-                                innerWidget: (percentage) {
-                                  return Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: '100',
-                                              style: kTitleStyle,
-                                            ),
-                                            TextSpan(
-                                                text: '%',
-                                                style: kTitleStyleSmall),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  );
-                                },
-                                appearance: CircularSliderAppearance(
-                                    size: Get.height * .20,
-                                    startAngle: 280,
-                                    angleRange: 350,
-                                    customColors: CustomSliderColors(
-                                      dotColor: kWhite,
-                                      progressBarColor: Colors.green,
-                                      trackColor: kGrey,
-                                    ),
-                                    customWidths: CustomSliderWidths(
-                                      progressBarWidth: Get.height * .01,
-                                    )),
-                                min: 0,
-                                max: 80,
-                                initialValue: 50,
-                                onChangeStart: (value) {},
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: SleekCircularSlider(
+                                  key: Key("fasting_progress"),
+                                  innerWidget: (percentage) {
+                                    return Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: '100',
+                                                style: kTitleStyle,
+                                              ),
+                                              TextSpan(
+                                                  text: '%',
+                                                  style: kTitleStyleSmall),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  },
+                                  appearance: CircularSliderAppearance(
+                                      size: Get.height * .20,
+                                      startAngle: 280,
+                                      angleRange: 350,
+                                      customColors: CustomSliderColors(
+                                        dotColor: kWhite,
+                                        progressBarColor: Colors.green,
+                                        trackColor: kGrey,
+                                      ),
+                                      customWidths: CustomSliderWidths(
+                                        progressBarWidth: Get.height * .01,
+                                      )),
+                                  min: 0,
+                                  max: 80,
+                                  initialValue: 50,
+                                  onChangeStart: (value) {},
+                                ),
                               ),
                             ],
                           ),
@@ -225,6 +233,11 @@ class _HomePageState extends State<HomePage> {
         },
         body: CustomScrollView(
           slivers: [
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 10,
+              ),
+            ),
             SliverList(
               delegate: SliverChildListDelegate(
                 [
@@ -243,10 +256,10 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SliverToBoxAdapter(
-              child: SizedBox(
-                height: 10,
-              ),
-            ),
+                child: Container(
+              padding: EdgeInsets.only(top: 10, bottom: 5, left: 10),
+              child: Text("Recent transactions"),
+            )),
             SliverList(
               delegate: SliverChildListDelegate(
                 [

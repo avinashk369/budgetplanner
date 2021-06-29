@@ -16,7 +16,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-        //padding: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
         shrinkWrap: true,
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.vertical,
