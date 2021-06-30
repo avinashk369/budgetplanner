@@ -35,4 +35,5 @@ abstract class DataRepository {
   Future<void> updateTransaction(TransactionModel transactionModel);
   Future deleteBudget(String id);
   Future<void> updateBudget(BudgetModel budgetModel);
+  Future<BudgetModel?> getBudgetModel(String name);
 }

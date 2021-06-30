@@ -24,7 +24,6 @@ class AddExpense extends StatelessWidget {
           SliverToBoxAdapter(
             child: Form(
               key: controller.expenseKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
                   ExpenseForm(controller: controller),

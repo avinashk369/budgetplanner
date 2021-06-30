@@ -40,8 +40,8 @@ class IncomeController extends BaseController {
   void onInit() {
     // TODO: implement onInit
 
-    amountController = TextEditingController(text: "100");
-    notesController = TextEditingController(text: "test transaction");
+    amountController = TextEditingController();
+    notesController = TextEditingController();
     () async {
       catList = await getIncomeCategories();
       recurranceList = await getRecurranceList();
@@ -65,14 +65,14 @@ class IncomeController extends BaseController {
 
   String? validateAmount(String amount) {
     if (amount.length < 1) {
-      return "Please enter email";
+      return "Please enter amount";
     }
     return null;
   }
 
   String? validatePassword(String password) {
     if (password.length <= 6) {
-      return "Password must be of 6 characters";
+      return "Notes must be of 6 characters";
     }
     return null;
   }

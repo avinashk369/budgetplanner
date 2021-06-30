@@ -25,7 +25,7 @@ class UpdateBudget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = BudgetController.tagged(budgetController);
+    final controller = BudgetController.tagged(updateBudgetController);
     iniBudget(controller);
     return Scaffold(
       appBar: AppBar(elevation: 0),
@@ -92,7 +92,7 @@ class UpdateBudget extends StatelessWidget {
               ),
               SliverToBoxAdapter(
                 child: Form(
-                  key: controller.budgetKey,
+                  key: controller.updateBudgetKey,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     children: [

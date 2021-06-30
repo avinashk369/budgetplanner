@@ -67,7 +67,6 @@ class AddBudget extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Form(
                   key: controller.budgetKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     children: [
                       BudgetForm(controller: controller),

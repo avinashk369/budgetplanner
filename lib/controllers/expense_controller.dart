@@ -52,8 +52,8 @@ class ExpenseController extends BaseController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    amountController = TextEditingController(text: "100");
-    notesController = TextEditingController(text: "test transaction");
+    amountController = TextEditingController();
+    notesController = TextEditingController();
     () async {
       catList = await getBudgetCategories();
       recurranceList = await getRecurranceList();

@@ -459,4 +459,16 @@ class DataRepositoryImpl implements DataRepository {
       rethrow;
     }
   }
+
+  Future<BudgetModel?> getBudgetModel(String name) async {
+    BudgetModel? budgetModel;
+    var response = await _firestore
+        .collection(userBudget)
+        .where('cat_name', isEqualTo: name)
+        .get();
+    print("${response.docs.length} response");
+    if (response.docs.length > 0)
+      budgetModel = BudgetModel.fromJson(response.docs.first.data());
+    return budgetModel;
+  }
 }

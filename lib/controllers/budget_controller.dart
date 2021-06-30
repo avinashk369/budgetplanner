@@ -1,12 +1,10 @@
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/budget_model.dart';
-import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/screens/bottom_nav/pages/budget/update_budget.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
-import 'package:budgetplanner/utils/category_constants.dart';
-import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/widgets/_ModalBottomSheetLayout.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
@@ -21,6 +19,7 @@ class BudgetController extends GetxController {
   var isLoading = true.obs;
 
   final GlobalKey<FormState> budgetKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> updateBudgetKey = GlobalKey<FormState>();
   final GlobalKey<State> keyLoader = new GlobalKey<State>();
   late TextEditingController amountController, notesController;
   late List<BudgetCategoryModel> catList;
@@ -31,12 +30,24 @@ class BudgetController extends GetxController {
       Get.find<BudgetController>(tag: name);
   @override
   void onInit() {
-    amountController = TextEditingController(text: "100");
-    notesController = TextEditingController(text: "test transaction");
+    amountController = TextEditingController();
+    notesController = TextEditingController();
     () async {
       catList = await getBudgetCategories();
     }();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+
+    amountController.dispose();
+    notesController.dispose();
+    // budgetCatModel = Rx<BudgetCategoryModel>(BudgetCategoryModel());
+    // setBudgetModel(BudgetCategoryModel());
+    // print("disposing");
+    super.onClose();
   }
 
   Future<List<BudgetCategoryModel>> getBudgetCategories() async {
@@ -58,14 +69,14 @@ class BudgetController extends GetxController {
 
   String? validateAmount(String amount) {
     if (amount.length < 1) {
-      return "Please enter email";
+      return "Please enter amount";
     }
     return null;
   }
 
   String? validatePassword(String password) {
     if (password.length <= 6) {
-      return "Password must be of 6 characters";
+      return "Notes must be of 6 characters";
     }
     return null;
   }
@@ -85,34 +96,42 @@ class BudgetController extends GetxController {
     }
 
     if (budgetKey.currentState!.validate()) {
-      print(amountController.text);
-      print(notesController.text);
+      //check if budget eist with the same name if yes then open update screen else let it save
+      BudgetModel? bm =
+          await DataRepositoryImpl().getBudgetModel(budgetCatModel.value.name!);
+      if (bm != null) {
+        print(bm.amount);
+        Get.to(UpdateBudget(budgetModel: bm));
+      } else {
+        print(amountController.text);
+        print(notesController.text);
 
-      print(budgetCatModel.value.name);
-      try {
-        isLoading(true);
-        LoadingDialog.showLoadingDialog(context, keyLoader);
-        BudgetModel budgetModel = BudgetModel();
-        budgetModel.amount = double.parse(amountController.text);
-        budgetModel.notes = notesController.text;
-        budgetModel.catName = budgetCatModel.value.name;
-        budgetModel.monthName = DateFormat('LLLL').format(DateTime.now());
-        budgetModel.createdOn = DateTime.now();
-        budgetModel.userId = PreferenceUtils.getString(user_id);
-        await DataRepositoryImpl().saveBudget(budgetModel);
-      } catch (e) {
-        Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
-        SnackBarDialog.displaySnackbar(
-          "Budget",
-          "Ooops!!!...Budget not saved",
-        );
-      } finally {
-        isLoading(false);
-        Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
-        SnackBarDialog.displaySuccessSnackbar(
-          "Budget",
-          "Budget saved successfully!",
-        );
+        print(budgetCatModel.value.name);
+        try {
+          isLoading(true);
+          LoadingDialog.showLoadingDialog(context, keyLoader);
+          BudgetModel budgetModel = BudgetModel();
+          budgetModel.amount = double.parse(amountController.text);
+          budgetModel.notes = notesController.text;
+          budgetModel.catName = budgetCatModel.value.name;
+          budgetModel.monthName = DateFormat('LLLL').format(DateTime.now());
+          budgetModel.createdOn = DateTime.now();
+          budgetModel.userId = PreferenceUtils.getString(user_id);
+          await DataRepositoryImpl().saveBudget(budgetModel);
+        } catch (e) {
+          Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+          SnackBarDialog.displaySnackbar(
+            "Budget",
+            "Ooops!!!...Budget not saved",
+          );
+        } finally {
+          isLoading(false);
+          Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+          SnackBarDialog.displaySuccessSnackbar(
+            "Budget",
+            "Budget saved successfully!",
+          );
+        }
       }
     }
   }
