@@ -126,8 +126,42 @@ class IncomeController extends BaseController {
         );
       }
     }
+  }
 
-    //Future.delayed(Duration(seconds: 3), () async {});
+/**
+ * update income transaction
+ */
+  void updatetransaction(
+      BuildContext context, TransactionModel transactionModel) async {
+    try {
+      isLoading(true);
+      LoadingDialog.showLoadingDialog(context, keyLoader);
+
+      transactionModel.amount = double.parse(amountController.text);
+      transactionModel.notes = notesController.text;
+      transactionModel.catName = incomeModel.value.name;
+      transactionModel.transactionType = income;
+
+      transactionModel.isRecurring = isRecurring();
+
+      transactionModel.updatedOn = DateTime.now();
+      transactionModel.recurrance =
+          recurranceModel.value.name ?? def_recurrance;
+      await DataRepositoryImpl().updateTransaction(transactionModel);
+    } catch (e) {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+      SnackBarDialog.displaySnackbar(
+        "Transaction",
+        "Ooops!!!...transaction not updated!",
+      );
+    } finally {
+      isLoading(false);
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+      SnackBarDialog.displaySuccessSnackbar(
+        "Transaction",
+        "Transaction updated successfully!",
+      );
+    }
   }
 
   Future<List<IncomeModel>> getIncomeCategories() async {

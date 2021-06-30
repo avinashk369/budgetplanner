@@ -29,6 +29,8 @@ class UpdateTransaction extends StatelessWidget {
     expenseController.setExpenseMode(budgetCategoryModel);
     expenseController.setExpenseSource(expenseSourceModel);
     expenseController.setRecurranceModeel(recurranceModel);
+    expenseController
+        .isWant((transactionModel.expenseType == want) ? true : false);
     expenseController.notesController.text = transactionModel.notes!;
     expenseController.amountController.text =
         transactionModel.amount.toString();
@@ -52,8 +54,6 @@ class UpdateTransaction extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = TransactionEntryController.to;
     final incomeC = Get.find<IncomeController>(tag: incomeController);
-
-    //final expenseC = Get.put(ExpenseController(), tag: expenseController);
     final expenseC = Get.find<ExpenseController>(tag: expenseController);
 
     (transactionModel.transactionType == expense)
@@ -72,6 +72,7 @@ class UpdateTransaction extends StatelessWidget {
             slivers: <Widget>[
               SliverToBoxAdapter(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       margin: EdgeInsets.only(left: 8),
@@ -95,7 +96,15 @@ class UpdateTransaction extends StatelessWidget {
                         ],
                       ),
                     ),
-                    //BudgetCard()
+                    IconButton(
+                        onPressed: () {
+                          controller.deletetransaction(transactionModel.id!);
+                          print(transactionModel.catName);
+                        },
+                        icon: Icon(
+                          Icons.delete,
+                          color: Theme.of(context).hintColor,
+                        ))
                   ],
                 ),
               ),
@@ -122,17 +131,11 @@ class UpdateTransaction extends StatelessWidget {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              controller
-                                  .deletetransaction(transactionModel.id!);
-                              print(transactionModel.catName);
-                            },
-                            child: Text("Delete"),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              transactionModel.amount = 299;
-                              transactionModel.updatedOn = DateTime.now();
-                              controller.updatetransaction(transactionModel);
+                              (transactionModel.transactionType == expense)
+                                  ? expenseC.updatetransaction(
+                                      context, transactionModel)
+                                  : incomeC.updatetransaction(
+                                      context, transactionModel);
                             },
                             child: Text("Update"),
                           ),

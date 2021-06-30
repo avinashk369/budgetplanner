@@ -78,14 +78,14 @@ class ExpenseController extends BaseController {
 
   String? validateAmount(String amount) {
     if (amount.length < 1) {
-      return "Please enter email";
+      return "Please enter amount";
     }
     return null;
   }
 
   String? validatePassword(String password) {
     if (password.length <= 6) {
-      return "Password must be of 6 characters";
+      return "Notes must be of 6 characters";
     }
     return null;
   }
@@ -142,8 +142,67 @@ class ExpenseController extends BaseController {
         );
       }
     }
+  }
 
-    Future.delayed(Duration(seconds: 3), () async {});
+  void demo(BuildContext context) async {
+    try {
+      isLoading(true);
+      LoadingDialog.showLoadingDialog(context, keyLoader);
+      Future.delayed(Duration(seconds: 3), () async {});
+    } catch (e) {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+      SnackBarDialog.displaySnackbar(
+        "Transaction",
+        "Ooops!!!...transaction cancelled!",
+      );
+    } finally {
+      isLoading(false);
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+      SnackBarDialog.displaySuccessSnackbar(
+        "Transaction",
+        "Transaction completed successfully!",
+      );
+    }
+  }
+
+/**
+ * update expense transaction
+ */
+  void updatetransaction(
+      BuildContext context, TransactionModel transactionModel) async {
+    try {
+      isLoading(true);
+      LoadingDialog.showLoadingDialog(context, keyLoader);
+      Future.delayed(Duration(seconds: 3), () async {
+        //isLoading(false);
+      });
+      transactionModel.amount = double.parse(amountController.text);
+      transactionModel.notes = notesController.text;
+      transactionModel.catName = budgetCatModel.value.name;
+      transactionModel.transactionType = expense;
+      transactionModel.expenseType = (isWant()) ? want : need;
+      transactionModel.isRecurring = isRecurring();
+      transactionModel.expenseSource =
+          expenseSourceModel.value.name ?? def_source;
+      transactionModel.updatedOn = DateTime.now();
+      transactionModel.recurrance =
+          recurranceModel.value.name ?? def_recurrance;
+      await DataRepositoryImpl().updateTransaction(transactionModel);
+    } catch (e) {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+      SnackBarDialog.displaySnackbar(
+        "Transaction",
+        "Ooops!!!...transaction not updated!",
+      );
+    } finally {
+      isLoading(false);
+      print("context ${keyLoader.currentContext.hashCode}");
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+      SnackBarDialog.displaySuccessSnackbar(
+        "Transaction",
+        "Transaction updated successfully!",
+      );
+    }
   }
 
   Future<List<BudgetCategoryModel>> getBudgetCategories() async {
@@ -155,9 +214,9 @@ class ExpenseController extends BaseController {
       budgetCategories = await DataRepositoryImpl().getBudgetCategories();
       print("object ${budgetCategories.data!.length}");
     } catch (e) {} finally {
-      Future.delayed(Duration(seconds: 1), () async {
-        isLoading(false);
-      });
+      //Future.delayed(Duration(seconds: 1), () async {
+      isLoading(false);
+      //});
     }
 
     return budgetCategories!.data!;
