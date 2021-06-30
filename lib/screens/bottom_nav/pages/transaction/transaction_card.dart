@@ -91,7 +91,7 @@ class TransactionCard extends StatelessWidget {
                   style: kLabelStyle.apply(
                     fontSizeFactor: 1.2,
                     color: (transactionModel.transactionType == expense)
-                        ? redColor
+                        ? kPink
                         : greenbuttoncolor,
                   ),
                 ),

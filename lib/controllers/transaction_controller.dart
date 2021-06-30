@@ -5,7 +5,9 @@ import 'package:budgetplanner/models/transaction_type_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/widgets/loading_dialog.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +18,7 @@ class TransactionEntryController extends GetxController {
   static TransactionEntryController get to =>
       Get.find<TransactionEntryController>();
 
+  final GlobalKey<State> keyLoader = new GlobalKey<State>();
   List<TransactionModel> get transactionList => transactionModel.value;
 
   Rx<List<TransactionModel>> transactionModel = Rx<List<TransactionModel>>([]);
@@ -54,21 +57,26 @@ class TransactionEntryController extends GetxController {
     super.onClose();
   }
 
-  Future deletetransaction(String id) async {
+  Future deletetransaction(BuildContext context, String id) async {
     try {
       isLoading(true);
+      LoadingDialog.showLoadingDialog(context, keyLoader);
       await DataRepositoryImpl().deleteTransaction(id);
     } catch (e) {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
       SnackBarDialog.displaySnackbar(
         "Transaction",
         "Ooops!!!...transaction not deleted!",
       );
     } finally {
       isLoading(false);
-      SnackBarDialog.displaySuccessSnackbar(
-        "Transaction",
-        "Deleted Successfully!",
-      );
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+
+      Get.showSnackbar(
+              SnackBarDialog.getSnanck("Deleted Successfully!", "Transaction"))!
+          .whenComplete(() => Get.back(
+                canPop: true,
+              ));
     }
   }
 

@@ -25,3 +25,4 @@ const addIncome = "Add Income";
 const addExpense = "Add Expense";
 const addBudget = "Add Budget";
 const monthName = "Month name";
+const update = "Update";

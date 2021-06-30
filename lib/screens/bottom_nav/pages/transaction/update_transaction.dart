@@ -10,6 +10,7 @@ import 'package:budgetplanner/screens/bottom_nav/pages/transaction/expense_form.
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/income_form.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
@@ -96,15 +97,27 @@ class UpdateTransaction extends StatelessWidget {
                         ],
                       ),
                     ),
-                    IconButton(
-                        onPressed: () {
-                          controller.deletetransaction(transactionModel.id!);
-                          print(transactionModel.catName);
-                        },
-                        icon: Icon(
-                          Icons.delete,
-                          color: Theme.of(context).hintColor,
-                        ))
+                    OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                        minimumSize: Size(50, 50),
+                        primary: whiteColor,
+                        side: BorderSide(
+                          color: heenColor,
+                          width: 1,
+                        ),
+                      ),
+                      onPressed: () {
+                        controller.deletetransaction(
+                            context, transactionModel.id!);
+                        print(transactionModel.catName);
+                      },
+                      child: Icon(
+                        Icons.delete,
+                        color: Theme.of(context).hintColor,
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -129,7 +142,7 @@ class UpdateTransaction extends StatelessWidget {
                           child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          ElevatedButton(
+                          OutlinedButton(
                             onPressed: () {
                               (transactionModel.transactionType == expense)
                                   ? expenseC.updatetransaction(
@@ -137,7 +150,7 @@ class UpdateTransaction extends StatelessWidget {
                                   : incomeC.updatetransaction(
                                       context, transactionModel);
                             },
-                            child: Text("Update"),
+                            child: Text(update),
                           ),
                         ],
                       )),

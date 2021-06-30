@@ -157,10 +157,11 @@ class IncomeController extends BaseController {
     } finally {
       isLoading(false);
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
-      SnackBarDialog.displaySuccessSnackbar(
-        "Transaction",
-        "Transaction updated successfully!",
-      );
+      Get.showSnackbar(SnackBarDialog.getSnanck(
+              "Transaction updated successfully!", "Transaction"))!
+          .whenComplete(() => Get.back(
+                canPop: true,
+              ));
     }
   }
 

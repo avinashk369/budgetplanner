@@ -372,7 +372,7 @@ class DataRepositoryImpl implements DataRepository {
   @override
   Future deleteTransaction(String id) async {
     try {
-      _firestore.collection(transaction).doc(id).delete();
+      await _firestore.collection(transaction).doc(id).delete();
     } catch (e) {
       print(e);
       rethrow;
@@ -381,7 +381,7 @@ class DataRepositoryImpl implements DataRepository {
 
   Future<void> updateTransaction(TransactionModel transactionModel) async {
     try {
-      _firestore
+      await _firestore
           .collection(transaction)
           .doc(transactionModel.id)
           .update(transactionModel.toJson());

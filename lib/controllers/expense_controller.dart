@@ -144,27 +144,6 @@ class ExpenseController extends BaseController {
     }
   }
 
-  void demo(BuildContext context) async {
-    try {
-      isLoading(true);
-      LoadingDialog.showLoadingDialog(context, keyLoader);
-      Future.delayed(Duration(seconds: 3), () async {});
-    } catch (e) {
-      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
-      SnackBarDialog.displaySnackbar(
-        "Transaction",
-        "Ooops!!!...transaction cancelled!",
-      );
-    } finally {
-      isLoading(false);
-      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
-      SnackBarDialog.displaySuccessSnackbar(
-        "Transaction",
-        "Transaction completed successfully!",
-      );
-    }
-  }
-
 /**
  * update expense transaction
  */
@@ -173,9 +152,7 @@ class ExpenseController extends BaseController {
     try {
       isLoading(true);
       LoadingDialog.showLoadingDialog(context, keyLoader);
-      Future.delayed(Duration(seconds: 3), () async {
-        //isLoading(false);
-      });
+
       transactionModel.amount = double.parse(amountController.text);
       transactionModel.notes = notesController.text;
       transactionModel.catName = budgetCatModel.value.name;
@@ -196,12 +173,13 @@ class ExpenseController extends BaseController {
       );
     } finally {
       isLoading(false);
-      print("context ${keyLoader.currentContext.hashCode}");
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
-      SnackBarDialog.displaySuccessSnackbar(
-        "Transaction",
-        "Transaction updated successfully!",
-      );
+
+      Get.showSnackbar(SnackBarDialog.getSnanck(
+              "Transaction updated successfully!", "Transaction"))!
+          .whenComplete(() => Get.back(
+                canPop: true,
+              ));
     }
   }
 

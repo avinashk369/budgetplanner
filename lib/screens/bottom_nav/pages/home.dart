@@ -266,8 +266,7 @@ class _HomePageState extends State<HomePage> {
                         border: Border.all(color: Colors.transparent, width: 0),
                       ),
                       child: Obx(() {
-                        if (transactionController
-                            .recentTransactionList.isEmpty) {
+                        if (transactionController.budgetList.isEmpty) {
                           return Center(child: Text("Please wait..."));
                         } else {
                           return controller.isLoading()
