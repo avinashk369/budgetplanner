@@ -1,25 +1,64 @@
+import 'package:budgetplanner/controllers/expense_controller.dart';
+import 'package:budgetplanner/controllers/income_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
+import 'package:budgetplanner/models/budget_category_model.dart';
+import 'package:budgetplanner/models/expense_source_model.dart';
+import 'package:budgetplanner/models/income_model.dart';
+import 'package:budgetplanner/models/recurrance_model.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
-import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
-import 'package:budgetplanner/utils/string_constants.dart';
+import 'package:budgetplanner/screens/bottom_nav/pages/transaction/expense_form.dart';
+import 'package:budgetplanner/screens/bottom_nav/pages/transaction/income_form.dart';
+import 'package:budgetplanner/utils/category_constants.dart';
+import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
-import 'package:budgetplanner/widgets/category_choser.dart';
-import 'package:budgetplanner/widgets/custom_input.dart';
-import 'package:budgetplanner/widgets/dashed_rect.dart';
-import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class UpdateTransaction extends StatelessWidget {
   final TransactionModel transactionModel;
   const UpdateTransaction({Key? key, required this.transactionModel})
       : super(key: key);
+  initExpenseForm(ExpenseController expenseController) {
+    ExpenseSourceModel expenseSourceModel = ExpenseSourceModel();
+    RecurranceModel recurranceModel = RecurranceModel();
+    BudgetCategoryModel budgetCategoryModel = BudgetCategoryModel();
+    budgetCategoryModel.name = transactionModel.catName;
+    expenseSourceModel.name = transactionModel.expenseSource;
+    recurranceModel.name = transactionModel.recurrance;
+    expenseController.setExpenseMode(budgetCategoryModel);
+    expenseController.setExpenseSource(expenseSourceModel);
+    expenseController.setRecurranceModeel(recurranceModel);
+    expenseController.notesController.text = transactionModel.notes!;
+    expenseController.amountController.text =
+        transactionModel.amount.toString();
+  }
+
+  iniIncome(IncomeController incomeController) {
+    ExpenseSourceModel expenseSourceModel = ExpenseSourceModel();
+    RecurranceModel recurranceModel = RecurranceModel();
+    IncomeModel incomeModel = IncomeModel();
+    incomeModel.name = transactionModel.catName;
+    expenseSourceModel.name = transactionModel.expenseSource;
+    recurranceModel.name = transactionModel.recurrance;
+    incomeController.setIncomeMode(incomeModel);
+
+    incomeController.setRecurranceModeel(recurranceModel);
+    incomeController.notesController.text = transactionModel.notes!;
+    incomeController.amountController.text = transactionModel.amount.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
     final controller = TransactionEntryController.to;
+    final incomeC = Get.find<IncomeController>(tag: incomeController);
+
+    //final expenseC = Get.put(ExpenseController(), tag: expenseController);
+    final expenseC = Get.find<ExpenseController>(tag: expenseController);
+
+    (transactionModel.transactionType == expense)
+        ? initExpenseForm(expenseC)
+        : iniIncome(incomeC);
 
     // TODO: implement build
     return Scaffold(
@@ -71,49 +110,9 @@ class UpdateTransaction extends StatelessWidget {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     children: [
-                      CategoryChooser(
-                        leftRowData: Text(
-                            transactionModel.catName ?? select_budget_category),
-                        rightRowData: transactionModel.catName != null
-                            ? Container(
-                                height: 35,
-                                width: 35,
-                                margin: EdgeInsets.only(bottom: 5),
-                                decoration: BoxDecoration(
-                                  color: DataRepositoryImpl()
-                                      .iconUrl(transactionModel.catName!)!
-                                      .colorName,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                ),
-                                child: Icon(
-                                  DataRepositoryImpl()
-                                      .iconUrl(transactionModel.catName!)!
-                                      .iconName,
-                                  color: whiteColor,
-                                ),
-                              )
-                            : Container(
-                                height: 35,
-                                width: 35,
-                                child: DashedRect(
-                                  color: Theme.of(context).hintColor,
-                                  strokeWidth: 1.0,
-                                  gap: 2.0,
-                                ),
-                              ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CategoryChooser(
-                        leftRowData: Text(monthName),
-                        rightRowData:
-                            Text(DateFormat('LLLL').format(DateTime.now())),
-                      ),
+                      (transactionModel.transactionType == expense)
+                          ? ExpenseForm(controller: expenseC)
+                          : IncomeForm(controller: incomeC),
                       SizedBox(
                         height: 20,
                       ),

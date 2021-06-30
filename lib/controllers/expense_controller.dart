@@ -40,7 +40,8 @@ class ExpenseController extends BaseController {
   final controller = TransactionEntryController.to;
   setExpenseSource(ExpenseSourceModel expenseSource) =>
       expenseSourceModel(expenseSource);
-  setExpenseMode(BudgetCategoryModel income) => budgetCatModel(income);
+  setExpenseMode(BudgetCategoryModel budgetCategoryModel) =>
+      budgetCatModel(budgetCategoryModel);
   setRecurranceModeel(RecurranceModel recurrance) =>
       recurranceModel(recurrance);
   static ExpenseController get to => Get.find<ExpenseController>();
@@ -105,10 +106,10 @@ class ExpenseController extends BaseController {
     }
     if (recurranceModel.value.name == null) print("Please select recurrance");
     if (expenseKey.currentState!.validate()) {
-      print(amountController.text);
-      print(notesController.text);
-      print(recurranceModel.value.name ?? recurrance);
-      print(budgetCatModel.value.name);
+      // print(amountController.text);
+      // print(notesController.text);
+      // print(recurranceModel.value.name ?? recurrance);
+      // print(budgetCatModel.value.name);
       try {
         isLoading(true);
         LoadingDialog.showLoadingDialog(context, keyLoader);
@@ -122,7 +123,8 @@ class ExpenseController extends BaseController {
         transactionModel.expenseSource =
             expenseSourceModel.value.name ?? def_source;
         transactionModel.createdOn = DateTime.now();
-        transactionModel.recurrance = def_recurrance;
+        transactionModel.recurrance =
+            recurranceModel.value.name ?? def_recurrance;
         transactionModel.userId = PreferenceUtils.getString(user_id);
         await DataRepositoryImpl().saveTransaction(transactionModel);
       } catch (e) {

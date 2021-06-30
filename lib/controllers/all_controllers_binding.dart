@@ -18,9 +18,9 @@ class AllControllersBinding implements Bindings {
         tag: budgetController);
     Get.lazyPut<BudgetController>(() => BudgetController());
     Get.lazyPut<IncomeController>(() => IncomeController(),
-        tag: incomeController);
+        tag: incomeController, fenix: true);
     Get.lazyPut<ExpenseController>(() => ExpenseController(),
-        tag: expenseController);
+        tag: expenseController, fenix: true);
     Get.lazyPut<SavingController>(() => SavingController(),
         tag: savingController);
     Get.lazyPut<TransactionEntryController>(() => TransactionEntryController(),

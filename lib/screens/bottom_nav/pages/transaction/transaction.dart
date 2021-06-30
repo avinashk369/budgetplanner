@@ -18,8 +18,8 @@ class _TransactionState extends State<Transaction>
   late ScrollController _scrollViewController;
 
   List<String> name = [
-    income,
     expense,
+    income,
     //saving,
   ];
   @override
@@ -69,8 +69,8 @@ class _TransactionState extends State<Transaction>
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            AddIncome(),
             AddExpense(),
+            AddIncome(),
             //AddSaving(),
           ],
         ),

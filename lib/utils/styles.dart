@@ -19,7 +19,7 @@ final kTitleStyleSmall = GoogleFonts.oswald(
 
 final kQuoteStyle = GoogleFonts.poppins(
     color: greyColor,
-    fontSize: 18.0,
+    fontSize: 16.0,
     letterSpacing: 0.4,
     fontStyle: FontStyle.italic);
 
