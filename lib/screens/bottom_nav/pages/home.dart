@@ -7,6 +7,7 @@ import 'package:budgetplanner/screens/bottom_nav/pages/transaction/recent_transa
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
+import 'package:budgetplanner/widgets/no_data.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
@@ -267,7 +268,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: Obx(() {
                         if (transactionController.budgetList.isEmpty) {
-                          return Center(child: Text("Please wait..."));
+                          return Center(
+                              child: NoData(message: "No budget allocated"));
                         } else {
                           return controller.isLoading()
                               ? Center(child: LoadingUI())
@@ -292,7 +294,8 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     child: Obx(() {
                       if (transactionController.recentTransactionList.isEmpty) {
-                        return Center(child: Text("Please wait..."));
+                        return Center(
+                            child: NoData(message: "No transaction available"));
                       } else {
                         return controller.isLoading()
                             ? Center(child: LoadingUI())

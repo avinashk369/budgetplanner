@@ -33,4 +33,6 @@ abstract class DataRepository {
   Future<double> getTotalIncome(String monthName);
   Future deleteTransaction(String id);
   Future<void> updateTransaction(TransactionModel transactionModel);
+  Future deleteBudget(String id);
+  Future<void> updateBudget(BudgetModel budgetModel);
 }

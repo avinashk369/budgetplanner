@@ -24,5 +24,6 @@ const profileTab = "Profile";
 const addIncome = "Add Income";
 const addExpense = "Add Expense";
 const addBudget = "Add Budget";
+const updateBudget = "Update Budget";
 const monthName = "Month name";
 const update = "Update";

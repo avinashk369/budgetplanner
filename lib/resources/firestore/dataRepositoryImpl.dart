@@ -391,6 +391,18 @@ class DataRepositoryImpl implements DataRepository {
     }
   }
 
+  Future<void> updateBudget(BudgetModel budgetModel) async {
+    try {
+      await _firestore
+          .collection(userBudget)
+          .doc(budgetModel.id)
+          .update(budgetModel.toJson());
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
   @override
   Future saveBudget(BudgetModel budgetModel) async {
     var _mainCollection = _firestore.collection(userBudget).doc();
@@ -435,6 +447,16 @@ class DataRepositoryImpl implements DataRepository {
       });
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  @override
+  Future deleteBudget(String id) async {
+    try {
+      await _firestore.collection(userBudget).doc(id).delete();
+    } catch (e) {
+      print(e);
+      rethrow;
     }
   }
 }

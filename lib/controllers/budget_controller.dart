@@ -117,6 +117,60 @@ class BudgetController extends GetxController {
     }
   }
 
+/**
+ * update budget
+ */
+  void updateBudget(BuildContext context, BudgetModel budgetModel) async {
+    try {
+      isLoading(true);
+      LoadingDialog.showLoadingDialog(context, keyLoader);
+
+      budgetModel.amount = double.parse(amountController.text);
+      budgetModel.notes = notesController.text;
+      budgetModel.catName = budgetCatModel.value.name;
+
+      await DataRepositoryImpl().updateBudget(budgetModel);
+    } catch (e) {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+      SnackBarDialog.displaySnackbar(
+        "Transaction",
+        "Ooops!!!...transaction not updated!",
+      );
+    } finally {
+      isLoading(false);
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+
+      Get.showSnackbar(SnackBarDialog.getSnanck(
+              "Budget updated successfully!", "Budget"))!
+          .whenComplete(() => Get.back(
+                canPop: true,
+              ));
+    }
+  }
+
+  Future deleteBudget(BuildContext context, String id) async {
+    try {
+      isLoading(true);
+      LoadingDialog.showLoadingDialog(context, keyLoader);
+      await DataRepositoryImpl().deleteBudget(id);
+    } catch (e) {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+      SnackBarDialog.displaySnackbar(
+        "Budget",
+        "Ooops!!!...budget not deleted!",
+      );
+    } finally {
+      isLoading(false);
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+
+      Get.showSnackbar(
+              SnackBarDialog.getSnanck("Deleted Successfully!", "Budget"))!
+          .whenComplete(() => Get.back(
+                canPop: true,
+              ));
+    }
+  }
+
   void modalBottomSheetMenu(
       BuildContext context,
       List<BudgetCategoryModel> imageList,
