@@ -1,5 +1,5 @@
 //app constants
-const String appname = "Budget Planner";
+const String appname = "Mr. Budget";
 
 const String access_token = "access token";
 const String user_id = "user_id";

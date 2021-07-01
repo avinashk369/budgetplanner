@@ -5,6 +5,7 @@ import 'package:budgetplanner/models/transaction_type_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -42,7 +43,7 @@ class TransactionEntryController extends GetxController {
     userId = PreferenceUtils.getString(user_id);
     () async {
       transactionTypeList = await getTransactionTypeList();
-      transactionModel.bindStream(getTransactionList(userId, "")!);
+      transactionModel.bindStream(getTransactionList(userId, expense)!);
       budgetmodel.bindStream(getBudgetListDemo()!);
       totalExpense.bindStream(getTotalExpense("", userId)!);
       totalIncome.bindStream(getTotalIncome("", userId)!);

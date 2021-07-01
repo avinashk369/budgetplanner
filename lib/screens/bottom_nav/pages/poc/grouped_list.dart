@@ -28,8 +28,8 @@ class _GroupedListState extends State<GroupedList> {
       elements: widget.transactionModelList,
       groupBy: (element) => element.createdOn!.toString().substring(0, 10),
       groupComparator: (value1, value2) => value2.compareTo(value1),
-      itemComparator: (item1, item2) =>
-          item1.catName!.compareTo(item2.catName!),
+      // itemComparator: (item1, item2) =>
+      //     item1.catName!.compareTo(item2.catName!),
       //order: GroupedListOrder.DESC,
       //useStickyGroupSeparators: true,
       separator: Padding(

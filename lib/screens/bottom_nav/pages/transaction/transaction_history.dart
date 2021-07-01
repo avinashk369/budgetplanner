@@ -34,47 +34,50 @@ class TransactionHistory extends GetView {
       ),
       floatingActionButton: Stack(
         children: [
-          Obx(() {
-            return Positioned(
-              left: controller.position.value.dx,
-              top: controller.position.value.dy,
-              child: Draggable(
-                feedback: FloatingActionButton(
-                  child: Icon(Icons.filter_list),
-                  onPressed: () {
-                    () {
-                      controller.transactionModel.bindStream(
-                          controller.getTransactionList(userId, income)!);
-                      print(
-                          "Avinash ${controller.transactionModel.value.length}");
-                    }();
+          Visibility(
+            visible: false,
+            child: Obx(() {
+              return Positioned(
+                left: controller.position.value.dx,
+                top: controller.position.value.dy,
+                child: Draggable(
+                  feedback: FloatingActionButton(
+                    child: Icon(Icons.filter_list),
+                    onPressed: () {
+                      () {
+                        controller.transactionModel.bindStream(
+                            controller.getTransactionList(userId, income)!);
+                        print(
+                            "Avinash ${controller.transactionModel.value.length}");
+                      }();
+                    },
+                  ),
+                  child: FloatingActionButton(
+                    child: Icon(Icons.filter_list),
+                    onPressed: () {
+                      () {
+                        controller.transactionModel.bindStream(
+                            controller.getTransactionList(userId, income)!);
+                        print(
+                            "Avinash ${controller.transactionModel.value.length}");
+                      }();
+                    },
+                  ),
+                  childWhenDragging: Container(),
+                  onDragEnd: (details) {
+                    if (details.offset.dx <= Get.width * .82 &&
+                        details.offset.dy <= Get.height * .82 &&
+                        details.offset.dx >= 10 &&
+                        details.offset.dy >= 10)
+                      controller.setposition(details.offset);
+                    print(details.offset);
+                    print(details.offset.dx);
+                    print(details.offset.dy);
                   },
                 ),
-                child: FloatingActionButton(
-                  child: Icon(Icons.filter_list),
-                  onPressed: () {
-                    () {
-                      controller.transactionModel.bindStream(
-                          controller.getTransactionList(userId, income)!);
-                      print(
-                          "Avinash ${controller.transactionModel.value.length}");
-                    }();
-                  },
-                ),
-                childWhenDragging: Container(),
-                onDragEnd: (details) {
-                  if (details.offset.dx <= Get.width * .82 &&
-                      details.offset.dy <= Get.height * .82 &&
-                      details.offset.dx >= 10 &&
-                      details.offset.dy >= 10)
-                    controller.setposition(details.offset);
-                  print(details.offset);
-                  print(details.offset.dx);
-                  print(details.offset.dy);
-                },
-              ),
-            );
-          }),
+              );
+            }),
+          ),
         ],
       ),
     );

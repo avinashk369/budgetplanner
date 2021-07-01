@@ -308,12 +308,17 @@ class DataRepositoryImpl implements DataRepository {
   Stream<List<TransactionModel>>? getTransactions(
       String userId, String transactionType) async* {
     try {
-      yield* _firestore
-          .collection(transaction)
-          //.where('transacion_type', isGreaterThanOrEqualTo: transactionType)
+      //yield*
+      var query = _firestore.collection(transaction);
+      if (transactionType != '') {
+        //print("transanction type $transactionType");
+        query.where('transacion_type', isEqualTo: transactionType);
+      }
+
+      yield* query
           .where('user_id', isEqualTo: userId)
           // .where('created_on', isLessThanOrEqualTo: DateTime.now())
-          // .orderBy('created_on')
+          .orderBy('created_on', descending: true)
           .snapshots()
           .map((query) {
         return query.docs.map((doc) {
@@ -414,6 +419,7 @@ class DataRepositoryImpl implements DataRepository {
       yield* _firestore
           .collection(transaction)
           .where('user_id', isEqualTo: userId)
+          .orderBy('created_on', descending: true)
           .limit(5)
           .snapshots()
           .map((query) {
