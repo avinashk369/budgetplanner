@@ -30,6 +30,8 @@ class TransactionEntryController extends GetxController {
 
   List<BudgetModel> get budgetList => budgetmodel.value;
   Rx<List<BudgetModel>> budgetmodel = Rx<List<BudgetModel>>([]);
+  var totalExpense = 0.0.obs;
+  var totalIncome = 0.0.obs;
 
   var position = Offset(Get.width * .83, Get.height * .83).obs;
   setposition(Offset offset) => position(offset);
@@ -41,6 +43,12 @@ class TransactionEntryController extends GetxController {
     () async {
       transactionTypeList = await getTransactionTypeList();
       transactionModel.bindStream(getTransactionList(userId, "")!);
+      budgetmodel.bindStream(getBudgetListDemo()!);
+      totalExpense.bindStream(getTotalExpense("", userId)!);
+      totalIncome.bindStream(getTotalIncome("", userId)!);
+      recentTransactionModel.bindStream(getRecentTransactionList(userId)!);
+      // transactionController.budgetmodel
+      //     .bindStream(transactionController.getBudgetList(userId)!);
     }();
     super.onInit();
   }
@@ -143,6 +151,26 @@ class TransactionEntryController extends GetxController {
     try {
       isLoading(true);
       return DataRepositoryImpl().listAllBudget();
+    } catch (e) {} finally {
+      isLoading(false);
+    }
+  }
+
+  Stream<double>? getTotalExpense(String monthName, String userId) {
+    try {
+      isLoading(true);
+      print("Going to get total expense record");
+      return DataRepositoryImpl().getTotalExpense(monthName, userId);
+    } catch (e) {} finally {
+      isLoading(false);
+    }
+  }
+
+  Stream<double>? getTotalIncome(String monthName, String userId) {
+    try {
+      isLoading(true);
+      print("Going to get total expense record");
+      return DataRepositoryImpl().getTotalIncome(monthName, userId);
     } catch (e) {} finally {
       isLoading(false);
     }

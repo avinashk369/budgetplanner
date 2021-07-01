@@ -1,7 +1,5 @@
 class MathUtils {
   static int getPercentage(double first, double second) {
-    int percent = 0;
-    percent = ((second * 100) / first).round();
-    return percent;
+    return (first > 0) ? ((second * 100) ~/ first).toInt() : 0;
   }
 }

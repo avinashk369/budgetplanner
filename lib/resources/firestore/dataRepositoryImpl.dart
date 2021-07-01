@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/budget_model.dart';
@@ -323,15 +325,6 @@ class DataRepositoryImpl implements DataRepository {
     }
   }
 
-  @override
-  Future<double> getTotalIncome(String monthName) async {
-    // TODO: implement testingConnection
-
-    double totalIncome = 0.0;
-
-    return totalIncome;
-  }
-
   Stream<BaseModel<List<TransactionModel>>> todoStream(
       String transactionType) async* {
     // TODO: implement testingConnection
@@ -516,5 +509,34 @@ class DataRepositoryImpl implements DataRepository {
           "${budgetModel.catName} Printing amount in ${budgetModel.totalExpense}");
     });
     return budgetModel;
+  }
+
+  Stream<double> getTotalExpense(String monthName, String id) async* {
+    var trList = await _firestore
+        .collection(transaction)
+        .where('user_id', isEqualTo: id)
+        .where('transacion_type', isEqualTo: expense)
+        .get();
+    double totalAMount = 0.0;
+    trList.docs.forEach((element) {
+      TransactionModel transaction = TransactionModel.fromJson(element.data());
+      totalAMount += transaction.amount!;
+    });
+    yield totalAMount;
+  }
+
+  Stream<double> getTotalIncome(String monthName, String id) async* {
+    var trList = await _firestore
+        .collection(transaction)
+        .where('user_id', isEqualTo: id)
+        .where('transacion_type', isEqualTo: income)
+        //.where('transacion_type', isEqualTo: monthName)
+        .get();
+    double totalAMount = 0.0;
+    trList.docs.forEach((element) {
+      TransactionModel transaction = TransactionModel.fromJson(element.data());
+      totalAMount += transaction.amount!;
+    });
+    yield totalAMount;
   }
 }

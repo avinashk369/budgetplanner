@@ -30,7 +30,8 @@ abstract class DataRepository {
   Stream<List<BudgetModel>>? getBudgetList(String userId);
   Future saveTransaction(TransactionModel transactionModel);
   Future saveBudget(BudgetModel budgetModel);
-  Future<double> getTotalIncome(String monthName);
+  Stream<double> getTotalIncome(String monthName, String userId);
+  Stream<double> getTotalExpense(String monthName, String userId);
   Future deleteTransaction(String id);
   Future<void> updateTransaction(TransactionModel transactionModel);
   Future deleteBudget(String id);

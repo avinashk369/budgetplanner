@@ -2,20 +2,17 @@ import 'package:budgetplanner/controllers/test_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/user_model.dart';
-import 'package:budgetplanner/resources/firestore/dataRepository.dart';
-import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/recent_transaction.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/header_row.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import 'budget/budget_list.dart';
 
@@ -41,13 +38,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     userId = PreferenceUtils.getString(user_id);
-
-    transactionController.recentTransactionModel
-        .bindStream(transactionController.getRecentTransactionList(userId)!);
-    // transactionController.budgetmodel
-    //     .bindStream(transactionController.getBudgetList(userId)!);
-    transactionController.budgetmodel
-        .bindStream(transactionController.getBudgetListDemo()!);
 
     // TODO: implement initState
     _controller = ScrollController();
@@ -107,152 +97,17 @@ class _HomePageState extends State<HomePage> {
                   title: Text(myTitle,
                       style:
                           kLabelStyle.apply(color: kWhite, fontSizeDelta: 6)),
-                  background: Stack(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Container(
-                          width: Get.width,
-                          height: Get.height,
-                          margin: EdgeInsets.only(bottom: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Flexible(
-                                flex: 2,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      DateFormat('LLLL')
-                                              .format(DateTime.now()) +
-                                          " " +
-                                          DateFormat('d')
-                                              .format(DateTime.now()),
-                                      style: kTitleStyle,
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text(
-                                      "BALANCE",
-                                      style: kLabelStyleBold.apply(
-                                          color: Theme.of(context).hintColor),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("\u20B9" + "5500"),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "INCOME",
-                                                style: kLabelStyleBold.apply(
-                                                    color: Theme.of(context)
-                                                        .hintColor),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text("\u20B9" + "5500"),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Container(
-                                            width: 1,
-                                            height: 40,
-                                            color: whiteColor,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "EXPENSE",
-                                                style: kLabelStyleBold.apply(
-                                                    color: Theme.of(context)
-                                                        .hintColor),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text("\u20B9" + "5500"),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: SleekCircularSlider(
-                                  key: Key("fasting_progress"),
-                                  innerWidget: (percentage) {
-                                    return Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: '100',
-                                                style: kTitleStyle,
-                                              ),
-                                              TextSpan(
-                                                  text: '%',
-                                                  style: kTitleStyleSmall),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    );
-                                  },
-                                  appearance: CircularSliderAppearance(
-                                      size: Get.height * .20,
-                                      startAngle: 280,
-                                      angleRange: 350,
-                                      customColors: CustomSliderColors(
-                                        dotColor: kWhite,
-                                        progressBarColor: Colors.green,
-                                        trackColor: kGrey,
-                                      ),
-                                      customWidths: CustomSliderWidths(
-                                        progressBarWidth: Get.height * .01,
-                                      )),
-                                  min: 0,
-                                  max: 80,
-                                  initialValue: 50,
-                                  onChangeStart: (value) {},
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
+                  background: Obx(() => (!transactionController.isLoading())
+                      ? HeaderRow(
+                          income: transactionController.totalIncome.value,
+                          expense: transactionController.totalExpense.value,
+                        )
+                      : Container())),
             ),
           ];
         },
         body: CustomScrollView(
+          physics: BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
               child: SizedBox(

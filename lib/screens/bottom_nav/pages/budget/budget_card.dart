@@ -75,9 +75,14 @@ class BudgetCard extends StatelessWidget {
                     )),
                 min: 0,
                 max: 100,
-                initialValue: MathUtils.getPercentage(
-                        budgetModel.amount!, budgetModel.totalExpense!)
-                    .toDouble(),
+                initialValue: (MathUtils.getPercentage(
+                                budgetModel.amount!, budgetModel.totalExpense!)
+                            .toDouble() >
+                        100)
+                    ? 100
+                    : MathUtils.getPercentage(
+                            budgetModel.amount!, budgetModel.totalExpense!)
+                        .toDouble(),
                 onChangeStart: (value) {},
               ),
             ),
