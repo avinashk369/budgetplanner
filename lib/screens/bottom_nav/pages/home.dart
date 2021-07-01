@@ -2,6 +2,8 @@ import 'package:budgetplanner/controllers/test_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/user_model.dart';
+import 'package:budgetplanner/resources/firestore/dataRepository.dart';
+import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/recent_transaction.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
@@ -42,8 +44,10 @@ class _HomePageState extends State<HomePage> {
 
     transactionController.recentTransactionModel
         .bindStream(transactionController.getRecentTransactionList(userId)!);
+    // transactionController.budgetmodel
+    //     .bindStream(transactionController.getBudgetList(userId)!);
     transactionController.budgetmodel
-        .bindStream(transactionController.getBudgetList(userId)!);
+        .bindStream(transactionController.getBudgetListDemo()!);
 
     // TODO: implement initState
     _controller = ScrollController();

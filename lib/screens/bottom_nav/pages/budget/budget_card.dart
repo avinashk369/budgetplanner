@@ -96,7 +96,7 @@ class BudgetCard extends StatelessWidget {
                             style: kLabelStyle,
                           ),
                           Text(
-                            "\u20B9" + "50000 ",
+                            "\u20B9" + budgetModel.totalExpense.toString(),
                             style: kLabelStyle,
                           ),
                         ],

@@ -139,6 +139,15 @@ class TransactionEntryController extends GetxController {
     }
   }
 
+  Stream<List<BudgetModel>>? getBudgetListDemo() {
+    try {
+      isLoading(true);
+      return DataRepositoryImpl().listAllBudget();
+    } catch (e) {} finally {
+      isLoading(false);
+    }
+  }
+
   void checkLogin(BuildContext context) {
     // final isValid = incomeKey.currentState!.validate();
     // if (!isValid) {

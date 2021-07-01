@@ -19,6 +19,7 @@ class BudgetModel {
   DateTime? createdOn;
   @JsonKey(name: "updated_on")
   DateTime? updatedOn;
+  double? totalExpense = 0.0;
   BudgetModel();
   factory BudgetModel.fromJson(Map<String, dynamic> json) =>
       _$BudgetModelFromJson(json);
