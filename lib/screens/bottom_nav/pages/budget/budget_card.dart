@@ -1,6 +1,7 @@
 import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/budget/update_budget.dart';
+import 'package:budgetplanner/utils/mathUtils.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,9 @@ class BudgetCard extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: '100',
+                              text: MathUtils.getPercentage(budgetModel.amount!,
+                                      budgetModel.totalExpense!)
+                                  .toString(),
                               style: kTitleStyle,
                             ),
                             TextSpan(text: '%', style: kTitleStyleSmall),
@@ -59,15 +62,22 @@ class BudgetCard extends StatelessWidget {
                     angleRange: 350,
                     customColors: CustomSliderColors(
                       dotColor: kWhite,
-                      progressBarColor: Colors.green,
+                      progressBarColor: (MathUtils.getPercentage(
+                                  budgetModel.amount!,
+                                  budgetModel.totalExpense!) >
+                              80)
+                          ? redColor
+                          : greenbuttoncolor,
                       trackColor: kGrey,
                     ),
                     customWidths: CustomSliderWidths(
                       progressBarWidth: Get.height * .01,
                     )),
                 min: 0,
-                max: 80,
-                initialValue: 50,
+                max: 100,
+                initialValue: MathUtils.getPercentage(
+                        budgetModel.amount!, budgetModel.totalExpense!)
+                    .toDouble(),
                 onChangeStart: (value) {},
               ),
             ),

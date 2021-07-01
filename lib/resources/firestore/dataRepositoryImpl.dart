@@ -481,6 +481,7 @@ class DataRepositoryImpl implements DataRepository {
         _firestore
             .collection(transaction)
             .where("cat_name", isEqualTo: budget.catName)
+            .where('user_id', isEqualTo: budget.userId)
             .get()
             .then((value) {
           double totalAMount = 0.0;
@@ -500,6 +501,7 @@ class DataRepositoryImpl implements DataRepository {
     _firestore
         .collection(transaction)
         .where("cat_name", isEqualTo: budgetModel.catName)
+        .where('user_id', isEqualTo: budgetModel.userId)
         .get()
         .then((value) {
       double totalAMount = 0.0;
