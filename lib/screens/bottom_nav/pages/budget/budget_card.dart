@@ -97,7 +97,8 @@ class BudgetCard extends StatelessWidget {
               ),
               child: Text(
                 budgetModel.catName!,
-                style: kLabelStyleBold,
+                style: kLabelStyleBold.apply(
+                    color: Theme.of(context).primaryColor),
               ),
             ),
             Padding(
@@ -112,12 +113,14 @@ class BudgetCard extends StatelessWidget {
                         children: [
                           Text(
                             currancySymbol + budgetModel.amount.toString(),
-                            style: kLabelStyle,
+                            style: kLabelStyle.apply(
+                                color: Theme.of(context).primaryColor),
                           ),
                           Text(
                             currancySymbol +
                                 budgetModel.totalExpense.toString(),
-                            style: kLabelStyle,
+                            style: kLabelStyle.apply(
+                                color: Theme.of(context).primaryColor),
                           ),
                         ],
                       )),

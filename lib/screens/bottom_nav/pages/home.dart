@@ -95,8 +95,9 @@ class _HomePageState extends State<HomePage> {
               flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
                   title: Text(myTitle,
-                      style:
-                          kLabelStyle.apply(color: kWhite, fontSizeDelta: 6)),
+                      style: kLabelStyle.apply(
+                          color: Theme.of(context).hintColor,
+                          fontSizeDelta: 6)),
                   background: Obx(() => (!transactionController.isLoading())
                       ? HeaderRow(
                           income: transactionController.totalIncome.value,
