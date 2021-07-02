@@ -52,3 +52,4 @@ const String transactionType = "transactionType";
 const String user = "users";
 const String transaction = "transaction";
 const String userBudget = "budget";
+const String featureRequest = "featureRequest";

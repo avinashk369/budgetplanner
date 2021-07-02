@@ -37,5 +37,7 @@ class AllControllersBinding implements Bindings {
     Get.lazyPut<SettingsController>(() => SettingsController(), fenix: true);
     Get.lazyPut<SettingsController>(() => SettingsController(),
         tag: language, fenix: true);
+    Get.lazyPut<SettingsController>(() => SettingsController(),
+        tag: features, fenix: true);
   }
 }

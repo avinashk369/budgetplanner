@@ -7,12 +7,14 @@ class CustomInput extends GetView {
   final TextEditingController? controller;
   final TextInputType? textInputType;
   final bool isPassword;
+  final int? numOfLines;
   const CustomInput({
     Key? key,
     required this.validator,
     required this.hintText,
     required this.controller,
     this.textInputType,
+    this.numOfLines,
     this.isPassword = false,
   }) : super(key: key);
 
@@ -24,6 +26,8 @@ class CustomInput extends GetView {
       keyboardType: textInputType ?? TextInputType.text,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validator,
+      minLines: numOfLines,
+      maxLines: numOfLines,
       obscureText: isPassword,
       style: TextStyle(
         color: Theme.of(context).hintColor,

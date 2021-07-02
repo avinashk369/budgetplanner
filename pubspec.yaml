@@ -58,6 +58,7 @@ dependencies:
 
   syncfusion_flutter_charts: ^19.1.69+1
   grouped_list: ^4.0.0
+  share: ^2.0.4
   
 
 dependency_overrides:

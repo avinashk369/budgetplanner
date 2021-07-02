@@ -37,4 +37,5 @@ abstract class DataRepository {
   Future deleteBudget(String id);
   Future<void> updateBudget(BudgetModel budgetModel);
   Future<BudgetModel?> getBudgetModel(String name);
+  Future saveRequest(Map<String, dynamic> requestJson);
 }

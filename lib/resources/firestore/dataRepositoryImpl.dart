@@ -542,4 +542,16 @@ class DataRepositoryImpl implements DataRepository {
     });
     yield totalAMount;
   }
+
+  @override
+  Future saveRequest(Map<String, dynamic> requestJson) async {
+    var _mainCollection = _firestore.collection(featureRequest).doc();
+    requestJson['id'] = _mainCollection.id;
+    await _mainCollection
+        .set(requestJson)
+        .whenComplete(() => print('Request added successfully!'))
+        .catchError((error) {
+      print(error.toString());
+    });
+  }
 }

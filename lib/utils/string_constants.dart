@@ -27,3 +27,5 @@ const addBudget = "Add Budget";
 const updateBudget = "Update Budget";
 const monthName = "Month name";
 const update = "Update";
+const feature_request = "Please explain your requirement";
+const submit = "Submit";
