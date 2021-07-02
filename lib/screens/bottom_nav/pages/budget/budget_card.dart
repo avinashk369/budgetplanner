@@ -38,56 +38,59 @@ class BudgetCard extends StatelessWidget {
           children: [
             SizedBox(height: 10),
             Center(
-              child: SleekCircularSlider(
-                key: Key("fasting_progress"),
-                innerWidget: (percentage) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: MathUtils.getPercentage(budgetModel.amount!,
-                                      budgetModel.totalExpense!)
-                                  .toString(),
-                              style: kTitleStyle,
-                            ),
-                            TextSpan(text: '%', style: kTitleStyleSmall),
-                          ],
-                        ),
-                      )
-                    ],
-                  );
-                },
-                appearance: CircularSliderAppearance(
-                    size: Get.height * .16,
-                    startAngle: 280,
-                    angleRange: 350,
-                    customColors: CustomSliderColors(
-                      dotColor: kWhite,
-                      progressBarColor: (MathUtils.getPercentage(
-                                  budgetModel.amount!,
-                                  budgetModel.totalExpense!) >
-                              80)
-                          ? redColor
-                          : greenbuttoncolor,
-                      trackColor: kGrey,
-                    ),
-                    customWidths: CustomSliderWidths(
-                      progressBarWidth: Get.height * .01,
-                    )),
-                min: 0,
-                max: 100,
-                initialValue: (MathUtils.getPercentage(
-                                budgetModel.amount!, budgetModel.totalExpense!)
-                            .toDouble() >
-                        100)
-                    ? 100
-                    : MathUtils.getPercentage(
-                            budgetModel.amount!, budgetModel.totalExpense!)
-                        .toDouble(),
-                onChangeStart: (value) {},
+              child: Obx(
+                () => SleekCircularSlider(
+                  key: Key("fasting_progress"),
+                  innerWidget: (percentage) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: MathUtils.getPercentage(
+                                        budgetModel.amount!,
+                                        budgetModel.totalBudgetExpense.value)
+                                    .toString(),
+                                style: kTitleStyle,
+                              ),
+                              TextSpan(text: '%', style: kTitleStyleSmall),
+                            ],
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                  appearance: CircularSliderAppearance(
+                      size: Get.height * .16,
+                      startAngle: 280,
+                      angleRange: 350,
+                      customColors: CustomSliderColors(
+                        dotColor: kWhite,
+                        progressBarColor: (MathUtils.getPercentage(
+                                    budgetModel.amount!,
+                                    budgetModel.totalBudgetExpense.value) >
+                                80)
+                            ? redColor
+                            : greenbuttoncolor,
+                        trackColor: kGrey,
+                      ),
+                      customWidths: CustomSliderWidths(
+                        progressBarWidth: Get.height * .01,
+                      )),
+                  min: 0,
+                  max: 100,
+                  initialValue: (MathUtils.getPercentage(budgetModel.amount!,
+                                  budgetModel.totalBudgetExpense.value)
+                              .toDouble() >
+                          100)
+                      ? 100
+                      : MathUtils.getPercentage(budgetModel.amount!,
+                              budgetModel.totalBudgetExpense.value)
+                          .toDouble(),
+                  onChangeStart: (value) {},
+                ),
               ),
             ),
             Padding(
@@ -116,12 +119,13 @@ class BudgetCard extends StatelessWidget {
                             style: kLabelStyle.apply(
                                 color: Theme.of(context).primaryColor),
                           ),
-                          Text(
-                            currancySymbol +
-                                budgetModel.totalExpense.toString(),
-                            style: kLabelStyle.apply(
-                                color: Theme.of(context).primaryColor),
-                          ),
+                          Obx(() => Text(
+                                currancySymbol +
+                                    budgetModel.totalBudgetExpense.value
+                                        .toString(),
+                                style: kLabelStyle.apply(
+                                    color: Theme.of(context).primaryColor),
+                              )),
                         ],
                       )),
                   Container(

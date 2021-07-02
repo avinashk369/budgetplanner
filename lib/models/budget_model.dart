@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:get/get.dart';
 part 'budget_model.g.dart';
 
 @JsonSerializable()
@@ -19,7 +20,9 @@ class BudgetModel {
   DateTime? createdOn;
   @JsonKey(name: "updated_on")
   DateTime? updatedOn;
-  double? totalExpense = 0.0;
+  @JsonKey(ignore: true)
+  var totalBudgetExpense = 0.0.obs;
+  setTotalBudgetExpense(double total) => totalBudgetExpense(total);
   BudgetModel();
   factory BudgetModel.fromJson(Map<String, dynamic> json) =>
       _$BudgetModelFromJson(json);

@@ -19,8 +19,7 @@ BudgetModel _$BudgetModelFromJson(Map<String, dynamic> json) {
         : DateTime.parse(json['created_on'] as String)
     ..updatedOn = json['updated_on'] == null
         ? null
-        : DateTime.parse(json['updated_on'] as String)
-    ..totalExpense = (json['totalExpense'] as num?)?.toDouble();
+        : DateTime.parse(json['updated_on'] as String);
 }
 
 Map<String, dynamic> _$BudgetModelToJson(BudgetModel instance) =>
@@ -33,5 +32,4 @@ Map<String, dynamic> _$BudgetModelToJson(BudgetModel instance) =>
       'month_name': instance.monthName,
       'created_on': instance.createdOn?.toIso8601String(),
       'updated_on': instance.updatedOn?.toIso8601String(),
-      'totalExpense': instance.totalExpense,
     };

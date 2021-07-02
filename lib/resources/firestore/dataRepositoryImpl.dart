@@ -471,6 +471,8 @@ class DataRepositoryImpl implements DataRepository {
 
   Stream<List<BudgetModel>> listAllBudget() async* {
     List<BudgetModel> budgetModelList = [];
+    final transactionController = TransactionEntryController.to;
+
     yield* _firestore.collection(userBudget).snapshots().map((query) {
       return query.docs.map((doc) {
         //return getBudgetDetail(BudgetModel.fromJson(doc.data()))!;
@@ -479,16 +481,31 @@ class DataRepositoryImpl implements DataRepository {
             .collection(transaction)
             .where("cat_name", isEqualTo: budget.catName)
             .where('user_id', isEqualTo: budget.userId)
-            .get()
-            .then((value) {
+            .snapshots()
+            .forEach((element) {
           double totalAMount = 0.0;
-          value.docs.forEach((element) {
+          element.docs.forEach((element) {
             TransactionModel transactionModel =
                 TransactionModel.fromJson(element.data());
             totalAMount += transactionModel.amount!;
+            //budget.totalExpense = totalAMount;
+            budget.setTotalBudgetExpense(totalAMount);
+            print(
+                "${budget.catName} Printing amount inside loop ${budget.totalBudgetExpense.value}");
           });
-          budget.totalExpense = totalAMount;
         });
+        //     .get()
+        //     .then((value) {
+        //   double totalAMount = 0.0;
+        //   value.docs.forEach((element) {
+        //     TransactionModel transactionModel =
+        //         TransactionModel.fromJson(element.data());
+        //     totalAMount += transactionModel.amount!;
+        //     budget.totalExpense = totalAMount;
+        //   });
+        // });
+        print(
+            "${budget.catName} Printing amount  ${budget.totalBudgetExpense.value}");
         return budget;
       }).toList();
     });
@@ -508,9 +525,9 @@ class DataRepositoryImpl implements DataRepository {
 
         totalAMount += transactionModel.amount!;
       });
-      budgetModel.totalExpense = totalAMount;
-      print(
-          "${budgetModel.catName} Printing amount in ${budgetModel.totalExpense}");
+      //budgetModel.totalExpense = totalAMount;
+      // print(
+      //     "${budgetModel.catName} Printing amount in ${budgetModel.totalExpense}");
     });
     return budgetModel;
   }
@@ -529,7 +546,6 @@ class DataRepositoryImpl implements DataRepository {
             TransactionModel.fromJson(element.data());
         totalAMount += transaction.amount!;
         transactionController.setTotalExpense(totalAMount);
-        print("total amount $totalAMount");
       });
     });
   }
@@ -548,7 +564,6 @@ class DataRepositoryImpl implements DataRepository {
             TransactionModel.fromJson(element.data());
         totalAMount += transaction.amount!;
         transactionController.setTotalIncome(totalAMount);
-        print("total amount $totalAMount");
       });
     });
   }
