@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/budget_model.dart';
@@ -515,32 +516,41 @@ class DataRepositoryImpl implements DataRepository {
   }
 
   Stream<double> getTotalExpense(String monthName, String id) async* {
-    var trList = await _firestore
+    final transactionController = TransactionEntryController.to;
+    _firestore
         .collection(transaction)
         .where('user_id', isEqualTo: id)
         .where('transacion_type', isEqualTo: expense)
-        .get();
-    double totalAMount = 0.0;
-    trList.docs.forEach((element) {
-      TransactionModel transaction = TransactionModel.fromJson(element.data());
-      totalAMount += transaction.amount!;
+        .snapshots()
+        .forEach((element) async {
+      double totalAMount = 0.0;
+      element.docs.forEach((element) {
+        TransactionModel transaction =
+            TransactionModel.fromJson(element.data());
+        totalAMount += transaction.amount!;
+        transactionController.setTotalExpense(totalAMount);
+        print("total amount $totalAMount");
+      });
     });
-    yield totalAMount;
   }
 
   Stream<double> getTotalIncome(String monthName, String id) async* {
-    var trList = await _firestore
+    final transactionController = TransactionEntryController.to;
+    _firestore
         .collection(transaction)
         .where('user_id', isEqualTo: id)
         .where('transacion_type', isEqualTo: income)
-        //.where('transacion_type', isEqualTo: monthName)
-        .get();
-    double totalAMount = 0.0;
-    trList.docs.forEach((element) {
-      TransactionModel transaction = TransactionModel.fromJson(element.data());
-      totalAMount += transaction.amount!;
+        .snapshots()
+        .forEach((element) async {
+      double totalAMount = 0.0;
+      element.docs.forEach((element) {
+        TransactionModel transaction =
+            TransactionModel.fromJson(element.data());
+        totalAMount += transaction.amount!;
+        transactionController.setTotalIncome(totalAMount);
+        print("total amount $totalAMount");
+      });
     });
-    yield totalAMount;
   }
 
   @override

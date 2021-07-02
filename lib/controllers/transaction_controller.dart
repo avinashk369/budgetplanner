@@ -33,6 +33,8 @@ class TransactionEntryController extends GetxController {
   Rx<List<BudgetModel>> budgetmodel = Rx<List<BudgetModel>>([]);
   var totalExpense = 0.0.obs;
   var totalIncome = 0.0.obs;
+  setTotalExpense(double total) => totalExpense(total);
+  setTotalIncome(double total) => totalIncome(total);
 
   var position = Offset(Get.width * .83, Get.height * .83).obs;
   setposition(Offset offset) => position(offset);
