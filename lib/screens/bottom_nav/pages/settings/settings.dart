@@ -74,7 +74,6 @@ class _SettingsState extends State<Settings> {
                           ListTile(
                             title: Text(
                               "Language",
-                              style: kLabelStyle,
                             ),
                             trailing: Text(PreferenceUtils.getString(language,
                                 defValue: 'EN')),
@@ -93,7 +92,6 @@ class _SettingsState extends State<Settings> {
                           ListTile(
                             title: Text(
                               "Theme",
-                              style: kLabelStyle,
                             ),
                             trailing: FittedBox(
                               fit: BoxFit.fill,
@@ -110,7 +108,6 @@ class _SettingsState extends State<Settings> {
                                     (PreferenceUtils.getBool(theme_mode))
                                         ? "Dark"
                                         : "Light",
-                                    style: kLabelStyle,
                                   )
                                 ],
                               ),
@@ -130,7 +127,6 @@ class _SettingsState extends State<Settings> {
                           ListTile(
                             title: Text(
                               "Currency",
-                              style: kLabelStyle,
                             ),
                             onTap: () {
                               showCurrencyPicker(
@@ -163,7 +159,6 @@ class _SettingsState extends State<Settings> {
                           ListTile(
                             title: Text(
                               "Share",
-                              style: kLabelStyle,
                             ),
                             onTap: () async {
                               if (Platform.isAndroid) {
@@ -191,7 +186,6 @@ class _SettingsState extends State<Settings> {
                           ListTile(
                             title: Text(
                               "Request feature",
-                              style: kLabelStyle,
                             ),
                             onTap: () => Get.to(FeatureRequestScreen()),
                           ),
