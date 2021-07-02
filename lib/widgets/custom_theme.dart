@@ -1,14 +1,17 @@
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:get/get.dart';
 
 class CustomTheme with ChangeNotifier {
-  static bool _isDarkTheme = true;
+  static bool _isDarkTheme = PreferenceUtils.getBool(theme_mode);
   ThemeMode get currentTheme => _isDarkTheme ? ThemeMode.dark : ThemeMode.light;
 
   void toggleTheme() {
     print("theme toggled");
     _isDarkTheme = !_isDarkTheme;
+    PreferenceUtils.putBool(theme_mode, _isDarkTheme);
     notifyListeners();
   }
 

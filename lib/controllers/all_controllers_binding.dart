@@ -3,8 +3,10 @@ import 'package:budgetplanner/controllers/expense_controller.dart';
 import 'package:budgetplanner/controllers/income_controller.dart';
 import 'package:budgetplanner/controllers/login_controller.dart';
 import 'package:budgetplanner/controllers/saving_controller.dart';
+import 'package:budgetplanner/controllers/settings_controller.dart';
 import 'package:budgetplanner/controllers/test_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:get/instance_manager.dart';
 
@@ -32,5 +34,8 @@ class AllControllersBinding implements Bindings {
     Get.lazyPut<LoginController>(() => LoginController());
     Get.lazyPut<TestController>(() => TestController(),
         tag: buttonEventController);
+    Get.lazyPut<SettingsController>(() => SettingsController(), fenix: true);
+    Get.lazyPut<SettingsController>(() => SettingsController(),
+        tag: language, fenix: true);
   }
 }

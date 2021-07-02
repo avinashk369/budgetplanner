@@ -1,5 +1,7 @@
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -13,7 +15,8 @@ class TransactionCard extends StatelessWidget {
 
   const TransactionCard({Key? key, required this.transactionModel})
       : super(key: key);
-
+  static String currancySymbol =
+      PreferenceUtils.getString(currancy_symbol, defValue: '\u20B9');
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -87,7 +90,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "\u20B9" + transactionModel.amount.toString(),
+                  currancySymbol + transactionModel.amount.toString(),
                   style: kLabelStyle.apply(
                     fontSizeFactor: 1.2,
                     color: (transactionModel.transactionType == expense)

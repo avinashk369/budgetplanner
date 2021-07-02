@@ -310,12 +310,9 @@ class DataRepositoryImpl implements DataRepository {
     try {
       //yield*
       var query = _firestore.collection(transaction);
-      if (transactionType != '') {
-        //print("transanction type $transactionType");
-        query.where('transacion_type', isEqualTo: transactionType);
-      }
 
       yield* query
+          //.where('transacion_type', isEqualTo: transactionType)
           .where('user_id', isEqualTo: userId)
           // .where('created_on', isLessThanOrEqualTo: DateTime.now())
           .orderBy('created_on', descending: true)

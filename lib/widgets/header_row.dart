@@ -1,4 +1,6 @@
 import 'package:budgetplanner/controllers/transaction_controller.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/mathUtils.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -14,7 +16,8 @@ class HeaderRow extends StatelessWidget {
     this.income = 0.0,
     this.expense = 0.0,
   }) : super(key: key);
-
+  static String currancySymbol =
+      PreferenceUtils.getString(currancy_symbol, defValue: '\u20B9');
   @override
   Widget build(BuildContext context) {
     final transactionController = TransactionEntryController.to;
@@ -54,7 +57,7 @@ class HeaderRow extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text("\u20B9" + (income - expense).toString()),
+                      Text(currancySymbol + (income - expense).toString()),
                       SizedBox(
                         height: 20,
                       ),
@@ -72,7 +75,7 @@ class HeaderRow extends StatelessWidget {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Text("\u20B9" + income.toString())
+                                Text(currancySymbol + income.toString())
                               ],
                             ),
                             SizedBox(
@@ -97,7 +100,7 @@ class HeaderRow extends StatelessWidget {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Text("\u20B9" + expense.toString()),
+                                Text(currancySymbol + expense.toString()),
                               ],
                             ),
                           ],

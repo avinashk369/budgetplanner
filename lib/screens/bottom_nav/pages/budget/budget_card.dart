@@ -1,6 +1,8 @@
 import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/budget/update_budget.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/mathUtils.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -11,6 +13,8 @@ import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 class BudgetCard extends StatelessWidget {
   final BudgetModel budgetModel;
   const BudgetCard({Key? key, required this.budgetModel}) : super(key: key);
+  static String currancySymbol =
+      PreferenceUtils.getString(currancy_symbol, defValue: '\u20B9');
 
   @override
   Widget build(BuildContext context) {
@@ -107,11 +111,12 @@ class BudgetCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "\u20B9" + budgetModel.amount.toString(),
+                            currancySymbol + budgetModel.amount.toString(),
                             style: kLabelStyle,
                           ),
                           Text(
-                            "\u20B9" + budgetModel.totalExpense.toString(),
+                            currancySymbol +
+                                budgetModel.totalExpense.toString(),
                             style: kLabelStyle,
                           ),
                         ],
