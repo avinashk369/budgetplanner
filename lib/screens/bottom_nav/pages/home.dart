@@ -129,7 +129,12 @@ class _HomePageState extends State<HomePage> {
                       child: Obx(() {
                         if (transactionController.budgetList.isEmpty) {
                           return Center(
-                              child: NoData(message: "No budget allocated"));
+                              child: NoData(
+                            message: "No budget allocated",
+                            imageUrl:
+                                "https://image.freepik.com/free-vector/estate-tax-composition_98292-7428.jpg",
+                            index: 3,
+                          ));
                         } else {
                           return controller.isLoading()
                               ? Center(child: LoadingUI())
@@ -155,7 +160,11 @@ class _HomePageState extends State<HomePage> {
                     child: Obx(() {
                       if (transactionController.recentTransactionList.isEmpty) {
                         return Center(
-                            child: NoData(message: "No transaction available"));
+                            child: NoData(
+                          message: "No transaction available",
+                          imageUrl: "",
+                          index: 2,
+                        ));
                       } else {
                         return controller.isLoading()
                             ? Center(child: LoadingUI())

@@ -1,4 +1,5 @@
 import 'package:budgetplanner/controllers/budget_controller.dart';
+import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/controllers/expense_controller.dart';
 import 'package:budgetplanner/controllers/income_controller.dart';
 import 'package:budgetplanner/controllers/login_controller.dart';
@@ -39,5 +40,7 @@ class AllControllersBinding implements Bindings {
         tag: language, fenix: true);
     Get.lazyPut<SettingsController>(() => SettingsController(),
         tag: features, fenix: true);
+    Get.lazyPut<DashboardController>(() => DashboardController(),
+        tag: dashboardController, fenix: true);
   }
 }

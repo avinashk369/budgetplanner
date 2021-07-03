@@ -5,6 +5,7 @@ import 'es.dart';
 import 'pt.dart';
 import 'hi.dart';
 import 'ta.dart';
+import 'de.dart';
 
 class MyTranslations extends Translations {
   @override
@@ -15,6 +16,7 @@ class MyTranslations extends Translations {
       'es': es,
       'hi': hi,
       'ta': ta,
+      'de': de,
     };
   }
 }
