@@ -213,6 +213,8 @@ class _SettingsState extends State<Settings> {
                               await Authentication.signOut(context: context);
                               PreferenceUtils.clear();
                               Navigator.of(context).popAndPushNamed(homeRoute);
+                              controller.setCurrency("\u20B9");
+                              controller.setindex(0);
                             },
                           ),
                         ],
