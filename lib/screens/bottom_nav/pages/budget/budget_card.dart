@@ -1,8 +1,10 @@
+import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/budget/update_budget.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/mathUtils.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -18,6 +20,8 @@ class BudgetCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = DashboardController.tagged(dashboardController);
+
     return InkWell(
       onTap: () {
         //open trainer detail screen
@@ -115,12 +119,13 @@ class BudgetCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            currancySymbol + budgetModel.amount.toString(),
+                            controller.currencySymbol +
+                                budgetModel.amount.toString(),
                             style: kLabelStyle.apply(
                                 color: Theme.of(context).primaryColor),
                           ),
                           Obx(() => Text(
-                                currancySymbol +
+                                controller.currencySymbol +
                                     budgetModel.totalBudgetExpense.value
                                         .toString(),
                                 style: kLabelStyle.apply(

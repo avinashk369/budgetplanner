@@ -1,6 +1,7 @@
 import 'package:budgetplanner/screens/onboard/widgets/next_page_button.dart';
 import 'package:budgetplanner/screens/onboard/widgets/ripple.dart';
 import 'package:budgetplanner/screens/user/email_signin.dart';
+import 'package:budgetplanner/screens/user/user_login.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
@@ -120,7 +121,7 @@ class _ThreeState extends State<Three> with TickerProviderStateMixin {
   Future<void> _nextPage() async {
     await _rippleAnimationController.forward();
     PreferenceUtils.putBool(has_seen, true);
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => EmailSignin()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => UserLogin())); //EmailSignin()
   }
 }

@@ -128,13 +128,12 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: Obx(() {
                         if (transactionController.budgetList.isEmpty) {
-                          return Center(
-                              child: NoData(
-                            message: "No budget allocated",
+                          return NoData(
+                            message: lbl_no_budget.tr,
                             imageUrl:
                                 "https://image.freepik.com/free-vector/estate-tax-composition_98292-7428.jpg",
                             index: 3,
-                          ));
+                          );
                         } else {
                           return controller.isLoading()
                               ? Center(child: LoadingUI())
@@ -149,22 +148,29 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SliverToBoxAdapter(
-                child: Container(
-              padding: EdgeInsets.only(top: 10, bottom: 5, left: 10),
-              child: Text(recent_transaction.tr),
-            )),
+              child: Obx(() {
+                if (transactionController.recentTransactionList.isNotEmpty) {
+                  return Container(
+                    padding: EdgeInsets.only(top: 10, bottom: 5, left: 10),
+                    child: Text(recent_transaction.tr),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+            ),
             SliverList(
               delegate: SliverChildListDelegate(
                 [
                   Container(
                     child: Obx(() {
                       if (transactionController.recentTransactionList.isEmpty) {
-                        return Center(
-                            child: NoData(
-                          message: "No transaction available",
-                          imageUrl: "",
+                        return NoData(
+                          message: lbl_no_transaction.tr,
+                          imageUrl:
+                              "https://image.freepik.com/free-vector/estate-tax-composition_98292-7428.jpg",
                           index: 2,
-                        ));
+                        );
                       } else {
                         return controller.isLoading()
                             ? Center(child: LoadingUI())

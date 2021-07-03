@@ -1,5 +1,8 @@
 import 'package:budgetplanner/screens/user/user_info.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/authentication.dart';
+import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +20,8 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
       padding: const EdgeInsets.only(bottom: 16.0),
       child: _isSigningIn
           ? CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).backgroundColor),
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(Theme.of(context).hintColor),
             )
           : OutlinedButton(
               style: ButtonStyle(
@@ -42,13 +45,13 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                 });
 
                 if (user != null) {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => UserInfoScreen(
-                        user: user,
-                      ),
-                    ),
-                  );
+                  PreferenceUtils.putString(user_id, user.uid);
+                  PreferenceUtils.putString(
+                      creation_time, user.metadata.creationTime.toString());
+                  PreferenceUtils.putString(
+                      sign_in_time, user.metadata.lastSignInTime.toString());
+
+                  Navigator.popAndPushNamed(context, dashboardRoute);
                 }
               },
               child: Padding(

@@ -1,13 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:budgetplanner/exception/bad_requrest.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/CaffairModel.dart';
 import 'package:budgetplanner/models/PaginationMeta.dart';
 import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepository.dart';
-import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -1,8 +1,10 @@
+import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
+import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class TransactionCard extends StatelessWidget {
       PreferenceUtils.getString(currancy_symbol, defValue: '\u20B9');
   @override
   Widget build(BuildContext context) {
+    final controller = DashboardController.tagged(dashboardController);
     return InkWell(
       onTap: () {
         //open trainer detail screen
@@ -90,7 +93,8 @@ class TransactionCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  currancySymbol + transactionModel.amount.toString(),
+                  controller.currencySymbol +
+                      transactionModel.amount.toString(),
                   style: kLabelStyle.apply(
                     fontSizeFactor: 1.2,
                     color: (transactionModel.transactionType == expense)

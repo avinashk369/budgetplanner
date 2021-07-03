@@ -1,9 +1,14 @@
 import 'dart:io';
 
+import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/settings/feature_request.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/settings/language_screen.dart';
+import 'package:budgetplanner/screens/welcome.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/authentication.dart';
+import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -20,6 +25,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  final controller = DashboardController.tagged(dashboardController);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,8 +145,9 @@ class _SettingsState extends State<Settings> {
                                       currancy_symbol, currency.symbol);
                                   PreferenceUtils.putString(
                                       currency_name, currency.flag);
+                                  controller.setCurrency(currency.symbol);
                                   setState(() {});
-                                  print('Select currency: ${currency.flag}');
+                                  print('Select currency: ${currency.symbol}');
                                 },
                               );
                             },
@@ -202,6 +209,11 @@ class _SettingsState extends State<Settings> {
                               "Log out",
                               style: kLabelStyle.apply(color: redColor),
                             ),
+                            onTap: () async {
+                              await Authentication.signOut(context: context);
+                              PreferenceUtils.clear();
+                              Navigator.of(context).popAndPushNamed(homeRoute);
+                            },
                           ),
                         ],
                       ),

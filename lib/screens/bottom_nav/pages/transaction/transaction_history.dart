@@ -3,7 +3,9 @@ import 'package:budgetplanner/screens/bottom_nav/pages/poc/grouped_list.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
+import 'package:budgetplanner/widgets/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -22,7 +24,12 @@ class TransactionHistory extends GetView {
       body: Container(
         child: Obx(() {
           if (controller.transactionList.isEmpty) {
-            return Center(child: Text("Please wait..."));
+            return NoData(
+              message: lbl_no_transaction.tr,
+              imageUrl:
+                  "https://image.freepik.com/free-vector/estate-tax-composition_98292-7428.jpg",
+              index: 2,
+            );
           } else {
             return controller.isLoading()
                 ? Center(child: LoadingUI())

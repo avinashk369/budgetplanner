@@ -3,6 +3,7 @@ import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/screens/onboard/onboard_screens.dart';
 import 'package:budgetplanner/screens/user/email_signin.dart';
+import 'package:budgetplanner/screens/user/user_login.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -77,7 +78,7 @@ class _WelcomeState extends State<Welcome> {
           (hasSeen)
               ? (userId != '')
                   ? Dashboard()
-                  : EmailSignin()
+                  : UserLogin() //EmailSingIn()
               : OnboardScreen()
         ],
       ),

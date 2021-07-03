@@ -1,6 +1,8 @@
+import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/mathUtils.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
@@ -22,6 +24,7 @@ class HeaderRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final transactionController = TransactionEntryController.to;
+    final controller = DashboardController.tagged(dashboardController);
     //print("print val ${transactionController.totalExpense.value}");
     return Stack(
       children: <Widget>[
@@ -58,7 +61,8 @@ class HeaderRow extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(currancySymbol + (income - expense).toString()),
+                      Text(controller.currencySymbol +
+                          (income - expense).toString()),
                       SizedBox(
                         height: 20,
                       ),
@@ -76,7 +80,8 @@ class HeaderRow extends StatelessWidget {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Text(currancySymbol + income.toString())
+                                Text(controller.currencySymbol +
+                                    income.toString())
                               ],
                             ),
                             SizedBox(
@@ -101,7 +106,8 @@ class HeaderRow extends StatelessWidget {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Text(currancySymbol + expense.toString()),
+                                Text(controller.currencySymbol +
+                                    expense.toString()),
                               ],
                             ),
                           ],
