@@ -3,7 +3,6 @@ import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/expense_source_model.dart';
-import 'package:budgetplanner/models/income_model.dart';
 import 'package:budgetplanner/models/recurrance_model.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
@@ -78,14 +77,14 @@ class ExpenseController extends BaseController {
 
   String? validateAmount(String amount) {
     if (amount.length < 1) {
-      return "Please enter amount";
+      return lbl_amount_error.tr;
     }
     return null;
   }
 
   String? validatePassword(String password) {
     if (password.length <= 6) {
-      return "Notes must be of 6 characters";
+      return lbl_notes_error.tr;
     }
     return null;
   }
@@ -98,8 +97,8 @@ class ExpenseController extends BaseController {
     if (GetUtils.isNull(budgetCatModel.value.name)) {
       print("Please select income");
       SnackBarDialog.displaySnackbar(
-        "Expense",
-        "Please select expense source",
+        total_expense.tr,
+        lbl_income_source.tr,
       );
 
       return;
@@ -130,15 +129,15 @@ class ExpenseController extends BaseController {
       } catch (e) {
         Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
         SnackBarDialog.displaySnackbar(
-          "Transaction",
-          "Ooops!!!...transaction cancelled!",
+          transactionTab.tr,
+          lbl_trx_cancelled.tr,
         );
       } finally {
         isLoading(false);
         Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
         SnackBarDialog.displaySuccessSnackbar(
-          "Transaction",
-          "Transaction completed successfully!",
+          transactionTab.tr,
+          lbl_trx_success.tr,
         );
       }
     }
@@ -168,15 +167,15 @@ class ExpenseController extends BaseController {
     } catch (e) {
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
       SnackBarDialog.displaySnackbar(
-        "Transaction",
-        "Ooops!!!...transaction not updated!",
+        transactionTab.tr,
+        lbl_trx_not_updated.tr,
       );
     } finally {
       isLoading(false);
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
 
-      Get.showSnackbar(SnackBarDialog.getSnanck(
-              "Transaction updated successfully!", "Transaction"))!
+      Get.showSnackbar(
+              SnackBarDialog.getSnanck(lbl_trx_updated.tr, transactionTab.tr))!
           .whenComplete(() => Get.back(
                 canPop: true,
               ));

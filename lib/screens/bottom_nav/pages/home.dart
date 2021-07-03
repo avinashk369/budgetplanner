@@ -5,11 +5,11 @@ import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/recent_transaction.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/header_row.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:get/get.dart';
@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
             SliverToBoxAdapter(
                 child: Container(
               padding: EdgeInsets.only(top: 10, bottom: 5, left: 10),
-              child: Text("Recent transactions"),
+              child: Text(recent_transaction.tr),
             )),
             SliverList(
               delegate: SliverChildListDelegate(

@@ -1,4 +1,6 @@
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 
 class DateFormatter {
   DateFormatter();
@@ -15,13 +17,13 @@ class DateFormatter {
     if (localDateTime.day == now.day &&
         localDateTime.month == now.month &&
         localDateTime.year == now.year) {
-      return "Today";
+      return today.tr;
     }
-    DateTime yesterday = now.subtract(Duration(days: 1));
-    if (localDateTime.day == yesterday.day &&
+    DateTime yesterDay = now.subtract(Duration(days: 1));
+    if (localDateTime.day == yesterDay.day &&
         localDateTime.month == now.month &&
         localDateTime.year == now.year) {
-      return "Yesterday";
+      return yesterday.tr;
     }
     // if (now.difference(localDateTime).inDays < 4) {
     //   String weekday = DateFormat('EEEE', 'EN').format(localDateTime);

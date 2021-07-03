@@ -5,6 +5,7 @@ import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/budget/update_budget.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/_ModalBottomSheetLayout.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
@@ -69,14 +70,14 @@ class BudgetController extends GetxController {
 
   String? validateAmount(String amount) {
     if (amount.length < 1) {
-      return "Please enter amount";
+      return lbl_amount_error.tr;
     }
     return null;
   }
 
   String? validatePassword(String password) {
     if (password.length <= 6) {
-      return "Notes must be of 6 characters";
+      return lbl_notes_error.tr;
     }
     return null;
   }
@@ -87,10 +88,7 @@ class BudgetController extends GetxController {
       return;
     }
     if (GetUtils.isNull(budgetCatModel.value.name)) {
-      SnackBarDialog.displaySnackbar(
-        "Budget",
-        "Please select budget category",
-      );
+      SnackBarDialog.displaySnackbar(budgetTab.tr, lbl_select_budget_cat.tr);
 
       return;
     }
@@ -121,15 +119,15 @@ class BudgetController extends GetxController {
         } catch (e) {
           Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
           SnackBarDialog.displaySnackbar(
-            "Budget",
-            "Ooops!!!...Budget not saved",
+            budgetTab.tr,
+            lbl_budget_not_saved.tr,
           );
         } finally {
           isLoading(false);
           Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
           SnackBarDialog.displaySuccessSnackbar(
-            "Budget",
-            "Budget saved successfully!",
+            budgetTab.tr,
+            lbl_budget_save_success.tr,
           );
         }
       }
@@ -152,15 +150,15 @@ class BudgetController extends GetxController {
     } catch (e) {
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
       SnackBarDialog.displaySnackbar(
-        "Transaction",
-        "Ooops!!!...transaction not updated!",
+        transactionTab.tr,
+        lbl_budget_not_update.tr,
       );
     } finally {
       isLoading(false);
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
 
-      Get.showSnackbar(SnackBarDialog.getSnanck(
-              "Budget updated successfully!", "Budget"))!
+      Get.showSnackbar(
+              SnackBarDialog.getSnanck(lbl_budget_update.tr, budgetTab.tr))!
           .whenComplete(() => Get.back(
                 canPop: true,
               ));
@@ -175,15 +173,15 @@ class BudgetController extends GetxController {
     } catch (e) {
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
       SnackBarDialog.displaySnackbar(
-        "Budget",
-        "Ooops!!!...budget not deleted!",
+        budgetTab.tr,
+        lbl_budget_not_delete.tr,
       );
     } finally {
       isLoading(false);
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
 
-      Get.showSnackbar(
-              SnackBarDialog.getSnanck("Deleted Successfully!", "Budget"))!
+      Get.showSnackbar(SnackBarDialog.getSnanck(
+              lbl_budget_delete_success.tr, budgetTab.tr))!
           .whenComplete(() => Get.back(
                 canPop: true,
               ));

@@ -83,7 +83,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                         .name),
                                 subtitle: Text(
                                     LanguageData.getLanguageList()[position]
-                                        .initial),
+                                        .code),
                                 trailing: FittedBox(
                                   fit: BoxFit.fill,
                                   child: Row(
@@ -99,13 +99,19 @@ class _LanguageScreenState extends State<LanguageScreen> {
                                       language,
                                       LanguageData.getLanguageList()[position]
                                           .initial);
-
+                                  PreferenceUtils.putString(
+                                      locale,
+                                      LanguageData.getLanguageList()[position]
+                                          .code);
+                                  Get.updateLocale(
+                                      LanguageData.getLanguageList()[position]
+                                          .locale);
                                   setState(() {});
                                 },
                                 selected:
                                     (LanguageData.getLanguageList()[position]
-                                                .initial ==
-                                            PreferenceUtils.getString(language,
+                                                .code ==
+                                            PreferenceUtils.getString(locale,
                                                 defValue: 'EN'))
                                         ? true
                                         : false,

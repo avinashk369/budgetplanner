@@ -32,7 +32,7 @@ class AddBudget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Plan your monthly",
+                            plan_month.tr,
                             style: kLabelStyle.apply(
                                 color: Theme.of(context).hintColor),
                           ),
@@ -40,7 +40,7 @@ class AddBudget extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            "Budget",
+                            budgetTab.tr,
                             style: kTitleStyle,
                           )
                         ],
@@ -68,7 +68,7 @@ class AddBudget extends StatelessWidget {
                         onPressed: () {
                           controller.submitIncomeRecord(context);
                         },
-                        child: Text(addBudget),
+                        child: Text(addBudget.tr),
                       ),
                     ],
                   ),

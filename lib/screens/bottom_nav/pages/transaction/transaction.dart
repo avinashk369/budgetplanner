@@ -1,9 +1,8 @@
-import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/add_expense.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/add_income.dart';
-import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Transaction extends StatefulWidget {
   const Transaction({Key? key}) : super(key: key);
@@ -18,8 +17,8 @@ class _TransactionState extends State<Transaction>
   late ScrollController _scrollViewController;
 
   List<String> name = [
-    expense,
-    income,
+    total_expense.tr,
+    total_income.tr,
     //saving,
   ];
   @override
@@ -49,7 +48,7 @@ class _TransactionState extends State<Transaction>
             SliverAppBar(
               centerTitle: true,
               title: Text(
-                transactionEntry,
+                transactionEntry.tr,
               ),
               floating: true,
               pinned: true,

@@ -83,7 +83,7 @@ class UpdateTransaction extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Update your daily",
+                            update_your_daily.tr,
                             style: kLabelStyle.apply(
                                 color: Theme.of(context).hintColor),
                           ),
@@ -91,7 +91,9 @@ class UpdateTransaction extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            transactionModel.transactionType!,
+                            (transactionModel.transactionType == income)
+                                ? income.tr
+                                : expense.tr,
                             style: kTitleStyle,
                           )
                         ],
@@ -150,7 +152,7 @@ class UpdateTransaction extends StatelessWidget {
                                   : incomeC.updatetransaction(
                                       context, transactionModel);
                             },
-                            child: Text(update),
+                            child: Text(update.tr),
                           ),
                         ],
                       )),

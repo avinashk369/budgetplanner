@@ -1,11 +1,12 @@
 import 'package:budgetplanner/controllers/all_controllers_binding.dart';
-import 'package:budgetplanner/screens/user/poc.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'internationalization/internationalization.dart';
 import 'routes_generator.dart';
 import 'utils/PreferenceUtils.dart';
 import 'utils/route_constants.dart';
@@ -34,8 +35,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late Locale localeClass;
+  late String coutryInitial;
+  late String countryCode;
   @override
   void initState() {
+    coutryInitial = PreferenceUtils.getString(language, defValue: 'US');
+    countryCode = PreferenceUtils.getString(locale, defValue: 'en');
+    localeClass = Locale(countryCode, coutryInitial);
     // TODO: implement initState
     currentTheme.addListener(() {
       print("ok i am listening");
@@ -62,11 +69,14 @@ class _MyAppState extends State<MyApp> {
         DefaultCupertinoLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      locale: Locale('en', 'US'),
+      //locale: Locale('en', 'US'),
       supportedLocales: [
         const Locale('en', 'US'), // English
         const Locale('th', 'TH'), // Thai
       ],
+      locale: localeClass,
+      fallbackLocale: Locale('en'),
+      translations: MyTranslations(),
       title: 'Motoko',
       theme: CustomTheme.lightTheme, //3
       darkTheme: CustomTheme.darkTheme, //4

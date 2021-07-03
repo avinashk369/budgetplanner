@@ -30,7 +30,7 @@ class BudgetForm extends StatelessWidget {
           },
           child: CategoryChooser(
             leftRowData: Obx(() => Text(controller.budgetCatModel.value.name ??
-                select_budget_category)),
+                select_budget_category.tr)),
             rightRowData: Obx(
               () => controller.budgetCatModel.value.name != null
                   ? Container(
@@ -67,7 +67,7 @@ class BudgetForm extends StatelessWidget {
         ),
         CustomInput(
           controller: controller.amountController,
-          hintText: amount,
+          hintText: amount.tr,
           validator: (value) => controller.validateAmount(value!),
           textInputType: TextInputType.number,
         ),
@@ -76,14 +76,14 @@ class BudgetForm extends StatelessWidget {
         ),
         CustomInput(
           controller: controller.notesController,
-          hintText: notes,
+          hintText: notes.tr,
           validator: (value) => controller.validatePassword(value!),
         ),
         SizedBox(
           height: 10,
         ),
         CategoryChooser(
-          leftRowData: Text(monthName),
+          leftRowData: Text(monthName.tr),
           rightRowData: Text(DateFormat('LLLL').format(DateTime.now())),
         ),
       ],

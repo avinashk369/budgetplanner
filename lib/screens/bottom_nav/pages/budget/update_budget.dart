@@ -48,7 +48,7 @@ class UpdateBudget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Update your monthly",
+                            update_plan_month.tr,
                             style: kLabelStyle.apply(
                                 color: Theme.of(context).hintColor),
                           ),
@@ -56,7 +56,7 @@ class UpdateBudget extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            "Budget",
+                            budgetTab.tr,
                             style: kTitleStyle,
                           )
                         ],
@@ -104,7 +104,7 @@ class UpdateBudget extends StatelessWidget {
                         onPressed: () {
                           controller.updateBudget(context, budgetModel);
                         },
-                        child: Text(updateBudget),
+                        child: Text(updateBudget.tr),
                       ),
                     ],
                   ),

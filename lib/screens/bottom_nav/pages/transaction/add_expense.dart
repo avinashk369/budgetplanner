@@ -5,6 +5,7 @@ import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/quote_container.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddExpense extends StatelessWidget {
   @override
@@ -34,7 +35,7 @@ class AddExpense extends StatelessWidget {
                     onPressed: () {
                       controller.submitIncomeRecord(context);
                     },
-                    child: Text(addExpense),
+                    child: Text(addExpense.tr),
                   ),
                 ],
               ),

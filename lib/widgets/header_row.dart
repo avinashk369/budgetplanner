@@ -2,6 +2,7 @@ import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/mathUtils.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class HeaderRow extends StatelessWidget {
                         height: 20,
                       ),
                       Text(
-                        "BALANCE",
+                        total_balance.tr.toUpperCase(),
                         style: kLabelStyleBold.apply(
                             color: Theme.of(context).hintColor),
                       ),
@@ -68,7 +69,7 @@ class HeaderRow extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "INCOME",
+                                  total_income.tr.toUpperCase(),
                                   style: kLabelStyleBold.apply(
                                       color: Theme.of(context).hintColor),
                                 ),
@@ -93,7 +94,7 @@ class HeaderRow extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "EXPENSE",
+                                  total_expense.tr.toUpperCase(),
                                   style: kLabelStyleBold.apply(
                                       color: Theme.of(context).hintColor),
                                 ),

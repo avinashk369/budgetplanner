@@ -30,7 +30,7 @@ class IncomeForm extends StatelessWidget {
           },
           child: CategoryChooser(
             leftRowData: Obx(() => Text(
-                controller.incomeModel.value.name ?? select_income_source)),
+                controller.incomeModel.value.name ?? select_income_source.tr)),
             rightRowData: Obx(
               () => controller.incomeModel.value.name != null
                   ? Container(
@@ -67,7 +67,7 @@ class IncomeForm extends StatelessWidget {
         ),
         CustomInput(
           controller: controller.amountController,
-          hintText: amount,
+          hintText: amount.tr,
           validator: (value) => controller.validateAmount(value!),
           textInputType: TextInputType.number,
         ),
@@ -76,7 +76,7 @@ class IncomeForm extends StatelessWidget {
         ),
         CustomInput(
           controller: controller.notesController,
-          hintText: notes,
+          hintText: notes.tr,
           validator: (value) => controller.validatePassword(value!),
         ),
         SizedBox(
@@ -98,7 +98,7 @@ class IncomeForm extends StatelessWidget {
             );
           },
           child: CategoryChooser(
-            leftRowData: Text(recurrance),
+            leftRowData: Text(recurrance.tr),
             rightRowData: Obx(
               () =>
                   Text(controller.recurranceModel.value.name ?? def_recurrance),

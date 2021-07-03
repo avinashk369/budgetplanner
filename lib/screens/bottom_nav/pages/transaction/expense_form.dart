@@ -30,7 +30,7 @@ class ExpenseForm extends StatelessWidget {
           },
           child: CategoryChooser(
             leftRowData: Obx(() => Text(controller.budgetCatModel.value.name ??
-                select_expense_category)),
+                select_expense_category.tr)),
             rightRowData: Obx(
               () => controller.budgetCatModel.value.name != null
                   ? Container(
@@ -67,7 +67,7 @@ class ExpenseForm extends StatelessWidget {
         ),
         CustomInput(
           controller: controller.amountController,
-          hintText: amount,
+          hintText: amount.tr,
           validator: (value) => controller.validateAmount(value!),
           textInputType: TextInputType.number,
         ),
@@ -76,7 +76,7 @@ class ExpenseForm extends StatelessWidget {
         ),
         CustomInput(
           controller: controller.notesController,
-          hintText: notes,
+          hintText: notes.tr,
           validator: (value) => controller.validatePassword(value!),
         ),
         SizedBox(
@@ -95,7 +95,7 @@ class ExpenseForm extends StatelessWidget {
             );
           },
           child: CategoryChooser(
-            leftRowData: Text(select_expense_source),
+            leftRowData: Text(select_expense_source.tr),
             rightRowData: Obx(
               () =>
                   Text(controller.expenseSourceModel.value.name ?? def_source),
@@ -118,7 +118,7 @@ class ExpenseForm extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Expense type',
+                expense_type.tr,
               ),
               Row(
                 children: [
@@ -136,7 +136,7 @@ class ExpenseForm extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Want/Need',
+                    want_or_need.tr,
                   ),
                 ],
               )
@@ -162,7 +162,7 @@ class ExpenseForm extends StatelessWidget {
             );
           },
           child: CategoryChooser(
-            leftRowData: Text(recurrance),
+            leftRowData: Text(recurrance.tr),
             rightRowData: Obx(
               () =>
                   Text(controller.recurranceModel.value.name ?? def_recurrance),

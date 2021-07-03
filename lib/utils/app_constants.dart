@@ -6,6 +6,7 @@ const String user_id = "user_id";
 const String has_seen = "has_seen";
 const String theme_mode = "theme_mode";
 const String language = "language";
+const String locale = "locale";
 const String features = "features";
 const String currency_name = "currancy_name";
 const String currancy_symbol = "currancy_symbol";

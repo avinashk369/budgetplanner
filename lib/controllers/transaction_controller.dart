@@ -6,6 +6,7 @@ import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -76,15 +77,15 @@ class TransactionEntryController extends GetxController {
     } catch (e) {
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
       SnackBarDialog.displaySnackbar(
-        "Transaction",
-        "Ooops!!!...transaction not deleted!",
+        transactionTab.tr,
+        lbl_trx_not_delete.tr,
       );
     } finally {
       isLoading(false);
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
 
-      Get.showSnackbar(
-              SnackBarDialog.getSnanck("Deleted Successfully!", "Transaction"))!
+      Get.showSnackbar(SnackBarDialog.getSnanck(
+              lbl_budget_delete_success.tr, transactionTab.tr))!
           .whenComplete(() => Get.back(
                 canPop: true,
               ));
@@ -97,14 +98,14 @@ class TransactionEntryController extends GetxController {
       await DataRepositoryImpl().updateTransaction(transactionModel);
     } catch (e) {
       SnackBarDialog.displaySnackbar(
-        "Transaction",
-        "Ooops!!!...transaction not updated!",
+        transactionTab.tr,
+        lbl_trx_not_updated.tr,
       );
     } finally {
       isLoading(false);
       SnackBarDialog.displaySuccessSnackbar(
-        "Transaction",
-        "Updated Successfully!",
+        transactionTab.tr,
+        lbl_trx_updated.tr,
       );
     }
   }

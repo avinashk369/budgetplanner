@@ -65,14 +65,14 @@ class IncomeController extends BaseController {
 
   String? validateAmount(String amount) {
     if (amount.length < 1) {
-      return "Please enter amount";
+      return lbl_amount_error.tr;
     }
     return null;
   }
 
   String? validatePassword(String password) {
     if (password.length <= 6) {
-      return "Notes must be of 6 characters";
+      return lbl_notes_error.tr;
     }
     return null;
   }
@@ -85,8 +85,8 @@ class IncomeController extends BaseController {
     if (GetUtils.isNull(incomeModel.value.name)) {
       print("Please select income");
       SnackBarDialog.displaySnackbar(
-        "Income",
-        "Please select income source",
+        total_income.tr,
+        lbl_income_source_error.tr,
       );
 
       return;
@@ -114,16 +114,14 @@ class IncomeController extends BaseController {
       } catch (e) {
         Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
         SnackBarDialog.displaySnackbar(
-          "Transaction",
-          "Ooops!!!...transaction cancelled!",
+          transactionTab.tr,
+          lbl_trx_cancelled.tr,
         );
       } finally {
         isLoading(false);
         Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
         SnackBarDialog.displaySuccessSnackbar(
-          "Transaction",
-          "Transaction completed successfully!",
-        );
+            transactionTab.tr, lbl_trx_success.tr);
       }
     }
   }
@@ -151,14 +149,14 @@ class IncomeController extends BaseController {
     } catch (e) {
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
       SnackBarDialog.displaySnackbar(
-        "Transaction",
-        "Ooops!!!...transaction not updated!",
+        transactionTab.tr,
+        lbl_trx_not_updated.tr,
       );
     } finally {
       isLoading(false);
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
-      Get.showSnackbar(SnackBarDialog.getSnanck(
-              "Transaction updated successfully!", "Transaction"))!
+      Get.showSnackbar(
+              SnackBarDialog.getSnanck(lbl_trx_updated.tr, transactionTab.tr))!
           .whenComplete(() => Get.back(
                 canPop: true,
               ));
