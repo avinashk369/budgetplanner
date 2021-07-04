@@ -1,8 +1,6 @@
 import 'package:budgetplanner/ad/native_ad.dart';
 import 'package:budgetplanner/controllers/ad_controller.dart';
-import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
-import 'package:budgetplanner/screens/bottom_nav/pages/budget/budget_card.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/transaction_card.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
