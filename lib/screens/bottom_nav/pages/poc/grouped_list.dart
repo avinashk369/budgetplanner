@@ -1,13 +1,9 @@
 import 'package:budgetplanner/models/transaction_model.dart';
-import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/transaction_card.dart';
-import 'package:budgetplanner/screens/bottom_nav/pages/transaction/update_transaction.dart';
-import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/date_formatter.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 class GroupedList extends StatefulWidget {

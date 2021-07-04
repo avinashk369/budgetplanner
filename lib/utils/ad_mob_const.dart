@@ -4,13 +4,17 @@ class AdmobConst {
   var androidBBIntertitialAdUnitId = "ca-app-pub-4538984371652894/3883090172";
   var androidBBRewardedAdUnitId = "ca-app-pub-4538984371652894/4813028461";
 
+// test ad id android
   var testAppId = "ca-app-pub-3940256099942544~3347511713";
   var testbannerId = "ca-app-pub-3940256099942544/6300978111";
   var testIntertitialId = "ca-app-pub-3940256099942544/1033173712";
   var testRewardedId = "ca-app-pub-3940256099942544/5224354917";
+  var nativeAndroidAdId = "ca-app-pub-3940256099942544/2247696110";
 
+// test ad id ios
   var iosAppId = "ca-app-pub-3940256099942544~1458002511";
   var iosBannerId = "ca-app-pub-3940256099942544/2934735716";
   var iosIntertitialId = "ca-app-pub-3940256099942544/4411468910";
   var iosRewarded = "ca-app-pub-3940256099942544/1712485313";
+  var nativeIosAdId = "ca-app-pub-3940256099942544/3986624511";
 }

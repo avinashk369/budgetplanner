@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		2B50D94626922D9E0066406B /* ListTileNativeAdFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50D94526922D9E0066406B /* ListTileNativeAdFactory.swift */; };
+		2B50D949269230330066406B /* ListTileNativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B50D948269230330066406B /* ListTileNativeAdView.xib */; };
 		2B779C892674728D004E80F6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B779C882674728D004E80F6 /* GoogleService-Info.plist */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		582B7E1B8D9332E0B40594D6 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180FDAB8FB09A6B668759D88 /* Pods_Runner.framework */; };
@@ -34,6 +36,8 @@
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		180FDAB8FB09A6B668759D88 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B50D94526922D9E0066406B /* ListTileNativeAdFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTileNativeAdFactory.swift; sourceTree = "<group>"; };
+		2B50D948269230330066406B /* ListTileNativeAdView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTileNativeAdView.xib; sourceTree = "<group>"; };
 		2B779C882674728D004E80F6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -123,6 +127,8 @@
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
+				2B50D94526922D9E0066406B /* ListTileNativeAdFactory.swift */,
+				2B50D948269230330066406B /* ListTileNativeAdView.xib */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -191,6 +197,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B50D949269230330066406B /* ListTileNativeAdView.xib in Resources */,
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				2B779C892674728D004E80F6 /* GoogleService-Info.plist in Resources */,
@@ -293,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B50D94626922D9E0066406B /* ListTileNativeAdFactory.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);

@@ -13,10 +13,14 @@ class AdController extends GetxController {
   var isRewardedAdReady = false.obs;
   setRewardedAdReady(bool ready) => isRewardedAdReady(ready);
 
+  var isNativeAdReady = false.obs;
+  setNativeAdReady(bool ready) => isNativeAdReady(ready);
+
   @override
   void onInit() {
     // TODO: implement onInit
     loadBannerAd();
+    loadNativeAd();
     _loadInterstitialAd();
     _loadRewardedAd();
     super.onInit();
@@ -28,6 +32,7 @@ class AdController extends GetxController {
     super.onClose();
     interstitialAd?.dispose();
     bannerAd.dispose();
+    ad.dispose();
     interstitialAd?.dispose();
   }
 
@@ -111,5 +116,27 @@ class AdController extends GetxController {
         },
       ),
     );
+  }
+
+  late NativeAd ad;
+  void loadNativeAd() {
+    ad = NativeAd(
+      adUnitId: AdHelper.nativeAdUnitId,
+      factoryId: 'listTile',
+      request: AdRequest(),
+      listener: NativeAdListener(
+        onAdLoaded: (_) {
+          setNativeAdReady(true);
+        },
+        onAdFailedToLoad: (ad, error) {
+          // Releases an ad resource when it fails to load
+          ad.dispose();
+          setNativeAdReady(false);
+          print('Ad load failed (code=${error.code} message=${error.message})');
+        },
+      ),
+    );
+
+    ad.load();
   }
 }
