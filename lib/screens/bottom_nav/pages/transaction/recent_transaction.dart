@@ -17,6 +17,16 @@ class _RecentTransactionState extends State<RecentTransaction> {
   final controller = AdController.tagged(adController);
 
   static final _kAdIndex = 4;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // _kAdIndex = (widget.transactionModelList.length > 4)
+    //     ? 4
+    //     : widget.transactionModelList.length;
+    super.initState();
+  }
+
   int _getDestinationItemIndex(int rawIndex) {
     if (rawIndex >= _kAdIndex && controller.isNativeAdReady.value) {
       return rawIndex - 1;
@@ -32,7 +42,10 @@ class _RecentTransactionState extends State<RecentTransaction> {
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.vertical,
         itemCount: widget.transactionModelList.length +
-            (controller.isNativeAdReady.value ? 1 : 0),
+            ((controller.isNativeAdReady.value &&
+                    widget.transactionModelList.length >= _kAdIndex)
+                ? 1
+                : 0),
         separatorBuilder: (context, index) => Padding(
               padding:
                   EdgeInsets.only(left: 70, bottom: kSpaceS, right: kSpaceS),

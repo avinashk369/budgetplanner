@@ -29,8 +29,11 @@ class BudgetController extends GetxController {
   static BudgetController get to => Get.find<BudgetController>();
   static BudgetController tagged(String name) =>
       Get.find<BudgetController>(tag: name);
+
+  late String userId;
   @override
   void onInit() {
+    userId = PreferenceUtils.getString(user_id);
     amountController = TextEditingController();
     notesController = TextEditingController();
     () async {
@@ -95,8 +98,8 @@ class BudgetController extends GetxController {
 
     if (budgetKey.currentState!.validate()) {
       //check if budget eist with the same name if yes then open update screen else let it save
-      BudgetModel? bm =
-          await DataRepositoryImpl().getBudgetModel(budgetCatModel.value.name!);
+      BudgetModel? bm = await DataRepositoryImpl()
+          .getBudgetModel(budgetCatModel.value.name!, userId);
       if (bm != null) {
         print(bm.amount);
         Get.to(UpdateBudget(budgetModel: bm));

@@ -457,11 +457,12 @@ class DataRepositoryImpl implements DataRepository {
     }
   }
 
-  Future<BudgetModel?> getBudgetModel(String name) async {
+  Future<BudgetModel?> getBudgetModel(String name, String userId) async {
     BudgetModel? budgetModel;
     var response = await _firestore
         .collection(userBudget)
         .where('cat_name', isEqualTo: name)
+        .where('user_id', isEqualTo: userId)
         .get();
     print("${response.docs.length} response");
     if (response.docs.length > 0)
@@ -469,11 +470,15 @@ class DataRepositoryImpl implements DataRepository {
     return budgetModel;
   }
 
-  Stream<List<BudgetModel>> listAllBudget() async* {
+  Stream<List<BudgetModel>> listAllBudget(String userId) async* {
     List<BudgetModel> budgetModelList = [];
     final transactionController = TransactionEntryController.to;
 
-    yield* _firestore.collection(userBudget).snapshots().map((query) {
+    yield* _firestore
+        .collection(userBudget)
+        .where('user_id', isEqualTo: userId)
+        .snapshots()
+        .map((query) {
       return query.docs.map((doc) {
         //return getBudgetDetail(BudgetModel.fromJson(doc.data()))!;
         BudgetModel budget = BudgetModel.fromJson(doc.data());

@@ -47,7 +47,7 @@ class TransactionEntryController extends GetxController {
     () async {
       transactionTypeList = await getTransactionTypeList();
       transactionModel.bindStream(getTransactionList(userId, expense)!);
-      budgetmodel.bindStream(getBudgetListDemo()!);
+      budgetmodel.bindStream(getBudgetListDemo(userId)!);
       totalExpense.bindStream(getTotalExpense("", userId)!);
       totalIncome.bindStream(getTotalIncome("", userId)!);
       recentTransactionModel.bindStream(getRecentTransactionList(userId)!);
@@ -151,10 +151,10 @@ class TransactionEntryController extends GetxController {
     }
   }
 
-  Stream<List<BudgetModel>>? getBudgetListDemo() {
+  Stream<List<BudgetModel>>? getBudgetListDemo(String userId) {
     try {
       isLoading(true);
-      return DataRepositoryImpl().listAllBudget();
+      return DataRepositoryImpl().listAllBudget(userId);
     } catch (e) {} finally {
       isLoading(false);
     }
