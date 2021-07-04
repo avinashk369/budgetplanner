@@ -1,6 +1,9 @@
+import 'package:budgetplanner/ad/banner_ad.dart';
+import 'package:budgetplanner/controllers/ad_controller.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/settings/language_data.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +19,8 @@ class LanguageScreen extends StatefulWidget {
 class _LanguageScreenState extends State<LanguageScreen> {
   @override
   Widget build(BuildContext context) {
+    final adCont = AdController.tagged(adController);
+
     return Scaffold(
       appBar: AppBar(elevation: 0),
       body: Container(
@@ -126,6 +131,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BannerAdView(),
     );
   }
 }

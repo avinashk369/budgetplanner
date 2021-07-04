@@ -14,7 +14,6 @@ class AddExpense extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = ExpenseController.tagged(expenseController);
-    final adCont = AdController.tagged(adController);
 
     final String quote = "\"Keep notes of all of your expenses\"";
     final String author = "Mr. Budget";
@@ -25,23 +24,12 @@ class AddExpense extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverToBoxAdapter(
-            //child: QuoteContainer(quote, author),
-            child: Obx(() => (adCont.isBannerAdReady.value)
-                ? Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      width: adCont.bannerAd.size.width.toDouble(),
-                      height: adCont.bannerAd.size.height.toDouble(),
-                      child: AdWidget(ad: adCont.bannerAd),
-                    ),
-                  )
-                : Container()),
+            child: QuoteContainer(quote, author),
           ),
           SliverToBoxAdapter(
-            child:SizedBox(
-              height:10,
-            )
-          ),
+              child: SizedBox(
+            height: 10,
+          )),
           SliverToBoxAdapter(
             child: Form(
               key: controller.expenseKey,

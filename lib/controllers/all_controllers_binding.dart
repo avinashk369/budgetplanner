@@ -45,5 +45,7 @@ class AllControllersBinding implements Bindings {
         tag: dashboardController, fenix: true);
     Get.lazyPut<AdController>(() => AdController(),
         tag: adController, fenix: true);
+    Get.lazyPut<AdController>(() => AdController(), fenix: true);
+    Get.create<AdController>(() => AdController(), tag: newAdController);
   }
 }

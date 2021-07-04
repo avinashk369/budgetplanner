@@ -1,7 +1,10 @@
+import 'package:budgetplanner/ad/banner_ad.dart';
+import 'package:budgetplanner/controllers/ad_controller.dart';
 import 'package:budgetplanner/controllers/settings_controller.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/settings/request_form.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/income_form.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -14,6 +17,8 @@ class FeatureRequestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = SettingsController.tagged(features);
+    final adCont = AdController.tagged(adController);
+
     return Scaffold(
       appBar: AppBar(elevation: 0),
       body: Container(
@@ -75,6 +80,7 @@ class FeatureRequestScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BannerAdView(),
     );
   }
 }

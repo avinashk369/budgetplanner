@@ -1,3 +1,5 @@
+import 'package:budgetplanner/ad/banner_ad.dart';
+import 'package:budgetplanner/controllers/ad_controller.dart';
 import 'package:budgetplanner/controllers/budget_controller.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/budget_model.dart';
@@ -26,6 +28,8 @@ class UpdateBudget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = BudgetController.tagged(updateBudgetController);
+    final adCont = AdController.tagged(adController);
+
     iniBudget(controller);
     return Scaffold(
       appBar: AppBar(elevation: 0),
@@ -114,6 +118,7 @@ class UpdateBudget extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BannerAdView(),
     );
   }
 }

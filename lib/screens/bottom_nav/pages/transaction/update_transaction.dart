@@ -1,3 +1,5 @@
+import 'package:budgetplanner/ad/banner_ad.dart';
+import 'package:budgetplanner/controllers/ad_controller.dart';
 import 'package:budgetplanner/controllers/expense_controller.dart';
 import 'package:budgetplanner/controllers/income_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
@@ -56,6 +58,7 @@ class UpdateTransaction extends StatelessWidget {
     final controller = TransactionEntryController.to;
     final incomeC = Get.find<IncomeController>(tag: incomeController);
     final expenseC = Get.find<ExpenseController>(tag: expenseController);
+    final adCont = AdController.tagged(adController);
 
     (transactionModel.transactionType == expense)
         ? initExpenseForm(expenseC)
@@ -164,6 +167,7 @@ class UpdateTransaction extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BannerAdView(),
     );
   }
 }

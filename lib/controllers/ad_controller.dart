@@ -7,12 +7,28 @@ class AdController extends GetxController {
   static AdController tagged(String name) => Get.find<AdController>(tag: name);
   var isBannerAdReady = false.obs;
   setBannerAdReady(bool ready) => isBannerAdReady(ready);
+  // TODO: Add _isInterstitialAdReady
+  var isInterstitialAdReady = false.obs;
+  setInterstitialAdReady(bool ready) => isInterstitialAdReady(ready);
+  var isRewardedAdReady = false.obs;
+  setRewardedAdReady(bool ready) => isRewardedAdReady(ready);
 
   @override
   void onInit() {
     // TODO: implement onInit
     loadBannerAd();
+    _loadInterstitialAd();
+    _loadRewardedAd();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    interstitialAd?.dispose();
+    bannerAd.dispose();
+    interstitialAd?.dispose();
   }
 
   // TODO: Add _bannerAd
@@ -37,5 +53,63 @@ class AdController extends GetxController {
     );
 
     bannerAd.load();
+  }
+
+// TODO: Add _interstitialAd
+  InterstitialAd? interstitialAd;
+  // TODO: Implement _loadInterstitialAd()
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          this.interstitialAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              //_moveToHome();
+              print("What to do now");
+            },
+          );
+
+          setInterstitialAdReady(true);
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+          setInterstitialAdReady(false);
+        },
+      ),
+    );
+  }
+
+// TODO: Add _rewardedAd
+  late RewardedAd rewardedAd;
+  // TODO: Add _isRewardedAdReady
+
+  // TODO: Implement _loadRewardedAd()
+  void _loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: AdHelper.rewardedAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          this.rewardedAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              setRewardedAdReady(false);
+              _loadRewardedAd();
+            },
+          );
+
+          setRewardedAdReady(true);
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load a rewarded ad: ${err.message}');
+          setRewardedAdReady(false);
+        },
+      ),
+    );
   }
 }
