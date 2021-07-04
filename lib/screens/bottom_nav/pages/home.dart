@@ -7,9 +7,11 @@ import 'package:budgetplanner/screens/bottom_nav/pages/transaction/recent_transa
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/budget_shimmer.dart';
 import 'package:budgetplanner/widgets/header_row.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
+import 'package:budgetplanner/widgets/trx_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:get/get.dart';
@@ -136,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                           );
                         } else {
                           return controller.isLoading()
-                              ? Center(child: LoadingUI())
+                              ? BudgetShimmer()
                               : BudgetList(
                                   budgetModel: transactionController.budgetList,
                                 );
@@ -173,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                         );
                       } else {
                         return controller.isLoading()
-                            ? Center(child: LoadingUI())
+                            ? TrxShimmer()
                             : RecentTransaction(
                                 transactionModelList:
                                     transactionController.recentTransactionList,

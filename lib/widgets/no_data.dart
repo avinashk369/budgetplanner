@@ -26,7 +26,7 @@ class NoData extends StatelessWidget {
       children: [
         Flexible(
           child: Image.asset(
-            'assets/budget.png',
+            'assets/bl4.png',
           ),
         ),
         Flexible(

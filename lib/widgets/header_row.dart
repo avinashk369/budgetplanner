@@ -119,7 +119,6 @@ class HeaderRow extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: SleekCircularSlider(
-                    key: Key("fasting_progress"),
                     innerWidget: (percentage) {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,

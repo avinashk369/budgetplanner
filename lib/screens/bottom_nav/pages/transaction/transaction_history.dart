@@ -6,6 +6,7 @@ import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
+import 'package:budgetplanner/widgets/trx_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -32,7 +33,7 @@ class TransactionHistory extends GetView {
             );
           } else {
             return controller.isLoading()
-                ? Center(child: LoadingUI())
+                ? TrxShimmer()
                 : GroupedList(
                     transactionModelList: controller.transactionList,
                   );

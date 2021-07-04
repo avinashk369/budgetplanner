@@ -541,6 +541,7 @@ class DataRepositoryImpl implements DataRepository {
         .snapshots()
         .forEach((element) async {
       double totalAMount = 0.0;
+      transactionController.setTotalExpense(totalAMount);
       element.docs.forEach((element) {
         TransactionModel transaction =
             TransactionModel.fromJson(element.data());
@@ -559,6 +560,7 @@ class DataRepositoryImpl implements DataRepository {
         .snapshots()
         .forEach((element) async {
       double totalAMount = 0.0;
+      transactionController.setTotalIncome(totalAMount);
       element.docs.forEach((element) {
         TransactionModel transaction =
             TransactionModel.fromJson(element.data());
