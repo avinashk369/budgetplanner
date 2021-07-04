@@ -60,6 +60,7 @@ dependencies:
   grouped_list: ^4.0.0
   share: ^2.0.4
   shimmer: ^2.0.0
+  google_mobile_ads: ^0.13.2
   
 
 dependency_overrides:

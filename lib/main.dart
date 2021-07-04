@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'internationalization/internationalization.dart';
 import 'routes_generator.dart';
 import 'utils/PreferenceUtils.dart';
@@ -18,6 +19,7 @@ GlobalKey navBarGlobalKey = GlobalKey(debugLabel: 'bottomAppBar');
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await MobileAds.instance.initialize();
   await PreferenceUtils.getInstance();
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
@@ -52,6 +54,11 @@ class _MyAppState extends State<MyApp> {
       });
     });
     super.initState();
+  }
+
+  Future<InitializationStatus> _initGoogleMobileAds() {
+    // TODO: Initialize Google Mobile Ads SDK
+    return MobileAds.instance.initialize();
   }
 
   @override

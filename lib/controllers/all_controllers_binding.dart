@@ -1,3 +1,4 @@
+import 'package:budgetplanner/controllers/ad_controller.dart';
 import 'package:budgetplanner/controllers/budget_controller.dart';
 import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/controllers/expense_controller.dart';
@@ -42,5 +43,7 @@ class AllControllersBinding implements Bindings {
         tag: features, fenix: true);
     Get.lazyPut<DashboardController>(() => DashboardController(),
         tag: dashboardController, fenix: true);
+    Get.lazyPut<AdController>(() => AdController(),
+        tag: adController, fenix: true);
   }
 }
