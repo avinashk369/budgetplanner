@@ -68,11 +68,13 @@ class One extends StatelessWidget {
                                 color: Colors.red),
                           ),
                         ),
-                        Text(
-                          'Your personal finance assistance',
-                          style: kLabelStyle.apply(
-                              fontSizeDelta: 3, color: kDarkGrey),
-                          textAlign: TextAlign.center,
+                        Flexible(
+                          child: Text(
+                            'Your personal expense management tool',
+                            style: kLabelStyle.apply(
+                                fontSizeDelta: 3, color: kDarkGrey),
+                            textAlign: TextAlign.left,
+                          ),
                         ),
                       ],
                     ),
