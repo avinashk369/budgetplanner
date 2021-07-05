@@ -2,11 +2,15 @@ import 'package:get/get.dart';
 
 import 'en.dart';
 import 'es.dart';
+import 'ja.dart';
 import 'pt.dart';
 import 'hi.dart';
 import 'ta.dart';
 import 'it.dart';
 import 'de.dart';
+import 'ru.dart';
+import 'zh.dart';
+import 'bn.dart';
 
 class MyTranslations extends Translations {
   @override
@@ -19,6 +23,10 @@ class MyTranslations extends Translations {
       'ta': ta,
       'de': de,
       'it': it,
+      'ru': ru,
+      'ja': ja,
+      'zh': zh,
+      'bn': bn
     };
   }
 }
