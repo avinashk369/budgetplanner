@@ -61,7 +61,7 @@ class UpdateBudget extends StatelessWidget {
                           ),
                           Text(
                             budgetTab.tr,
-                            style: kTitleStyle,
+                            style: Theme.of(context).textTheme.headline1,
                           )
                         ],
                       ),

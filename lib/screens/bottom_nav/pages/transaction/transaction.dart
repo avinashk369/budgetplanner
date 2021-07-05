@@ -4,9 +4,9 @@ import 'package:budgetplanner/screens/bottom_nav/pages/transaction/add_expense.d
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/add_income.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
+import 'package:budgetplanner/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class Transaction extends StatefulWidget {
   const Transaction({Key? key}) : super(key: key);
@@ -64,6 +64,10 @@ class _TransactionState extends State<Transaction>
               centerTitle: true,
               title: Text(
                 transactionEntry.tr,
+                style: kLabelStyle.copyWith(
+                  color: Theme.of(context).hintColor,
+                  fontSize: 18,
+                ),
               ),
               floating: true,
               pinned: true,

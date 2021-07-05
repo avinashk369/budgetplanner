@@ -25,7 +25,7 @@ class QuoteContainer extends GetView {
               children: [
                 Text(
                   quote,
-                  style: kQuoteStyle.apply(color: kPink),
+                  style: Theme.of(context).textTheme.headline3,
                 ),
                 SizedBox(
                   height: 5,
@@ -51,7 +51,8 @@ class QuoteContainer extends GetView {
                     Text(
                       author,
                       textAlign: TextAlign.end,
-                      style: kLabelStyle.apply(color: whiteColor),
+                      style:
+                          kLabelStyle.apply(color: Theme.of(context).hintColor),
                     ),
                   ],
                 ),

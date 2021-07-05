@@ -1,18 +1,19 @@
 import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
-import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NoData extends StatelessWidget {
+  final String title;
   final String message;
   final String imageUrl;
   final int index;
 
   const NoData(
       {Key? key,
+      required this.title,
       required this.message,
       required this.imageUrl,
       required this.index})
@@ -26,7 +27,7 @@ class NoData extends StatelessWidget {
       children: [
         Flexible(
           child: Image.asset(
-            'assets/bl4.png',
+            imageUrl,
           ),
         ),
         Flexible(
@@ -34,11 +35,25 @@ class NoData extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                message,
+                title,
                 textAlign: TextAlign.left,
+                style: TextStyle(
+                    color: heenColor,
+                    fontSize: 16,
+                    fontStyle: FontStyle.italic),
               ),
               SizedBox(
-                height: 20,
+                height: 5,
+              ),
+              Text(
+                message,
+                textAlign: TextAlign.left,
+                style: kLabelStyle.copyWith(
+                  color: Theme.of(context).hintColor,
+                ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               OutlinedButton(
                 style: OutlinedButton.styleFrom(
@@ -62,10 +77,10 @@ class NoData extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Text(
-                lbl_add_one.tr,
-                style: kLabelStyleBold,
-              ),
+              // Text(
+              //   lbl_add_one.tr,
+              //   style: kLabelStyleBold,
+              // ),
             ],
           ),
         ),

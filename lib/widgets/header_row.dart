@@ -48,7 +48,7 @@ class HeaderRow extends StatelessWidget {
                         DateFormat('LLLL').format(DateTime.now()) +
                             " " +
                             DateFormat('d').format(DateTime.now()),
-                        style: kTitleStyle,
+                        style: Theme.of(context).textTheme.headline1,
                       ),
                       SizedBox(
                         height: 20,
@@ -129,9 +129,12 @@ class HeaderRow extends StatelessWidget {
                                 TextSpan(
                                   text: MathUtils.getPercentage(income, expense)
                                       .toString(),
-                                  style: kTitleStyle,
+                                  style: Theme.of(context).textTheme.headline1,
                                 ),
-                                TextSpan(text: '%', style: kTitleStyleSmall),
+                                TextSpan(
+                                    text: '%',
+                                    style:
+                                        Theme.of(context).textTheme.headline2),
                               ],
                             ),
                           )

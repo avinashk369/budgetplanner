@@ -9,7 +9,6 @@ import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/budget_shimmer.dart';
 import 'package:budgetplanner/widgets/header_row.dart';
-import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
 import 'package:budgetplanner/widgets/trx_shimmer.dart';
 import 'package:flutter/material.dart';
@@ -96,10 +95,13 @@ class _HomePageState extends State<HomePage> {
               elevation: 0,
               flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text(myTitle,
-                      style: kLabelStyle.apply(
-                          color: Theme.of(context).hintColor,
-                          fontSizeDelta: 6)),
+                  title: Text(
+                    myTitle,
+                    style: kLabelStyle.copyWith(
+                      color: Theme.of(context).hintColor,
+                      fontSize: 18,
+                    ),
+                  ),
                   background: Obx(() => (!transactionController.isLoading())
                       ? HeaderRow(
                           income: transactionController.totalIncome.value,
@@ -131,9 +133,9 @@ class _HomePageState extends State<HomePage> {
                       child: Obx(() {
                         if (transactionController.budgetList.isEmpty) {
                           return NoData(
-                            message: lbl_no_budget.tr,
-                            imageUrl:
-                                "https://image.freepik.com/free-vector/estate-tax-composition_98292-7428.jpg",
+                            title: lbl_no_budget.tr,
+                            message: desc_no_budget.tr,
+                            imageUrl: 'assets/bl4.png',
                             index: 3,
                           );
                         } else {
@@ -168,9 +170,9 @@ class _HomePageState extends State<HomePage> {
                     child: Obx(() {
                       if (transactionController.recentTransactionList.isEmpty) {
                         return NoData(
-                          message: lbl_no_transaction.tr,
-                          imageUrl:
-                              "https://image.freepik.com/free-vector/estate-tax-composition_98292-7428.jpg",
+                          title: lbl_no_transaction.tr,
+                          message: desc_no_transaction.tr,
+                          imageUrl: 'assets/bl4.png',
                           index: 2,
                         );
                       } else {

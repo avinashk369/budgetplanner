@@ -1,5 +1,6 @@
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:get/get.dart';
@@ -72,10 +73,10 @@ class CustomTheme with ChangeNotifier {
         brightness: Brightness.light,
         fontFamily: 'Montserrat',
         textTheme: TextTheme(
-          headline1: TextStyle(
-            color: darkColor,
-            fontSize: 16,
-          ),
+          headline1: kTitleStyle.copyWith(color: shade),
+          headline2: kTitleStyleSmall.copyWith(color: shade),
+          headline3: kQuoteStyle.copyWith(color: shade),
+          caption: kLabelStyle.copyWith(color: shade),
           bodyText1: TextStyle(
             color: darkColor,
             fontSize: 18,
@@ -165,10 +166,10 @@ class CustomTheme with ChangeNotifier {
       brightness: Brightness.dark,
       fontFamily: 'Montserrat',
       textTheme: TextTheme(
-        headline1: TextStyle(
-          color: whiteColor,
-          fontSize: 16,
-        ),
+        headline1: kTitleStyle,
+        headline2: kTitleStyleSmall,
+        headline3: kQuoteStyle,
+        caption: kLabelStyle,
         bodyText1: TextStyle(
           color: whiteColor,
           fontSize: 18,

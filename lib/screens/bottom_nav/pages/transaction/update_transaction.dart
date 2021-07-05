@@ -97,7 +97,7 @@ class UpdateTransaction extends StatelessWidget {
                             (transactionModel.transactionType == income)
                                 ? income.tr
                                 : expense.tr,
-                            style: kTitleStyle,
+                            style: Theme.of(context).textTheme.headline1,
                           )
                         ],
                       ),

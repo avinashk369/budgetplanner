@@ -57,7 +57,7 @@ class _SettingsState extends State<Settings> {
                           ),
                           Text(
                             "Settings",
-                            style: kTitleStyle,
+                            style: Theme.of(context).textTheme.headline1,
                           )
                         ],
                       ),
@@ -207,7 +207,7 @@ class _SettingsState extends State<Settings> {
                           ListTile(
                             title: Text(
                               "Log out",
-                              style: kLabelStyle.apply(color: redColor),
+                              style: kLabelStyle.apply(color: shade),
                             ),
                             onTap: () async {
                               await Authentication.signOut(context: context);

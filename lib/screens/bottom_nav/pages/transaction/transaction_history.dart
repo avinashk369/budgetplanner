@@ -26,9 +26,9 @@ class TransactionHistory extends GetView {
         child: Obx(() {
           if (controller.transactionList.isEmpty) {
             return NoData(
-              message: lbl_no_transaction.tr,
-              imageUrl:
-                  "https://image.freepik.com/free-vector/estate-tax-composition_98292-7428.jpg",
+              title: lbl_no_transaction.tr,
+              message: desc_no_transaction.tr,
+              imageUrl: 'assets/bl4.png',
               index: 2,
             );
           } else {

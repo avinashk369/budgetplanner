@@ -25,7 +25,7 @@ class CategoryChooser extends GetView {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
-            flex: 1,
+            flex: 2,
             child: leftRowData,
           ),
           Flexible(

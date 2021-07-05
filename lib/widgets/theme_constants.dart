@@ -132,3 +132,4 @@ const tealColor = Color(0xff2ec4b6);
 const redColor = Color(0xffe71d36);
 const heenColor = Color(0xffff9f1c);
 const greyColor = Color(0xffe2e2df);
+const shade = Color(0xffff8c61);
