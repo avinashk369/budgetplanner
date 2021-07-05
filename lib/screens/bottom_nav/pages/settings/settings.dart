@@ -9,6 +9,7 @@ import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/authentication.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/route_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -48,7 +49,7 @@ class _SettingsState extends State<Settings> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Customise your app",
+                            lbl_settings_cutomise.tr,
                             style: kLabelStyle.apply(
                                 color: Theme.of(context).hintColor),
                           ),
@@ -56,7 +57,7 @@ class _SettingsState extends State<Settings> {
                             height: 5,
                           ),
                           Text(
-                            "Settings",
+                            settingsTab.tr,
                             style: Theme.of(context).textTheme.headline1,
                           )
                         ],
@@ -234,7 +235,7 @@ class _SettingsState extends State<Settings> {
           padding: const EdgeInsets.all(16.0),
           child: Text(
             "App version 0.0.1",
-            style: kLabelStyle,
+            style: kLabelStyle.copyWith(color: Theme.of(context).hintColor),
             textAlign: TextAlign.center,
           ),
         ),

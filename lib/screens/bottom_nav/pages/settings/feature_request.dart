@@ -39,7 +39,7 @@ class FeatureRequestScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Request for new",
+                            lbl_request_feature.tr,
                             style: kLabelStyle.apply(
                                 color: Theme.of(context).hintColor),
                           ),
@@ -47,7 +47,7 @@ class FeatureRequestScreen extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            "Feature",
+                            lbl_feature.tr,
                             style: Theme.of(context).textTheme.headline1,
                           )
                         ],
@@ -70,7 +70,7 @@ class FeatureRequestScreen extends StatelessWidget {
                         onPressed: () {
                           controller.submitRequest(context);
                         },
-                        child: Text(submit),
+                        child: Text(submit.tr),
                       ),
                     ],
                   ),
