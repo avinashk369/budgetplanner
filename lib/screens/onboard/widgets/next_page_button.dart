@@ -17,8 +17,8 @@ class NextPageButton extends StatelessWidget {
       shape: CircleBorder(),
       fillColor: kWhite,
       child: Icon(
-        Icons.arrow_forward,
-        color: kOrange,
+        Icons.arrow_forward_ios,
+        color: darkColor,
         size: 32.0,
       ),
       onPressed: onPressed,

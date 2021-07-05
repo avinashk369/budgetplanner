@@ -1,6 +1,8 @@
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 const String _svg_j6doiw =
     '<svg viewBox="0.5 289.5 50.0 110.0" ><path transform="translate(0.5, 289.5)" d="M 0 0 L 50 0" fill="#242323" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /><path transform="translate(0.5, 399.5)" d="M 0 0 L 45 0" fill="none" stroke="#242323" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
@@ -10,18 +12,17 @@ class One extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kDark,
+      backgroundColor: greyColor,
       body: Stack(
         children: <Widget>[
           // Adobe XD layer: 'photo-1566501206188…' (shape)
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: const AssetImage('assets/images/two.jpg'),
-                fit: BoxFit.cover,
-              ),
+            width: double.infinity,
+            //decoration: BoxDecoration(border: Border.all(color: red)),
+            padding: const EdgeInsets.all(40.0),
+            child: Image.asset(
+              'assets/logo1.png',
+              height: 160,
             ),
           ),
           Column(
@@ -33,7 +34,7 @@ class One extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Text(
-                      'MAKE \nYOURSELF',
+                      'BE \nFINANCIALLY',
                       style: kTitleStyle.apply(color: kDarkGrey),
                       textAlign: TextAlign.left,
                     ),
@@ -41,9 +42,9 @@ class One extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Text(
-                      'BETTER',
+                      'DISCIPLINE',
                       style: kTitleStyle.apply(
-                        color: kOrange,
+                        color: shade,
                       ),
                       textAlign: TextAlign.left,
                     ),
@@ -68,7 +69,7 @@ class One extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Your personal fitness trainer',
+                          'Your personal finance assistance',
                           style: kLabelStyle.apply(
                               fontSizeDelta: 3, color: kDarkGrey),
                           textAlign: TextAlign.center,
@@ -106,8 +107,8 @@ class One extends StatelessWidget {
                         ),
                         child: Center(
                             child: Text(
-                          'Start training',
-                          style: kButtonStyle,
+                          appname,
+                          style: kLabelStyleBold.copyWith(fontSize: 18),
                         )),
                       ),
                     ],

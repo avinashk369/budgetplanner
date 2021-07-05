@@ -48,7 +48,7 @@ class FeatureRequestScreen extends StatelessWidget {
                           ),
                           Text(
                             "Feature",
-                            style: kTitleStyle,
+                            style: Theme.of(context).textTheme.headline1,
                           )
                         ],
                       ),

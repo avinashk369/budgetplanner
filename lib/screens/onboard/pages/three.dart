@@ -4,9 +4,11 @@ import 'package:budgetplanner/screens/user/email_signin.dart';
 import 'package:budgetplanner/screens/user/user_login.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Three extends StatefulWidget {
   final double screenHeight;
@@ -61,21 +63,30 @@ class _ThreeState extends State<Three> with TickerProviderStateMixin {
                   height: MediaQuery.of(context).size.height * 0.30,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.transparent, width: 0)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'YOUR ULTIMATEPERSONAL TRAINER',
-                        style: kTitleStyle,
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        'Personalized workouts and plans for any fitness goal and skill level',
-                        style: kSubtitleStyle,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          lbl_no_transaction.tr,
+                          style: kTitleStyle.copyWith(fontSize: 20),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          desc_no_transaction.tr,
+                          style: kLabelStyle.copyWith(color: whiteColor),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Column(
@@ -90,15 +101,21 @@ class _ThreeState extends State<Three> with TickerProviderStateMixin {
                           topLeft: Radius.circular(20.0),
                           topRight: Radius.circular(20.0),
                         ),
-                        image: DecorationImage(
-                          image: const AssetImage('assets/images/three.jpg'),
-                          fit: BoxFit.cover,
-                        ),
+                        color: greylightcolor,
                       ),
                       child: Padding(
                         padding: EdgeInsets.only(bottom: 50),
-                        child: NextPageButton(
-                          onPressed: () async => await _nextPage(),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Image.asset(
+                              'assets/grp.png',
+                              height: 300,
+                            ),
+                            NextPageButton(
+                              onPressed: () async => await _nextPage(),
+                            ),
+                          ],
                         ),
                       ),
                     )

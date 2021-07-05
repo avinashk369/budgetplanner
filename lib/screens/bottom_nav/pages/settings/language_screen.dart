@@ -50,7 +50,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                           ),
                           Text(
                             "Language",
-                            style: kTitleStyle,
+                            style: Theme.of(context).textTheme.headline1,
                           )
                         ],
                       ),
