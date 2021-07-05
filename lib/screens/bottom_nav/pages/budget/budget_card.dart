@@ -7,6 +7,7 @@ import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/mathUtils.dart';
 import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,9 +58,19 @@ class BudgetCard extends StatelessWidget {
                                         budgetModel.amount!,
                                         budgetModel.totalBudgetExpense.value)
                                     .toString(),
-                                style: kTitleStyle,
+                                style: kTitleStyle.copyWith(
+                                    color: (currentTheme.currentTheme ==
+                                            ThemeMode.dark)
+                                        ? shade
+                                        : kPink),
                               ),
-                              TextSpan(text: '%', style: kTitleStyleSmall),
+                              TextSpan(
+                                  text: '%',
+                                  style: kTitleStyleSmall.copyWith(
+                                      color: (currentTheme.currentTheme ==
+                                              ThemeMode.dark)
+                                          ? shade
+                                          : kPink)),
                             ],
                           ),
                         )
