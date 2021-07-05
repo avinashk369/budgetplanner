@@ -47,4 +47,19 @@ const en = {
   lbl_select_budget_cat: "Please select budget category",
   lbl_income_source_error: "Please select income source",
   lbl_trx_not_delete: "Ooops!!!...transaction not deleted!",
+  //new translation
+  lbl_no_budget: "Running out of money every month",
+  desc_no_budget:
+      "Time to start watching where every dollar goes & build more discipline for your financial goals.",
+  lbl_add_one: "Add One",
+  lbl_no_transaction: "Always make a record of your transaction",
+  desc_no_transaction:
+      "It's makes you financially disciplined and boost your financial health.",
+  lbl_config_laguage: "Config your region",
+  lbl_language: "Language",
+  lbl_request_feature: "Request for new",
+  lbl_feature: "Feature",
+  lbl_settings_cutomise: "Customise your app",
+  feature_request: "Please explain your requirements",
+  submit: "Submit",
 };

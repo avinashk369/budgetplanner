@@ -5,6 +5,7 @@ import 'es.dart';
 import 'pt.dart';
 import 'hi.dart';
 import 'ta.dart';
+import 'it.dart';
 import 'de.dart';
 
 class MyTranslations extends Translations {
@@ -17,6 +18,7 @@ class MyTranslations extends Translations {
       'hi': hi,
       'ta': ta,
       'de': de,
+      'it': it,
     };
   }
 }

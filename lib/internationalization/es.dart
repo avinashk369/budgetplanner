@@ -47,4 +47,18 @@ const es = {
   lbl_select_budget_cat: "Seleccione una categoría de presupuesto",
   lbl_income_source_error: "Seleccione la fuente de ingresos",
   lbl_trx_not_delete: "Ooops !!! ... transacción no eliminada!",
+  lbl_no_budget: "Quedarse sin dinero todos los meses",
+  desc_no_budget:
+      "Es hora de comenzar a ver a dónde va cada dólar y desarrollar más disciplina para sus objetivos financieros.",
+  lbl_add_one: "Agrega uno",
+  lbl_no_transaction: "Siempre haga un registro de su transacción",
+  desc_no_transaction:
+      "Te hace disciplinado financieramente y mejora tu salud financiera.",
+  lbl_config_laguage: "Configura tu región",
+  lbl_language: "Idioma",
+  lbl_request_feature: "Solicitud de nuevo",
+  lbl_feature: "Característica",
+  lbl_settings_cutomise: "Personaliza tu aplicación",
+  feature_request: "Por favor explique sus requisitos",
+  submit: "Enviar",
 };

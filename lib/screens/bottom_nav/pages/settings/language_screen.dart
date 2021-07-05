@@ -86,10 +86,14 @@ class _LanguageScreenState extends State<LanguageScreen> {
                               return ListTile(
                                 title: Text(
                                     LanguageData.getLanguageList()[position]
-                                        .name),
+                                        .name,
+                                    style: kLabelStyle.copyWith(
+                                        color: Theme.of(context).hintColor)),
                                 subtitle: Text(
-                                    LanguageData.getLanguageList()[position]
-                                        .code),
+                                  LanguageData.getLanguageList()[position].code,
+                                  style: kLabelStyle.copyWith(
+                                      color: Theme.of(context).hintColor),
+                                ),
                                 trailing: FittedBox(
                                   fit: BoxFit.fill,
                                   child: Row(

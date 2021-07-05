@@ -47,4 +47,18 @@ const de = {
   lbl_select_budget_cat: "Bitte Budgetkategorie auswählen",
   lbl_income_source_error: "Bitte Einkommensquelle auswählen",
   lbl_trx_not_delete: "Hoppla!!!...Transaktion nicht gelöscht!",
+  lbl_no_budget: "Jeden Monat geht das Geld aus",
+  desc_no_budget:
+      "Es ist an der Zeit, zu beobachten, wohin jeder Dollar geht und mehr Disziplin für Ihre finanziellen Ziele aufzubauen.",
+  lbl_add_one: "Füge eins hinzu",
+  lbl_no_transaction: "Machen Sie immer eine Aufzeichnung Ihrer Transaktion",
+  desc_no_transaction:
+      "Es macht Sie finanziell diszipliniert und stärkt Ihre finanzielle Gesundheit.",
+  lbl_config_laguage: "Konfigurieren Sie Ihre Region",
+  lbl_language: "Sprache",
+  lbl_request_feature: "Anfrage für neue",
+  lbl_feature: "Feature",
+  lbl_settings_cutomise: "Passen Sie Ihre App an",
+  feature_request: "Bitte erläutern Sie Ihre Anforderungen",
+  submit: "einreichen",
 };
