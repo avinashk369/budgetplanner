@@ -6,6 +6,7 @@ import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -98,7 +99,9 @@ class TransactionCard extends StatelessWidget {
                   style: kLabelStyle.apply(
                     fontSizeFactor: 1.2,
                     color: (transactionModel.transactionType == expense)
-                        ? shade
+                        ? (currentTheme.currentTheme == ThemeMode.dark)
+                            ? kPink
+                            : shade
                         : greenbuttoncolor,
                   ),
                 ),
