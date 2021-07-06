@@ -2,7 +2,7 @@
     package="com.finance.budgetplanner">
    <application
         android:label="budgetplanner"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/logo_bg">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

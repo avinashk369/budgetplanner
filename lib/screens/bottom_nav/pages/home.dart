@@ -140,27 +140,34 @@ class _HomePageState extends State<HomePage> {
                 [
                   Padding(
                     padding: EdgeInsets.all(10),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.transparent, width: 0),
+                    child: Obx(
+                      () => Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: (transactionController.budgetList.isNotEmpty)
+                            ? MediaQuery.of(context).size.height * .30
+                            : MediaQuery.of(context).size.height * .45,
+                        decoration: BoxDecoration(
+                          border:
+                              Border.all(color: Colors.transparent, width: 0),
+                        ),
+                        child: Obx(() {
+                          if (transactionController.budgetList.isEmpty) {
+                            return NoData(
+                              title: lbl_no_budget.tr,
+                              message: desc_no_budget.tr,
+                              imageUrl: 'assets/bl4.png',
+                              index: 3,
+                            );
+                          } else {
+                            return controller.isLoading()
+                                ? BudgetShimmer()
+                                : BudgetList(
+                                    budgetModel:
+                                        transactionController.budgetList,
+                                  );
+                          }
+                        }),
                       ),
-                      child: Obx(() {
-                        if (transactionController.budgetList.isEmpty) {
-                          return NoData(
-                            title: lbl_no_budget.tr,
-                            message: desc_no_budget.tr,
-                            imageUrl: 'assets/bl4.png',
-                            index: 3,
-                          );
-                        } else {
-                          return controller.isLoading()
-                              ? BudgetShimmer()
-                              : BudgetList(
-                                  budgetModel: transactionController.budgetList,
-                                );
-                        }
-                      }),
                     ),
                   ),
                 ],
@@ -171,7 +178,10 @@ class _HomePageState extends State<HomePage> {
                 if (transactionController.recentTransactionList.isNotEmpty) {
                   return Container(
                     padding: EdgeInsets.only(top: 10, bottom: 5, left: 10),
-                    child: Text(recent_transaction.tr),
+                    child: Text(
+                      recent_transaction.tr,
+                      style: kLabelStyleBold,
+                    ),
                   );
                 } else {
                   return Container();
