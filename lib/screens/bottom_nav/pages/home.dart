@@ -1,3 +1,4 @@
+import 'package:budgetplanner/controllers/ad_controller.dart';
 import 'package:budgetplanner/controllers/test_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
@@ -5,6 +6,7 @@ import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/recent_transaction.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/budget_shimmer.dart';
@@ -27,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   final transactionController = TransactionEntryController.to;
   TestController controller = Get.find<TestController>();
   TestController controller1 = Get.find<TestController>(tag: "buttonEvent");
+  final adCont = AdController.tagged(adController);
   UserModel? userModel;
   late String userId;
   late ScrollController _controller;
@@ -66,7 +69,20 @@ class _HomePageState extends State<HomePage> {
       }
     });
     getUserData();
+    showRewardAd();
     super.initState();
+  }
+
+  void showRewardAd() {
+    print("  reward earned");
+    //to display rewarded ad
+    if (adCont.isRewardedAdReady.value) {
+      adCont.rewardedAd.show(
+        onUserEarnedReward: (ad, reward) {
+          print("${reward.amount} amount earned");
+        },
+      );
+    }
   }
 
   void getUserData() async {

@@ -2,7 +2,6 @@ import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 const String _svg_j6doiw =
     '<svg viewBox="0.5 289.5 50.0 110.0" ><path transform="translate(0.5, 289.5)" d="M 0 0 L 50 0" fill="#242323" stroke="none" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /><path transform="translate(0.5, 399.5)" d="M 0 0 L 45 0" fill="none" stroke="#242323" stroke-width="1" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';

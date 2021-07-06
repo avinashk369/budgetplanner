@@ -1,10 +1,11 @@
+import 'package:budgetplanner/controllers/ad_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/poc/grouped_list.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
+import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
-import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
 import 'package:budgetplanner/widgets/trx_shimmer.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +14,20 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class TransactionHistory extends GetView {
+  void showInterstitialAd(AdController adCont) {
+    print("  reward earned");
+    //to display intertitial ad
+    if (adCont.isInterstitialAdReady.value) {
+      adCont.interstitialAd?.show();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final adCont = AdController.tagged(adController);
     final controller = TransactionEntryController.to;
     final String userId = PreferenceUtils.getString(user_id);
+    showInterstitialAd(adCont);
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
