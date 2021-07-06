@@ -180,7 +180,8 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.only(top: 10, bottom: 5, left: 10),
                     child: Text(
                       recent_transaction.tr,
-                      style: kLabelStyleBold,
+                      style: kLabelStyleBold.copyWith(
+                          color: Theme.of(context).hintColor),
                     ),
                   );
                 } else {
