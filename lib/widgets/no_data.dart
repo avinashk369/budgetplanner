@@ -22,69 +22,72 @@ class NoData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dashController = DashboardController.tagged(dashboardController);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          child: Image.asset(
-            imageUrl,
+    return InkWell(
+      onTap: () => dashController.setindex(index),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Image.asset(
+              imageUrl,
+            ),
           ),
-        ),
-        Flexible(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    color: heenColor,
-                    fontSize: 16,
-                    fontStyle: FontStyle.italic),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                message,
-                textAlign: TextAlign.left,
-                style: kLabelStyle.copyWith(
-                  color: Theme.of(context).hintColor,
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      color: heenColor,
+                      fontSize: 16,
+                      fontStyle: FontStyle.italic),
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
-                  minimumSize: Size(50, 50),
-                  primary: whiteColor,
-                  side: BorderSide(
-                    color: heenColor,
-                    width: 1,
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  message,
+                  textAlign: TextAlign.left,
+                  style: kLabelStyle.copyWith(
+                    color: Theme.of(context).hintColor,
                   ),
                 ),
-                onPressed: () {
-                  dashController.setindex(index);
-                },
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).hintColor,
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              // Text(
-              //   lbl_add_one.tr,
-              //   style: kLabelStyleBold,
-              // ),
-            ],
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    minimumSize: Size(50, 50),
+                    primary: whiteColor,
+                    side: BorderSide(
+                      color: heenColor,
+                      width: 1,
+                    ),
+                  ),
+                  onPressed: () {
+                    dashController.setindex(index);
+                  },
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).hintColor,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                // Text(
+                //   lbl_add_one.tr,
+                //   style: kLabelStyleBold,
+                // ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

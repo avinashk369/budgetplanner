@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     userId = PreferenceUtils.getString(user_id);
-
+    print("$userId user id in home ${PreferenceUtils.getString(user_id)}");
     // TODO: implement initState
     _controller = ScrollController();
 
@@ -87,15 +87,15 @@ class _HomePageState extends State<HomePage> {
 
   void getUserData() async {
     userModel = await controller.getUserDetail(userId);
-    print("User info ${userModel!.email}");
+    print("User info ${userModel?.email}");
   }
 
-  Future<UserModel> getUser() async {
-    BaseModel<UserModel> user =
-        await userRepositoryImpl.getUser("wyly5t8m8yTisWgEUA6BDRbd7xp2");
-    print(user.data!.email);
-    return user.data!;
-  }
+  // Future<UserModel> getUser() async {
+  //   BaseModel<UserModel> user =
+  //       await userRepositoryImpl.getUser("wyly5t8m8yTisWgEUA6BDRbd7xp2");
+  //   print(user.data!.email);
+  //   return user.data!;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                         return NoData(
                           title: lbl_no_transaction.tr,
                           message: desc_no_transaction.tr,
-                          imageUrl: 'assets/bl4.png',
+                          imageUrl: 'assets/grp.png',
                           index: 2,
                         );
                       } else {

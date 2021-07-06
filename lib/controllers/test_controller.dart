@@ -14,13 +14,12 @@ class TestController extends GetxController {
 
   void increment() => counter.value++;
 
-  Future<UserModel> getUserDetail(String userId) async {
+  Future<UserModel?> getUserDetail(String userId) async {
     BaseModel<UserModel>? userData;
     try {
       isLoading(true);
 
-      userData =
-          await UserRepositoryImpl().getUser("wyly5t8m8yTisWgEUA6BDRbd7xp2");
+      userData = await UserRepositoryImpl().getUser(userId);
       userData.obs;
     } catch (e) {} finally {
       Future.delayed(Duration(seconds: 3), () async {
@@ -28,7 +27,7 @@ class TestController extends GetxController {
       });
     }
 
-    return userData!.data!;
+    return userData?.data!;
   }
 
   Future<List<BudgetCategoryModel>> getBudgetCategories() async {

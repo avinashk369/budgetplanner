@@ -39,7 +39,7 @@ class TransactionHistory extends GetView {
             return NoData(
               title: lbl_no_transaction.tr,
               message: desc_no_transaction.tr,
-              imageUrl: 'assets/bl4.png',
+              imageUrl: 'assets/grp.png',
               index: 2,
             );
           } else {

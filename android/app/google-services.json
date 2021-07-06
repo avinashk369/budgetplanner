@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "451693928860-siocs27qf1ag9sm5m28k46e82j1ajmrl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.finance.budgetplanner",
+            "certificate_hash": "595386a25037f167b444254bc637e25c6dd79bc7"
+          }
+        },
+        {
           "client_id": "451693928860-s8troccha5re5uq4mfc1p41qqiq76mfa.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "451693928860-s8troccha5re5uq4mfc1p41qqiq76mfa.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "451693928860-saf1nqiorka20mdssumq0gou4r8p14p5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.finance.budgetplanner"
+              }
             }
           ]
         }

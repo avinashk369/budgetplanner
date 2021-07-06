@@ -1,10 +1,11 @@
 import 'package:budgetplanner/controllers/dashboard_controller.dart';
+import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/route_constants.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 import 'bottom_nav/TabNavigationItem.dart';
@@ -16,11 +17,14 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final controller = DashboardController.tagged(dashboardController);
+  final transactionController = TransactionEntryController.to;
   //int _currentIndex = 0;
   String? userId;
   @override
   void initState() {
+    transactionController.onInit();
     userId = PreferenceUtils.getString(user_id);
+    print("${FirebaseAuth.instance.currentUser!.uid} user id in dashboard");
     //_currentIndex = controller.currentIndex.value;
     // TODO: implement initState
     super.initState();
