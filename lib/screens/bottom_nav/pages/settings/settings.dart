@@ -233,10 +233,12 @@ class _SettingsState extends State<Settings> {
         elevation: 0,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text(
-            "App version 0.0.1",
-            style: kLabelStyle.copyWith(color: Theme.of(context).hintColor),
-            textAlign: TextAlign.center,
+          child: Obx(
+            () => Text(
+              "App version " + controller.packageInfo.value,
+              style: kLabelStyle.copyWith(color: Theme.of(context).hintColor),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),
