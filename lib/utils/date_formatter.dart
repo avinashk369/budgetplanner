@@ -10,9 +10,9 @@ class DateFormatter {
     DateTime now = DateTime.now();
     DateTime justNow = now.subtract(Duration(minutes: 1));
     DateTime localDateTime = dateTime.toLocal();
-    if (!localDateTime.difference(justNow).isNegative) {
-      return "Just Now";
-    }
+    // if (!localDateTime.difference(justNow).isNegative) {
+    //   return "Just Now";
+    // }
     String roughTimeString = DateFormat('jm').format(dateTime);
     if (localDateTime.day == now.day &&
         localDateTime.month == now.month &&

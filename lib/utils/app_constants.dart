@@ -35,4 +35,4 @@ const otp_api_key = "rYwj2RAHA3MXf1W5";
 const String app_store_url =
     "https://apps.apple.com/in/app/tda-academy/id1552594564";
 const String play_store_url =
-    "https://play.google.com/store/apps/details?id=com.edtech.tda_academy";
+    "https://play.google.com/store/apps/details?id=com.finance.budgetplanner";
