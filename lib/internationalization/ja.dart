@@ -60,4 +60,5 @@ const ja = {
   lbl_settings_cutomise: "アプリをカスタマイズする",
   feature_request: "要件を説明してください",
   submit: "参加する",
+  lbl_history: "レポート",
 };

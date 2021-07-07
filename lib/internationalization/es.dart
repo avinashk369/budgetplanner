@@ -61,4 +61,5 @@ const es = {
   lbl_settings_cutomise: "Personaliza tu aplicación",
   feature_request: "Por favor explique sus requisitos",
   submit: "Enviar",
+  lbl_history: "Informes",
 };

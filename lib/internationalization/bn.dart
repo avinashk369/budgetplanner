@@ -62,4 +62,5 @@ const bn = {
   lbl_settings_cutomise: "আপনার অ্যাপ্লিকেশনটি কাস্টমাইজ করুন",
   feature_request: "আপনার প্রয়োজনীয়তা ব্যাখ্যা করুন",
   submit: "জমা দিন",
+  lbl_history: "রিপোর্ট",
 };

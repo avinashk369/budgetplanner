@@ -40,13 +40,20 @@ class TransactionEntryController extends GetxController {
   var position = Offset(Get.width * .83, Get.height * .83).obs;
   setposition(Offset offset) => position(offset);
   late String userId;
+
+  var nextMonth = 1.obs;
+  var prevMonth = 1.obs;
+  setNextMonth(int next) => nextMonth(next);
+  setPrevMonth(int prev) => prevMonth(prev);
+
   @override
   void onInit() {
     // TODO: implement onInit
     userId = PreferenceUtils.getString(user_id);
+    var date = DateTime.now();
     () async {
       transactionTypeList = await getTransactionTypeList();
-      transactionModel.bindStream(getTransactionList(userId, expense)!);
+      bindTransaction(date);
       budgetmodel.bindStream(getBudgetListDemo(userId)!);
       totalExpense.bindStream(getTotalExpense("", userId)!);
       totalIncome.bindStream(getTotalIncome("", userId)!);
@@ -55,6 +62,10 @@ class TransactionEntryController extends GetxController {
       //     .bindStream(transactionController.getBudgetList(userId)!);
     }();
     super.onInit();
+  }
+
+  void bindTransaction(DateTime date) {
+    transactionModel.bindStream(getTransactionList(userId, expense, date)!);
   }
 
   @override
@@ -123,11 +134,12 @@ class TransactionEntryController extends GetxController {
   }
 
   Stream<List<TransactionModel>>? getTransactionList(
-      String userId, String transactionType) {
+      String userId, String transactionType, DateTime currenctMonth) {
     BaseModel<List<TransactionModel>>? transactionList;
     try {
       isLoading(true);
-      return DataRepositoryImpl().getTransactions(userId, transactionType);
+      return DataRepositoryImpl()
+          .getTransactions(userId, transactionType, currenctMonth);
     } catch (e) {} finally {
       isLoading(false);
     }

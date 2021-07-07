@@ -6,12 +6,14 @@ import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
+import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
 import 'package:budgetplanner/widgets/trx_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:intl/intl.dart';
 
 class TransactionHistory extends GetView {
   void showInterstitialAd(AdController adCont) {
@@ -24,6 +26,13 @@ class TransactionHistory extends GetView {
 
   @override
   Widget build(BuildContext context) {
+    var date = DateTime.now();
+
+    // print("month name ${date.month}");
+    // print(
+    //     "print no of days of the month ${DateTime(date.year, date.month - 4, 0).day}");
+    // DateFormat format = DateFormat.yMMMMd();
+    // print("month name ${DateTime(date.year, date.month - 6, 0).toString()}");
     final adCont = AdController.tagged(adController);
     final controller = TransactionEntryController.to;
     final String userId = PreferenceUtils.getString(user_id);
@@ -32,6 +41,79 @@ class TransactionHistory extends GetView {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(top: 6.0),
+                child: Text(
+                  lbl_history.tr,
+                  style: kLabelStyle.copyWith(
+                    color: Theme.of(context).hintColor,
+                    fontSize: 18,
+                  ),
+                )),
+          ],
+        ),
+        actions: <Widget>[
+          Row(
+            children: <Widget>[
+              IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    size: 20,
+                  ),
+                  color: Theme.of(context).hintColor,
+                  onPressed: () {
+                    controller.setNextMonth(controller.nextMonth.value - 1);
+                    controller.setPrevMonth(controller.nextMonth.value + 1 - 1);
+                    print("prev month ${controller.prevMonth.value}");
+                    controller.transactionModel
+                        .bindStream(controller.getTransactionList(
+                      userId,
+                      income,
+                      DateTime(date.year,
+                          date.month + controller.prevMonth.value, 0),
+                    )!);
+                  }),
+              Obx(
+                () => InkWell(
+                  onTap: () {
+                    controller.setPrevMonth(1);
+                    controller.setNextMonth(1);
+                    controller.transactionModel.bindStream(controller
+                        .getTransactionList(userId, income, DateTime.now())!);
+                  },
+                  child: Text(
+                    DateFormat('LLL').format(DateTime(
+                        date.year, date.month + controller.nextMonth.value, 0)),
+                    style: kLabelStyle.copyWith(
+                      color: Theme.of(context).hintColor,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(
+                  icon: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 20,
+                  ),
+                  color: Theme.of(context).hintColor,
+                  onPressed: () {
+                    controller.setNextMonth(controller.nextMonth.value + 1);
+                    print("next month ${controller.nextMonth.value}");
+                    controller.transactionModel
+                        .bindStream(controller.getTransactionList(
+                      userId,
+                      income,
+                      DateTime(date.year,
+                          date.month + controller.nextMonth.value, 0),
+                    )!);
+                  }),
+            ],
+          ),
+        ],
       ),
       body: Container(
         child: Obx(() {
@@ -65,7 +147,8 @@ class TransactionHistory extends GetView {
                     onPressed: () {
                       () {
                         controller.transactionModel.bindStream(
-                            controller.getTransactionList(userId, income)!);
+                            controller.getTransactionList(
+                                userId, income, DateTime.now())!);
                         print(
                             "Avinash ${controller.transactionModel.value.length}");
                       }();
@@ -76,7 +159,8 @@ class TransactionHistory extends GetView {
                     onPressed: () {
                       () {
                         controller.transactionModel.bindStream(
-                            controller.getTransactionList(userId, income)!);
+                            controller.getTransactionList(
+                                userId, income, DateTime.now())!);
                         print(
                             "Avinash ${controller.transactionModel.value.length}");
                       }();

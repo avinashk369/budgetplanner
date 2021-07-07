@@ -61,4 +61,5 @@ const de = {
   lbl_settings_cutomise: "Passen Sie Ihre App an",
   feature_request: "Bitte erläutern Sie Ihre Anforderungen",
   submit: "einreichen",
+  lbl_history: "Berichte",
 };

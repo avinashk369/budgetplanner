@@ -307,15 +307,25 @@ class DataRepositoryImpl implements DataRepository {
 
   @override
   Stream<List<TransactionModel>>? getTransactions(
-      String userId, String transactionType) async* {
+      String userId, String transactionType, DateTime currenctMonth) async* {
     try {
+      var date = DateTime.now().add(Duration(days: 31));
+      print(
+          " compare date ${DateTime(date.year, date.month, 1).toIso8601String()}");
       //yield*
       var query = _firestore.collection(transaction);
 
       yield* query
           //.where('transacion_type', isEqualTo: transactionType)
           .where('user_id', isEqualTo: userId)
-          // .where('created_on', isLessThanOrEqualTo: DateTime.now())
+          .where('created_on',
+              isGreaterThanOrEqualTo:
+                  DateTime(currenctMonth.year, currenctMonth.month, 1)
+                      .toIso8601String())
+          .where('created_on',
+              isLessThan:
+                  DateTime(currenctMonth.year, currenctMonth.month + 1, 1)
+                      .toIso8601String())
           .orderBy('created_on', descending: true)
           .snapshots()
           .map((query) {
@@ -473,10 +483,17 @@ class DataRepositoryImpl implements DataRepository {
   Stream<List<BudgetModel>> listAllBudget(String userId) async* {
     List<BudgetModel> budgetModelList = [];
     final transactionController = TransactionEntryController.to;
-
+    var currenctMonth = DateTime.now();
     yield* _firestore
         .collection(userBudget)
         .where('user_id', isEqualTo: userId)
+        .where('created_on',
+            isGreaterThanOrEqualTo:
+                DateTime(currenctMonth.year, currenctMonth.month, 1)
+                    .toIso8601String())
+        .where('created_on',
+            isLessThan: DateTime(currenctMonth.year, currenctMonth.month + 1, 1)
+                .toIso8601String())
         .snapshots()
         .map((query) {
       return query.docs.map((doc) {
@@ -539,10 +556,18 @@ class DataRepositoryImpl implements DataRepository {
 
   Stream<double> getTotalExpense(String monthName, String id) async* {
     final transactionController = TransactionEntryController.to;
+    var currenctMonth = DateTime.now();
     _firestore
         .collection(transaction)
         .where('user_id', isEqualTo: id)
         .where('transacion_type', isEqualTo: expense)
+        .where('created_on',
+            isGreaterThanOrEqualTo:
+                DateTime(currenctMonth.year, currenctMonth.month, 1)
+                    .toIso8601String())
+        .where('created_on',
+            isLessThan: DateTime(currenctMonth.year, currenctMonth.month + 1, 1)
+                .toIso8601String())
         .snapshots()
         .forEach((element) async {
       double totalAMount = 0.0;
@@ -558,10 +583,18 @@ class DataRepositoryImpl implements DataRepository {
 
   Stream<double> getTotalIncome(String monthName, String id) async* {
     final transactionController = TransactionEntryController.to;
+    var currenctMonth = DateTime.now();
     _firestore
         .collection(transaction)
         .where('user_id', isEqualTo: id)
         .where('transacion_type', isEqualTo: income)
+        .where('created_on',
+            isGreaterThanOrEqualTo:
+                DateTime(currenctMonth.year, currenctMonth.month, 1)
+                    .toIso8601String())
+        .where('created_on',
+            isLessThan: DateTime(currenctMonth.year, currenctMonth.month + 1, 1)
+                .toIso8601String())
         .snapshots()
         .forEach((element) async {
       double totalAMount = 0.0;

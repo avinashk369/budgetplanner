@@ -62,4 +62,5 @@ const ru = {
   lbl_settings_cutomise: "Настройте свое приложение",
   feature_request: "Пожалуйста, объясните свои требования",
   submit: "подавать",
+  lbl_history: "Отчеты",
 };

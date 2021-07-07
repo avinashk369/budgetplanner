@@ -61,4 +61,5 @@ const ta = {
   lbl_settings_cutomise: "உங்கள் பயன்பாட்டைத் தனிப்பயனாக்கவும்",
   feature_request: "உங்கள் தேவைகளை விளக்கவும்",
   submit: "சமர்ப்பிக்கவும்",
+  lbl_history: "அறிக்கைகள்",
 };

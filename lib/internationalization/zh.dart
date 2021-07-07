@@ -60,4 +60,5 @@ const zh = {
   lbl_settings_cutomise: "自定义您的应用",
   feature_request: "请说明您的要求",
   submit: "提交",
+  lbl_history: "報告",
 };

@@ -61,4 +61,5 @@ const hi = {
   lbl_settings_cutomise: "अपना ऐप कस्टमाइज़ करें",
   feature_request: "कृपया अपनी आवश्यकताओं की व्याख्या करें",
   submit: "प्रस्तुत",
+  lbl_history: "विवरण",
 };

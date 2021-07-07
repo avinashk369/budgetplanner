@@ -62,4 +62,5 @@ const it = {
   lbl_settings_cutomise: "Personalizza la tua app",
   feature_request: "Si prega di spiegare le vostre esigenze",
   submit: "Invia",
+  lbl_history: "Rapporti",
 };
