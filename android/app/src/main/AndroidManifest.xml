@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.finance.budgetplanner">
    <application
-        android:label="budgetplanner"
+        android:label="Mr. Budget"
         android:icon="@mipmap/logo_bg">
         <activity
             android:name=".MainActivity"
