@@ -22,7 +22,7 @@ class AdController extends GetxController {
     loadBannerAd();
     loadNativeAd();
     _loadInterstitialAd();
-    _loadRewardedAd();
+    //_loadRewardedAd();
     super.onInit();
   }
 

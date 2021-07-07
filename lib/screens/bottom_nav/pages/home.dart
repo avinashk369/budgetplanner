@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
       }
     });
     getUserData();
-    showRewardAd();
+    //showRewardAd();
     super.initState();
   }
 
