@@ -40,7 +40,7 @@ class UserLogin extends StatelessWidget {
           Text(
             "One touch sign in".toUpperCase(),
             textAlign: TextAlign.center,
-            style: kTitleStyleSmall.copyWith(color: darkColor, fontSize: 16),
+            style: kHeaderStyle.copyWith(color: darkColor, fontSize: 16),
           ),
         ],
       ),

@@ -152,9 +152,12 @@ class _SettingsState extends State<Settings> {
                                 },
                               );
                             },
-                            trailing: Text(PreferenceUtils.getString(
-                                currancy_symbol,
-                                defValue: '\u20B9')),
+                            trailing: Text(
+                              PreferenceUtils.getString(currancy_symbol,
+                                  defValue: '\u20B9'),
+                              style: kHeaderStyle.copyWith(
+                                  color: Theme.of(context).hintColor),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),

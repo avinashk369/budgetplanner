@@ -23,13 +23,13 @@ class CustomTheme with ChangeNotifier {
         primaryColor: whiteColor,
         scaffoldBackgroundColor: whiteColor,
         backgroundColor: whiteColor,
-        accentColor: redColor,
+        accentColor: shade,
         tabBarTheme: TabBarTheme(
           unselectedLabelColor: kGrey,
-          labelColor: redColor,
+          labelColor: shade,
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: redColor,
+          backgroundColor: shade,
         ),
         inputDecorationTheme: InputDecorationTheme(
           border: UnderlineInputBorder(
@@ -56,7 +56,7 @@ class CustomTheme with ChangeNotifier {
           ),
           backgroundColor: whiteColor,
           elevation: 0,
-          selectedItemColor: redColor,
+          selectedItemColor: shade,
           unselectedItemColor: kGrey,
           showSelectedLabels: true,
           showUnselectedLabels: true,
