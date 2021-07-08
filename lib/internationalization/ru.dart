@@ -63,4 +63,5 @@ const ru = {
   feature_request: "Пожалуйста, объясните свои требования",
   submit: "подавать",
   lbl_history: "Отчеты",
+  monthly_budget: "Месячный бюджет",
 };

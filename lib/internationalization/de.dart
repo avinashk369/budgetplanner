@@ -62,4 +62,5 @@ const de = {
   feature_request: "Bitte erläutern Sie Ihre Anforderungen",
   submit: "einreichen",
   lbl_history: "Berichte",
+  monthly_budget: "Monatliches Budget",
 };

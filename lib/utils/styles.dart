@@ -23,6 +23,12 @@ final kQuoteStyle = GoogleFonts.poppins(
     letterSpacing: 0.4,
     fontStyle: FontStyle.italic);
 
+final kHeaderStyle = GoogleFonts.poppins(
+  color: kGrey,
+  fontSize: 18.0,
+  letterSpacing: 0.4,
+);
+
 final kSubtitleStyle = GoogleFonts.oswald(
   color: kGrey,
   fontSize: 18.0,

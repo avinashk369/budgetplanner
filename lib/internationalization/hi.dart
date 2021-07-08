@@ -62,4 +62,5 @@ const hi = {
   feature_request: "कृपया अपनी आवश्यकताओं की व्याख्या करें",
   submit: "प्रस्तुत",
   lbl_history: "विवरण",
+  monthly_budget: "महीने का हिसाब - किताब",
 };

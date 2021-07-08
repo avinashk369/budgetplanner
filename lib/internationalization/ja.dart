@@ -61,4 +61,5 @@ const ja = {
   feature_request: "要件を説明してください",
   submit: "参加する",
   lbl_history: "レポート",
+  monthly_budget: "月々の予算",
 };

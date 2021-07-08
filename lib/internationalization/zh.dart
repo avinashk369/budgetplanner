@@ -61,4 +61,5 @@ const zh = {
   feature_request: "请说明您的要求",
   submit: "提交",
   lbl_history: "報告",
+  monthly_budget: "每月预算",
 };

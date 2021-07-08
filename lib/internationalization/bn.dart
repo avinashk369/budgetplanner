@@ -63,4 +63,5 @@ const bn = {
   feature_request: "আপনার প্রয়োজনীয়তা ব্যাখ্যা করুন",
   submit: "জমা দিন",
   lbl_history: "রিপোর্ট",
+  monthly_budget: "মাসিক বাজেট",
 };

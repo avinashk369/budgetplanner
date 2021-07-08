@@ -1,0 +1,8 @@
+deep filters on multiple parameters
+report download into excel format
+import budget from existing month
+notification
+recurring transacntion automation
+#offline support
+pagination in transaction page
+bar chart for yearly stats which show income,expense and balance in every month

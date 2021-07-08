@@ -135,6 +135,22 @@ class _HomePageState extends State<HomePage> {
                 height: 10,
               ),
             ),
+            SliverToBoxAdapter(
+              child: Obx(() {
+                if (transactionController.budgetList.isNotEmpty) {
+                  return Container(
+                    padding: EdgeInsets.only(top: 10, bottom: 5, left: 10),
+                    child: Text(
+                      monthly_budget.tr,
+                      style: kHeaderStyle.copyWith(
+                          color: Theme.of(context).accentColor),
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+            ),
             SliverList(
               delegate: SliverChildListDelegate(
                 [
@@ -180,8 +196,8 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.only(top: 10, bottom: 5, left: 10),
                     child: Text(
                       recent_transaction.tr,
-                      style: kLabelStyleBold.copyWith(
-                          color: Theme.of(context).hintColor),
+                      style: kHeaderStyle.copyWith(
+                          color: Theme.of(context).accentColor),
                     ),
                   );
                 } else {

@@ -62,4 +62,5 @@ const ta = {
   feature_request: "உங்கள் தேவைகளை விளக்கவும்",
   submit: "சமர்ப்பிக்கவும்",
   lbl_history: "அறிக்கைகள்",
+  monthly_budget: "மாத பட்ஜெட்",
 };

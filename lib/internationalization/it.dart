@@ -63,4 +63,5 @@ const it = {
   feature_request: "Si prega di spiegare le vostre esigenze",
   submit: "Invia",
   lbl_history: "Rapporti",
+  monthly_budget: "Budget mensile",
 };

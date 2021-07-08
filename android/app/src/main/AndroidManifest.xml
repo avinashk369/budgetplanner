@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     
    <application
-        android:label="Mr. Budget"
+        android:label="Mr Budget"
         android:icon="@mipmap/logo_bg">
         <activity
             android:name=".MainActivity"

@@ -33,6 +33,7 @@ const total_income = "Income";
 const total_expense = "Expense";
 const total_balance = "Balance";
 const recent_transaction = "Recent transactions";
+const monthly_budget = "Monthly budget";
 const yesterday = "Yesterday";
 const today = "Today";
 const update_your_daily = "Update your daily";
