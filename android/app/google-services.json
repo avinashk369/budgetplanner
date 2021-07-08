@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "451693928860-siocs27qf1ag9sm5m28k46e82j1ajmrl.apps.googleusercontent.com",
+          "client_id": "451693928860-fdgba8b3dd7a62arqtal1pv2intvue34.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.finance.budgetplanner",
-            "certificate_hash": "595386a25037f167b444254bc637e25c6dd79bc7"
+            "certificate_hash": "7f82d8aa6468a578614e7b0d8abd7ddca3793a2b"
           }
         },
         {
