@@ -38,7 +38,22 @@ class DraggableBottomSheet {
             //padding: EdgeInsets.all(10),
             child: ListView(
               controller: scrollController,
-              children: [layout],
+              children: [
+                SizedBox(height: 15),
+                Center(
+                  child: Container(
+                    width: 100,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(3),
+                      ),
+                      color: Theme.of(context).primaryColor.withOpacity(.12),
+                    ),
+                  ),
+                ),
+                layout
+              ],
             ),
           ),
         ),

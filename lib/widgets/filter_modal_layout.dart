@@ -165,11 +165,11 @@ class _FilterLayoutState extends State<FilterLayout> {
               duration: Duration(milliseconds: 500), curve: Curves.ease);
         },
         child: Container(
-          height: 60.0,
+          height: 40.0,
           width: 120.0,
           decoration: BoxDecoration(
             color: (tappedIndex == index) ? shade : Theme.of(context).hintColor,
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+            borderRadius: BorderRadius.all(Radius.circular(3)),
           ),
           child: Center(
               child: Text(

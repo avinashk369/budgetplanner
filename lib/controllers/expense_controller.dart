@@ -83,7 +83,7 @@ class ExpenseController extends BaseController {
   }
 
   String? validatePassword(String password) {
-    if (password.length <= 6) {
+    if (password.length <= 5) {
       return lbl_notes_error.tr;
     }
     return null;
