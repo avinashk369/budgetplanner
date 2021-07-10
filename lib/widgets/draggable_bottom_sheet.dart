@@ -26,56 +26,19 @@ class DraggableBottomSheet {
           onTap: () {},
         ),
       );
-  Widget buildSheet() => makeDissmisable(
+  Widget buildSheet(Widget layout) => makeDissmisable(
         child: DraggableScrollableSheet(
           initialChildSize: 0.5,
           minChildSize: 0.5,
           maxChildSize: 0.9,
           builder: (_, scrollController) => Container(
             decoration: BoxDecoration(
-                color: redColor,
+                color: Theme.of(context).hintColor,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
-            padding: EdgeInsets.all(10),
+            //padding: EdgeInsets.all(10),
             child: ListView(
               controller: scrollController,
-              children: [
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-                Text(
-                    "Before we start adding user data to the database, we first need to create users"),
-              ],
+              children: [layout],
             ),
           ),
         ),

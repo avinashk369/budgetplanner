@@ -7,6 +7,8 @@ import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/draggable_bottom_sheet.dart';
+import 'package:budgetplanner/widgets/filter_modal_layout.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
 import 'package:budgetplanner/widgets/trx_shimmer.dart';
 import 'package:flutter/material.dart';
@@ -85,8 +87,15 @@ class TransactionHistory extends GetView {
                         .getTransactionList(userId, income, DateTime.now())!);
                   },
                   child: Text(
-                    DateFormat('LLL').format(DateTime(
-                        date.year, date.month + controller.nextMonth.value, 0)),
+                    DateFormat('LLL').format(
+                          DateTime(date.year,
+                              date.month + controller.nextMonth.value, 0),
+                        ) +
+                        " " +
+                        DateFormat('y').format(
+                          DateTime(date.year,
+                              date.month + controller.nextMonth.value, 0),
+                        ),
                     style: kLabelStyle.copyWith(
                       color: Theme.of(context).hintColor,
                       fontSize: 18,
@@ -136,33 +145,45 @@ class TransactionHistory extends GetView {
       floatingActionButton: Stack(
         children: [
           Visibility(
-            visible: false,
+            visible: true,
             child: Obx(() {
               return Positioned(
                 left: controller.position.value.dx,
                 top: controller.position.value.dy,
                 child: Draggable(
                   feedback: FloatingActionButton(
-                    child: Icon(Icons.filter_list),
+                    child: Icon(
+                      Icons.filter_list,
+                      color: Theme.of(context).primaryColor,
+                    ),
                     onPressed: () {
                       () {
-                        controller.transactionModel.bindStream(
-                            controller.getTransactionList(
-                                userId, income, DateTime.now())!);
-                        print(
-                            "Avinash ${controller.transactionModel.value.length}");
+                        // controller.transactionModel.bindStream(
+                        //     controller.getTransactionList(
+                        //         userId, income, DateTime.now())!);
+                        // print(
+                        //     "Avinash ${controller.transactionModel.value.length}");
                       }();
                     },
                   ),
                   child: FloatingActionButton(
-                    child: Icon(Icons.filter_list),
+                    child: Icon(
+                      Icons.filter_list,
+                      color: Theme.of(context).primaryColor,
+                    ),
                     onPressed: () {
                       () {
-                        controller.transactionModel.bindStream(
-                            controller.getTransactionList(
-                                userId, income, DateTime.now())!);
-                        print(
-                            "Avinash ${controller.transactionModel.value.length}");
+                        // controller.transactionModel.bindStream(
+                        //     controller.getTransactionList(
+                        //         userId, income, DateTime.now())!);
+                        showModalBottomSheet(
+                          context: context,
+                          enableDrag: true,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => DraggableBottomSheet(context)
+                              .buildSheet(FilterLayout()),
+                        );
                       }();
                     },
                   ),

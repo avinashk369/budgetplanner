@@ -9,7 +9,7 @@ class BudgetShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey[500]!,
+      baseColor: Colors.blueGrey[50]!,
       highlightColor: Colors.grey[100]!,
       enabled: true,
       child: ListView.builder(

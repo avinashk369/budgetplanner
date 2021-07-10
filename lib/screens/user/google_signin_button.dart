@@ -1,4 +1,6 @@
-import 'package:budgetplanner/screens/user/user_info.dart';
+import 'package:budgetplanner/models/BaseModel.dart';
+import 'package:budgetplanner/models/user_model.dart';
+import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/authentication.dart';
@@ -45,6 +47,14 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                 });
 
                 if (user != null) {
+                  BaseModel<UserModel> userData =
+                      await UserRepositoryImpl().getUser(user.uid);
+                  if (userData.data!.email != null) {
+                    print("Avinash ${userData.data!.name}");
+                  } else {
+                    UserRepositoryImpl()
+                        .createUserInDatabaseWithGoogleProvider(user);
+                  }
                   PreferenceUtils.putString(user_id, user.uid);
                   PreferenceUtils.putString(
                       creation_time, user.metadata.creationTime.toString());
