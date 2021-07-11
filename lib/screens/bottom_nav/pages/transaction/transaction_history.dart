@@ -1,4 +1,6 @@
 import 'package:budgetplanner/controllers/ad_controller.dart';
+import 'package:budgetplanner/controllers/expense_controller.dart';
+import 'package:budgetplanner/controllers/income_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/poc/grouped_list.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
@@ -37,6 +39,8 @@ class TransactionHistory extends GetView {
     // print("month name ${DateTime(date.year, date.month - 6, 0).toString()}");
     final adCont = AdController.tagged(adController);
     final controller = TransactionEntryController.to;
+    final expController = ExpenseController.tagged(expenseController);
+    final incController = IncomeController.tagged(incomeController);
     final String userId = PreferenceUtils.getString(user_id);
     showInterstitialAd(adCont);
     // TODO: implement build
@@ -70,21 +74,22 @@ class TransactionHistory extends GetView {
                     controller.setNextMonth(controller.nextMonth.value - 1);
                     controller.setPrevMonth(controller.nextMonth.value + 1 - 1);
                     print("prev month ${controller.prevMonth.value}");
-                    controller.transactionModel
-                        .bindStream(controller.getTransactionList(
-                      userId,
-                      income,
-                      DateTime(date.year,
-                          date.month + controller.prevMonth.value, 0),
-                    )!);
+                    controller.transactionModel.bindStream(
+                        controller.getTransactionList(
+                            userId,
+                            income,
+                            DateTime(date.year,
+                                date.month + controller.prevMonth.value, 0),
+                            controller.filterCats.value)!);
                   }),
               Obx(
                 () => InkWell(
                   onTap: () {
                     controller.setPrevMonth(1);
                     controller.setNextMonth(1);
-                    controller.transactionModel.bindStream(controller
-                        .getTransactionList(userId, income, DateTime.now())!);
+                    controller.transactionModel.bindStream(
+                        controller.getTransactionList(userId, income,
+                            DateTime.now(), controller.filterCats.value)!);
                   },
                   child: Text(
                     DateFormat('LLL').format(
@@ -112,13 +117,13 @@ class TransactionHistory extends GetView {
                   onPressed: () {
                     controller.setNextMonth(controller.nextMonth.value + 1);
                     print("next month ${controller.nextMonth.value}");
-                    controller.transactionModel
-                        .bindStream(controller.getTransactionList(
-                      userId,
-                      income,
-                      DateTime(date.year,
-                          date.month + controller.nextMonth.value, 0),
-                    )!);
+                    controller.transactionModel.bindStream(
+                        controller.getTransactionList(
+                            userId,
+                            income,
+                            DateTime(date.year,
+                                date.month + controller.nextMonth.value, 0),
+                            controller.filterCats.value)!);
                   }),
             ],
           ),
@@ -182,7 +187,23 @@ class TransactionHistory extends GetView {
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
                           builder: (context) => DraggableBottomSheet(context)
-                              .buildSheet(FilterLayout()),
+                              .buildSheet(FilterLayout(
+                            applyFilter: (values) {
+                              controller.setFiterCat(values);
+
+                              controller.transactionModel.bindStream(
+                                  controller.getTransactionList(
+                                      userId,
+                                      income,
+                                      DateTime(
+                                          date.year,
+                                          date.month +
+                                              controller.nextMonth.value,
+                                          0),
+                                      controller.filterCats.value)!);
+                              Navigator.of(context).pop();
+                            },
+                          )),
                         );
                       }();
                     },
