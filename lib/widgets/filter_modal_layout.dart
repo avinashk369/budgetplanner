@@ -9,7 +9,10 @@ import 'package:get/get.dart';
 
 class FilterLayout extends StatefulWidget {
   final Function(List<String>) applyFilter;
-  const FilterLayout({Key? key, required this.applyFilter}) : super(key: key);
+  final Function(List<String>) removeFilter;
+  const FilterLayout(
+      {Key? key, required this.applyFilter, required this.removeFilter})
+      : super(key: key);
 
   @override
   _FilterLayoutState createState() => _FilterLayoutState();
@@ -80,12 +83,13 @@ class _FilterLayoutState extends State<FilterLayout> {
                           children: [
                             OutlinedButton(
                                 onPressed: () {
+                                  List<String> blank = [];
                                   incController.catList.forEach((element) {
                                     setState(() {
                                       element.isSelected = false;
                                     });
                                   });
-                                  Navigator.of(context).pop();
+                                  widget.removeFilter(blank);
                                 },
                                 child: Text(
                                   "Clear Filter",
@@ -119,12 +123,13 @@ class _FilterLayoutState extends State<FilterLayout> {
                             children: [
                               OutlinedButton(
                                   onPressed: () {
+                                    List<String> blank = [];
                                     expController.catList.forEach((item) {
                                       setState(() {
                                         item.isSelected = false;
                                       });
                                     });
-                                    Navigator.of(context).pop();
+                                    widget.removeFilter(blank);
                                   },
                                   child: Text(
                                     "Clear Filter",
