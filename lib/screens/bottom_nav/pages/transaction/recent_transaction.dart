@@ -16,7 +16,7 @@ class RecentTransaction extends StatefulWidget {
 class _RecentTransactionState extends State<RecentTransaction> {
   final controller = AdController.tagged(adController);
 
-  static final _kAdIndex = 4;
+  static final _kAdIndex = 2;
 
   @override
   void initState() {

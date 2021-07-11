@@ -307,17 +307,29 @@ class DataRepositoryImpl implements DataRepository {
 
   @override
   Stream<List<TransactionModel>>? getTransactions(
-      String userId, String transactionType, DateTime currenctMonth) async* {
+      String userId,
+      String transactionType,
+      DateTime currenctMonth,
+      List<String> filterCategory) async* {
     try {
       var date = DateTime.now().add(Duration(days: 31));
-      print(
-          " compare date ${DateTime(date.year, date.month, 1).toIso8601String()}");
+
       //yield*
-      var query = _firestore.collection(transaction);
+      var query = _firestore
+          .collection(transaction)
+          .where('user_id', isEqualTo: userId);
+      if (transactionType != '' && transactionType.isNotEmpty) {
+        //print(" type is available $transactionType");
+        //query = query.where('transacion_type', isEqualTo: transactionType);
+        //query = query.where('cat_name', isEqualTo: salary);
+      }
+      if (filterCategory.length > 0) {
+        query = query.where('cat_name', whereIn: filterCategory);
+      }
 
       yield* query
           //.where('transacion_type', isEqualTo: transactionType)
-          .where('user_id', isEqualTo: userId)
+
           .where('created_on',
               isGreaterThanOrEqualTo:
                   DateTime(currenctMonth.year, currenctMonth.month, 1)
@@ -424,9 +436,18 @@ class DataRepositoryImpl implements DataRepository {
   @override
   Stream<List<TransactionModel>>? getRecentTransactions(String userId) async* {
     try {
+      var currenctMonth = DateTime.now();
       yield* _firestore
           .collection(transaction)
           .where('user_id', isEqualTo: userId)
+          .where('created_on',
+              isGreaterThanOrEqualTo:
+                  DateTime(currenctMonth.year, currenctMonth.month, 1)
+                      .toIso8601String())
+          .where('created_on',
+              isLessThan:
+                  DateTime(currenctMonth.year, currenctMonth.month + 1, 1)
+                      .toIso8601String())
           .orderBy('created_on', descending: true)
           .limit(5)
           .snapshots()

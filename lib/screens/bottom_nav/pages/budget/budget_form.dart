@@ -84,7 +84,9 @@ class BudgetForm extends StatelessWidget {
         ),
         CategoryChooser(
           leftRowData: Text(monthName.tr),
-          rightRowData: Text(DateFormat('LLLL').format(DateTime.now())),
+          rightRowData: Text(DateFormat('LLLL').format(DateTime.now()) +
+              " " +
+              DateFormat('y').format(DateTime.now())),
         ),
       ],
     );

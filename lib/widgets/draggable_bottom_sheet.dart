@@ -28,32 +28,36 @@ class DraggableBottomSheet {
       );
   Widget buildSheet(Widget layout) => makeDissmisable(
         child: DraggableScrollableSheet(
-          initialChildSize: 0.5,
+          initialChildSize: 0.6,
           minChildSize: 0.5,
           maxChildSize: 0.9,
           builder: (_, scrollController) => Container(
             decoration: BoxDecoration(
-                color: Theme.of(context).hintColor,
+                color: whiteColor,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
             //padding: EdgeInsets.all(10),
-            child: ListView(
+            child: SingleChildScrollView(
               controller: scrollController,
-              children: [
-                SizedBox(height: 15),
-                Center(
-                  child: Container(
-                    width: 100,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(3),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 15),
+                  Center(
+                    child: Container(
+                      width: 100,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(3),
+                        ),
+                        color: darkColor.withOpacity(.12),
                       ),
-                      color: Theme.of(context).primaryColor.withOpacity(.12),
                     ),
                   ),
-                ),
-                layout
-              ],
+                  SizedBox(height: 15),
+                  layout
+                ],
+              ),
             ),
           ),
         ),

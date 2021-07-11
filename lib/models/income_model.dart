@@ -7,6 +7,8 @@ class IncomeModel {
   String? id;
   @JsonKey(name: "name")
   String? name;
+  @JsonKey(ignore: true)
+  bool isSelected = false;
   IncomeModel();
   factory IncomeModel.fromJson(Map<String, dynamic> json) =>
       _$IncomeModelFromJson(json);

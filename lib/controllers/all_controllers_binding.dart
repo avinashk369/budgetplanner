@@ -30,7 +30,7 @@ class AllControllersBinding implements Bindings {
     Get.lazyPut<SavingController>(() => SavingController(),
         tag: savingController);
     Get.lazyPut<TransactionEntryController>(() => TransactionEntryController(),
-        tag: expenseController);
+        tag: transactionEntryController);
     Get.lazyPut<TransactionEntryController>(() => TransactionEntryController(),
         tag: savingController);
     Get.lazyPut<LoginController>(() => LoginController());

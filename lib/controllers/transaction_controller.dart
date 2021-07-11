@@ -46,6 +46,9 @@ class TransactionEntryController extends GetxController {
   setNextMonth(int next) => nextMonth(next);
   setPrevMonth(int prev) => prevMonth(prev);
 
+  Rx<List<String>> filterCats = Rx<List<String>>([]);
+  setFiterCat(List<String> filters) => filterCats(filters);
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -65,7 +68,12 @@ class TransactionEntryController extends GetxController {
   }
 
   void bindTransaction(DateTime date) {
-    transactionModel.bindStream(getTransactionList(userId, expense, date)!);
+    transactionModel.bindStream(getTransactionList(
+      userId,
+      expense,
+      date,
+      filterCats.value,
+    )!);
   }
 
   @override
@@ -134,12 +142,15 @@ class TransactionEntryController extends GetxController {
   }
 
   Stream<List<TransactionModel>>? getTransactionList(
-      String userId, String transactionType, DateTime currenctMonth) {
+      String userId,
+      String transactionType,
+      DateTime currenctMonth,
+      List<String> filterCategory) {
     BaseModel<List<TransactionModel>>? transactionList;
     try {
       isLoading(true);
-      return DataRepositoryImpl()
-          .getTransactions(userId, transactionType, currenctMonth);
+      return DataRepositoryImpl().getTransactions(
+          userId, transactionType, currenctMonth, filterCategory);
     } catch (e) {} finally {
       isLoading(false);
     }

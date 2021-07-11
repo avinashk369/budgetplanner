@@ -7,6 +7,8 @@ class RecurranceModel {
   String? id;
   @JsonKey(name: "name")
   String? name;
+  @JsonKey(ignore: true)
+  bool isSelected = false;
   RecurranceModel();
 
   factory RecurranceModel.fromJson(Map<String, dynamic> json) =>
