@@ -3,11 +3,14 @@ import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
+import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-
+import 'package:get/get.dart';
 import 'bottom_nav/TabNavigationItem.dart';
 
 class Dashboard extends StatefulWidget {
@@ -44,39 +47,81 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx(
-          () => TabNavigationItem.items[controller.currentIndex.value].page),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-          boxShadow: [
-            BoxShadow(
-                color: Theme.of(context).hintColor.withOpacity(0.5),
-                spreadRadius: 0,
-                blurRadius: 10),
-          ],
-        ),
-        child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15.0),
-              topRight: Radius.circular(15.0),
-            ),
-            child: Obx(
-              () => BottomNavigationBar(
-                currentIndex: controller.currentIndex.value,
-                onTap: (int index) {
-                  checkCredsAndNavigate(index);
-                },
-                items: <BottomNavigationBarItem>[
-                  for (final tabItem in TabNavigationItem.items)
-                    BottomNavigationBarItem(
-                      icon: tabItem.icon,
-                      label: tabItem.title,
+    return WillPopScope(
+      onWillPop: () async {
+        final value = await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text(lbl_exit_message.tr,
+                    style: kHeaderStyle.copyWith(
+                      color: darkColor,
+                    )),
+                actions: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                              minimumSize: Size(100, 40)),
+                          child: Text(lbl_no.tr),
+                          onPressed: () {
+                            Navigator.of(context).pop(false);
+                          },
+                        ),
+                        OutlinedButton(
+                          child: Text(lbl_yes.tr),
+                          style: OutlinedButton.styleFrom(
+                              minimumSize: Size(100, 40)),
+                          onPressed: () {
+                            Navigator.of(context).pop(true);
+                          },
+                        ),
+                      ],
                     ),
+                  )
                 ],
+              );
+            });
+
+        return value == true;
+      },
+      child: Scaffold(
+        body: Obx(
+            () => TabNavigationItem.items[controller.currentIndex.value].page),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+            boxShadow: [
+              BoxShadow(
+                  color: Theme.of(context).hintColor.withOpacity(0.5),
+                  spreadRadius: 0,
+                  blurRadius: 10),
+            ],
+          ),
+          child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0),
               ),
-            )),
+              child: Obx(
+                () => BottomNavigationBar(
+                  currentIndex: controller.currentIndex.value,
+                  onTap: (int index) {
+                    checkCredsAndNavigate(index);
+                  },
+                  items: <BottomNavigationBarItem>[
+                    for (final tabItem in TabNavigationItem.items)
+                      BottomNavigationBarItem(
+                        icon: tabItem.icon,
+                        label: tabItem.title,
+                      ),
+                  ],
+                ),
+              )),
+        ),
       ),
     );
   }

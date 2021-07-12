@@ -91,6 +91,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Container(
                             height: 40,
@@ -104,6 +105,31 @@ class _OnboardScreenState extends State<OnboardScreen> {
                               children: _buildPageIndicator(),
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 0),
+                            child: Container(
+                              child: _currentPage < 2
+                                  ? RawMaterialButton(
+                                      padding: const EdgeInsets.all(kPaddingM),
+                                      elevation: 0.0,
+                                      shape: CircleBorder(),
+                                      fillColor: kWhite,
+                                      child: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: darkColor,
+                                        //size: 25.0,
+                                      ),
+                                      onPressed: () {
+                                        _pageController.animateToPage(
+                                            _currentPage + 1,
+                                            duration:
+                                                Duration(milliseconds: 500),
+                                            curve: Curves.ease);
+                                      },
+                                    )
+                                  : Container(),
+                            ),
+                          )
                         ],
                       ),
                     )

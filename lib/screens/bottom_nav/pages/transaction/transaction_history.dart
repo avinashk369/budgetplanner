@@ -188,6 +188,19 @@ class TransactionHistory extends GetView {
                           backgroundColor: Colors.transparent,
                           builder: (context) => DraggableBottomSheet(context)
                               .buildSheet(FilterLayout(
+                            removeFilter: (val) {
+                              controller.transactionModel.bindStream(
+                                  controller.getTransactionList(
+                                      userId,
+                                      income,
+                                      DateTime(
+                                          date.year,
+                                          date.month +
+                                              controller.nextMonth.value,
+                                          0),
+                                      val)!);
+                              Navigator.of(context).pop();
+                            },
                             applyFilter: (values) {
                               controller.setFiterCat(values);
 
