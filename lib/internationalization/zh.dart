@@ -62,4 +62,7 @@ const zh = {
   submit: "提交",
   lbl_history: "報告",
   monthly_budget: "每月预算",
+  lbl_exit_message: "你确定要离开?",
+  lbl_no: "不",
+  lbl_yes: "是的, 出口",
 };

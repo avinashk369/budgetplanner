@@ -64,4 +64,7 @@ const it = {
   submit: "Invia",
   lbl_history: "Rapporti",
   monthly_budget: "Budget mensile",
+  lbl_exit_message: "siete sicuri di voler uscire?",
+  lbl_no: "No",
+  lbl_yes: "sì, Uscita",
 };

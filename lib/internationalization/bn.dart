@@ -64,4 +64,7 @@ const bn = {
   submit: "জমা দিন",
   lbl_history: "রিপোর্ট",
   monthly_budget: "মাসিক বাজেট",
+  lbl_exit_message: "আপনি প্রস্থান করতে চান?",
+  lbl_no: "না",
+  lbl_yes: "হ্যাঁ, প্রস্থান",
 };

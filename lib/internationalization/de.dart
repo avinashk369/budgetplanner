@@ -63,4 +63,7 @@ const de = {
   submit: "einreichen",
   lbl_history: "Berichte",
   monthly_budget: "Monatliches Budget",
+  lbl_exit_message: "Sie sind sicher, dass Sie beenden wollen?",
+  lbl_no: "Nein",
+  lbl_yes: "Ausgang",
 };

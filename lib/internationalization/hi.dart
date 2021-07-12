@@ -63,4 +63,7 @@ const hi = {
   submit: "प्रस्तुत",
   lbl_history: "विवरण",
   monthly_budget: "महीने का हिसाब - किताब",
+  lbl_exit_message: "क्या आप बाहर निकलना चाहते हैं?",
+  lbl_no: "नहीं",
+  lbl_yes: "हाँ, बाहर",
 };

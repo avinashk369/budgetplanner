@@ -62,4 +62,7 @@ const ja = {
   submit: "参加する",
   lbl_history: "レポート",
   monthly_budget: "月々の予算",
+  lbl_exit_message: "終了してよろしいですか?",
+  lbl_no: "番号",
+  lbl_yes: "はい, 出口",
 };

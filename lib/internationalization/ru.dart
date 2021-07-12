@@ -64,4 +64,7 @@ const ru = {
   submit: "подавать",
   lbl_history: "Отчеты",
   monthly_budget: "Месячный бюджет",
+  lbl_exit_message: "Вы уверены, что хотите выйти?",
+  lbl_no: "Нет",
+  lbl_yes: "да, Выход",
 };

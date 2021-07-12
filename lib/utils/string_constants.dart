@@ -71,3 +71,6 @@ const lbl_feature = "Feature";
 const lbl_settings_cutomise = "Customise your app";
 const msg_feature_request = "";
 const lbl_history = "history";
+const lbl_exit_message = "Exit message";
+const lbl_no = "No";
+const lbl_yes = "Yes";

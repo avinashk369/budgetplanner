@@ -63,4 +63,7 @@ const ta = {
   submit: "சமர்ப்பிக்கவும்",
   lbl_history: "அறிக்கைகள்",
   monthly_budget: "மாத பட்ஜெட்",
+  lbl_exit_message: "நிச்சயமாக நீங்கள் வெளியேற வேண்டுமா?",
+  lbl_no: "இல்லை",
+  lbl_yes: "ஆம், வெளியேறு",
 };

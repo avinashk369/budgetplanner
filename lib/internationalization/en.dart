@@ -63,5 +63,8 @@ const en = {
   feature_request: "Please explain your requirements",
   submit: "Submit",
   lbl_history: "Reports",
-  monthly_budget:"Monthly budget",
+  monthly_budget: "Monthly budget",
+  lbl_exit_message: "Are you sure you want to exit?",
+  lbl_no: "No",
+  lbl_yes: "Yes, Exit",
 };

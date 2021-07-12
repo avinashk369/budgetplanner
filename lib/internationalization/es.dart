@@ -63,4 +63,7 @@ const es = {
   submit: "Enviar",
   lbl_history: "Informes",
   monthly_budget: "Presupuesto mensual",
+  lbl_exit_message: "Seguro que quieres salir?",
+  lbl_no: "No",
+  lbl_yes: "sí, Salida",
 };
