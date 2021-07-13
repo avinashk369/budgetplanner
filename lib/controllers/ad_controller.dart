@@ -19,9 +19,9 @@ class AdController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    loadBannerAd();
-    loadNativeAd();
-    _loadInterstitialAd();
+    // loadBannerAd();
+    // loadNativeAd();
+    // _loadInterstitialAd();
     //_loadRewardedAd();
     super.onInit();
   }
@@ -31,13 +31,13 @@ class AdController extends GetxController {
     // TODO: implement onClose
     super.onClose();
     interstitialAd?.dispose();
-    bannerAd.dispose();
-    ad.dispose();
-    interstitialAd?.dispose();
+    bannerAd?.dispose();
+    ad?.dispose();
+    rewardedAd?.dispose();
   }
 
   // TODO: Add _bannerAd
-  late BannerAd bannerAd;
+  BannerAd? bannerAd;
 
   void loadBannerAd() {
     // TODO: Initialize _bannerAd
@@ -57,7 +57,7 @@ class AdController extends GetxController {
       ),
     );
 
-    bannerAd.load();
+    bannerAd?.load();
   }
 
 // TODO: Add _interstitialAd
@@ -89,7 +89,7 @@ class AdController extends GetxController {
   }
 
 // TODO: Add _rewardedAd
-  late RewardedAd rewardedAd;
+  RewardedAd? rewardedAd;
   // TODO: Add _isRewardedAdReady
 
   // TODO: Implement _loadRewardedAd()
@@ -118,7 +118,7 @@ class AdController extends GetxController {
     );
   }
 
-  late NativeAd ad;
+  NativeAd? ad;
   void loadNativeAd() {
     ad = NativeAd(
       adUnitId: AdHelper.nativeAdUnitId,
@@ -137,6 +137,6 @@ class AdController extends GetxController {
       ),
     );
 
-    ad.load();
+    ad?.load();
   }
 }

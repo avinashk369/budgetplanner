@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
     print("  reward earned");
     //to display rewarded ad
     if (adCont.isRewardedAdReady.value) {
-      adCont.rewardedAd.show(
+      adCont.rewardedAd?.show(
         onUserEarnedReward: (ad, reward) {
           print("${reward.amount} amount earned");
         },

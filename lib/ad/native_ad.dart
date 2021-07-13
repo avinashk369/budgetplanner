@@ -15,7 +15,7 @@ class _NativeAdViewState extends State<NativeAdView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: AdWidget(ad: controller.ad),
+      child: AdWidget(ad: controller.ad!),
       height: 72.0,
       alignment: Alignment.center,
     );

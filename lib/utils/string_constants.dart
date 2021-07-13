@@ -74,3 +74,6 @@ const lbl_history = "history";
 const lbl_exit_message = "Exit message";
 const lbl_no = "No";
 const lbl_yes = "Yes";
+const lbl_delete_message = "delete_message";
+const cancel = "cancel";
+const delete = "delete";

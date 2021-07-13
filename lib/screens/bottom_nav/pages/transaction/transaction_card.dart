@@ -86,7 +86,7 @@ class TransactionCard extends StatelessWidget {
                         ),
                         Text(
                           (transactionModel.transactionType == expense)
-                              ? transactionModel.expenseType ?? ""
+                              ? transactionModel.expenseSource!
                               : income,
                         )
                       ],

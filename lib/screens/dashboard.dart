@@ -4,8 +4,7 @@ import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
-import 'package:budgetplanner/utils/styles.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
+import 'package:budgetplanner/widgets/custom_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/route_constants.dart';
@@ -52,37 +51,12 @@ class _DashboardState extends State<Dashboard> {
         final value = await showDialog<bool>(
             context: context,
             builder: (context) {
-              return AlertDialog(
-                content: Text(lbl_exit_message.tr,
-                    style: kHeaderStyle.copyWith(
-                      color: darkColor,
-                    )),
-                actions: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                              minimumSize: Size(100, 40)),
-                          child: Text(lbl_no.tr),
-                          onPressed: () {
-                            Navigator.of(context).pop(false);
-                          },
-                        ),
-                        OutlinedButton(
-                          child: Text(lbl_yes.tr),
-                          style: OutlinedButton.styleFrom(
-                              minimumSize: Size(100, 40)),
-                          onPressed: () {
-                            Navigator.of(context).pop(true);
-                          },
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+              return CustomDialog.exitDialog(
+                message: lbl_exit_message.tr,
+                noButtonLabel: lbl_no.tr,
+                yesButtonLabel: lbl_yes.tr,
+                yes: () => Navigator.of(context).pop(true),
+                no: () => Navigator.of(context).pop(false),
               );
             });
 

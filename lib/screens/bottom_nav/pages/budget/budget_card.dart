@@ -139,8 +139,7 @@ class BudgetCard extends StatelessWidget {
                                 controller.currencySymbol +
                                     budgetModel.totalBudgetExpense.value
                                         .toString(),
-                                style: kLabelStyle.apply(
-                                    color: Theme.of(context).primaryColor),
+                                style: kLabelStyle.apply(color: shade),
                               )),
                         ],
                       )),

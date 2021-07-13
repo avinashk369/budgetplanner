@@ -14,6 +14,7 @@ import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/custom_dialog.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -114,9 +115,22 @@ class UpdateTransaction extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        controller.deletetransaction(
-                            context, transactionModel.id!);
-                        print(transactionModel.catName);
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return CustomDialog.deleteDiaolg(
+                                yes: () async {
+                                  Navigator.of(context).pop(true);
+                                  await controller.deletetransaction(
+                                      context, transactionModel.id!);
+                                  print(transactionModel.catName);
+                                },
+                                no: () => Navigator.of(context).pop(false),
+                                yesButtonLabel: delete.tr,
+                                noButtonLabel: cancel.tr,
+                                message: lbl_delete_message.tr);
+                          },
+                        );
                       },
                       child: Icon(
                         Icons.delete,

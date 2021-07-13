@@ -67,4 +67,7 @@ const en = {
   lbl_exit_message: "Are you sure you want to exit?",
   lbl_no: "No",
   lbl_yes: "Yes, Exit",
+  lbl_delete_message: "Are you sure you want to delete ?",
+  cancel: "Cancel",
+  delete: "Delete",
 };

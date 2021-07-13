@@ -27,9 +27,9 @@ class _BannerAdViewState extends State<BannerAdView> {
       padding: const EdgeInsets.only(bottom: 5),
       child: Obx(() => (controller.isBannerAdReady.value)
           ? Container(
-              width: controller.bannerAd.size.width.toDouble(),
-              height: controller.bannerAd.size.height.toDouble(),
-              child: AdWidget(ad: controller.bannerAd),
+              width: controller.bannerAd?.size.width.toDouble(),
+              height: controller.bannerAd?.size.height.toDouble(),
+              child: AdWidget(ad: controller.bannerAd!),
             )
           : Container(
               height: 1,
