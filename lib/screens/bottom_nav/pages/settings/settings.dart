@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/settings/feature_request.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/settings/language_screen.dart';
-import 'package:budgetplanner/screens/welcome.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/authentication.dart';
@@ -15,6 +14,7 @@ import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:share/share.dart';
 
@@ -221,6 +221,23 @@ class _SettingsState extends State<Settings> {
                               controller.setindex(0);
                             },
                           ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                          //   child: Divider(
+                          //     color:
+                          //         Theme.of(context).hintColor.withOpacity(.6),
+                          //     height: 1,
+                          //   ),
+                          // ),
+                          // ListTile(
+                          //   title: Text(
+                          //     "Download",
+                          //   ),
+                          //   onTap: () async {
+                          //     await controller.getTransactions(context);
+                          //     //startService();
+                          //   },
+                          // ),
                         ],
                       ),
                     ),
@@ -250,5 +267,18 @@ class _SettingsState extends State<Settings> {
 
   _onShareWithEmptyOrigin(BuildContext context, String url) async {
     await Share.share(url);
+  }
+
+  Future<void> startService() async {
+    try {
+      print("Strting service");
+      if (Platform.isAndroid) {
+        var methodChannel = MethodChannel("com.finance.budgetplanner");
+        String data = await methodChannel.invokeMethod("startService");
+        debugPrint(data);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

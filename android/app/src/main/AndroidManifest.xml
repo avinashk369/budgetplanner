@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.finance.budgetplanner">
     <uses-permission android:name="android.permission.INTERNET"/>
+
     
    <application
+       android:name=".App"
         android:label="Mr Budget"
         android:icon="@mipmap/logo_bg">
         <activity
@@ -43,5 +45,6 @@
           <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4538984371652894~1093275306"/>
+<!--       <service android:name=".AppService"/>-->
     </application>
 </manifest>

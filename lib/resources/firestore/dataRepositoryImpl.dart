@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:io';
 
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/BaseModel.dart';
@@ -12,8 +12,10 @@ import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/models/transaction_type_model.dart';
 import 'package:budgetplanner/resources/firestore/image_data.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
-import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csv/csv.dart';
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'dataRepository.dart';
 
@@ -639,5 +641,20 @@ class DataRepositoryImpl implements DataRepository {
         .catchError((error) {
       print(error.toString());
     });
+  }
+
+  @override
+  Future generateCsv(List<List<String>> data) async {
+    String fileName = DateFormat('LLL').format(DateTime.now()) +
+        "_" +
+        DateFormat('y').format(DateTime.now());
+
+    String csvData = ListToCsvConverter().convert(data);
+    final String directory =
+        (await getApplicationSupportDirectory()).absolute.path;
+    final path = "$directory/reports-$fileName.csv";
+    print(path);
+    final File file = File(path);
+    await file.writeAsString(csvData);
   }
 }

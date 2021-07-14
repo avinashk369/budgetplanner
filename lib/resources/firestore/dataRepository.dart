@@ -41,4 +41,5 @@ abstract class DataRepository {
   Future<void> updateBudget(BudgetModel budgetModel);
   Future<BudgetModel?> getBudgetModel(String name, String userId);
   Future saveRequest(Map<String, dynamic> requestJson);
+  Future generateCsv(List<List<String>> data);
 }
