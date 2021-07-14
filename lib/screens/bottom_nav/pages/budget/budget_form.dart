@@ -77,7 +77,7 @@ class BudgetForm extends StatelessWidget {
         CustomInput(
           controller: controller.notesController,
           hintText: notes.tr,
-          validator: (value) => controller.validatePassword(value!),
+          //validator: (value) => controller.validatePassword(value!),
         ),
         SizedBox(
           height: 10,

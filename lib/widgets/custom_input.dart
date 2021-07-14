@@ -10,7 +10,7 @@ class CustomInput extends GetView {
   final int? numOfLines;
   const CustomInput({
     Key? key,
-    required this.validator,
+    this.validator,
     required this.hintText,
     required this.controller,
     this.textInputType,
