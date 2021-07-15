@@ -9,7 +9,6 @@ import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -201,42 +200,5 @@ class TransactionEntryController extends GetxController {
     } catch (e) {} finally {
       isLoading(false);
     }
-  }
-
-  void checkLogin(BuildContext context) {
-    // final isValid = incomeKey.currentState!.validate();
-    // if (!isValid) {
-    //   return;
-    // }
-    // LoadingDialog.showLoadingDialog(context, _keyLoader);
-    // Authentication.signinWithEmailPassword(
-    //   context: context,
-    //   email: emailController.text.toString(),
-    //   password: "password",
-    // ).then((value) {
-    //   print("${value!.uid} registerd user id ${value.emailVerified}");
-    //   Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
-    // if (!value.emailVerified) {
-    //   Get.dialog(
-    //     MyAlertDialog(
-    //       title: Container(),
-    //       content: Text('verification-email-sent-message'.tr),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () => Get.back(),
-    //           child: Text(
-    //             'Ok',
-    //             style: TextStyle(
-    //               color: Color(0xFF39bc26),
-    //             ),
-    //           ),
-    //         )
-    //       ],
-    //     ),
-    //   );
-    // } else {
-    //Navigator.popAndPushNamed(context, dashboardRoute);
-    //}
-    //});
   }
 }

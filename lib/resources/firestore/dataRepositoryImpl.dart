@@ -352,6 +352,17 @@ class DataRepositoryImpl implements DataRepository {
     }
   }
 
+  @override
+  Stream<List<TransactionModel>>? getNextTransactions(
+      String userId,
+      String transactionType,
+      DateTime currenctMonth,
+      List<String> filterCategory,
+      DocumentSnapshot<Object?> lastDocument) {
+    // TODO: implement getNextTransactions
+    throw UnimplementedError();
+  }
+
   Stream<BaseModel<List<TransactionModel>>> todoStream(
       String transactionType) async* {
     // TODO: implement testingConnection
@@ -535,8 +546,8 @@ class DataRepositoryImpl implements DataRepository {
             totalAMount += transactionModel.amount!;
             //budget.totalExpense = totalAMount;
             budget.setTotalBudgetExpense(totalAMount);
-            print(
-                "${budget.catName} Printing amount inside loop ${budget.totalBudgetExpense.value}");
+            // print(
+            //     "${budget.catName} Printing amount inside loop ${budget.totalBudgetExpense.value}");
           });
         });
         //     .get()
@@ -549,8 +560,8 @@ class DataRepositoryImpl implements DataRepository {
         //     budget.totalExpense = totalAMount;
         //   });
         // });
-        print(
-            "${budget.catName} Printing amount  ${budget.totalBudgetExpense.value}");
+        // print(
+        //     "${budget.catName} Printing amount  ${budget.totalBudgetExpense.value}");
         return budget;
       }).toList();
     });
@@ -650,8 +661,7 @@ class DataRepositoryImpl implements DataRepository {
         DateFormat('y').format(DateTime.now());
 
     String csvData = ListToCsvConverter().convert(data);
-    final String directory =
-        (await getApplicationSupportDirectory()).absolute.path;
+    final String directory = (await getApplicationSupportDirectory()).path;
     final path = "$directory/reports-$fileName.csv";
     print(path);
     final File file = File(path);

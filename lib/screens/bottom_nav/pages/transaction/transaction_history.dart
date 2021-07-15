@@ -39,6 +39,7 @@ class TransactionHistory extends GetView {
     // print("month name ${DateTime(date.year, date.month - 6, 0).toString()}");
     final adCont = AdController.tagged(adController);
     final controller = TransactionEntryController.to;
+    //used for transaction filter option
     final expController = ExpenseController.tagged(expenseController);
     final incController = IncomeController.tagged(incomeController);
     final String userId = PreferenceUtils.getString(user_id);

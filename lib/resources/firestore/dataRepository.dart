@@ -7,6 +7,7 @@ import 'package:budgetplanner/models/recurrance_model.dart';
 import 'package:budgetplanner/models/saving_category.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/models/transaction_type_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class DataRepository {
   Future createBudgetCategory();
@@ -29,6 +30,12 @@ abstract class DataRepository {
       String transactionType,
       DateTime currenctMonth,
       List<String> filterCategory);
+  Stream<List<TransactionModel>>? getNextTransactions(
+      String userId,
+      String transactionType,
+      DateTime currenctMonth,
+      List<String> filterCategory,
+      DocumentSnapshot lastDocument);
   Stream<List<TransactionModel>>? getRecentTransactions(String userId);
   Stream<List<BudgetModel>>? getBudgetList(String userId);
   Future saveTransaction(TransactionModel transactionModel);

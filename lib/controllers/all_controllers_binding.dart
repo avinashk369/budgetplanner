@@ -4,6 +4,7 @@ import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/controllers/expense_controller.dart';
 import 'package:budgetplanner/controllers/income_controller.dart';
 import 'package:budgetplanner/controllers/login_controller.dart';
+import 'package:budgetplanner/controllers/pagination_controller.dart';
 import 'package:budgetplanner/controllers/saving_controller.dart';
 import 'package:budgetplanner/controllers/settings_controller.dart';
 import 'package:budgetplanner/controllers/test_controller.dart';
@@ -47,5 +48,7 @@ class AllControllersBinding implements Bindings {
         tag: adController, fenix: true);
     Get.lazyPut<AdController>(() => AdController(), fenix: true);
     Get.create<AdController>(() => AdController(), tag: newAdController);
+    Get.lazyPut<PaginationController>(() => PaginationController(),
+        tag: paginationController, fenix: true);
   }
 }
