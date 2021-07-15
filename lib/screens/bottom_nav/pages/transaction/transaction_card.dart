@@ -68,9 +68,8 @@ class TransactionCard extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           transactionModel.catName.toString(),
-                          style: kLabelStyle.apply(
-                              fontSizeFactor: 1.2,
-                              color: Theme.of(context).hintColor),
+                          style: kLabelStyle.copyWith(
+                              fontSize: 16, color: Theme.of(context).hintColor),
                         ),
                         SizedBox(
                           height: 3,
@@ -88,6 +87,9 @@ class TransactionCard extends StatelessWidget {
                           (transactionModel.transactionType == expense)
                               ? transactionModel.expenseSource!
                               : income,
+                          style: kLabelStyle.copyWith(
+                            color: kGrey,
+                          ),
                         )
                       ],
                     ),
