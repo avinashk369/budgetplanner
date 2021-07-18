@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:budgetplanner/controllers/dashboard_controller.dart';
@@ -7,6 +8,7 @@ import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/authentication.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/utils/notification_service.dart';
 import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
@@ -15,7 +17,9 @@ import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:open_file/open_file.dart';
 import 'package:share/share.dart';
 
 class Settings extends StatefulWidget {
@@ -27,6 +31,14 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   final controller = DashboardController.tagged(dashboardController);
+
+  @override
+  void initState() {
+    super.initState();
+
+    NotificationService().init();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,9 +91,7 @@ class _SettingsState extends State<Settings> {
                       child: Column(
                         children: [
                           ListTile(
-                            title: Text(
-                              "Language",
-                            ),
+                            title: Text("Language", style: kLabelStyle),
                             trailing: Text(PreferenceUtils.getString(language,
                                 defValue: 'EN')),
                             onTap: () {
@@ -97,9 +107,7 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           ListTile(
-                            title: Text(
-                              "Theme",
-                            ),
+                            title: Text("Theme", style: kLabelStyle),
                             trailing: FittedBox(
                               fit: BoxFit.fill,
                               child: Row(
@@ -112,10 +120,10 @@ class _SettingsState extends State<Settings> {
                                     width: 3,
                                   ),
                                   Text(
-                                    (PreferenceUtils.getBool(theme_mode))
-                                        ? "Dark"
-                                        : "Light",
-                                  )
+                                      (PreferenceUtils.getBool(theme_mode))
+                                          ? "Dark"
+                                          : "Light",
+                                      style: kLabelStyle)
                                 ],
                               ),
                             ),
@@ -132,9 +140,7 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           ListTile(
-                            title: Text(
-                              "Currency",
-                            ),
+                            title: Text("Currency", style: kLabelStyle),
                             onTap: () {
                               showCurrencyPicker(
                                 context: context,
@@ -168,9 +174,7 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           ListTile(
-                            title: Text(
-                              "Share",
-                            ),
+                            title: Text("Share", style: kLabelStyle),
                             onTap: () async {
                               if (Platform.isAndroid) {
                                 print('Android');
@@ -195,9 +199,7 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           ListTile(
-                            title: Text(
-                              "Request feature",
-                            ),
+                            title: Text("Request feature", style: kLabelStyle),
                             onTap: () => Get.to(FeatureRequestScreen()),
                           ),
                           Padding(
@@ -230,11 +232,17 @@ class _SettingsState extends State<Settings> {
                           //   ),
                           // ),
                           // ListTile(
-                          //   title: Text(
-                          //     "Download",
-                          //   ),
+                          //   title: Text("Download", style: kLabelStyle),
                           //   onTap: () async {
-                          //     await controller.getTransactions(context);
+                          //     Map<String, dynamic> result = {
+                          //       'isSuccess': false,
+                          //       'filePath': "abcd",
+                          //       'error': "sorry ",
+                          //     };
+                          //     //Get.to(BarChartSample5());
+                          //     await NotificationService()
+                          //         .showNotification(result);
+                          //     //await controller.getTransactions(context);
                           //     //startService();
                           //   },
                           // ),

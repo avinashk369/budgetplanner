@@ -1,5 +1,6 @@
 import 'package:budgetplanner/controllers/all_controllers_binding.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/notification_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +22,7 @@ void main() async {
   await Firebase.initializeApp();
   await MobileAds.instance.initialize();
   await PreferenceUtils.getInstance();
+  await NotificationService().init();
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

@@ -43,6 +43,9 @@ class TransactionHistory extends GetView {
     final expController = ExpenseController.tagged(expenseController);
     final incController = IncomeController.tagged(incomeController);
     final String userId = PreferenceUtils.getString(user_id);
+
+    controller.bindTransaction(DateTime.now());
+
     showInterstitialAd(adCont);
     // TODO: implement build
     return Scaffold(

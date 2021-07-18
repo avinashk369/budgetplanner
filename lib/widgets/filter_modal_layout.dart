@@ -42,7 +42,7 @@ class _FilterLayoutState extends State<FilterLayout> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 15),
+              SizedBox(height: 5),
               Container(
                 height: 40,
                 child: ListView.builder(
@@ -54,7 +54,7 @@ class _FilterLayoutState extends State<FilterLayout> {
                       filterTab(filterTabs[index], index),
                 ),
               ),
-              SizedBox(height: 35),
+              SizedBox(height: 15),
               Expanded(
                 child: PageView(
                   physics: ClampingScrollPhysics(),
@@ -70,8 +70,7 @@ class _FilterLayoutState extends State<FilterLayout> {
                       children: [
                         Container(
                           child: Wrap(
-                            spacing: 8,
-                            runSpacing: 5,
+                            spacing: 5,
                             children: buildIncomeChoiceList(),
                           ),
                         ),
@@ -111,8 +110,7 @@ class _FilterLayoutState extends State<FilterLayout> {
                       child: Column(
                         children: [
                           Wrap(
-                            spacing: 8,
-                            runSpacing: 5,
+                            spacing: 5,
                             children: buildExpChoiceList(),
                           ),
                           SizedBox(
@@ -166,12 +164,10 @@ class _FilterLayoutState extends State<FilterLayout> {
       choices.add(Container(
         child: FilterChip(
           label: Text(item.name!),
-          labelStyle: kLabelStyle.copyWith(color: whiteColor),
+          labelStyle: kLabelStyle.copyWith(
+              color: (item.isSelected) ? whiteColor : darkColor),
           checkmarkColor: whiteColor,
-          backgroundColor: darkColor,
           selectedColor: tealColor,
-          shape: StadiumBorder(
-              side: BorderSide(color: Colors.transparent, width: 1)),
           selected: item.isSelected,
           onSelected: (selected) {
             (selected)
@@ -216,11 +212,9 @@ class _FilterLayoutState extends State<FilterLayout> {
       choices.add(Container(
         child: FilterChip(
           label: Text(item.name!),
-          labelStyle: kLabelStyle.copyWith(color: whiteColor),
+          labelStyle: kLabelStyle.copyWith(color: whiteColor, fontSize: 12),
           backgroundColor: Colors.transparent,
           selectedColor: tealColor,
-          shape: StadiumBorder(
-              side: BorderSide(color: Colors.transparent, width: 1)),
           selected: item.isSelected,
           onSelected: (selected) {
             setState(() {
@@ -234,27 +228,24 @@ class _FilterLayoutState extends State<FilterLayout> {
   }
 
   buildIncomeChoiceList() {
+    //Color tc = darkColor;
     List<Widget> choices = [];
     incController.catList.forEach((item) {
-      choices.add(Container(
-        child: FilterChip(
-          label: Text(item.name!),
-          labelStyle: kLabelStyle.copyWith(color: whiteColor),
-          checkmarkColor: whiteColor,
-          backgroundColor: darkColor,
-          selectedColor: tealColor,
-          shape: StadiumBorder(
-              side: BorderSide(color: Colors.transparent, width: 1)),
-          selected: item.isSelected,
-          onSelected: (selected) {
-            (selected)
-                ? filterName.add(item.name!)
-                : filterName.remove(item.name);
-            setState(() {
-              item.isSelected = selected;
-            });
-          },
-        ),
+      choices.add(FilterChip(
+        label: Text(item.name!),
+        labelStyle: kLabelStyle.copyWith(
+            color: (item.isSelected) ? whiteColor : darkColor),
+        checkmarkColor: whiteColor,
+        selectedColor: tealColor,
+        selected: item.isSelected,
+        onSelected: (selected) {
+          (selected)
+              ? filterName.add(item.name!)
+              : filterName.remove(item.name);
+          setState(() {
+            item.isSelected = selected;
+          });
+        },
       ));
     });
 
