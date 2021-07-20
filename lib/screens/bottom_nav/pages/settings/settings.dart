@@ -239,11 +239,21 @@ class _SettingsState extends State<Settings> {
                           //       'filePath': "abcd",
                           //       'error': "sorry ",
                           //     };
-                          //     //Get.to(BarChartSample5());
-                          //     await NotificationService()
-                          //         .showNotification(result);
-                          //     //await controller.getTransactions(context);
-                          //     //startService();
+                          //show report chart
+                          //Get.to(BarChartSample5());
+                          // await NotificationService()
+                          //     .showNotification(result);
+                          // await NotificationService()
+                          //     .periodicNotification(result);
+                          // await NotificationService().zonedSchedule(result,
+                          //     androidAllowWhileIdle: true,
+                          //     uiLocalNotificationDateInterpretation:
+                          //         UILocalNotificationDateInterpretation
+                          //             .absoluteTime);
+                          // await NotificationService().cancelNotification();
+                          //download csv
+                          //await controller.getTransactions(context);
+                          //startService();
                           //   },
                           // ),
                         ],
