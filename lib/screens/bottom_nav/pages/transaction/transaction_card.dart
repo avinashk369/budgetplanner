@@ -40,10 +40,10 @@ class TransactionCard extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Container(
-                  width: 50.0,
-                  height: 50,
+                  width: 40.0,
+                  height: 40,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25.0),
+                    borderRadius: BorderRadius.circular(20.0),
                     color: DataRepositoryImpl()
                         .iconUrl(transactionModel.catName!)!
                         .colorName,
@@ -69,7 +69,7 @@ class TransactionCard extends StatelessWidget {
                         Text(
                           transactionModel.catName.toString(),
                           style: kLabelStyle.copyWith(
-                              fontSize: 16, color: Theme.of(context).hintColor),
+                              fontSize: 14, color: Theme.of(context).hintColor),
                         ),
                         SizedBox(
                           height: 3,
@@ -83,12 +83,25 @@ class TransactionCard extends StatelessWidget {
                         SizedBox(
                           height: 3,
                         ),
-                        Text(
-                          (transactionModel.transactionType == expense)
-                              ? transactionModel.expenseSource!
-                              : income,
-                          style: kLabelStyle.copyWith(
-                            color: kGrey,
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          height: 20,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Theme.of(context).hintColor.withOpacity(.08),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                (transactionModel.transactionType == expense)
+                                    ? transactionModel.expenseSource!
+                                    : income,
+                                style: kLabelStyle.copyWith(
+                                  color: kGrey,
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       ],
@@ -98,8 +111,8 @@ class TransactionCard extends StatelessWidget {
                 Text(
                   controller.currencySymbol +
                       transactionModel.amount.toString(),
-                  style: kLabelStyle.apply(
-                    fontSizeFactor: 1.2,
+                  style: kLabelStyle.copyWith(
+                    fontSize: 14,
                     color: (transactionModel.transactionType == expense)
                         ? (currentTheme.currentTheme == ThemeMode.dark)
                             ? kPink

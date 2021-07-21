@@ -51,18 +51,18 @@ class CustomTheme with ChangeNotifier {
             fontSize: 14,
           ),
           unselectedLabelStyle: TextStyle(
-            color: kDarkGrey,
+            color: darkColor,
             fontSize: 12,
           ),
           backgroundColor: whiteColor,
           elevation: 0,
           selectedItemColor: shade,
-          unselectedItemColor: kGrey,
+          unselectedItemColor: darkColor,
           showSelectedLabels: true,
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
           unselectedIconTheme: IconThemeData(
-            color: kGrey,
+            color: darkColor,
             size: 20,
           ),
           selectedIconTheme: IconThemeData(

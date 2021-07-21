@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       monthly_budget.tr,
                       style: kHeaderStyle.copyWith(
-                          fontSize: 17, color: Theme.of(context).accentColor),
+                          fontSize: 16, color: Theme.of(context).accentColor),
                     ),
                   );
                 } else {
@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       recent_transaction.tr,
                       style: kHeaderStyle.copyWith(
-                          fontSize: 17, color: Theme.of(context).accentColor),
+                          fontSize: 16, color: Theme.of(context).accentColor),
                     ),
                   );
                 } else {

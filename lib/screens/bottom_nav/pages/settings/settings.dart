@@ -91,7 +91,9 @@ class _SettingsState extends State<Settings> {
                       child: Column(
                         children: [
                           ListTile(
-                            title: Text("Language", style: kLabelStyle),
+                            title: Text("Language",
+                                style: kLabelStyle.copyWith(
+                                    color: Theme.of(context).hintColor)),
                             trailing: Text(PreferenceUtils.getString(language,
                                 defValue: 'EN')),
                             onTap: () {
@@ -107,7 +109,9 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           ListTile(
-                            title: Text("Theme", style: kLabelStyle),
+                            title: Text("Theme",
+                                style: kLabelStyle.copyWith(
+                                    color: Theme.of(context).hintColor)),
                             trailing: FittedBox(
                               fit: BoxFit.fill,
                               child: Row(
@@ -123,7 +127,8 @@ class _SettingsState extends State<Settings> {
                                       (PreferenceUtils.getBool(theme_mode))
                                           ? "Dark"
                                           : "Light",
-                                      style: kLabelStyle)
+                                      style: kLabelStyle.copyWith(
+                                          color: Theme.of(context).hintColor))
                                 ],
                               ),
                             ),
@@ -140,7 +145,9 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           ListTile(
-                            title: Text("Currency", style: kLabelStyle),
+                            title: Text("Currency",
+                                style: kLabelStyle.copyWith(
+                                    color: Theme.of(context).hintColor)),
                             onTap: () {
                               showCurrencyPicker(
                                 context: context,
@@ -174,7 +181,9 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           ListTile(
-                            title: Text("Share", style: kLabelStyle),
+                            title: Text("Share",
+                                style: kLabelStyle.copyWith(
+                                    color: Theme.of(context).hintColor)),
                             onTap: () async {
                               if (Platform.isAndroid) {
                                 print('Android');
@@ -199,7 +208,9 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           ListTile(
-                            title: Text("Request feature", style: kLabelStyle),
+                            title: Text("Request feature",
+                                style: kLabelStyle.copyWith(
+                                    color: Theme.of(context).hintColor)),
                             onTap: () => Get.to(FeatureRequestScreen()),
                           ),
                           Padding(
@@ -223,39 +234,41 @@ class _SettingsState extends State<Settings> {
                               controller.setindex(0);
                             },
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.symmetric(horizontal: 10),
-                          //   child: Divider(
-                          //     color:
-                          //         Theme.of(context).hintColor.withOpacity(.6),
-                          //     height: 1,
-                          //   ),
-                          // ),
-                          // ListTile(
-                          //   title: Text("Download", style: kLabelStyle),
-                          //   onTap: () async {
-                          //     Map<String, dynamic> result = {
-                          //       'isSuccess': false,
-                          //       'filePath': "abcd",
-                          //       'error': "sorry ",
-                          //     };
-                          //show report chart
-                          //Get.to(BarChartSample5());
-                          // await NotificationService()
-                          //     .showNotification(result);
-                          // await NotificationService()
-                          //     .periodicNotification(result);
-                          // await NotificationService().zonedSchedule(result,
-                          //     androidAllowWhileIdle: true,
-                          //     uiLocalNotificationDateInterpretation:
-                          //         UILocalNotificationDateInterpretation
-                          //             .absoluteTime);
-                          // await NotificationService().cancelNotification();
-                          //download csv
-                          //await controller.getTransactions(context);
-                          //startService();
-                          //   },
-                          // ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Divider(
+                              color:
+                                  Theme.of(context).hintColor.withOpacity(.6),
+                              height: 1,
+                            ),
+                          ),
+                          ListTile(
+                            title: Text("Download", style: kLabelStyle),
+                            onTap: () async {
+                              //     Map<String, dynamic> result = {
+                              //       'isSuccess': false,
+                              //       'filePath': "abcd",
+                              //       'error': "sorry ",
+                              //     };
+                              //show report chart
+                              //Get.to(BarChartSample5());
+                              // await NotificationService()
+                              //     .scheduleDailyTenAMNotification();
+                              // await NotificationService()
+                              //     .showNotification(result);
+                              // await NotificationService()
+                              //     .periodicNotification(result);
+                              // await NotificationService().zonedSchedule(result,
+                              //     androidAllowWhileIdle: true,
+                              //     uiLocalNotificationDateInterpretation:
+                              //         UILocalNotificationDateInterpretation
+                              //             .absoluteTime);
+                              // await NotificationService().cancelNotification();
+                              //download csv
+                              //await controller.getTransactions(context);
+                              //startService();
+                            },
+                          ),
                         ],
                       ),
                     ),

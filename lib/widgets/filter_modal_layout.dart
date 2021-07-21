@@ -43,16 +43,75 @@ class _FilterLayoutState extends State<FilterLayout> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 5),
-              Container(
-                height: 40,
-                child: ListView.builder(
-                  itemCount: filterTabs.length,
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) =>
-                      filterTab(filterTabs[index], index),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                      color: Colors.grey[100], //grey[100]
+                    ),
+                    child: ListView.builder(
+                      itemCount: filterTabs.length,
+                      shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: filterTab(filterTabs[index], index),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                      color: greylightcolor, //grey[100]
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 3),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        FloatingActionButton(
+                          backgroundColor: Colors.grey[100],
+                          elevation: 0,
+                          child: Icon(Icons.cancel, color: redColor),
+                          onPressed: () {
+                            List<String> blank = [];
+                            incController.catList.forEach((element) {
+                              setState(() {
+                                element.isSelected = false;
+                              });
+                            });
+                            expController.catList.forEach((item) {
+                              setState(() {
+                                item.isSelected = false;
+                              });
+                            });
+                            widget.removeFilter(blank);
+                          },
+                        ),
+                        FloatingActionButton(
+                          backgroundColor: Colors.grey[100],
+                          elevation: 0,
+                          child: Icon(
+                            Icons.check,
+                            color: tealColor,
+                          ),
+                          onPressed: () {
+                            widget.applyFilter(filterName);
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 15),
               Expanded(
@@ -74,36 +133,6 @@ class _FilterLayoutState extends State<FilterLayout> {
                             children: buildIncomeChoiceList(),
                           ),
                         ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            OutlinedButton(
-                                onPressed: () {
-                                  List<String> blank = [];
-                                  incController.catList.forEach((element) {
-                                    setState(() {
-                                      element.isSelected = false;
-                                    });
-                                  });
-                                  widget.removeFilter(blank);
-                                },
-                                child: Text(
-                                  "Clear Filter",
-                                  style: kLabelStyle.copyWith(color: darkColor),
-                                )),
-                            OutlinedButton(
-                                onPressed: () {
-                                  widget.applyFilter(filterName);
-                                },
-                                child: Text(
-                                  "Apply Filter",
-                                  style: kLabelStyle.copyWith(color: darkColor),
-                                ))
-                          ],
-                        )
                       ],
                     ),
                     Container(
@@ -113,38 +142,6 @@ class _FilterLayoutState extends State<FilterLayout> {
                             spacing: 5,
                             children: buildExpChoiceList(),
                           ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              OutlinedButton(
-                                  onPressed: () {
-                                    List<String> blank = [];
-                                    expController.catList.forEach((item) {
-                                      setState(() {
-                                        item.isSelected = false;
-                                      });
-                                    });
-                                    widget.removeFilter(blank);
-                                  },
-                                  child: Text(
-                                    "Clear Filter",
-                                    style:
-                                        kLabelStyle.copyWith(color: darkColor),
-                                  )),
-                              OutlinedButton(
-                                  onPressed: () {
-                                    widget.applyFilter(filterName);
-                                  },
-                                  child: Text(
-                                    "Apply Filter",
-                                    style:
-                                        kLabelStyle.copyWith(color: darkColor),
-                                  )),
-                            ],
-                          )
                         ],
                       ),
                     ),
@@ -164,11 +161,13 @@ class _FilterLayoutState extends State<FilterLayout> {
       choices.add(Container(
         child: FilterChip(
           label: Text(item.name!),
+          elevation: 0,
           labelStyle: kLabelStyle.copyWith(
-              color: (item.isSelected) ? whiteColor : darkColor),
+              fontSize: 14, color: (item.isSelected) ? whiteColor : darkColor),
           checkmarkColor: whiteColor,
           selectedColor: tealColor,
           selected: item.isSelected,
+          backgroundColor: Colors.grey[100],
           onSelected: (selected) {
             (selected)
                 ? filterName.add(item.name!)
@@ -233,11 +232,13 @@ class _FilterLayoutState extends State<FilterLayout> {
     incController.catList.forEach((item) {
       choices.add(FilterChip(
         label: Text(item.name!),
+        elevation: 0,
         labelStyle: kLabelStyle.copyWith(
-            color: (item.isSelected) ? whiteColor : darkColor),
+            fontSize: 14, color: (item.isSelected) ? whiteColor : darkColor),
         checkmarkColor: whiteColor,
         selectedColor: tealColor,
         selected: item.isSelected,
+        backgroundColor: Colors.grey[100],
         onSelected: (selected) {
           (selected)
               ? filterName.add(item.name!)
@@ -253,8 +254,18 @@ class _FilterLayoutState extends State<FilterLayout> {
   }
 
   Widget filterTab(String name, int index) {
-    return InkWell(
-      onTap: () {
+    return ChoiceChip(
+      label: Text(
+        name,
+      ),
+      elevation: 0,
+      selected: (tappedIndex == index),
+      labelStyle: kLabelStyle.copyWith(
+          fontSize: 16, color: (tappedIndex == index) ? whiteColor : darkColor),
+      selectedColor: tealColor,
+      backgroundColor:
+          (tappedIndex == index) ? Colors.transparent : Colors.grey[100],
+      onSelected: (value) {
         setState(() {
           tappedIndex = index;
         });
@@ -262,18 +273,28 @@ class _FilterLayoutState extends State<FilterLayout> {
         _pageController.animateToPage(index,
             duration: Duration(milliseconds: 500), curve: Curves.ease);
       },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
-          color: (tappedIndex == index) ? tealColor : whiteColor,
-          borderRadius: BorderRadius.all(Radius.circular(3)),
-        ),
-        child: Center(
-            child: Text(
-          name,
-          style: kHeaderStyle.copyWith(color: darkColor),
-        )),
-      ),
     );
+    // return InkWell(
+    //   onTap: () {
+    //     setState(() {
+    //       tappedIndex = index;
+    //     });
+    //     print("index $index tappedIndex $tappedIndex");
+    //     _pageController.animateToPage(index,
+    //         duration: Duration(milliseconds: 500), curve: Curves.ease);
+    //   },
+    //   child: Container(
+    //     padding: EdgeInsets.symmetric(horizontal: 10),
+    //     decoration: BoxDecoration(
+    //       color: (tappedIndex == index) ? tealColor : whiteColor,
+    //       borderRadius: BorderRadius.all(Radius.circular(3)),
+    //     ),
+    //     child: Center(
+    //         child: Text(
+    //       name,
+    //       style: kHeaderStyle.copyWith(color: darkColor),
+    //     )),
+    //   ),
+    // );
   }
 }
