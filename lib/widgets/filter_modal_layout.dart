@@ -7,6 +7,8 @@ import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'loading_ui.dart';
+
 class FilterLayout extends StatefulWidget {
   final Function(List<String>) applyFilter;
   final Function(List<String>) removeFilter;
@@ -128,9 +130,13 @@ class _FilterLayoutState extends State<FilterLayout> {
                     Column(
                       children: [
                         Container(
-                          child: Wrap(
-                            spacing: 5,
-                            children: buildIncomeChoiceList(),
+                          child: Obx(
+                            () => (expController.isLoading()
+                                ? loader()
+                                : Wrap(
+                                    spacing: 5,
+                                    children: buildIncomeChoiceList(),
+                                  )),
                           ),
                         ),
                       ],
@@ -138,9 +144,13 @@ class _FilterLayoutState extends State<FilterLayout> {
                     Container(
                       child: Column(
                         children: [
-                          Wrap(
-                            spacing: 5,
-                            children: buildExpChoiceList(),
+                          Obx(
+                            () => (expController.isLoading()
+                                ? LoadingUI()
+                                : Wrap(
+                                    spacing: 5,
+                                    children: buildExpChoiceList(),
+                                  )),
                           ),
                         ],
                       ),
@@ -149,6 +159,22 @@ class _FilterLayoutState extends State<FilterLayout> {
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget loader() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(
+            color: darkColor,
+            strokeWidth: 2,
           ),
         ],
       ),

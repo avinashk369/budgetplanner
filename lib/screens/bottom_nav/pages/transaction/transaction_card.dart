@@ -69,7 +69,7 @@ class TransactionCard extends StatelessWidget {
                         Text(
                           transactionModel.catName.toString(),
                           style: kLabelStyle.copyWith(
-                              fontSize: 14, color: Theme.of(context).hintColor),
+                              fontSize: 15, color: Theme.of(context).hintColor),
                         ),
                         SizedBox(
                           height: 3,
@@ -99,6 +99,7 @@ class TransactionCard extends StatelessWidget {
                                     : income,
                                 style: kLabelStyle.copyWith(
                                   color: kGrey,
+                                  fontSize: 12,
                                 ),
                               ),
                             ],

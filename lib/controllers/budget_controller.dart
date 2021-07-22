@@ -7,6 +7,7 @@ import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/_ModalBottomSheetLayout.dart';
+import 'package:budgetplanner/widgets/custom_theme.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
@@ -239,9 +240,10 @@ class BudgetController extends GetxController {
                                     width: 55,
                                     margin: EdgeInsets.only(bottom: 5),
                                     decoration: BoxDecoration(
-                                      color: DataRepositoryImpl()
-                                          .iconUrl(imageList[index].name!)!
-                                          .colorName,
+                                      color: (CustomTheme().currentTheme ==
+                                              ThemeMode.dark)
+                                          ? Colors.grey[100]
+                                          : Colors.black12,
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(30)),
                                     ),
@@ -252,7 +254,9 @@ class BudgetController extends GetxController {
                                             .iconUrl(imageList[index].name!)!
                                             .iconName,
                                         size: 35,
-                                        color: whiteColor,
+                                        color: DataRepositoryImpl()
+                                            .iconUrl(imageList[index].name!)!
+                                            .colorName,
                                       ),
                                       onPressed: () {
                                         //Navigator.of(context).pop();

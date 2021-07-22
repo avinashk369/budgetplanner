@@ -12,6 +12,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
+import 'custom_theme.dart';
+
 class HeaderRow extends StatelessWidget {
   final double income, expense;
   const HeaderRow({
@@ -90,7 +92,10 @@ class HeaderRow extends StatelessWidget {
                             Container(
                               width: 1,
                               height: 40,
-                              color: whiteColor,
+                              color:
+                                  (CustomTheme().currentTheme == ThemeMode.dark)
+                                      ? Colors.black26
+                                      : Colors.grey[300],
                             ),
                             SizedBox(
                               width: 10,

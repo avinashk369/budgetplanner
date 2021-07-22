@@ -56,7 +56,6 @@ class IncomeForm extends StatelessWidget {
                       child: DashedRect(
                         color: Theme.of(context).hintColor,
                         strokeWidth: 1.0,
-                        gap: 2.0,
                       ),
                     ),
             ),

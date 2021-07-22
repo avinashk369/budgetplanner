@@ -10,6 +10,7 @@ import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/_ModalBottomSheetLayout.dart';
+import 'package:budgetplanner/widgets/custom_theme.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/recurrance_list.dart';
@@ -243,9 +244,10 @@ class IncomeController extends BaseController {
                                   width: 55,
                                   margin: EdgeInsets.only(bottom: 5),
                                   decoration: BoxDecoration(
-                                    color: DataRepositoryImpl()
-                                        .iconUrl(imageList[index].name!)!
-                                        .colorName,
+                                    color: (CustomTheme().currentTheme ==
+                                            ThemeMode.dark)
+                                        ? Colors.grey[100]
+                                        : Colors.black12,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(30)),
                                   ),
@@ -256,7 +258,9 @@ class IncomeController extends BaseController {
                                           .iconUrl(imageList[index].name!)!
                                           .iconName,
                                       size: 35,
-                                      color: whiteColor,
+                                      color: DataRepositoryImpl()
+                                          .iconUrl(imageList[index].name!)!
+                                          .colorName,
                                     ),
                                     onPressed: () {
                                       //Navigator.of(context).pop();
