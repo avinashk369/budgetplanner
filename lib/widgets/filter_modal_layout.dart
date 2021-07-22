@@ -49,7 +49,7 @@ class _FilterLayoutState extends State<FilterLayout> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
                     height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
@@ -63,7 +63,7 @@ class _FilterLayoutState extends State<FilterLayout> {
                       physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: filterTab(filterTabs[index], index),
                       ),
                     ),

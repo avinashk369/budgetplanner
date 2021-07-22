@@ -94,10 +94,6 @@ class IncomeController extends BaseController {
     }
     if (recurranceModel.value.name == null) print("Please select recurrance");
     if (incomeKey.currentState!.validate()) {
-      print(amountController.text);
-      print(notesController.text);
-      print(recurranceModel.value.name ?? recurrance);
-      print(incomeModel.value.name);
       try {
         isLoading(true);
         LoadingDialog.showLoadingDialog(context, keyLoader);
@@ -112,6 +108,7 @@ class IncomeController extends BaseController {
             recurranceModel.value.name ?? def_recurrance;
         transactionModel.userId = PreferenceUtils.getString(user_id);
         await DataRepositoryImpl().saveTransaction(transactionModel);
+        releaseValues();
       } catch (e) {
         Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
         SnackBarDialog.displaySnackbar(
@@ -125,6 +122,14 @@ class IncomeController extends BaseController {
             transactionTab.tr, lbl_trx_success.tr);
       }
     }
+  }
+
+  /**
+   * relase persisted values
+   */
+  void releaseValues() {
+    setIncomeMode(IncomeModel());
+    setRecurranceModeel(RecurranceModel());
   }
 
 /**

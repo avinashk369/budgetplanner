@@ -65,15 +65,17 @@ class NotificationService {
         InitializationSettings(
             android: initializationSettingsAndroid,
             iOS: initializationSettingsIOS);
-    // final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
-    // tz.setLocalLocation(tz.getLocation(timeZoneName!));
+
     tz.initializeTimeZones();
+    final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneName!));
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onSelectNotification: selectNotification,
     );
     // schedule notification
-    await periodicNotification(result);
+    //await periodicNotification(result);
+    await scheduleDailyTenAMNotification();
   }
 
 /**
@@ -164,8 +166,11 @@ class NotificationService {
  */
   tz.TZDateTime _nextInstanceOfTenAM() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    print("local time $now");
     tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, 23, 38);
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 19, 30);
+    print("scheduled time $scheduledDate");
+
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
@@ -178,8 +183,8 @@ class NotificationService {
   Future<void> scheduleDailyTenAMNotification() async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
-        'daily scheduled notification title',
-        'daily scheduled notification body',
+        'Alert',
+        'Have you recorded your expense today? ',
         _nextInstanceOfTenAM(),
         const NotificationDetails(
           android: AndroidNotificationDetails(

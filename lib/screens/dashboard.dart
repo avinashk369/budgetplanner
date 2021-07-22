@@ -70,9 +70,9 @@ class _DashboardState extends State<Dashboard> {
             borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
             boxShadow: [
               BoxShadow(
-                  color: Theme.of(context).hintColor.withOpacity(0.5),
+                  color: Theme.of(context).hintColor.withOpacity(0.3),
                   spreadRadius: 0,
-                  blurRadius: 10),
+                  blurRadius: 5),
             ],
           ),
           child: ClipRRect(

@@ -20,9 +20,9 @@ class AddIncome extends StatelessWidget {
         //controller: ScrollController(),
         physics: BouncingScrollPhysics(),
         slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: QuoteContainer(quote, author),
-          ),
+          // SliverToBoxAdapter(
+          //   child: QuoteContainer(quote, author),
+          // ),
           SliverToBoxAdapter(
             child: Form(
               key: controller.incomeKey,

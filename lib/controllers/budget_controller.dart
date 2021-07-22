@@ -120,6 +120,7 @@ class BudgetController extends GetxController {
           budgetModel.createdOn = DateTime.now();
           budgetModel.userId = PreferenceUtils.getString(user_id);
           await DataRepositoryImpl().saveBudget(budgetModel);
+          setBudgetModel(BudgetCategoryModel());
         } catch (e) {
           Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
           SnackBarDialog.displaySnackbar(

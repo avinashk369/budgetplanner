@@ -23,9 +23,9 @@ class AddExpense extends StatelessWidget {
         //controller: ScrollController(),
         physics: BouncingScrollPhysics(),
         slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: QuoteContainer(quote, author),
-          ),
+          // SliverToBoxAdapter(
+          //   child: QuoteContainer(quote, author),
+          // ),
           SliverToBoxAdapter(
               child: SizedBox(
             height: 10,
@@ -41,7 +41,7 @@ class AddExpense extends StatelessWidget {
                   ),
                   OutlinedButton(
                     onPressed: () {
-                      controller.submitIncomeRecord(context);
+                      controller.submitExpenseRecord(context);
                     },
                     child: Text(addExpense.tr),
                   ),

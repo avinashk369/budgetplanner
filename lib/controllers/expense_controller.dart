@@ -55,6 +55,7 @@ class ExpenseController extends BaseController {
     super.onInit();
     amountController = TextEditingController();
     notesController = TextEditingController();
+
     () async {
       catList = await getBudgetCategories();
       recurranceList = await getRecurranceList();
@@ -91,7 +92,7 @@ class ExpenseController extends BaseController {
     return null;
   }
 
-  void submitIncomeRecord(BuildContext context) async {
+  void submitExpenseRecord(BuildContext context) async {
     final isValid = expenseKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -107,10 +108,6 @@ class ExpenseController extends BaseController {
     }
     if (recurranceModel.value.name == null) print("Please select recurrance");
     if (expenseKey.currentState!.validate()) {
-      // print(amountController.text);
-      // print(notesController.text);
-      // print(recurranceModel.value.name ?? recurrance);
-      // print(budgetCatModel.value.name);
       try {
         isLoading(true);
         LoadingDialog.showLoadingDialog(context, keyLoader);
@@ -128,6 +125,7 @@ class ExpenseController extends BaseController {
             recurranceModel.value.name ?? def_recurrance;
         transactionModel.userId = PreferenceUtils.getString(user_id);
         await DataRepositoryImpl().saveTransaction(transactionModel);
+        releaseValues();
       } catch (e) {
         Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
         SnackBarDialog.displaySnackbar(
@@ -143,6 +141,15 @@ class ExpenseController extends BaseController {
         );
       }
     }
+  }
+
+  /**
+   * relase persisted values
+   */
+  void releaseValues() {
+    setExpenseMode(BudgetCategoryModel());
+    setRecurranceModeel(RecurranceModel());
+    setExpenseSource(ExpenseSourceModel());
   }
 
 /**

@@ -1,7 +1,6 @@
 import 'package:budgetplanner/controllers/ad_controller.dart';
 import 'package:budgetplanner/controllers/test_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
-import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/recent_transaction.dart';
@@ -13,11 +12,13 @@ import 'package:budgetplanner/widgets/budget_shimmer.dart';
 import 'package:budgetplanner/widgets/header_row.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
 import 'package:budgetplanner/widgets/trx_shimmer.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:get/get.dart';
 
 import 'budget/budget_list.dart';
+import 'transaction/BarChartSample5.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -130,6 +131,27 @@ class _HomePageState extends State<HomePage> {
         body: CustomScrollView(
           physics: BouncingScrollPhysics(),
           slivers: [
+            SliverToBoxAdapter(
+              child: ChoiceChip(
+                label: RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                    text: "View report ",
+                    style: kLabelStyle.copyWith(fontSize: 14),
+                  ),
+                  TextSpan(
+                    text: ">",
+                    style: kLabelStyle.copyWith(fontSize: 14),
+                  ),
+                ])),
+                onSelected: (value) {
+                  Get.to(BarChartSample5());
+                },
+                avatar: Icon(EvaIcons.barChart),
+                selected: true,
+                selectedColor: Colors.grey[100],
+              ),
+            ),
             SliverToBoxAdapter(
               child: SizedBox(
                 height: 10,
