@@ -265,7 +265,7 @@ class _SettingsState extends State<Settings> {
                               //             .absoluteTime);
                               // await NotificationService().cancelNotification();
                               //download csv
-                              //await controller.getTransactions(context);
+                              await controller.getTransactions(context);
                               //startService();
                             },
                           ),

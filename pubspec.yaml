@@ -68,6 +68,8 @@ dependencies:
   open_file: ^3.2.1
   permission_handler: ^8.1.2
   fl_chart: ^0.36.2
+  flutter_native_timezone: ^2.0.0
+  
   
 
 dependency_overrides:

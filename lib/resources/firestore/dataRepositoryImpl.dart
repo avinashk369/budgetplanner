@@ -14,8 +14,12 @@ import 'package:budgetplanner/resources/firestore/image_data.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
+import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 
 import 'dataRepository.dart';
 
@@ -537,6 +541,14 @@ class DataRepositoryImpl implements DataRepository {
             .collection(transaction)
             .where("cat_name", isEqualTo: budget.catName)
             .where('user_id', isEqualTo: budget.userId)
+            .where('created_on',
+                isGreaterThanOrEqualTo:
+                    DateTime(currenctMonth.year, currenctMonth.month, 1)
+                        .toIso8601String())
+            .where('created_on',
+                isLessThan:
+                    DateTime(currenctMonth.year, currenctMonth.month + 1, 1)
+                        .toIso8601String())
             .snapshots()
             .forEach((element) {
           double totalAMount = 0.0;
@@ -656,15 +668,34 @@ class DataRepositoryImpl implements DataRepository {
 
   @override
   Future generateCsv(List<List<String>> data) async {
+    /**
+     * make sure to ask user for storage permission
+     */
     String fileName = DateFormat('LLL').format(DateTime.now()) +
         "_" +
         DateFormat('y').format(DateTime.now());
 
     String csvData = ListToCsvConverter().convert(data);
-    final String directory = (await getApplicationSupportDirectory()).path;
+
+    //final String directory = (await getApplicationDocumentsDirectory()).path;
+    final String directory = GetPlatform.isAndroid
+        ? (await getTemporaryDirectory()).path
+        : (await getTemporaryDirectory()).path;
+
     final path = "$directory/reports-$fileName.csv";
     print(path);
     final File file = File(path);
-    await file.writeAsString(csvData);
+
+    // notify user about the file download status
+    await file.writeAsString(csvData).then((value) => shareFile([value.path]));
+
+    //file.exists().then((value) => file.openRead());
+    // print("file path ${file.path}");
+    // final _result = await OpenFile.open(path);
+    //print(_result.message);
+  }
+
+  shareFile(List<String> filePath) async {
+    await Share.shareFiles(filePath);
   }
 }

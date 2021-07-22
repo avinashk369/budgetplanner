@@ -57,6 +57,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_local_notifications (0.0.1):
     - Flutter
+  - flutter_native_timezone (0.0.1):
+    - Flutter
   - Google-Mobile-Ads-SDK (8.5.0):
     - GoogleAppMeasurement (< 9.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
@@ -136,6 +138,7 @@ DEPENDENCIES:
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.0.0`)
   - Flutter (from `Flutter`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_native_timezone (from `.symlinks/plugins/flutter_native_timezone/ios`)
   - google_mobile_ads (from `.symlinks/plugins/google_mobile_ads/ios`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
   - open_file (from `.symlinks/plugins/open_file/ios`)
@@ -180,6 +183,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_native_timezone:
+    :path: ".symlinks/plugins/flutter_native_timezone/ios"
   google_mobile_ads:
     :path: ".symlinks/plugins/google_mobile_ads/ios"
   google_sign_in:
@@ -216,6 +221,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 0d1548ab6085002d87c173ce3f881129f39b3565
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
+  flutter_native_timezone: 5f05b2de06c9776b4cc70e1839f03de178394d22
   Google-Mobile-Ads-SDK: 6f5c41bf73db1656e5b203ba9c31e3d0899a128d
   google_mobile_ads: b3a22ee82112a9f06eea4435c71a97d104e0d271
   google_sign_in: 6bd214b9c154f881422f5fe27b66aaa7bbd580cc

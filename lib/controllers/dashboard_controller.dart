@@ -4,10 +4,12 @@ import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DashboardController extends GetxController {
   var currentIndex = 0.obs;
@@ -35,7 +37,72 @@ class DashboardController extends GetxController {
     setPackgeInfo(info.version);
   }
 
+  Future<bool> requestPersmission(BuildContext context) async {
+    var status = await Permission.storage.status;
+    if (status.isGranted) {
+      return true;
+    } else if (status.isDenied) {
+      return false;
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => CupertinoAlertDialog(
+                title: Text('Storage Permission'),
+                content: Text(
+                    'This app needs storage access to download report files'),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: Text('Deny'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  CupertinoDialogAction(
+                    child: Text('Settings'),
+                    onPressed: () => openAppSettings(),
+                  ),
+                ],
+              ));
+    }
+    return false;
+  }
+
+  Future<void> _checkPermission(BuildContext context) async {
+    final serviceStatus = await Permission.storage.status;
+    final isGpsOn = serviceStatus.isGranted;
+    if (!isGpsOn) {
+      print('Turn on location services before requesting permission.');
+      return;
+    }
+
+    final status = await Permission.storage.request();
+    if (status == PermissionStatus.granted) {
+      print('Permission granted');
+    } else if (status == PermissionStatus.denied) {
+      print(
+          'Permission denied. Show a dialog and again ask for the permission');
+    } else if (status == PermissionStatus.permanentlyDenied) {
+      print('Take the user to the settings page.');
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => CupertinoAlertDialog(
+                title: Text('Storage Permission'),
+                content: Text(
+                    'This app needs storage access to download report files'),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: Text('Deny'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  CupertinoDialogAction(
+                    child: Text('Settings'),
+                    onPressed: () async => await openAppSettings(),
+                  ),
+                ],
+              ));
+    }
+  }
+
   Future getTransactions(BuildContext context) async {
+    _checkPermission(context);
     try {
       LoadingDialog.showLoadingDialog(context, keyLoader);
       BaseModel<List<BudgetCategoryModel>> listData =

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -20,6 +21,10 @@ class NotificationService {
 
   NotificationService._internal();
 
+  Map<String, dynamic> result = {
+    'title': "Alert",
+    'desc': "Have you recorded your expense today? ",
+  };
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -60,11 +65,15 @@ class NotificationService {
         InitializationSettings(
             android: initializationSettingsAndroid,
             iOS: initializationSettingsIOS);
+    // final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+    // tz.setLocalLocation(tz.getLocation(timeZoneName!));
     tz.initializeTimeZones();
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onSelectNotification: selectNotification,
     );
+    // schedule notification
+    await periodicNotification(result);
   }
 
 /**
@@ -150,6 +159,40 @@ class NotificationService {
         payload: json);
   }
 
+/**
+ * instance of scheduled date
+ */
+  tz.TZDateTime _nextInstanceOfTenAM() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 23, 38);
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
+
+  /**
+   * daily at 10 am
+   */
+  Future<void> scheduleDailyTenAMNotification() async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        'daily scheduled notification title',
+        'daily scheduled notification body',
+        _nextInstanceOfTenAM(),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+              'daily_notification_id',
+              'daily notification channel name',
+              'daily notification description'),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time);
+  }
+
   /**
    * show scheduled notification
    */
@@ -170,15 +213,6 @@ class NotificationService {
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
-    // periodically notification
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('repeating channel id',
-            'repeating channel name', 'repeating description');
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.periodicallyShow(0, 'repeating title',
-        'repeating body', RepeatInterval.everyMinute, platformChannelSpecifics,
-        androidAllowWhileIdle: true);
   }
 
   /**
@@ -187,12 +221,16 @@ class NotificationService {
   Future<void> periodicNotification(Map<String, dynamic> downloadStatus) async {
     // periodically notification
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('repeating channel id',
-            'repeating channel name', 'repeating description');
+        AndroidNotificationDetails('daily_notification_channel', 'daily_report',
+            'daily_report_description');
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.periodicallyShow(0, 'repeating title',
-        'repeating body', RepeatInterval.everyMinute, platformChannelSpecifics,
+    await flutterLocalNotificationsPlugin.periodicallyShow(
+        0,
+        downloadStatus['title'],
+        downloadStatus['desc'],
+        RepeatInterval.daily,
+        platformChannelSpecifics,
         androidAllowWhileIdle: true);
   }
 

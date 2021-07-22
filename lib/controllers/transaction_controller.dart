@@ -55,7 +55,7 @@ class TransactionEntryController extends GetxController {
     var date = DateTime.now();
     () async {
       transactionTypeList = await getTransactionTypeList();
-      bindTransaction(date);
+      //bindTransaction(date);
       budgetmodel.bindStream(getBudgetListDemo(userId)!);
       totalExpense.bindStream(getTotalExpense("", userId)!);
       totalIncome.bindStream(getTotalIncome("", userId)!);
