@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:budgetplanner/models/notification_model.dart';
+import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:open_file/open_file.dart';
@@ -21,6 +22,7 @@ class NotificationService {
 
   NotificationService._internal();
 
+  late List<NotificationModel> notificationModelList;
   Map<String, dynamic> result = {
     'title': "Alert",
     'desc': "Have you recorded your expense today? ",
@@ -73,9 +75,68 @@ class NotificationService {
       initializationSettings,
       onSelectNotification: selectNotification,
     );
-    // schedule notification
-    //await periodicNotification(result);
-    await scheduleDailyTenAMNotification();
+    // first get all the notifications
+    () async {
+      notificationModelList = (await getAllNotifications())!;
+      // schedule notification
+      scheduleNotifications("reminder");
+      scheduleNotifications("challenge");
+      scheduleNotifications("promotional");
+      //await periodicNotification(result);
+    }();
+  }
+
+  void scheduleNotifications(String name) async {
+    switch (name) {
+      case "reminder":
+        //remind morning
+        for (NotificationModel notificationModel in notificationModelList) {
+          if (notificationModel.isMorning!) {
+            await scheduleNotification(
+                notificationModel, _nextInstanceOfNineAM());
+            return;
+          }
+        }
+        //remind evening
+        for (NotificationModel notificationModel in notificationModelList) {
+          if (notificationModel.isEvening!) {
+            await scheduleNotification(
+                notificationModel, _nextInstanceOfSevenPM());
+            return;
+          }
+        }
+        break;
+      case "challenge":
+        //remind evenry 5th day
+        for (NotificationModel notificationModel in notificationModelList) {
+          if (notificationModel.notificationType == challenge) {
+            await scheduleNotification(
+                notificationModel, _nextInstanceOfFifthDay());
+            return;
+          }
+        }
+        break;
+      case "promotional":
+        //remind daily at 11 am
+        for (NotificationModel notificationModel in notificationModelList) {
+          if (notificationModel.notificationType == promotional) {
+            await scheduleNotification(
+                notificationModel, _nextInstanceOfElevenAMDay());
+            return;
+          }
+        }
+
+        break;
+    }
+  }
+
+  /**
+   * get all notificaitons
+   */
+  Future<List<NotificationModel>?> getAllNotifications() async {
+    try {
+      return await DataRepositoryImpl().getAllNotifications();
+    } catch (e) {}
   }
 
 /**
@@ -162,9 +223,9 @@ class NotificationService {
   }
 
 /**
- * instance of scheduled date
+ * instance of scheduled time of seven pm
  */
-  tz.TZDateTime _nextInstanceOfTenAM() {
+  tz.TZDateTime _nextInstanceOfSevenPM() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     print("local time $now");
     tz.TZDateTime scheduledDate =
@@ -178,14 +239,85 @@ class NotificationService {
   }
 
   /**
-   * daily at 10 am
+ * instance of scheduled time of seven am
+ */
+  tz.TZDateTime _nextInstanceOfNineAM() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    print("local time $now");
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 9, 30);
+    print("scheduled time $scheduledDate");
+
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
+
+  /**
+ * instance of scheduled date every fifth days
+ */
+  tz.TZDateTime _nextInstanceOfFifthDay() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    print("local time $now");
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 11);
+    print("scheduled time $scheduledDate");
+
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 5));
+    }
+    return scheduledDate;
+  }
+
+  /**
+ * instance of scheduled daily eleven
+ */
+  tz.TZDateTime _nextInstanceOfElevenAMDay() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    print("local time $now");
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 11);
+    print("scheduled time $scheduledDate");
+
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
+
+  /**
+   * Schedule notification
    */
-  Future<void> scheduleDailyTenAMNotification() async {
+  Future<void> scheduleNotification(
+      NotificationModel notificationModel, tz.TZDateTime tzDateTime) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
-        'Alert',
-        'Have you recorded your expense today? ',
-        _nextInstanceOfTenAM(),
+        notificationModel.title,
+        notificationModel.desc,
+        tzDateTime,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+              'daily_notification_id',
+              'daily notification channel name',
+              'daily notification description'),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time);
+  }
+
+  /**
+   * daily at 7 pm
+   */
+  Future<void> scheduleDailySevenPMNotification(
+      NotificationModel notificationModel) async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        notificationModel.title,
+        notificationModel.desc,
+        _nextInstanceOfSevenPM(),
         const NotificationDetails(
           android: AndroidNotificationDetails(
               'daily_notification_id',
