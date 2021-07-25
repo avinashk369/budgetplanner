@@ -1,5 +1,6 @@
 import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
+import 'package:budgetplanner/screens/bottom_nav/pages/transaction/BarChartSample5.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
@@ -7,6 +8,7 @@ import 'package:budgetplanner/utils/mathUtils.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -121,55 +123,92 @@ class HeaderRow extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: SleekCircularSlider(
-                    innerWidget: (percentage) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: MathUtils.getPercentage(income, expense)
-                                      .toString(),
-                                  style: Theme.of(context).textTheme.headline1,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 0),
+                      child: SleekCircularSlider(
+                        innerWidget: (percentage) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: MathUtils.getPercentage(
+                                              income, expense)
+                                          .toString(),
+                                      style:
+                                          Theme.of(context).textTheme.headline1,
+                                    ),
+                                    TextSpan(
+                                        text: '%',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline2),
+                                  ],
                                 ),
-                                TextSpan(
-                                    text: '%',
-                                    style:
-                                        Theme.of(context).textTheme.headline2),
-                              ],
+                              )
+                            ],
+                          );
+                        },
+                        appearance: CircularSliderAppearance(
+                            size: Get.height * .20,
+                            startAngle: 280,
+                            angleRange: 350,
+                            customColors: CustomSliderColors(
+                              dotColor: kWhite,
+                              progressBarColor:
+                                  (MathUtils.getPercentage(income, expense) >
+                                          80)
+                                      ? redColor
+                                      : greenbuttoncolor,
+                              trackColor: kGrey,
                             ),
-                          )
-                        ],
-                      );
-                    },
-                    appearance: CircularSliderAppearance(
-                        size: Get.height * .20,
-                        startAngle: 280,
-                        angleRange: 350,
-                        customColors: CustomSliderColors(
-                          dotColor: kWhite,
-                          progressBarColor:
-                              (MathUtils.getPercentage(income, expense) > 80)
-                                  ? redColor
-                                  : greenbuttoncolor,
-                          trackColor: kGrey,
+                            customWidths: CustomSliderWidths(
+                              progressBarWidth: Get.height * .01,
+                            )),
+                        min: 0,
+                        max: 100,
+                        initialValue: (MathUtils.getPercentage(income, expense)
+                                    .toDouble() >
+                                100)
+                            ? 100
+                            : MathUtils.getPercentage(income, expense)
+                                .toDouble(),
+                        onChangeStart: (value) {},
+                      ),
+                    ),
+                    ChoiceChip(
+                      label: RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                          text: "View report ",
+                          style: kLabelStyle.copyWith(
+                              fontSize: 14, color: Theme.of(context).hintColor),
                         ),
-                        customWidths: CustomSliderWidths(
-                          progressBarWidth: Get.height * .01,
-                        )),
-                    min: 0,
-                    max: 100,
-                    initialValue: (MathUtils.getPercentage(income, expense)
-                                .toDouble() >
-                            100)
-                        ? 100
-                        : MathUtils.getPercentage(income, expense).toDouble(),
-                    onChangeStart: (value) {},
-                  ),
+                        TextSpan(
+                          text: ">",
+                          style: kLabelStyle.copyWith(
+                              fontSize: 14, color: Theme.of(context).hintColor),
+                        ),
+                      ])),
+                      onSelected: (value) {
+                        Get.to(BarChartSample5());
+                      },
+                      avatar: Icon(
+                        EvaIcons.barChart,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      selected: true,
+                      selectedColor:
+                          CustomTheme().currentTheme == ThemeMode.dark
+                              ? kDarkGrey
+                              : Colors.grey[100],
+                    ),
+                  ],
                 ),
               ],
             ),

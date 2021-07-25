@@ -77,3 +77,6 @@ const lbl_yes = "Yes";
 const lbl_delete_message = "delete_message";
 const cancel = "cancel";
 const delete = "delete";
+const promotional = "Promotional";
+const challenge = "Challenge";
+const reminder = "Reminder";

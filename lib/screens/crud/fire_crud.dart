@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/CaffairModel.dart';
+import 'package:budgetplanner/models/notification_model.dart';
+import 'package:budgetplanner/models/notification_type.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
@@ -14,7 +18,7 @@ class FireCrud extends StatefulWidget {
 }
 
 class _FireCrudState extends State<FireCrud> {
-  List<String> actions = ['create', 'update', 'read', 'delete'];
+  List<String> actions = ['create', 'update', 'read', 'delete', 'notification'];
   UserRepositoryImpl userRepositoryImpl = UserRepositoryImpl();
   DataRepositoryImpl dataRepositoryImpl = DataRepositoryImpl();
   @override
@@ -75,6 +79,27 @@ class _FireCrudState extends State<FireCrud> {
         await dataRepositoryImpl.clear(transactionType);
         await dataRepositoryImpl.clear(savingCategory);
         await dataRepositoryImpl.clear(expenseSource);
+        break;
+      case "notification":
+        NotificationModel notificationModel = NotificationModel();
+        notificationModel.title = "";
+        notificationModel.desc = "";
+        notificationModel.isEvening = true;
+        notificationModel.notificationType =
+            NotificationType.Reminder.toString();
+//{id: null, title: , desc: , type: NotificationType.Reminder, img_url: null, has_img: false, is_mrng: false, is_evng: true, is_hrly: false}
+        List<String> notifications = [
+          '{"title": " 💰 Much or Less 💰 ", "desc": "Record every transaction 🎯 ", "type":  "Reminder","is_mrng":true}',
+          '{"title": " Day has past 🌙 ", "desc": "Have you recorded your transaction today? 🏁 ", "type":  "Reminder","is_evng":true}',
+          '{"title": " Money saving challenge ", "desc": "Save minimum 1000 this month 🎯 ", "type":  "Challenge"}',
+          '{"title": " Track your money 💸 ", "desc": "Don\'t let go your money unnoticed ", "type":  "Promotional"}',
+        ];
+        notifications.forEach((element) {
+          notificationModel = NotificationModel.fromJson(jsonDecode(element));
+          print(notificationModel.title.toString());
+          dataRepositoryImpl.createNotifications(notificationModel);
+        });
+
         break;
     }
   }

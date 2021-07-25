@@ -6,6 +6,7 @@ import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/models/expense_source_model.dart';
 import 'package:budgetplanner/models/income_model.dart';
+import 'package:budgetplanner/models/notification_model.dart';
 import 'package:budgetplanner/models/recurrance_model.dart';
 import 'package:budgetplanner/models/saving_category.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
@@ -697,5 +698,58 @@ class DataRepositoryImpl implements DataRepository {
 
   shareFile(List<String> filePath) async {
     await Share.shareFiles(filePath);
+  }
+
+  /**
+   * create notification message list
+   */
+  Future createNotifications(NotificationModel notificationModel) async {
+    var _mainCollection = _firestore.collection(notifications).doc();
+    notificationModel.id = _mainCollection.id;
+    await _mainCollection
+        .set(notificationModel.toJson())
+        .whenComplete(() => print('Notification added successfully!'))
+        .catchError((error) {
+      print(error.toString());
+    });
+  }
+
+/**
+ * get all notifications list
+ */
+  Future<List<NotificationModel>> getAllNotifications() async {
+    List<NotificationModel> notificationList = [];
+    try {
+      var response = await _firestore.collection(notifications).get();
+      notificationList = response.docs
+          .map((e) => NotificationModel.fromJson(e.data()))
+          .toList();
+    } catch (e) {}
+    return notificationList;
+  }
+
+  /**
+   * get all transactions by year
+   */
+  Future<List<TransactionModel>> getAllTransactionsOfYear(
+      String userId, int yearName) async {
+    List<TransactionModel> transactionList = [];
+    try {
+      var response = await _firestore
+          .collection(transaction)
+          .where('user_id', isEqualTo: userId)
+          .where('created_on',
+              isGreaterThanOrEqualTo:
+                  DateTime(yearName, 1, 1).toIso8601String())
+          .where('created_on',
+              isLessThan: DateTime(yearName, 12, 31).toIso8601String())
+          .get();
+      transactionList = response.docs
+          .map((e) => TransactionModel.fromJson(e.data()))
+          .toList();
+    } catch (e) {
+      print(e.toString());
+    }
+    return transactionList;
   }
 }
