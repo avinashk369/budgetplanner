@@ -15,6 +15,7 @@ import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'PieChartSample2.dart';
 
@@ -47,16 +48,27 @@ class _TransactionReportState extends State<TransactionReport> {
     return rawIndex;
   }
 
+  double totalIncome = 0;
+  double totalExpense = 0;
+  var date = DateTime.now();
   @override
   void initState() {
     currencySymbol =
         PreferenceUtils.getString(currancy_symbol, defValue: '\u20B9');
     () async {
-      trxList = await controller.getAllTransactionOfYear();
+      trxList = await controller.getAllTransactionOfYear(date.year);
       //for pie hart and list view
       controller
           .setPieChartData(controller.generateCategoryMap(trxList!, expense));
-
+      //set total income and total expense value
+      controller.generateCategoryMap(trxList!, expense).forEach((element) {
+        totalExpense += double.parse(element[1]);
+        setState(() {});
+      });
+      controller.generateCategoryMap(trxList!, income).forEach((element) {
+        totalIncome += double.parse(element[1]);
+        setState(() {});
+      });
       //generateCategoryMap(expense);
     }();
 
@@ -97,8 +109,17 @@ class _TransactionReportState extends State<TransactionReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-      ),
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            DateFormat('y').format(
+              DateTime(date.year, date.month, 0),
+            ),
+            style: kLabelStyle.copyWith(
+              color: Theme.of(context).hintColor,
+              fontSize: 18,
+            ),
+          )),
       body: Column(
         children: [
           Expanded(
@@ -106,7 +127,13 @@ class _TransactionReportState extends State<TransactionReport> {
               physics: BouncingScrollPhysics(),
               slivers: [
                 SliverToBoxAdapter(
-                  child: BarChartSample5(),
+                  child: Obx(
+                    () => (controller.piechartDataList.length > 0)
+                        ? BarChartSample5(
+                            dataList: trxList!,
+                          )
+                        : Container(),
+                  ),
                 ),
                 SliverToBoxAdapter(
                   child: SizedBox(
@@ -143,6 +170,65 @@ class _TransactionReportState extends State<TransactionReport> {
                   ),
                 ),
                 SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 20,
+                  ),
+                ),
+                SliverToBoxAdapter(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: expense,
+                            style: kLabelStyleBold.copyWith(
+                                color: Theme.of(context).hintColor),
+                          ),
+                          TextSpan(
+                            text: " " + totalExpense.toString(),
+                            style: kLabelStyle.copyWith(
+                                color: Theme.of(context).accentColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: income,
+                            style: kLabelStyleBold.copyWith(
+                                color: Theme.of(context).hintColor),
+                          ),
+                          TextSpan(
+                            text: " " + totalIncome.toString(),
+                            style: kLabelStyle.copyWith(
+                                color: Theme.of(context).accentColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: saving,
+                            style: kLabelStyleBold.copyWith(
+                                color: Theme.of(context).hintColor),
+                          ),
+                          TextSpan(
+                            text: " " + (totalIncome - totalExpense).toString(),
+                            style: kLabelStyle.copyWith(
+                                color: Theme.of(context).accentColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )),
+                SliverToBoxAdapter(
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.transparent, width: 1),
@@ -171,15 +257,15 @@ class _TransactionReportState extends State<TransactionReport> {
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
                                   separatorBuilder: (context, index) => Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 78,
-                                        bottom: kSpaceS,
-                                        right: kSpaceS),
-                                    child: Divider(
-                                      height: 1,
-                                      color: kGrey,
-                                    ),
-                                  ),
+                                        padding: EdgeInsets.only(
+                                            left: 78,
+                                            bottom: kSpaceS,
+                                            right: kSpaceS),
+                                        child: Divider(
+                                          height: 1,
+                                          color: kGrey,
+                                        ),
+                                      ),
                                   itemCount:
                                       controller.piechartDataList.length +
                                           ((adCont.isNativeAdReady.value &&
@@ -188,13 +274,18 @@ class _TransactionReportState extends State<TransactionReport> {
                                                       _kAdIndex)
                                               ? 1
                                               : 0),
-                                  itemBuilder: (context, index) => (adCont
-                                              .isNativeAdReady.value &&
-                                          index == _kAdIndex)
-                                      ? NativeAdView()
-                                      : reportTile(
-                                          controller.piechartDataList[index]),
-                                )
+                                  itemBuilder: (context, index) {
+                                    if (adCont.isNativeAdReady.value &&
+                                        index == _kAdIndex) {
+                                      return NativeAdView();
+                                    } else {
+                                      List<String> data =
+                                          controller.piechartDataList[
+                                              _getDestinationItemIndex(index)];
+
+                                      return reportTile(data);
+                                    }
+                                  })
                               : Container(),
                         ),
                       ),
@@ -213,7 +304,7 @@ class _TransactionReportState extends State<TransactionReport> {
     return ListTile(
       title: Text(
         data[0],
-        style: kLabelStyle.copyWith(),
+        style: kLabelStyle.copyWith(color: Theme.of(context).hintColor),
       ),
       subtitle: Text(
         data[2] +
@@ -235,7 +326,7 @@ class _TransactionReportState extends State<TransactionReport> {
         child: Icon(
           DataRepositoryImpl().iconUrl(data[0])!.iconName,
           size: 30,
-          color: Theme.of(context).primaryColor,
+          color: whiteColor,
         ),
       ),
       trailing: Text(

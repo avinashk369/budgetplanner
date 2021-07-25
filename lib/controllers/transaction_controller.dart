@@ -94,9 +94,9 @@ class TransactionEntryController extends GetxController {
 /**
  * get all the transaction of the year
  */
-  Future<List<TransactionModel>?> getAllTransactionOfYear() async {
+  Future<List<TransactionModel>?> getAllTransactionOfYear(int year) async {
     try {
-      return await DataRepositoryImpl().getAllTransactionsOfYear(userId, 2021);
+      return await DataRepositoryImpl().getAllTransactionsOfYear(userId, year);
     } catch (e) {}
   }
 
@@ -128,6 +128,46 @@ class TransactionEntryController extends GetxController {
         });
       }
     });
+    return dataList;
+  }
+
+  /**
+   * get data list for bar chart
+   */
+  List<List<double>> getDataListForBarchart(
+      List<TransactionModel> transactionList) {
+    var newMap = groupBy(transactionList,
+        (TransactionModel model) => model.createdOn.toString().substring(5, 7));
+
+    //validate new map
+    List<List<double>> dataList = [];
+
+    for (var i = 0; i < 12; i++) {
+      newMap.forEach((key, value) {
+        // key = 07,08...12
+        // value = [200,100,100]
+        double incomeAmount = 0;
+        double expenseAmount = 0;
+
+        value.forEach((element) {
+          switch (element.transactionType) {
+            case income:
+              incomeAmount += element.amount!;
+              break;
+            case expense:
+              expenseAmount += element.amount!;
+              break;
+          }
+        });
+        if (i == int.parse(key)) {
+          dataList
+              .add([expenseAmount, incomeAmount, incomeAmount - expenseAmount]);
+        } else {
+          dataList.add([0, 0, 0]);
+        }
+      });
+    }
+
     return dataList;
   }
 

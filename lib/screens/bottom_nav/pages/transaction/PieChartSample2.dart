@@ -19,10 +19,17 @@ class PieChart2State extends State {
   void initState() {
     // TODO: implement initState
     super.initState();
-    dataList.forEach((element) {
-      totalAmount += double.parse(element[1]);
+    setState(() {
+      totalAmount = calcAmount(0);
     });
-    print(totalAmount);
+  }
+
+  double calcAmount(double amount) {
+    dataList.forEach((element) {
+      amount += double.parse(element[1]);
+    });
+    print(amount);
+    return amount;
   }
 
   final List<List<String>> dataList;
@@ -36,7 +43,7 @@ class PieChart2State extends State {
       aspectRatio: 1.7,
       child: Card(
         elevation: 0,
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
         child: Row(
           children: <Widget>[
             const SizedBox(
