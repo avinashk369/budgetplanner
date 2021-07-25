@@ -9,6 +9,7 @@ import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,6 +49,9 @@ class TransactionEntryController extends GetxController {
   Rx<List<String>> filterCats = Rx<List<String>>([]);
   setFiterCat(List<String> filters) => filterCats(filters);
 
+  RxList<List<String>> piechartDataList = RxList<List<String>>([]);
+  setPieChartData(List<List<String>> dataList) => piechartDataList(dataList);
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -85,6 +89,46 @@ class TransactionEntryController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+  }
+
+/**
+ * get all the transaction of the year
+ */
+  Future<List<TransactionModel>?> getAllTransactionOfYear() async {
+    try {
+      return await DataRepositoryImpl().getAllTransactionsOfYear(userId, 2021);
+    } catch (e) {}
+  }
+
+  /**
+   * categorised data for pie chart and list view
+   */
+  List<List<String>> generateCategoryMap(
+      List<TransactionModel> trxList, String trxType) {
+    var newMap1 =
+        groupBy(trxList, (TransactionModel model) => model.transactionType);
+    List<List<String>> dataList = [];
+    newMap1.forEach((key, value) {
+      print(key);
+      if (key == trxType) {
+        var newMap = groupBy(value, (TransactionModel model) => model.catName);
+
+        newMap.forEach((key, value) {
+          //print(key);
+          double amount = 0;
+          int totalCount = 0;
+
+          value.forEach((element) {
+            if (element.transactionType == trxType) {
+              amount += element.amount!;
+              totalCount++;
+            }
+          });
+          dataList.add([key!, amount.toString(), totalCount.toString()]);
+        });
+      }
+    });
+    return dataList;
   }
 
   Future deletetransaction(BuildContext context, String id) async {

@@ -1,7 +1,22 @@
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/gestures.dart';
+import 'package:budgetplanner/ad/native_ad.dart';
+import 'package:budgetplanner/controllers/ad_controller.dart';
+import 'package:budgetplanner/controllers/transaction_controller.dart';
+import 'package:budgetplanner/models/transaction_model.dart';
+import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/screens/bottom_nav/pages/transaction/BarChartSample5.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/category_constants.dart';
+import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
+import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/config.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:get/get.dart';
+
+import 'PieChartSample2.dart';
 
 class TransactionReport extends StatefulWidget {
   @override
@@ -9,296 +24,254 @@ class TransactionReport extends StatefulWidget {
 }
 
 class _TransactionReportState extends State<TransactionReport> {
-  final Color leftBarColor = const Color(0xff53fdd7);
+  final controller = TransactionEntryController.to;
+  final adCont = AdController.tagged(adController);
 
-  final Color rightBarColor = const Color(0xffff5182);
+  static final _kAdIndex = 2;
+  List<TransactionModel>? trxList = [];
 
-  final double width = 7;
+  int tappedIndex = 0;
+  bool isSelected = false;
+  bool isESelected = false;
+  bool isExpense = true;
+  List<String> filterTabs = [
+    "Expense",
+    "Income",
+  ];
+  String? currencySymbol;
 
-  late List<BarChartGroupData> rawBarGroups;
-
-  late List<BarChartGroupData> showingBarGroups;
-
-  int touchedGroupIndex = -1;
+  int _getDestinationItemIndex(int rawIndex) {
+    if (rawIndex >= _kAdIndex && adCont.isNativeAdReady.value) {
+      return rawIndex - 1;
+    }
+    return rawIndex;
+  }
 
   @override
   void initState() {
+    currencySymbol =
+        PreferenceUtils.getString(currancy_symbol, defValue: '\u20B9');
+    () async {
+      trxList = await controller.getAllTransactionOfYear();
+      //for pie hart and list view
+      controller
+          .setPieChartData(controller.generateCategoryMap(trxList!, expense));
+
+      //generateCategoryMap(expense);
+    }();
+
     super.initState();
-    final barGroup1 = makeGroupData(0, 5, 12);
-    final barGroup2 = makeGroupData(1, 16, 12);
-    final barGroup3 = makeGroupData(2, 18, 5);
-    final barGroup4 = makeGroupData(3, 20, 16);
-    final barGroup5 = makeGroupData(4, 17, 6);
-    final barGroup6 = makeGroupData(5, 19, 1.5);
-    final barGroup7 = makeGroupData(6, 10, 1.5);
-    final barGroup8 = makeGroupData(5, 10, 1.5);
-    final barGroup9 = makeGroupData(4, 10, 1.5);
-    final barGroup10 = makeGroupData(3, 10, 1.5);
-    final barGroup11 = makeGroupData(2, 10, 1.5);
-    final barGroup12 = makeGroupData(1, 10, 1.5);
+  }
 
-    final items = [
-      barGroup1,
-      barGroup2,
-      barGroup3,
-      barGroup4,
-      barGroup5,
-      barGroup6,
-      barGroup7,
-      barGroup8,
-      barGroup9,
-      barGroup10,
-      barGroup11,
-      barGroup12,
-    ];
+  void generateMap() {
+    var newMap = groupBy(trxList!,
+        (TransactionModel model) => model.createdOn.toString().substring(0, 8));
+    //validate new map
+    List<List<double>> dataList = [];
 
-    rawBarGroups = items;
-
-    showingBarGroups = rawBarGroups;
+    newMap.forEach((key, value) {
+      //print(key);
+      double incomeAmount = 0;
+      double expenseAmount = 0;
+      int incomeCount = 0;
+      int expenseCount = 0;
+      value.forEach((element) {
+        switch (element.transactionType) {
+          case income:
+            incomeAmount += element.amount!;
+            incomeCount++;
+            break;
+          case expense:
+            expenseAmount += element.amount!;
+            expenseCount++;
+            break;
+        }
+        //print("${element.catName} ${element.transactionType}");
+      });
+      dataList.add([incomeAmount, expenseAmount, incomeAmount - expenseAmount]);
+      print("$expenseCount $incomeCount");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Card(
+    return Scaffold(
+      appBar: AppBar(
         elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        color: const Color(0xff2c4260),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  makeTransactionsIcon(),
-                  const SizedBox(
-                    width: 38,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: CustomScrollView(
+              physics: BouncingScrollPhysics(),
+              slivers: [
+                SliverToBoxAdapter(
+                  child: BarChartSample5(),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 15,
                   ),
-                  const Text(
-                    'Transactions',
-                    style: TextStyle(color: Colors.white, fontSize: 22),
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  const Text(
-                    'state',
-                    style: TextStyle(color: Color(0xff77839a), fontSize: 16),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 38,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: BarChart(
-                    BarChartData(
-                      maxY: 20,
-                      barTouchData: BarTouchData(
-                          touchTooltipData: BarTouchTooltipData(
-                            tooltipBgColor: Colors.grey,
-                            getTooltipItem: (_a, _b, _c, _d) => null,
+                ),
+                SliverToBoxAdapter(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 0, vertical: 2),
+                        height: 40,
+                        decoration: BoxDecoration(
+                          border:
+                              Border.all(color: Colors.transparent, width: 1),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
                           ),
-                          touchCallback: (response) {
-                            if (response.spot == null) {
-                              setState(() {
-                                touchedGroupIndex = -1;
-                                showingBarGroups = List.of(rawBarGroups);
-                              });
-                              return;
-                            }
-
-                            touchedGroupIndex =
-                                response.spot!.touchedBarGroupIndex;
-
-                            setState(() {
-                              if (response.touchInput is PointerExitEvent ||
-                                  response.touchInput is PointerUpEvent) {
-                                touchedGroupIndex = -1;
-                                showingBarGroups = List.of(rawBarGroups);
-                              } else {
-                                showingBarGroups = List.of(rawBarGroups);
-                                if (touchedGroupIndex != -1) {
-                                  var sum = 0.0;
-                                  for (var rod
-                                      in showingBarGroups[touchedGroupIndex]
-                                          .barRods) {
-                                    sum += rod.y;
-                                  }
-                                  final avg = sum /
-                                      showingBarGroups[touchedGroupIndex]
-                                          .barRods
-                                          .length;
-
-                                  showingBarGroups[touchedGroupIndex] =
-                                      showingBarGroups[touchedGroupIndex]
-                                          .copyWith(
-                                    barRods: showingBarGroups[touchedGroupIndex]
-                                        .barRods
-                                        .map((rod) {
-                                      return rod.copyWith(y: avg);
-                                    }).toList(),
-                                  );
-                                }
-                              }
-                            });
-                          }),
-                      titlesData: FlTitlesData(
-                        show: true,
-                        bottomTitles: SideTitles(
-                          showTitles: true,
-                          getTextStyles: (value) => const TextStyle(
-                              color: Color(0xff7589a2),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                          margin: 20,
-                          getTitles: (double value) {
-                            switch (value.toInt()) {
-                              case 0:
-                                return 'Jan';
-                              case 1:
-                                return 'Feb';
-                              case 2:
-                                return 'Mar';
-                              case 3:
-                                return 'Apr';
-                              case 4:
-                                return 'May';
-                              case 5:
-                                return 'Jun';
-                              case 6:
-                                return 'Jul';
-                              case 7:
-                                return 'Aug';
-                              case 8:
-                                return 'Sep';
-                              case 9:
-                                return 'Oct';
-                              case 10:
-                                return 'Nov';
-                              case 11:
-                                return 'Dec';
-                              default:
-                                return '';
-                            }
-                          },
+                          color: Colors.grey[100], //grey[100]
                         ),
-                        leftTitles: SideTitles(
-                          showTitles: true,
-                          getTextStyles: (value) => const TextStyle(
-                              color: Color(0xff7589a2),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                          margin: 32,
-                          reservedSize: 14,
-                          getTitles: (value) {
-                            if (value == 0) {
-                              return '1K';
-                            } else if (value == 10) {
-                              return '5K';
-                            } else if (value == 19) {
-                              return '10K';
-                            } else {
-                              return '';
-                            }
-                          },
+                        child: ListView.builder(
+                          itemCount: filterTabs.length,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: filterTab(filterTabs[index], index),
+                          ),
                         ),
                       ),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      barGroups: showingBarGroups,
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.transparent, width: 1),
+                    ),
+                    child: Obx(
+                      () => (controller.piechartDataList.length > 0)
+                          ? PieChartSample2(
+                              dataList: controller.piechartDataList,
+                            )
+                          : Container(),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-            ],
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      Container(
+                        decoration: BoxDecoration(
+                          border:
+                              Border.all(color: Colors.transparent, width: 1),
+                        ),
+                        child: Obx(
+                          () => (controller.piechartDataList.length > 0)
+                              ? ListView.separated(
+                                  physics: BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  separatorBuilder: (context, index) => Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 78,
+                                        bottom: kSpaceS,
+                                        right: kSpaceS),
+                                    child: Divider(
+                                      height: 1,
+                                      color: kGrey,
+                                    ),
+                                  ),
+                                  itemCount:
+                                      controller.piechartDataList.length +
+                                          ((adCont.isNativeAdReady.value &&
+                                                  controller.piechartDataList
+                                                          .length >=
+                                                      _kAdIndex)
+                                              ? 1
+                                              : 0),
+                                  itemBuilder: (context, index) => (adCont
+                                              .isNativeAdReady.value &&
+                                          index == _kAdIndex)
+                                      ? NativeAdView()
+                                      : reportTile(
+                                          controller.piechartDataList[index]),
+                                )
+                              : Container(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget reportTile(List<String> data) {
+    return ListTile(
+      title: Text(
+        data[0],
+        style: kLabelStyle.copyWith(),
+      ),
+      subtitle: Text(
+        data[2] +
+            " " +
+            ((int.parse(data[2]) > 1) ? "Transactions" : transactionTab.tr),
+        style: kLabelStyle.copyWith(
+          color: kGrey,
+          fontSize: 12,
+        ),
+      ),
+      leading: Container(
+        height: 50,
+        width: 50,
+        margin: EdgeInsets.only(bottom: 5),
+        decoration: BoxDecoration(
+          color: DataRepositoryImpl().iconUrl(data[0])!.colorName,
+          borderRadius: BorderRadius.all(Radius.circular(25)),
+        ),
+        child: Icon(
+          DataRepositoryImpl().iconUrl(data[0])!.iconName,
+          size: 30,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+      trailing: Text(
+        currencySymbol! + "" + data[1],
+        style: kLabelStyle.copyWith(
+          color: (isExpense)
+              ? (currentTheme.currentTheme == ThemeMode.dark)
+                  ? kPink
+                  : shade
+              : greenbuttoncolor,
         ),
       ),
     );
   }
 
-  BarChartGroupData makeGroupData(int x, double y1, double y2) {
-    return BarChartGroupData(barsSpace: 4, x: x, barRods: [
-      BarChartRodData(
-        y: y1,
-        colors: [leftBarColor],
-        width: width,
+  Widget filterTab(String name, int index) {
+    return ChoiceChip(
+      label: Text(
+        name,
       ),
-      BarChartRodData(
-        y: y2,
-        colors: [rightBarColor],
-        width: width,
-      ),
-    ]);
-  }
-
-  Widget makeTransactionsIcon() {
-    const width = 4.5;
-    const space = 3.5;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          width: width,
-          height: 10,
-          color: Colors.white.withOpacity(0.4),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: Colors.white.withOpacity(0.8),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 42,
-          color: Colors.white.withOpacity(1),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: Colors.white.withOpacity(0.8),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 10,
-          color: Colors.white.withOpacity(0.4),
-        ),
-      ],
+      elevation: 0,
+      selected: (tappedIndex == index),
+      labelStyle: kLabelStyle.copyWith(
+          fontSize: 16, color: (tappedIndex == index) ? whiteColor : darkColor),
+      selectedColor: tealColor,
+      backgroundColor:
+          (tappedIndex == index) ? Colors.transparent : Colors.grey[100],
+      onSelected: (value) {
+        setState(() {
+          isExpense = !isExpense;
+          tappedIndex = index;
+          controller.setPieChartData(controller.generateCategoryMap(
+              trxList!, (index < 1) ? expense : income));
+          print("index $index tappedIndex $tappedIndex");
+        });
+      },
     );
   }
-}
-
-/// Sample ordinal data type.
-class OrdinalSales {
-  final String year;
-  final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }

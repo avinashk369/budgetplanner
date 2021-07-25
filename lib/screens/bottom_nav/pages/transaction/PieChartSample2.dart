@@ -1,21 +1,41 @@
+import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/utils/mathUtils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'indicator.dart';
 
 class PieChartSample2 extends StatefulWidget {
+  final List<List<String>> dataList;
+
+  const PieChartSample2({Key? key, required this.dataList}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => PieChart2State();
+  State<StatefulWidget> createState() => PieChart2State(dataList);
 }
 
 class PieChart2State extends State {
+  double totalAmount = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dataList.forEach((element) {
+      totalAmount += double.parse(element[1]);
+    });
+    print(totalAmount);
+  }
+
+  final List<List<String>> dataList;
   int touchedIndex = -1;
+
+  PieChart2State(this.dataList);
 
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.3,
+      aspectRatio: 1.7,
       child: Card(
+        elevation: 0,
         color: Colors.white,
         child: Row(
           children: <Widget>[
@@ -57,59 +77,25 @@ class PieChart2State extends State {
     );
   }
 
+  int percentCalc(double catAmount) {
+    return MathUtils.getPercentage(totalAmount, catAmount);
+  }
+
   List<PieChartSectionData> showingSections() {
-    return List.generate(4, (i) {
+    return List.generate(dataList.length, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;
       final radius = isTouched ? 60.0 : 50.0;
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: const Color(0xff0293ee),
-            value: 40,
-            title: '40%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: const Color(0xfff8b250),
-            value: 30,
-            title: '30%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 2:
-          return PieChartSectionData(
-            color: const Color(0xff845bef),
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 3:
-          return PieChartSectionData(
-            color: const Color(0xff13d38e),
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        default:
-          throw Error();
-      }
+      return PieChartSectionData(
+        color: DataRepositoryImpl().iconUrl(dataList[i][0])!.colorName,
+        value: double.parse(dataList[i][1]),
+        title: '', //${percentCalc(double.parse(dataList[i][1]))}%
+        radius: radius,
+        titleStyle: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.bold,
+            color: const Color(0xffffffff)),
+      );
     });
   }
 }
