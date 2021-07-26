@@ -732,18 +732,22 @@ class DataRepositoryImpl implements DataRepository {
    * get all transactions by year
    */
   Future<List<TransactionModel>> getAllTransactionsOfYear(
-      String userId, int yearName) async {
+      String userId, int yearName, String catName) async {
     List<TransactionModel> transactionList = [];
     try {
-      var response = await _firestore
+      var query = _firestore
           .collection(transaction)
           .where('user_id', isEqualTo: userId)
           .where('created_on',
               isGreaterThanOrEqualTo:
                   DateTime(yearName, 1, 1).toIso8601String())
           .where('created_on',
-              isLessThan: DateTime(yearName, 12, 31).toIso8601String())
-          .get();
+              isLessThan: DateTime(yearName, 12, 31).toIso8601String());
+      if (catName != '') {
+        query = query.where('cat_name', isEqualTo: catName);
+      }
+
+      var response = await query.get();
       transactionList = response.docs
           .map((e) => TransactionModel.fromJson(e.data()))
           .toList();

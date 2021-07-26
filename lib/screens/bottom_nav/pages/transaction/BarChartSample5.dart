@@ -1,13 +1,7 @@
-import 'dart:math';
-
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
-import 'package:budgetplanner/screens/bottom_nav/pages/transaction/PieChartSample2.dart';
-import 'package:budgetplanner/utils/category_constants.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import "package:collection/collection.dart";
 
 class BarChartSample5 extends StatefulWidget {
   final List<TransactionModel> dataList;
@@ -19,16 +13,24 @@ class BarChartSample5 extends StatefulWidget {
 
 class BarChartSample5State extends State<BarChartSample5> {
   final controller = TransactionEntryController.to;
+  List<List<double>> dataSet = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    List<List<double>> dataList =
+    Map<String, List<double>> dataList =
         controller.getDataListForBarchart(widget.dataList);
-    dataList.forEach((element) {
-      print(element);
+
+    for (var i = 0; i < 12; i++) {
+      dataSet.add([0, 0, 0]);
+    }
+
+    dataList.forEach((key, value) {
+      if (dataSet.asMap().containsKey(int.parse(key))) {
+        dataSet.removeAt(int.parse(key) - 1);
+        dataSet.insert(int.parse(key) - 1, value);
+      }
     });
-    print("Length ${dataList.length}");
   }
 
   final Color dark = const Color(0xff3b8c75);
@@ -91,7 +93,7 @@ class BarChartSample5State extends State<BarChartSample5> {
                   },
                 ),
                 leftTitles: SideTitles(
-                  interval: 1000,
+                  interval: 5000,
                   showTitles: true,
                   getTextStyles: (value) => const TextStyle(
                       color: Color(
@@ -103,7 +105,7 @@ class BarChartSample5State extends State<BarChartSample5> {
               ),
               gridData: FlGridData(
                 show: true,
-                checkToShowHorizontalLine: (value) => value % 1000 == 0,
+                checkToShowHorizontalLine: (value) => value % 5000 == 0,
                 getDrawingHorizontalLine: (value) => FlLine(
                   color: const Color(0xffe7e8ec),
                   strokeWidth: 1,
@@ -122,24 +124,9 @@ class BarChartSample5State extends State<BarChartSample5> {
   }
 
   List<BarChartGroupData> getData() {
-    List<List<double>> dataList = [
-      [1000, 800, 200], //jan
-      [1200, 1100, 100], //feb
-      [500, 450, 50], //mar
-      [1000, 30, 70], //apr
-      [1500, 800, 700], //may
-      [180, 80, 100], //jun
-      [1200, 800, 400], //jul
-      [1700, 700, 1000], //aug
-      [1000, 1010, -10], //sep
-      [2000, 800, 1200], //oct
-      [2800, 2400, 200], //nov
-      [1000, 700, 300], //dec
-    ];
-
     List<BarChartGroupData> brData = [];
     int i = 0;
-    dataList.forEach(
+    dataSet.forEach(
       (element) {
         brData.add(
           BarChartGroupData(
@@ -150,8 +137,8 @@ class BarChartSample5State extends State<BarChartSample5> {
                   width: 20,
                   y: element[0],
                   rodStackItems: [
-                    BarChartRodStackItem(0, element[2], dark),
-                    BarChartRodStackItem(element[2], element[1], normal),
+                    BarChartRodStackItem(0, 0, dark),
+                    BarChartRodStackItem(0, element[1], dark),
                     BarChartRodStackItem(element[1], element[0], light),
                   ],
                   borderRadius:

@@ -4,6 +4,7 @@ import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/BarChartSample5.dart';
+import 'package:budgetplanner/screens/bottom_nav/pages/transaction/category_report.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
@@ -136,6 +137,56 @@ class _TransactionReportState extends State<TransactionReport> {
                   ),
                 ),
                 SliverToBoxAdapter(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 10,
+                            height: 10,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.transparent, width: 1),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              color: Color(0xff64caad), //grey[100]
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(income),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            height: 10,
+                            width: 10,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.transparent, width: 1),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              color: Color(0xff3b8c75), //grey[100]
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(expense),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
                   child: SizedBox(
                     height: 15,
                   ),
@@ -175,58 +226,65 @@ class _TransactionReportState extends State<TransactionReport> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: expense,
-                            style: kLabelStyleBold.copyWith(
-                                color: Theme.of(context).hintColor),
-                          ),
-                          TextSpan(
-                            text: " " + totalExpense.toString(),
-                            style: kLabelStyle.copyWith(
-                                color: Theme.of(context).accentColor),
-                          ),
-                        ],
+                    child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  color: currentTheme.currentTheme == ThemeMode.dark
+                      ? Colors.black12
+                      : Colors.grey[100],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: expense,
+                              style: kLabelStyleBold.copyWith(
+                                  color: Theme.of(context).hintColor),
+                            ),
+                            TextSpan(
+                              text: " " + totalExpense.toString(),
+                              style: kLabelStyle.copyWith(
+                                  color: Theme.of(context).accentColor),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: income,
-                            style: kLabelStyleBold.copyWith(
-                                color: Theme.of(context).hintColor),
-                          ),
-                          TextSpan(
-                            text: " " + totalIncome.toString(),
-                            style: kLabelStyle.copyWith(
-                                color: Theme.of(context).accentColor),
-                          ),
-                        ],
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: income,
+                              style: kLabelStyleBold.copyWith(
+                                  color: Theme.of(context).hintColor),
+                            ),
+                            TextSpan(
+                              text: " " + totalIncome.toString(),
+                              style: kLabelStyle.copyWith(
+                                  color: Theme.of(context).accentColor),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: saving,
-                            style: kLabelStyleBold.copyWith(
-                                color: Theme.of(context).hintColor),
-                          ),
-                          TextSpan(
-                            text: " " + (totalIncome - totalExpense).toString(),
-                            style: kLabelStyle.copyWith(
-                                color: Theme.of(context).accentColor),
-                          ),
-                        ],
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: saving,
+                              style: kLabelStyleBold.copyWith(
+                                  color: Theme.of(context).hintColor),
+                            ),
+                            TextSpan(
+                              text:
+                                  " " + (totalIncome - totalExpense).toString(),
+                              style: kLabelStyle.copyWith(
+                                  color: Theme.of(context).accentColor),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 )),
                 SliverToBoxAdapter(
                   child: Container(
@@ -302,6 +360,7 @@ class _TransactionReportState extends State<TransactionReport> {
 
   Widget reportTile(List<String> data) {
     return ListTile(
+      onTap: () => Get.to(CategoryReport(catName: data[0])),
       title: Text(
         data[0],
         style: kLabelStyle.copyWith(color: Theme.of(context).hintColor),
