@@ -13,11 +13,15 @@ class BarChartSample5 extends StatefulWidget {
 
 class BarChartSample5State extends State<BarChartSample5> {
   final controller = TransactionEntryController.to;
-  List<List<double>> dataSet = [];
+  late List<List<double>> dataSet;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  void setBarData() {
+    dataSet = [];
     Map<String, List<double>> dataList =
         controller.getDataListForBarchart(widget.dataList);
 
@@ -40,6 +44,7 @@ class BarChartSample5State extends State<BarChartSample5> {
 
   @override
   Widget build(BuildContext context) {
+    setBarData();
     return AspectRatio(
       aspectRatio: 1.66,
       child: Card(
