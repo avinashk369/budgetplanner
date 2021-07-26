@@ -29,7 +29,7 @@ class _GroupedListState extends State<GroupedList> {
       //order: GroupedListOrder.DESC,
       //useStickyGroupSeparators: true,
       separator: Padding(
-        padding: EdgeInsets.only(left: 72, bottom: kSpaceS, right: kSpaceS),
+        padding: EdgeInsets.only(left: 65, bottom: kSpaceS, right: kSpaceS),
         child: Divider(
           height: 1,
           color: kGrey,

@@ -48,7 +48,7 @@ class _RecentTransactionState extends State<RecentTransaction> {
                 : 0),
         separatorBuilder: (context, index) => Padding(
               padding:
-                  EdgeInsets.only(left: 78, bottom: kSpaceS, right: kSpaceS),
+                  EdgeInsets.only(left: 70, bottom: kSpaceS, right: kSpaceS),
               child: Divider(
                 height: 1,
                 color: kGrey,
