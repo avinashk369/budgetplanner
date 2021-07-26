@@ -1,4 +1,5 @@
 import 'package:budgetplanner/models/BaseModel.dart';
+import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/models/transaction_type_model.dart';
@@ -13,6 +14,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class TransactionEntryController extends GetxController {
   late List<TransactionType> transactionTypeList;
@@ -321,6 +323,88 @@ class TransactionEntryController extends GetxController {
       return DataRepositoryImpl().getTotalIncome(monthName, userId);
     } catch (e) {} finally {
       isLoading(false);
+    }
+  }
+
+  /**
+   * check storage permission
+   */
+  Future<void> _checkPermission(BuildContext context) async {
+    final serviceStatus = await Permission.storage.status;
+    final isGpsOn = serviceStatus.isGranted;
+    if (!isGpsOn) {
+      print('Turn on location services before requesting permission.');
+      return;
+    }
+
+    final status = await Permission.storage.request();
+    if (status == PermissionStatus.granted) {
+      print('Permission granted');
+    } else if (status == PermissionStatus.denied) {
+      print(
+          'Permission denied. Show a dialog and again ask for the permission');
+    } else if (status == PermissionStatus.permanentlyDenied) {
+      print('Take the user to the settings page.');
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => CupertinoAlertDialog(
+                title: Text('Storage Permission'),
+                content: Text(
+                    'This app needs storage access to download report files'),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: Text('Deny'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  CupertinoDialogAction(
+                    child: Text('Settings'),
+                    onPressed: () async => await openAppSettings(),
+                  ),
+                ],
+              ));
+    }
+  }
+
+  /**
+   * download report
+   */
+  Future getTransactions(
+      BuildContext context, List<TransactionModel> transactionList) async {
+    _checkPermission(context);
+    try {
+      LoadingDialog.showLoadingDialog(context, keyLoader);
+      BaseModel<List<BudgetCategoryModel>> listData =
+          await DataRepositoryImpl().getBudgetCategories();
+      List<List<String>> dataList = [];
+      dataList.add([
+        "No.",
+        "Amount",
+        "Category",
+        "Expense Source",
+        "Transaction Type",
+        "Notes",
+        "Transaction Date"
+      ]);
+      int i = 1;
+      transactionList.forEach((element) {
+        dataList.add([
+          "$i",
+          "${element.amount}",
+          "${element.catName}",
+          "${element.expenseSource}",
+          "${element.transactionType}",
+          "${element.notes}",
+          "${element.createdOn!.toIso8601String().substring(0, 10)}"
+        ]);
+        i++;
+      });
+
+      await DataRepositoryImpl().generateCsv(dataList);
+    } catch (e) {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+      print(e.toString());
+    } finally {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
     }
   }
 }

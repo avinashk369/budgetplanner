@@ -110,17 +110,31 @@ class _TransactionReportState extends State<TransactionReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            DateFormat('y').format(
-              DateTime(date.year, date.month, 0),
-            ),
-            style: kLabelStyle.copyWith(
-              color: Theme.of(context).hintColor,
-              fontSize: 18,
-            ),
-          )),
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          DateFormat('y').format(
+            DateTime(date.year, date.month, 0),
+          ),
+          style: kLabelStyle.copyWith(
+            color: Theme.of(context).hintColor,
+            fontSize: 18,
+          ),
+        ),
+        actions: [
+          Obx(
+            () => (controller.piechartDataList.isNotEmpty)
+                ? IconButton(
+                    onPressed: () {
+                      controller.getTransactions(context, trxList!);
+                    },
+                    icon: Icon(Icons.download,
+                        color: Theme.of(context).hintColor),
+                  )
+                : Container(),
+          )
+        ],
+      ),
       body: Column(
         children: [
           Expanded(

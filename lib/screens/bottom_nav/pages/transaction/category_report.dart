@@ -2,7 +2,10 @@ import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/category_bar_chart.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -18,20 +21,26 @@ class CategoryReport extends StatefulWidget {
 
 class _CategoryReportState extends State<CategoryReport> {
   final controller = TransactionEntryController.to;
-
+  String? currencySymbol;
   var date = DateTime.now();
+  double totalAmount = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("getting map ${widget.catName}");
+    currencySymbol =
+        PreferenceUtils.getString(currancy_symbol, defValue: '\u20B9');
     () async {
       // controller.catTransactionModel.value = (await controller
       //     .getAllTransactionOfYearForCategory(date.year, widget.catName))!;
 
       controller.setCatTransactionList((await controller
           .getAllTransactionOfYearForCategory(date.year, widget.catName))!);
+      controller.catTransactionList.forEach((element) {
+        totalAmount += element.amount!;
+        setState(() {});
+      });
     }();
   }
 
@@ -68,6 +77,46 @@ class _CategoryReportState extends State<CategoryReport> {
             SizedBox(
               height: 15,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.transparent, width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                        color: Color(0xff64caad), //grey[100]
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "Total expenses ",
+                              style: kLabelStyleBold.copyWith(
+                                  color: Theme.of(context).hintColor)),
+                          TextSpan(
+                              text: totalAmount.toString(),
+                              style: kLabelStyle.copyWith(
+                                  color: Theme.of(context).hintColor))
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
             Obx(
               () => (controller.catTransactionList.isNotEmpty)
                   ? renderList(controller.catTransactionList)
@@ -92,13 +141,19 @@ class _CategoryReportState extends State<CategoryReport> {
       ),
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text(trxList[index].catName!),
+          title: Text(
+            trxList[index].catName!,
+            style: kLabelStyle.copyWith(
+                fontSize: 15, color: Theme.of(context).hintColor),
+          ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 trxList[index].expenseSource!,
-                style: kLabelStyle.copyWith(color: Theme.of(context).hintColor),
+                style: kLabelStyle.copyWith(
+                  color: kGrey,
+                ),
               ),
               Text(
                 trxList[index].createdOn!.toIso8601String().substring(0, 10),
@@ -106,7 +161,13 @@ class _CategoryReportState extends State<CategoryReport> {
               ),
             ],
           ),
-          trailing: Text(trxList[index].amount.toString()),
+          trailing: Text(
+            currencySymbol! + "" + trxList[index].amount.toString(),
+            style: kLabelStyle.copyWith(
+              color:
+                  (currentTheme.currentTheme == ThemeMode.dark) ? kPink : shade,
+            ),
+          ),
         );
       },
     );
