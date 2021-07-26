@@ -19,9 +19,9 @@ class AdController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    // loadBannerAd();
-    // loadNativeAd();
-    // _loadInterstitialAd();
+    loadBannerAd();
+    loadNativeAd();
+    loadInterstitialAd();
     //_loadRewardedAd();
     super.onInit();
   }
@@ -63,7 +63,7 @@ class AdController extends GetxController {
 // TODO: Add _interstitialAd
   InterstitialAd? interstitialAd;
   // TODO: Implement _loadInterstitialAd()
-  void _loadInterstitialAd() {
+  void loadInterstitialAd() {
     InterstitialAd.load(
       adUnitId: AdHelper.interstitialAdUnitId,
       request: AdRequest(),
@@ -75,6 +75,9 @@ class AdController extends GetxController {
             onAdDismissedFullScreenContent: (ad) {
               //_moveToHome();
               print("What to do now");
+              Future.delayed(Duration(seconds: 5), () async {
+                //loadInterstitialAd();
+              });
             },
           );
 

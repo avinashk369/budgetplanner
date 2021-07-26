@@ -1,3 +1,4 @@
+import 'package:budgetplanner/ad/banner_ad.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
@@ -114,6 +115,10 @@ class _CategoryReportState extends State<CategoryReport> {
                 ),
               ],
             ),
+            SizedBox(
+              height: 15,
+            ),
+            BannerAdView(),
             SizedBox(
               height: 15,
             ),

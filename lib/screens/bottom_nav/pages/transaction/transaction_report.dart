@@ -106,8 +106,17 @@ class _TransactionReportState extends State<TransactionReport> {
     });
   }
 
+  void showInterstitialAd(AdController adCont) {
+    print("  reward earned");
+    //to display intertitial ad
+    if (adCont.isInterstitialAdReady.value) {
+      adCont.interstitialAd?.show();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    showInterstitialAd(adCont);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
