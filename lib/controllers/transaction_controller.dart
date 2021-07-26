@@ -53,9 +53,10 @@ class TransactionEntryController extends GetxController {
   setPieChartData(List<List<String>> dataList) => piechartDataList(dataList);
 
   //category data set for bar chart
-  List<TransactionModel> get catTransactionList => catTransactionModel.value!;
-
-  Rx<List<TransactionModel>?> catTransactionModel =
+  List<TransactionModel> get catTransactionList => catTransactionModel.value;
+  setCatTransactionList(List<TransactionModel> lists) =>
+      catTransactionModel(lists);
+  Rx<List<TransactionModel>> catTransactionModel =
       Rx<List<TransactionModel>>([]);
 
   @override
@@ -177,6 +178,32 @@ class TransactionEntryController extends GetxController {
         incomeAmount,
         expenseAmount,
         incomeAmount - expenseAmount
+      ];
+    });
+    return dataList;
+  }
+
+  /**
+   * get data list for category bar chart
+   */
+  Map<String, List<double>> getDataListForCatBarchart(
+      List<TransactionModel> transactionList) {
+    var newMap = groupBy(transactionList,
+        (TransactionModel model) => model.createdOn.toString().substring(5, 7));
+    //validate new map
+    Map<String, List<double>> dataList = {};
+    newMap.forEach((key, value) {
+      double expenseAmount = 0;
+
+      value.forEach((element) {
+        switch (element.transactionType) {
+          case expense:
+            expenseAmount += element.amount!;
+            break;
+        }
+      });
+      dataList[key] = [
+        expenseAmount,
       ];
     });
     return dataList;

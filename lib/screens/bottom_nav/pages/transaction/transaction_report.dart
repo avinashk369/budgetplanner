@@ -360,7 +360,10 @@ class _TransactionReportState extends State<TransactionReport> {
 
   Widget reportTile(List<String> data) {
     return ListTile(
-      onTap: () => Get.to(CategoryReport(catName: data[0])),
+      onTap: () {
+        controller.setCatTransactionList([]);
+        Get.to(CategoryReport(catName: data[0]));
+      },
       title: Text(
         data[0],
         style: kLabelStyle.copyWith(color: Theme.of(context).hintColor),
