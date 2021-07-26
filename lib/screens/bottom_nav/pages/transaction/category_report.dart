@@ -142,7 +142,7 @@ class _CategoryReportState extends State<CategoryReport> {
       itemBuilder: (context, index) {
         return ListTile(
           title: Text(
-            trxList[index].catName!,
+            trxList[index].notes!,
             style: kLabelStyle.copyWith(
                 fontSize: 15, color: Theme.of(context).hintColor),
           ),
