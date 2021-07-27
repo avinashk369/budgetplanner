@@ -51,7 +51,7 @@ class _DashboardState extends State<Dashboard> {
         final value = await showDialog<bool>(
             context: context,
             builder: (context) {
-              return CustomDialog.exitDialog(
+              return CustomDialog.customExitDialog(
                 message: lbl_exit_message.tr,
                 noButtonLabel: lbl_no.tr,
                 yesButtonLabel: lbl_yes.tr,

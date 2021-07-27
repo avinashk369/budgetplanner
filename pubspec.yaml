@@ -29,10 +29,8 @@ dependencies:
   #page_transition: ^2.0.2
   eva_icons_flutter: ^3.0.0
   google_fonts: ^2.0.0
-  hive: ^2.0.4
   #flutter_rounded_date_picker: 2.0.2 // circular date picker dialog
   intl: ^0.17.0
-  super_tooltip: ^1.0.1
   sleek_circular_slider: ^2.0.0
   currency_picker: ^2.0.3
 
@@ -46,17 +44,11 @@ dependencies:
   firebase_dynamic_links: ^2.0.6
 
   # lib. to manage http call and state managemnet using bloc pattern
-  retrofit: ^2.0.0
   logger: any
-  dio: ^4.0.0
   json_annotation: ^4.0.1
-  flutter_bloc: ^7.0.0
-  equatable: ^2.0.0
-  pretty_dio_logger: ^1.1.1
   shared_preferences: ^2.0.6
   synchronized:
 
-  charts_flutter: ^0.11.0
   grouped_list: ^4.0.0
   share: ^2.0.4
   shimmer: ^2.0.0
@@ -70,16 +62,7 @@ dependencies:
   fl_chart: ^0.36.2
   flutter_native_timezone: ^2.0.0
   collection: ^1.15.0
-  
-  
 
-dependency_overrides:
-  retrofit_generator:
-    git:
-      url: https://github.com/Chimerapps/retrofit.dart.git
-      ref: 9f90296751984b359937c38563da5b19db5550f5
-      path: generator  
-  
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -90,7 +73,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   analyzer: ^1.5.0
-  retrofit_generator: ^2.0.0
   build_runner: any
   json_serializable: ^4.1.1
   source_gen: ^1.0.1

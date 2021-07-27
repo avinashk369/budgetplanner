@@ -242,33 +242,33 @@ class _SettingsState extends State<Settings> {
                           //     height: 1,
                           //   ),
                           // ),
-                          ListTile(
-                            title: Text("Download", style: kLabelStyle),
-                            onTap: () async {
-                              Map<String, dynamic> result = {
-                                'isSuccess': false,
-                                'filePath': "abcd",
-                                'error': "sorry ",
-                              };
-                              //show report chart
-                              //Get.to(BarChartSample5());
-                              // await NotificationService()
-                              //     .scheduleDailyTenAMNotification();
-                              await NotificationService()
-                                  .showNotification(result);
-                              // await NotificationService()
-                              //     .periodicNotification(result);
-                              // await NotificationService().zonedSchedule(result,
-                              //     androidAllowWhileIdle: true,
-                              //     uiLocalNotificationDateInterpretation:
-                              //         UILocalNotificationDateInterpretation
-                              //             .absoluteTime);
-                              // await NotificationService().cancelNotification();
-                              //download csv
-                              //await controller.getTransactions(context);
-                              //startService();
-                            },
-                          ),
+                          // ListTile(
+                          //   title: Text("Download", style: kLabelStyle),
+                          //   onTap: () async {
+                          //     Map<String, dynamic> result = {
+                          //       'isSuccess': false,
+                          //       'filePath': "abcd",
+                          //       'error': "sorry ",
+                          //     };
+                          //show report chart
+                          //Get.to(BarChartSample5());
+                          // await NotificationService()
+                          //     .scheduleDailyTenAMNotification();
+                          // await NotificationService()
+                          //     .showNotification(result);
+                          // await NotificationService()
+                          //     .periodicNotification(result);
+                          // await NotificationService().zonedSchedule(result,
+                          //     androidAllowWhileIdle: true,
+                          //     uiLocalNotificationDateInterpretation:
+                          //         UILocalNotificationDateInterpretation
+                          //             .absoluteTime);
+                          // await NotificationService().cancelNotification();
+                          //download csv
+                          //await controller.getTransactions(context);
+                          //startService();
+                          //   },
+                          // ),
                         ],
                       ),
                     ),
