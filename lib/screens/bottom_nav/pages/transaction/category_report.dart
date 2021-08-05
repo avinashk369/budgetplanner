@@ -50,6 +50,7 @@ class _CategoryReportState extends State<CategoryReport> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        centerTitle: true,
         title: Container(
           width: 40.0,
           height: 40,

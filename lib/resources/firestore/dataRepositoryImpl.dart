@@ -508,10 +508,18 @@ class DataRepositoryImpl implements DataRepository {
 
   Future<BudgetModel?> getBudgetModel(String name, String userId) async {
     BudgetModel? budgetModel;
+    var currenctMonth = DateTime.now();
     var response = await _firestore
         .collection(userBudget)
         .where('cat_name', isEqualTo: name)
         .where('user_id', isEqualTo: userId)
+        .where('created_on',
+            isGreaterThanOrEqualTo:
+                DateTime(currenctMonth.year, currenctMonth.month, 1)
+                    .toIso8601String())
+        .where('created_on',
+            isLessThan: DateTime(currenctMonth.year, currenctMonth.month + 1, 1)
+                .toIso8601String())
         .get();
     print("${response.docs.length} response");
     if (response.docs.length > 0)
