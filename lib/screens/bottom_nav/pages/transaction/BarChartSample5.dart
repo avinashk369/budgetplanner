@@ -109,6 +109,26 @@ class BarChartSample5State extends State<BarChartSample5> {
                       fontSize: 10),
                   margin: 0,
                 ),
+                topTitles: SideTitles(
+                  interval: 5000,
+                  showTitles: false,
+                  getTextStyles: (context, value) => const TextStyle(
+                      color: Color(
+                        0xff939393,
+                      ),
+                      fontSize: 10),
+                  margin: 0,
+                ),
+                rightTitles: SideTitles(
+                  interval: 5000,
+                  showTitles: false,
+                  getTextStyles: (context, value) => const TextStyle(
+                      color: Color(
+                        0xff939393,
+                      ),
+                      fontSize: 10),
+                  margin: 0,
+                ),
               ),
               gridData: FlGridData(
                 show: true,

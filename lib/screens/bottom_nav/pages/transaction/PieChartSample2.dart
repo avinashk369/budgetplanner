@@ -2,8 +2,6 @@ import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/utils/mathUtils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'indicator.dart';
 
 class PieChartSample2 extends StatefulWidget {
   final List<List<String>> dataList;
@@ -57,17 +55,17 @@ class PieChart2State extends State {
                       pieTouchData: PieTouchData(
                         touchCallback: (p0, pieTouchResponse) {
                           setState(() {
-                            final desiredTouch = pieTouchResponse!
-                                    .touchedSection is! PointerExitEvent &&
-                                pieTouchResponse.touchedSection
-                                    is! PointerUpEvent;
-                            if (desiredTouch &&
-                                pieTouchResponse.touchedSection != null) {
-                              touchedIndex = pieTouchResponse
-                                  .touchedSection!.touchedSectionIndex;
-                            } else {
-                              touchedIndex = -1;
-                            }
+                            // final desiredTouch = pieTouchResponse!
+                            //         .touchedSection is! PointerExitEvent &&
+                            //     pieTouchResponse.touchedSection
+                            //         is! PointerUpEvent;
+                            // if (desiredTouch &&
+                            //     pieTouchResponse.touchedSection != null) {
+                            //   touchedIndex = pieTouchResponse
+                            //       .touchedSection!.touchedSectionIndex;
+                            // } else {
+                            //   touchedIndex = -1;
+                            // }
                           });
                         },
                       ),
