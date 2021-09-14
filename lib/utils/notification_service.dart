@@ -296,11 +296,9 @@ class NotificationService {
         notificationModel.title,
         notificationModel.desc,
         tzDateTime,
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-              'daily_notification_id',
-              'daily notification channel name',
-              'daily notification description'),
+        NotificationDetails(
+          android: AndroidNotificationDetails(notificationModel.id!,
+              notificationModel.notificationType!, notificationModel.title!),
         ),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:

@@ -7,6 +7,7 @@ import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/draggable_bottom_sheet.dart';
@@ -141,6 +142,9 @@ class TransactionHistory extends GetView {
               message: desc_no_transaction.tr,
               imageUrl: 'assets/grp.png',
               index: 2,
+              goTo: () {
+                Navigator.of(context).pushNamed(addTransactionRoute);
+              },
             );
           } else {
             return controller.isLoading()

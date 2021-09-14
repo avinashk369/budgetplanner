@@ -22,6 +22,7 @@ const String mycourseDetail = '/mycourseDetail';
 const String verificationRoute = '/verification';
 const String createAcountRoute = '/createAcount';
 const String dashboardRoute = '/home';
+const String addTransactionRoute = '/addTransaction';
 const String resultRoute = '/quizResult';
 const String registerRoute = '/register';
 const String searchDoctorRoute = '/searchDctor';

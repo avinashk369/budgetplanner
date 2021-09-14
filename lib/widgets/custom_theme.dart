@@ -24,6 +24,13 @@ class CustomTheme with ChangeNotifier {
         scaffoldBackgroundColor: whiteColor,
         backgroundColor: whiteColor,
         accentColor: shade,
+        appBarTheme: AppBarTheme(
+          backgroundColor: whiteColor,
+          centerTitle: true,
+          elevation: 0,
+          titleTextStyle: kLabelStyleBold.copyWith(fontSize: 18),
+          foregroundColor: Colors.black,
+        ),
         tabBarTheme: TabBarTheme(
           unselectedLabelColor: kGrey,
           labelColor: shade,
@@ -118,6 +125,13 @@ class CustomTheme with ChangeNotifier {
       backgroundColor: darkColor,
       hintColor: whiteColor,
       accentColor: heenColor,
+      appBarTheme: AppBarTheme(
+        backgroundColor: darkColor,
+        centerTitle: true,
+        elevation: 0,
+        titleTextStyle: kLabelStyleBold.copyWith(fontSize: 18),
+        foregroundColor: Colors.white,
+      ),
       tabBarTheme: TabBarTheme(
         unselectedLabelColor: kGrey,
         labelColor: heenColor,

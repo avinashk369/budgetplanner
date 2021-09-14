@@ -31,8 +31,10 @@ class CustomInput extends GetView {
       obscureText: isPassword,
       style: TextStyle(
         color: Theme.of(context).hintColor,
+        height: 1.4,
       ),
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(8),
         hintText: hintText,
       ),
     );

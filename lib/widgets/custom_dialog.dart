@@ -1,4 +1,5 @@
 import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -84,6 +85,7 @@ class CustomDialog {
       required String noButtonLabel,
       required String message}) {
     return Dialog(
+      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       child: Container(
         height: 220,
@@ -91,10 +93,10 @@ class CustomDialog {
           children: [
             Expanded(
               child: Container(
-                color: Colors.white70,
                 child: Icon(
                   Icons.exit_to_app,
                   size: 60,
+                  color: Colors.black,
                 ),
               ),
             ),

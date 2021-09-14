@@ -27,17 +27,17 @@ class TabNavigationItem {
         ),
         TabNavigationItem(
           page: TransactionHistory(),
-          icon: Icon(Icons.receipt_long),
-          title: transactionTab.tr,
+          icon: Icon(Icons.timeline),
+          title: historyTab.tr,
         ),
-        TabNavigationItem(
-          page: Transaction(),
-          icon: Icon(Icons.add_box_rounded),
-          title: addTab.tr,
-        ),
+        // TabNavigationItem(
+        //   page: Transaction(),
+        //   icon: Icon(Icons.add_box_rounded),
+        //   title: addTab.tr,
+        // ),
         TabNavigationItem(
           page: AddBudget(),
-          icon: Icon(Icons.pie_chart),
+          icon: Icon(Icons.savings),
           title: budgetTab.tr,
         ),
         TabNavigationItem(

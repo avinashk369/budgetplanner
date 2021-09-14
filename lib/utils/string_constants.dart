@@ -16,6 +16,7 @@ const def_source = "Cash";
 const def_notes = "Adding notes give you more clarity of the transaction";
 const homeTab = "Home";
 const transactionTab = "Transaction";
+const historyTab = "Tiemline";
 const addTab = "Add";
 const statsTab = "Stats";
 const settingsTab = "Settings";

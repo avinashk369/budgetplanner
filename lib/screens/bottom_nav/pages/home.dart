@@ -1,4 +1,5 @@
 import 'package:budgetplanner/controllers/ad_controller.dart';
+import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/controllers/test_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/user_model.dart';
@@ -6,6 +7,7 @@ import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/recent_transaction.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/budget_shimmer.dart';
@@ -36,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   String myTitle = "";
 
   final PageController _pageController = PageController(initialPage: 0);
+  final dashController = DashboardController.tagged(dashboardController);
   int _currentPage = 0;
 
   @override
@@ -99,6 +102,18 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Theme.of(context).hintColor,
+        onPressed: () {
+          Navigator.of(context).pushNamed(addTransactionRoute);
+        },
+        icon: Icon(Icons.edit, color: Theme.of(context).primaryColor),
+        label: Text(
+          transactionTab.tr,
+          style: kLabelStyle.copyWith(color: Theme.of(context).primaryColor),
+        ),
+      ),
       body: NestedScrollView(
         controller: _controller,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -172,6 +187,9 @@ class _HomePageState extends State<HomePage> {
                               message: desc_no_budget.tr,
                               imageUrl: 'assets/bl4.png',
                               index: 3,
+                              goTo: () {
+                                dashController.setindex(2);
+                              },
                             );
                           } else {
                             return controller.isLoading()
@@ -215,6 +233,10 @@ class _HomePageState extends State<HomePage> {
                           message: desc_no_transaction.tr,
                           imageUrl: 'assets/grp.png',
                           index: 2,
+                          goTo: () {
+                            Navigator.of(context)
+                                .pushNamed(addTransactionRoute);
+                          },
                         );
                       } else {
                         return controller.isLoading()

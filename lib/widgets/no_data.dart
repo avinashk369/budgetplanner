@@ -10,20 +10,22 @@ class NoData extends StatelessWidget {
   final String message;
   final String imageUrl;
   final int index;
+  final Function goTo;
 
   const NoData(
       {Key? key,
       required this.title,
       required this.message,
       required this.imageUrl,
-      required this.index})
+      required this.index,
+      required this.goTo})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final dashController = DashboardController.tagged(dashboardController);
     return InkWell(
-      onTap: () => dashController.setindex(index),
+      onTap: () => goTo(), //dashController.setindex(index),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -69,7 +71,8 @@ class NoData extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    dashController.setindex(index);
+                    //dashController.setindex(index);
+                    goTo();
                   },
                   child: Icon(
                     Icons.arrow_forward_ios,

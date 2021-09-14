@@ -13,7 +13,7 @@ class CategoryChooser extends GetView {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56,
+      height: 48,
       width: Get.width,
       padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(

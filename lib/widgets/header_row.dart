@@ -50,7 +50,7 @@ class HeaderRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        DateFormat('LLLL').format(DateTime.now()) +
+                        DateFormat('LLL').format(DateTime.now()) +
                             " " +
                             DateFormat('d').format(DateTime.now()),
                         style: Theme.of(context).textTheme.headline1,

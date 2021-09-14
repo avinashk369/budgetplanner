@@ -104,46 +104,49 @@ class ExpenseForm extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        Container(
-          height: 56,
-          width: Get.width,
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-              border: Border.all(
-                  color: Theme.of(context).hintColor.withOpacity(.12),
-                  width: 1),
-              borderRadius: BorderRadius.all(Radius.circular(5))),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                expense_type.tr,
-              ),
-              Row(
-                children: [
-                  Obx(
-                    () => Checkbox(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3.0)),
-                      checkColor: whiteColor,
-                      activeColor: redColor,
-                      value: controller.isWant(),
-                      onChanged: (bool? value) {
-                        print(value);
-                        controller.isWant(value);
-                      },
+        Visibility(
+          visible: false,
+          child: Container(
+            height: 56,
+            width: Get.width,
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: Theme.of(context).hintColor.withOpacity(.12),
+                    width: 1),
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  expense_type.tr,
+                ),
+                Row(
+                  children: [
+                    Obx(
+                      () => Checkbox(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3.0)),
+                        checkColor: whiteColor,
+                        activeColor: redColor,
+                        value: controller.isWant(),
+                        onChanged: (bool? value) {
+                          print(value);
+                          controller.isWant(value);
+                        },
+                      ),
                     ),
-                  ),
-                  Text(
-                    want_or_need.tr,
-                  ),
-                ],
-              )
-            ],
+                    Text(
+                      want_or_need.tr,
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
         SizedBox(
-          height: 10,
+          height: 0,
         ),
         InkWell(
           onTap: () {

@@ -1,4 +1,5 @@
 import 'package:budgetplanner/SlideRightRoute.dart';
+import 'package:budgetplanner/screens/bottom_nav/pages/transaction/transaction.dart';
 import 'package:budgetplanner/screens/dashboard.dart';
 import 'package:budgetplanner/screens/user/email_signin.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,9 @@ class RouteGenerator {
 
       case dashboardRoute:
         return SlideRightRoute(page: Dashboard());
+      case addTransactionRoute:
+        return SlideRightRoute(page: Transaction());
+
       // case allCourse:
       //   return SlideRightRoute(page: Courses());
 
