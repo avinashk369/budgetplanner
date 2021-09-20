@@ -1,6 +1,7 @@
 //app constants
 const String appname = "Mr Budget";
 
+const String user_name = "user_name";
 const String access_token = "access token";
 const String user_id = "user_id";
 const String has_seen = "has_seen";

@@ -88,7 +88,9 @@ class TransactionCard extends StatelessWidget {
                           height: 20,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Theme.of(context).hintColor.withOpacity(.08),
+                            color: (transactionModel.transactionType == expense)
+                                ? getTrxColor(context, transactionModel)
+                                : Theme.of(context).hintColor.withOpacity(.08),
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -98,7 +100,10 @@ class TransactionCard extends StatelessWidget {
                                     ? transactionModel.expenseSource!
                                     : income,
                                 style: kLabelStyle.copyWith(
-                                  color: kGrey,
+                                  color: (transactionModel.transactionType ==
+                                          expense)
+                                      ? whiteColor
+                                      : kGrey,
                                   fontSize: 12,
                                 ),
                               ),
@@ -127,5 +132,18 @@ class TransactionCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color getTrxColor(BuildContext context, TransactionModel transactionModel) {
+    switch (transactionModel.expenseSource) {
+      case creditCard:
+        return Colors.deepPurple;
+      case accounts:
+        return Colors.green;
+      case cash:
+        return Colors.brown;
+      default:
+        return Theme.of(context).hintColor;
+    }
   }
 }

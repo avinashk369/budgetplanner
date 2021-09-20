@@ -24,6 +24,7 @@ import 'package:get/get.dart';
 
 class ExpenseController extends BaseController {
   var isLoading = true.obs;
+  var isExpLoading = true.obs;
   var isWant = false.obs;
   var isNeed = false.obs;
   var isRecurring = false.obs;
@@ -199,7 +200,8 @@ class ExpenseController extends BaseController {
 
       budgetCategories = await DataRepositoryImpl().getBudgetCategories();
       print("object ${budgetCategories.data!.length}");
-    } catch (e) {} finally {
+    } catch (e) {
+    } finally {
       //Future.delayed(Duration(seconds: 1), () async {
       isLoading(false);
       //});
@@ -216,7 +218,8 @@ class ExpenseController extends BaseController {
 
       recurranceList = await DataRepositoryImpl().getRecurranceType();
       print("object ${recurranceList.data!.length}");
-    } catch (e) {} finally {
+    } catch (e) {
+    } finally {
       Future.delayed(Duration(seconds: 1), () async {
         isLoading(false);
       });
@@ -229,13 +232,14 @@ class ExpenseController extends BaseController {
     BaseModel<List<ExpenseSourceModel>>? expenseSourceList;
 
     try {
-      isLoading(true);
+      isExpLoading(true);
 
       expenseSourceList = await DataRepositoryImpl().getExpenseSource();
       print("object ${expenseSourceList.data!.length}");
-    } catch (e) {} finally {
+    } catch (e) {
+    } finally {
       Future.delayed(Duration(seconds: 1), () async {
-        isLoading(false);
+        isExpLoading(false);
       });
     }
 

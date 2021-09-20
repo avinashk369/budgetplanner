@@ -26,10 +26,12 @@ abstract class DataRepository {
   Future<BaseModel<List<TransactionType>>> getTransactionType();
   Future<BaseModel<List<ExpenseSourceModel>>> getExpenseSource();
   Stream<List<TransactionModel>>? getTransactions(
-      String userId,
-      String transactionType,
-      DateTime currenctMonth,
-      List<String> filterCategory);
+    String userId,
+    String transactionType,
+    DateTime currenctMonth,
+    List<String> filterCategory,
+    String expenseSource,
+  );
   Stream<List<TransactionModel>>? getNextTransactions(
       String userId,
       String transactionType,

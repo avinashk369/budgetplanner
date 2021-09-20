@@ -57,6 +57,8 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   }
                   PreferenceUtils.putString(user_id, user.uid);
                   PreferenceUtils.putString(
+                      user_name, user.displayName ?? user.email!);
+                  PreferenceUtils.putString(
                       creation_time, user.metadata.creationTime.toString());
                   PreferenceUtils.putString(
                       sign_in_time, user.metadata.lastSignInTime.toString());

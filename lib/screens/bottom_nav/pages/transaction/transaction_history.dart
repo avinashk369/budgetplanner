@@ -2,6 +2,7 @@ import 'package:budgetplanner/controllers/ad_controller.dart';
 import 'package:budgetplanner/controllers/expense_controller.dart';
 import 'package:budgetplanner/controllers/income_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
+import 'package:budgetplanner/models/expense_source_model.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/poc/grouped_list.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
@@ -11,8 +12,11 @@ import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/draggable_bottom_sheet.dart';
+import 'package:budgetplanner/widgets/expense_source_list.dart';
 import 'package:budgetplanner/widgets/filter_modal_layout.dart';
+import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:budgetplanner/widgets/trx_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -45,7 +49,7 @@ class TransactionHistory extends GetView {
     final incController = IncomeController.tagged(incomeController);
     final String userId = PreferenceUtils.getString(user_id);
 
-    controller.bindTransaction(DateTime.now());
+    controller.bindTransaction(DateTime.now(), controller.expenseSource.value);
 
     showInterstitialAd(adCont);
     // TODO: implement build
@@ -85,7 +89,8 @@ class TransactionHistory extends GetView {
                             income,
                             DateTime(date.year,
                                 date.month + controller.prevMonth.value, 0),
-                            controller.filterCats.value)!);
+                            controller.filterCats.value,
+                            controller.expenseSource.value)!);
                   }),
               Obx(
                 () => InkWell(
@@ -93,8 +98,12 @@ class TransactionHistory extends GetView {
                     controller.setPrevMonth(1);
                     controller.setNextMonth(1);
                     controller.transactionModel.bindStream(
-                        controller.getTransactionList(userId, income,
-                            DateTime.now(), controller.filterCats.value)!);
+                        controller.getTransactionList(
+                            userId,
+                            income,
+                            DateTime.now(),
+                            controller.filterCats.value,
+                            controller.expenseSource.value)!);
                   },
                   child: Text(
                     DateFormat('LLL').format(
@@ -128,32 +137,85 @@ class TransactionHistory extends GetView {
                             income,
                             DateTime(date.year,
                                 date.month + controller.nextMonth.value, 0),
-                            controller.filterCats.value)!);
+                            controller.filterCats.value,
+                            controller.expenseSource.value)!);
                   }),
             ],
           ),
         ],
       ),
-      body: Container(
-        child: Obx(() {
-          if (controller.transactionList.isEmpty) {
-            return NoData(
-              title: lbl_no_transaction.tr,
-              message: desc_no_transaction.tr,
-              imageUrl: 'assets/grp.png',
-              index: 2,
-              goTo: () {
-                Navigator.of(context).pushNamed(addTransactionRoute);
-              },
-            );
-          } else {
-            return controller.isLoading()
-                ? TrxShimmer()
-                : GroupedList(
-                    transactionModelList: controller.transactionList,
-                  );
-          }
-        }),
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Obx(
+                      () => (!expController.isExpLoading())
+                          ? Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.transparent, width: 1)),
+                                  height: 35,
+                                  child: renderExpenseFilter(controller,
+                                      expController.expenseSourceList),
+                                ),
+                                FilterChip(
+                                  onSelected: (b) {
+                                    //print(expenseSourceList[index].name!);
+                                    controller.transactionModel1.value = [];
+                                    controller.bindTransaction(DateTime.now(),
+                                        controller.expenseSource.value);
+                                  },
+                                  showCheckmark: false,
+                                  backgroundColor: Colors.grey[100],
+                                  selectedColor: Colors.grey[100],
+                                  label: Text(
+                                    "Clear",
+                                    style: kLabelStyle.copyWith(
+                                        color: Colors.black),
+                                  ),
+                                  selected: true,
+                                ),
+                              ],
+                            )
+                          : LoadingUI(),
+                    ),
+                    Container(
+                      child: Obx(() {
+                        if (controller.transactionList.isEmpty) {
+                          return NoData(
+                            title: lbl_no_transaction.tr,
+                            message: desc_no_transaction.tr,
+                            imageUrl: 'assets/grp.png',
+                            index: 2,
+                            goTo: () {
+                              Navigator.of(context)
+                                  .pushNamed(addTransactionRoute);
+                            },
+                          );
+                        } else {
+                          return controller.isLoading()
+                              ? TrxShimmer()
+                              : GroupedList(
+                                  transactionModelList:
+                                      (controller.transactionList1.isEmpty)
+                                          ? controller.transactionList
+                                          : controller.transactionList1,
+                                );
+                        }
+                      }),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       floatingActionButton: Stack(
         children: [
@@ -206,7 +268,8 @@ class TransactionHistory extends GetView {
                                           date.month +
                                               controller.nextMonth.value,
                                           0),
-                                      val)!);
+                                      val,
+                                      controller.expenseSource.value)!);
                               Navigator.of(context).pop();
                             },
                             applyFilter: (values) {
@@ -221,7 +284,8 @@ class TransactionHistory extends GetView {
                                           date.month +
                                               controller.nextMonth.value,
                                           0),
-                                      controller.filterCats.value)!);
+                                      controller.filterCats.value,
+                                      controller.expenseSource.value)!);
                               Navigator.of(context).pop();
                             },
                           )),
@@ -246,6 +310,49 @@ class TransactionHistory extends GetView {
           ),
         ],
       ),
+    );
+  }
+
+  /// The material design primary color swatches, excluding grey.
+  static const List<MaterialColor> primaries = <MaterialColor>[
+    Colors.green,
+    Colors.deepPurple,
+    Colors.brown,
+  ];
+
+  Widget renderExpenseFilter(
+      TransactionEntryController transactionEntryController,
+      List<ExpenseSourceModel> expenseSourceList) {
+    print("length ${expenseSourceList.length}");
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      itemCount: expenseSourceList.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: FilterChip(
+            onSelected: (b) {
+              //print(expenseSourceList[index].name!);
+              transactionEntryController.expenseSource.value =
+                  expenseSourceList[index].name!;
+              transactionEntryController.transactionModel1.bindStream(
+                  transactionEntryController.filterTransactionList(
+                      transactionEntryController.transactionList,
+                      expenseSourceList[index].name!)!);
+            },
+            showCheckmark: false,
+            backgroundColor: primaries[index],
+            selectedColor: primaries[index],
+            label: Text(
+              expenseSourceList[index].name!,
+              style: kLabelStyle.copyWith(color: Colors.white),
+            ),
+            selected: true,
+          ),
+        );
+      },
     );
   }
 }

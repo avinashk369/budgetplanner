@@ -66,8 +66,14 @@ class HeaderRow extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(controller.currencySymbol +
-                          (income - expense).toString()),
+                      Text(
+                          controller.currencySymbol +
+                              (income - expense).toString(),
+                          style: kLabelStyleBold.copyWith(
+                            color: ((income - expense) > 0)
+                                ? greenbuttoncolor
+                                : redColor,
+                          )),
                       SizedBox(
                         height: 20,
                       ),
@@ -85,8 +91,12 @@ class HeaderRow extends StatelessWidget {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Text(controller.currencySymbol +
-                                    income.toString())
+                                Text(
+                                  controller.currencySymbol + income.toString(),
+                                  style: kLabelStyleBold.copyWith(
+                                    color: greenbuttoncolor,
+                                  ),
+                                )
                               ],
                             ),
                             SizedBox(
@@ -114,8 +124,13 @@ class HeaderRow extends StatelessWidget {
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Text(controller.currencySymbol +
-                                    expense.toString()),
+                                Text(
+                                  controller.currencySymbol +
+                                      expense.toString(),
+                                  style: kLabelStyleBold.copyWith(
+                                    color: redColor,
+                                  ),
+                                ),
                               ],
                             ),
                           ],

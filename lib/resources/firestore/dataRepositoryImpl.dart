@@ -314,10 +314,12 @@ class DataRepositoryImpl implements DataRepository {
 
   @override
   Stream<List<TransactionModel>>? getTransactions(
-      String userId,
-      String transactionType,
-      DateTime currenctMonth,
-      List<String> filterCategory) async* {
+    String userId,
+    String transactionType,
+    DateTime currenctMonth,
+    List<String> filterCategory,
+    String expenseSource,
+  ) async* {
     try {
       var date = DateTime.now().add(Duration(days: 31));
 
@@ -330,7 +332,7 @@ class DataRepositoryImpl implements DataRepository {
         //query = query.where('transacion_type', isEqualTo: transactionType);
         //query = query.where('cat_name', isEqualTo: salary);
       }
-      if (filterCategory.length > 0) {
+      if (filterCategory.isNotEmpty) {
         query = query.where('cat_name', whereIn: filterCategory);
       }
 

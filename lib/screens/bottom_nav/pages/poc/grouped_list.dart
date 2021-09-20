@@ -19,7 +19,8 @@ class _GroupedListState extends State<GroupedList> {
   @override
   Widget build(BuildContext context) {
     return GroupedListView<TransactionModel, String>(
-      physics: BouncingScrollPhysics(),
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       padding: EdgeInsets.only(bottom: 10),
       elements: widget.transactionModelList,
       groupBy: (element) => element.createdOn!.toString().substring(0, 10),
@@ -41,23 +42,17 @@ class _GroupedListState extends State<GroupedList> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 5,
-                vertical: 10,
-              ),
-              child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 6),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    color: tealColor,
-                  ),
-                  child: Text(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 5,
+                  vertical: 10,
+                ),
+                child: RawChip(
+                  backgroundColor: Colors.purple[600],
+                  label: Text(
                     DateFormatter().getVerboseDateTimeRepresentation(value),
-                    style: kLabelStyle.apply(color: darkColor),
-                  )),
-            ),
+                    style: kLabelStyleBold.apply(color: whiteColor),
+                  ),
+                )),
           ],
         ),
       ),
