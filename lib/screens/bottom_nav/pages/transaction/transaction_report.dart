@@ -400,19 +400,24 @@ class _TransactionReportState extends State<TransactionReport> {
           fontSize: 12,
         ),
       ),
-      leading: Container(
-        height: 50,
-        width: 50,
-        margin: EdgeInsets.only(bottom: 5),
-        decoration: BoxDecoration(
-          color: DataRepositoryImpl().iconUrl(data[0])!.colorName,
-          borderRadius: BorderRadius.all(Radius.circular(25)),
-        ),
-        child: Icon(
-          DataRepositoryImpl().iconUrl(data[0])!.iconName,
-          size: 30,
-          color: whiteColor,
-        ),
+      leading: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            height: 40,
+            width: 40,
+            margin: EdgeInsets.only(bottom: 5),
+            decoration: BoxDecoration(
+              color: DataRepositoryImpl().iconUrl(data[0])!.colorName,
+              borderRadius: BorderRadius.all(Radius.circular(25)),
+            ),
+            child: Icon(
+              DataRepositoryImpl().iconUrl(data[0])!.iconName,
+              size: 30,
+              color: whiteColor,
+            ),
+          ),
+        ],
       ),
       trailing: Text(
         currencySymbol! + "" + data[1],

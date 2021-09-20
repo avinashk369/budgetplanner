@@ -42,6 +42,7 @@ class TransactionEntryController extends GetxController {
   var position = Offset(Get.width * .83, Get.height * .83).obs;
   setposition(Offset offset) => position(offset);
   late String userId;
+  var expenseSource = "".obs;
 
   var nextMonth = 1.obs;
   var prevMonth = 1.obs;
@@ -79,13 +80,9 @@ class TransactionEntryController extends GetxController {
     super.onInit();
   }
 
-  void bindTransaction(DateTime date) {
+  void bindTransaction(DateTime date, String expenseSource) {
     transactionModel.bindStream(getTransactionList(
-      userId,
-      expense,
-      date,
-      filterCats.value,
-    )!);
+        userId, expense, date, filterCats.value, expenseSource)!);
   }
 
   @override
@@ -257,7 +254,8 @@ class TransactionEntryController extends GetxController {
     try {
       isLoading(true);
       incomeCategories = await DataRepositoryImpl().getTransactionType();
-    } catch (e) {} finally {
+    } catch (e) {
+    } finally {
       isLoading(false);
     }
 
@@ -265,16 +263,19 @@ class TransactionEntryController extends GetxController {
   }
 
   Stream<List<TransactionModel>>? getTransactionList(
-      String userId,
-      String transactionType,
-      DateTime currenctMonth,
-      List<String> filterCategory) {
+    String userId,
+    String transactionType,
+    DateTime currenctMonth,
+    List<String> filterCategory,
+    String expenseSource,
+  ) {
     BaseModel<List<TransactionModel>>? transactionList;
     try {
       isLoading(true);
-      return DataRepositoryImpl().getTransactions(
-          userId, transactionType, currenctMonth, filterCategory);
-    } catch (e) {} finally {
+      return DataRepositoryImpl().getTransactions(userId, transactionType,
+          currenctMonth, filterCategory, expenseSource);
+    } catch (e) {
+    } finally {
       isLoading(false);
     }
   }
@@ -283,7 +284,8 @@ class TransactionEntryController extends GetxController {
     try {
       isLoading(true);
       return DataRepositoryImpl().getRecentTransactions(userId);
-    } catch (e) {} finally {
+    } catch (e) {
+    } finally {
       isLoading(false);
     }
   }
@@ -292,7 +294,8 @@ class TransactionEntryController extends GetxController {
     try {
       isLoading(true);
       return DataRepositoryImpl().getBudgetList(userId);
-    } catch (e) {} finally {
+    } catch (e) {
+    } finally {
       isLoading(false);
     }
   }
@@ -301,7 +304,8 @@ class TransactionEntryController extends GetxController {
     try {
       isLoading(true);
       return DataRepositoryImpl().listAllBudget(userId);
-    } catch (e) {} finally {
+    } catch (e) {
+    } finally {
       isLoading(false);
     }
   }
@@ -311,7 +315,8 @@ class TransactionEntryController extends GetxController {
       isLoading(true);
       print("Going to get total expense record");
       return DataRepositoryImpl().getTotalExpense(monthName, userId);
-    } catch (e) {} finally {
+    } catch (e) {
+    } finally {
       isLoading(false);
     }
   }
@@ -321,7 +326,8 @@ class TransactionEntryController extends GetxController {
       isLoading(true);
       print("Going to get total expense record");
       return DataRepositoryImpl().getTotalIncome(monthName, userId);
-    } catch (e) {} finally {
+    } catch (e) {
+    } finally {
       isLoading(false);
     }
   }
@@ -405,6 +411,34 @@ class TransactionEntryController extends GetxController {
       print(e.toString());
     } finally {
       Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+    }
+  }
+
+  /**
+   * fliter transactionList 
+   */
+  Stream<List<TransactionModel>>? filterTransactionList(
+      List<TransactionModel> complteList, String filterName) async* {
+    try {
+      isLoading(true);
+      var kList = complteList.map((e) {
+        if (e.expenseSource == filterName) {
+          return e;
+        }
+      }).toList();
+      List<TransactionModel> testList = [];
+      kList.forEach((element) {
+        if (element != null) {
+          testList.add(element);
+          print("$filterName avinash ${element.catName}");
+        }
+      });
+
+      print("avinash ${testList.length}");
+      yield testList;
+    } catch (e) {
+    } finally {
+      isLoading(false);
     }
   }
 }

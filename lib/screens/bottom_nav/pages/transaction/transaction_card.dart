@@ -100,10 +100,7 @@ class TransactionCard extends StatelessWidget {
                                     ? transactionModel.expenseSource!
                                     : income,
                                 style: kLabelStyle.copyWith(
-                                  color: (transactionModel.transactionType ==
-                                          expense)
-                                      ? whiteColor
-                                      : kGrey,
+                                  color: Colors.black,
                                   fontSize: 12,
                                 ),
                               ),
@@ -137,11 +134,11 @@ class TransactionCard extends StatelessWidget {
   Color getTrxColor(BuildContext context, TransactionModel transactionModel) {
     switch (transactionModel.expenseSource) {
       case creditCard:
-        return Colors.deepPurple;
+        return Colors.indigo[100]!;
       case accounts:
-        return Colors.green;
+        return Colors.greenAccent;
       case cash:
-        return Colors.brown;
+        return Colors.orange[100]!;
       default:
         return Theme.of(context).hintColor;
     }

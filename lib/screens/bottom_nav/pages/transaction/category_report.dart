@@ -39,8 +39,9 @@ class _CategoryReportState extends State<CategoryReport> {
       controller.setCatTransactionList((await controller
           .getAllTransactionOfYearForCategory(date.year, widget.catName))!);
       controller.catTransactionList.forEach((element) {
-        totalAmount += element.amount!;
-        setState(() {});
+        setState(() {
+          totalAmount += element.amount!;
+        });
       });
     }();
   }
@@ -69,9 +70,11 @@ class _CategoryReportState extends State<CategoryReport> {
           children: [
             Obx(() {
               if (controller.catTransactionList.isNotEmpty) {
-                print("actual ${controller.catTransactionList.length}");
+                print("actual ${totalAmount}");
                 return CategoryBarChart(
-                    transactionList: controller.catTransactionList);
+                  transactionList: controller.catTransactionList,
+                  totalExp: totalAmount,
+                );
               } else {
                 return Container();
               }
@@ -137,6 +140,7 @@ class _CategoryReportState extends State<CategoryReport> {
   Widget renderList(List<TransactionModel> trxList) {
     return ListView.separated(
       shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       itemCount: trxList.length,
       separatorBuilder: (context, index) => Padding(
         padding: EdgeInsets.only(left: 15, bottom: kSpaceS, right: kSpaceS),

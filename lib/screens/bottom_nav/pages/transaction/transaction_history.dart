@@ -12,11 +12,9 @@ import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/draggable_bottom_sheet.dart';
-import 'package:budgetplanner/widgets/expense_source_list.dart';
 import 'package:budgetplanner/widgets/filter_modal_layout.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:budgetplanner/widgets/trx_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -162,14 +160,14 @@ class TransactionHistory extends GetView {
                                           color: Colors.transparent, width: 1)),
                                   height: 35,
                                   child: renderExpenseFilter(controller,
-                                      expController.expenseSourceList),
+                                      expController.expenseSourceList, userId),
                                 ),
                                 FilterChip(
                                   onSelected: (b) {
                                     //print(expenseSourceList[index].name!);
-                                    controller.transactionModel1.value = [];
-                                    controller.bindTransaction(DateTime.now(),
-                                        controller.expenseSource.value);
+
+                                    controller.bindTransaction(
+                                        DateTime.now(), "");
                                   },
                                   showCheckmark: false,
                                   backgroundColor: Colors.grey[100],
@@ -185,10 +183,11 @@ class TransactionHistory extends GetView {
                             )
                           : LoadingUI(),
                     ),
-                    Container(
-                      child: Obx(() {
-                        if (controller.transactionList.isEmpty) {
-                          return NoData(
+                    Obx(() {
+                      if (controller.transactionList.isEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 50),
+                          child: NoData(
                             title: lbl_no_transaction.tr,
                             message: desc_no_transaction.tr,
                             imageUrl: 'assets/grp.png',
@@ -197,19 +196,17 @@ class TransactionHistory extends GetView {
                               Navigator.of(context)
                                   .pushNamed(addTransactionRoute);
                             },
-                          );
-                        } else {
-                          return controller.isLoading()
-                              ? TrxShimmer()
-                              : GroupedList(
-                                  transactionModelList:
-                                      (controller.transactionList1.isEmpty)
-                                          ? controller.transactionList
-                                          : controller.transactionList1,
-                                );
-                        }
-                      }),
-                    ),
+                          ),
+                        );
+                      } else {
+                        return controller.isLoading()
+                            ? TrxShimmer()
+                            : GroupedList(
+                                transactionModelList:
+                                    controller.transactionList,
+                              );
+                      }
+                    }),
                   ],
                 ),
               ],
@@ -314,16 +311,16 @@ class TransactionHistory extends GetView {
   }
 
   /// The material design primary color swatches, excluding grey.
-  static const List<MaterialColor> primaries = <MaterialColor>[
-    Colors.green,
-    Colors.deepPurple,
-    Colors.brown,
+  static List<Color> primaries = <Color>[
+    Colors.greenAccent,
+    Colors.indigo[100]!,
+    Colors.orange[100]!,
   ];
 
   Widget renderExpenseFilter(
       TransactionEntryController transactionEntryController,
-      List<ExpenseSourceModel> expenseSourceList) {
-    print("length ${expenseSourceList.length}");
+      List<ExpenseSourceModel> expenseSourceList,
+      String userId) {
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -331,23 +328,38 @@ class TransactionHistory extends GetView {
       itemCount: expenseSourceList.length,
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 3),
           child: FilterChip(
             onSelected: (b) {
+              var date = DateTime.now();
               //print(expenseSourceList[index].name!);
               transactionEntryController.expenseSource.value =
                   expenseSourceList[index].name!;
-              transactionEntryController.transactionModel1.bindStream(
-                  transactionEntryController.filterTransactionList(
-                      transactionEntryController.transactionList,
-                      expenseSourceList[index].name!)!);
+              transactionEntryController.bindTransaction(DateTime.now(),
+                  transactionEntryController.expenseSource.value);
+
+              transactionEntryController.transactionModel.bindStream(
+                  transactionEntryController.getTransactionList(
+                      userId,
+                      income,
+                      DateTime(
+                          date.year,
+                          date.month +
+                              transactionEntryController.nextMonth.value,
+                          0),
+                      transactionEntryController.filterCats.value,
+                      transactionEntryController.expenseSource.value)!);
+              // transactionEntryController.transactionModel1.bindStream(
+              //     transactionEntryController.filterTransactionList(
+              //         transactionEntryController.transactionList,
+              //         expenseSourceList[index].name!)!);
             },
             showCheckmark: false,
             backgroundColor: primaries[index],
             selectedColor: primaries[index],
             label: Text(
               expenseSourceList[index].name!,
-              style: kLabelStyle.copyWith(color: Colors.white),
+              style: kLabelStyle.copyWith(color: Colors.black),
             ),
             selected: true,
           ),

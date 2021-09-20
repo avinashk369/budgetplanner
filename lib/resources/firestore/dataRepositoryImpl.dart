@@ -335,6 +335,9 @@ class DataRepositoryImpl implements DataRepository {
       if (filterCategory.isNotEmpty) {
         query = query.where('cat_name', whereIn: filterCategory);
       }
+      if (expenseSource.isNotEmpty) {
+        query = query.where('expense_source', isEqualTo: expenseSource);
+      }
 
       yield* query
           //.where('transacion_type', isEqualTo: transactionType)

@@ -2,14 +2,19 @@ import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final kTitleStyle = GoogleFonts.oswald(
+String titleFont = GoogleFonts.lato().fontFamily!;
+String headerFont = GoogleFonts.lato().fontFamily!;
+
+final kTitleStyle = TextStyle(
+  fontFamily: GoogleFonts.oswald().fontFamily,
   color: kPink,
   fontSize: 40.0,
   fontWeight: FontWeight.bold,
   letterSpacing: 0.4,
   height: 1.2,
 );
-final kTitleStyleSmall = GoogleFonts.oswald(
+final kTitleStyleSmall = TextStyle(
+  fontFamily: titleFont,
   color: kPink,
   fontSize: 30.0,
   fontWeight: FontWeight.bold,
@@ -17,33 +22,38 @@ final kTitleStyleSmall = GoogleFonts.oswald(
   height: 1.2,
 );
 
-final kQuoteStyle = GoogleFonts.poppins(
+final kQuoteStyle = TextStyle(
+    fontFamily: titleFont,
     color: greyColor,
     fontSize: 16.0,
     letterSpacing: 0.4,
     fontStyle: FontStyle.italic);
 
-final kHeaderStyle = GoogleFonts.poppins(
+final kHeaderStyle = TextStyle(
+  fontFamily: titleFont,
   color: kGrey,
   fontSize: 18.0,
   letterSpacing: 0.4,
 );
 
-final kSubtitleStyle = GoogleFonts.oswald(
+final kSubtitleStyle = TextStyle(
+  fontFamily: titleFont,
   color: kGrey,
   fontSize: 18.0,
   letterSpacing: 0.4,
   height: 1.2,
 );
 
-final kLabelStyle = GoogleFonts.poppins(
+final kLabelStyle = TextStyle(
+  fontFamily: titleFont,
   color: kDarkGrey,
   fontSize: 14.0,
   letterSpacing: 0.4,
   height: 1.2,
 );
 
-final kLabelStyleBold = GoogleFonts.poppins(
+final kLabelStyleBold = TextStyle(
+  fontFamily: headerFont,
   color: kDarkGrey,
   fontSize: 14.0,
   letterSpacing: 0.4,
@@ -51,7 +61,8 @@ final kLabelStyleBold = GoogleFonts.poppins(
   height: 1.2,
 );
 
-final kButtonStyle = GoogleFonts.signika(
+final kButtonStyle = TextStyle(
+  fontFamily: titleFont,
   color: kDarkGrey,
   fontSize: 16.0,
 );

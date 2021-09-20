@@ -1,12 +1,15 @@
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
+import 'package:budgetplanner/utils/mathUtils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CategoryBarChart extends StatefulWidget {
   final List<TransactionModel> transactionList;
-  const CategoryBarChart({Key? key, required this.transactionList})
+  final double totalExp;
+  const CategoryBarChart(
+      {Key? key, required this.transactionList, required this.totalExp})
       : super(key: key);
 
   @override
@@ -19,11 +22,12 @@ class _CategoryBarChartState extends State<CategoryBarChart> {
   final Color dark = const Color(0xff3b8c75);
   final Color normal = const Color(0xff64caad);
   final Color light = const Color(0xff73e8c9);
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("finding ${widget.transactionList.length}");
+    print("finding ${widget.totalExp}");
     Map<String, List<double>> dataList =
         controller.getDataListForCatBarchart(widget.transactionList);
 
@@ -37,6 +41,7 @@ class _CategoryBarChartState extends State<CategoryBarChart> {
         dataSet.insert(int.parse(key) - 1, value);
       }
     });
+
     print(dataSet);
     // dataSet.forEach((element) {
     //   element.forEach((element) {
@@ -48,11 +53,11 @@ class _CategoryBarChartState extends State<CategoryBarChart> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => (controller.catTransactionList.isNotEmpty)
-        ? bodyBar(context)
+        ? bodyBar(context, widget.totalExp)
         : Container());
   }
 
-  AspectRatio bodyBar(BuildContext context) {
+  AspectRatio bodyBar(BuildContext context, double totalAmount) {
     return AspectRatio(
       aspectRatio: 1.66,
       child: Card(
@@ -106,8 +111,28 @@ class _CategoryBarChartState extends State<CategoryBarChart> {
                   },
                 ),
                 leftTitles: SideTitles(
-                  interval: 500,
+                  interval: (MathUtils.gridSeparator(totalAmount) /
+                          ((totalAmount.toInt().toString().length + 1)))
+                      .floorToDouble(),
                   showTitles: true,
+                  getTextStyles: (context, value) => const TextStyle(
+                      color: Color(
+                        0xff939393,
+                      ),
+                      fontSize: 10),
+                  margin: 0,
+                ),
+                rightTitles: SideTitles(
+                  showTitles: false,
+                  getTextStyles: (context, value) => const TextStyle(
+                      color: Color(
+                        0xff939393,
+                      ),
+                      fontSize: 10),
+                  margin: 0,
+                ),
+                topTitles: SideTitles(
+                  showTitles: false,
                   getTextStyles: (context, value) => const TextStyle(
                       color: Color(
                         0xff939393,
