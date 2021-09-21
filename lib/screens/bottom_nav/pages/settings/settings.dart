@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:budgetplanner/controllers/dashboard_controller.dart';
@@ -17,9 +16,7 @@ import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:open_file/open_file.dart';
 import 'package:share/share.dart';
 
 class Settings extends StatefulWidget {
@@ -101,7 +98,7 @@ class _SettingsState extends State<Settings> {
                             },
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Divider(
                               color:
                                   Theme.of(context).hintColor.withOpacity(.6),
@@ -137,7 +134,7 @@ class _SettingsState extends State<Settings> {
                             },
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Divider(
                               color:
                                   Theme.of(context).hintColor.withOpacity(.6),
@@ -173,7 +170,7 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Divider(
                               color:
                                   Theme.of(context).hintColor.withOpacity(.6),
@@ -200,7 +197,7 @@ class _SettingsState extends State<Settings> {
                             },
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Divider(
                               color:
                                   Theme.of(context).hintColor.withOpacity(.6),
@@ -214,7 +211,7 @@ class _SettingsState extends State<Settings> {
                             onTap: () => Get.to(FeatureRequestScreen()),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Divider(
                               color:
                                   Theme.of(context).hintColor.withOpacity(.6),
