@@ -13,8 +13,10 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 class CategoryReport extends StatefulWidget {
   final String catName;
+  final bool trType;
 
-  const CategoryReport({Key? key, required this.catName}) : super(key: key);
+  const CategoryReport({Key? key, required this.catName, required this.trType})
+      : super(key: key);
 
   @override
   _CategoryReportState createState() => _CategoryReportState();
@@ -35,7 +37,7 @@ class _CategoryReportState extends State<CategoryReport> {
     () async {
       // controller.catTransactionModel.value = (await controller
       //     .getAllTransactionOfYearForCategory(date.year, widget.catName))!;
-
+      print(widget.catName);
       controller.setCatTransactionList((await controller
           .getAllTransactionOfYearForCategory(date.year, widget.catName))!);
       controller.catTransactionList.forEach((element) {
@@ -70,7 +72,7 @@ class _CategoryReportState extends State<CategoryReport> {
           children: [
             Obx(() {
               if (controller.catTransactionList.isNotEmpty) {
-                print("actual ${totalAmount}");
+                print("actual ${controller.catTransactionList.length}");
                 return CategoryBarChart(
                   transactionList: controller.catTransactionList,
                   totalExp: totalAmount,
@@ -105,7 +107,9 @@ class _CategoryReportState extends State<CategoryReport> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                              text: "Total expenses ",
+                              text: widget.trType
+                                  ? "Total expenses "
+                                  : "Total incomes ",
                               style: kLabelStyleBold.copyWith(
                                   color: Theme.of(context).hintColor)),
                           TextSpan(
@@ -160,7 +164,7 @@ class _CategoryReportState extends State<CategoryReport> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                trxList[index].expenseSource!,
+                trxList[index].expenseSource ?? trxList[index].notes!,
                 style: kLabelStyle.copyWith(
                   color: kGrey,
                 ),
