@@ -51,11 +51,13 @@ class _TransactionReportState extends State<TransactionReport> {
 
   double totalIncome = 0;
   double totalExpense = 0;
+  bool isLoaded = false;
   var date = DateTime.now();
   @override
   void initState() {
     currencySymbol =
         PreferenceUtils.getString(currancy_symbol, defValue: '\u20B9');
+    isLoaded = false;
     () async {
       trxList = await controller.getAllTransactionOfYear(date.year);
       //for pie hart and list view
@@ -63,12 +65,15 @@ class _TransactionReportState extends State<TransactionReport> {
           .setPieChartData(controller.generateCategoryMap(trxList!, expense));
       //set total income and total expense value
       controller.generateCategoryMap(trxList!, expense).forEach((element) {
-        totalExpense += double.parse(element[1]);
-        setState(() {});
+        setState(() {
+          totalExpense += double.parse(element[1]);
+        });
       });
       controller.generateCategoryMap(trxList!, income).forEach((element) {
-        totalIncome += double.parse(element[1]);
-        setState(() {});
+        setState(() {
+          isLoaded = true;
+          totalIncome += double.parse(element[1]);
+        });
       });
       //generateCategoryMap(expense);
     }();
@@ -152,9 +157,10 @@ class _TransactionReportState extends State<TransactionReport> {
               slivers: [
                 SliverToBoxAdapter(
                   child: Obx(
-                    () => (controller.piechartDataList.length > 0)
+                    () => (controller.piechartDataList.isNotEmpty && isLoaded)
                         ? BarChartSample5(
                             dataList: trxList!,
+                            totalAmount: totalIncome,
                           )
                         : Container(),
                   ),
@@ -385,7 +391,10 @@ class _TransactionReportState extends State<TransactionReport> {
     return ListTile(
       onTap: () {
         controller.setCatTransactionList([]);
-        Get.to(CategoryReport(catName: data[0]));
+        Get.to(CategoryReport(
+          catName: data[0],
+          trType: isExpense,
+        ));
       },
       title: Text(
         data[0],

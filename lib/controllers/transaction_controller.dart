@@ -199,6 +199,9 @@ class TransactionEntryController extends GetxController {
           case expense:
             expenseAmount += element.amount!;
             break;
+          case income:
+            expenseAmount += element.amount!;
+            break;
         }
       });
       dataList[key] = [

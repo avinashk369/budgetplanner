@@ -1,12 +1,15 @@
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
+import 'package:budgetplanner/utils/mathUtils.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class BarChartSample5 extends StatefulWidget {
   final List<TransactionModel> dataList;
-
-  const BarChartSample5({Key? key, required this.dataList}) : super(key: key);
+  final double totalAmount;
+  const BarChartSample5(
+      {Key? key, required this.dataList, required this.totalAmount})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() => BarChartSample5State();
 }
@@ -14,9 +17,14 @@ class BarChartSample5 extends StatefulWidget {
 class BarChartSample5State extends State<BarChartSample5> {
   final controller = TransactionEntryController.to;
   late List<List<double>> dataSet;
+  double interval = 5000;
   @override
   void initState() {
     // TODO: implement initState
+    print("total amount received ${widget.totalAmount}");
+    interval = (MathUtils.gridSeparator(widget.totalAmount) /
+            ((widget.totalAmount.toInt().toString().length + 1)))
+        .floorToDouble();
     super.initState();
   }
 
@@ -100,7 +108,7 @@ class BarChartSample5State extends State<BarChartSample5> {
                   },
                 ),
                 leftTitles: SideTitles(
-                  interval: 5000,
+                  interval: interval > 0 ? interval : 5000,
                   showTitles: true,
                   getTextStyles: (context, value) => const TextStyle(
                       color: Color(
@@ -110,7 +118,6 @@ class BarChartSample5State extends State<BarChartSample5> {
                   margin: 0,
                 ),
                 topTitles: SideTitles(
-                  interval: 5000,
                   showTitles: false,
                   getTextStyles: (context, value) => const TextStyle(
                       color: Color(
@@ -120,7 +127,6 @@ class BarChartSample5State extends State<BarChartSample5> {
                   margin: 0,
                 ),
                 rightTitles: SideTitles(
-                  interval: 5000,
                   showTitles: false,
                   getTextStyles: (context, value) => const TextStyle(
                       color: Color(
