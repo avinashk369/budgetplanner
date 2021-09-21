@@ -104,6 +104,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: "transaction",
         backgroundColor: Theme.of(context).hintColor,
         onPressed: () {
           Navigator.of(context).pushNamed(addTransactionRoute);

@@ -49,7 +49,6 @@ class _TransactionHistoryState extends State<TransactionHistory> {
 
     controller.bindTransaction(DateTime.now(), controller.expenseSource.value);
 
-    showInterstitialAd(adCont);
     // TODO: implement initState
     super.initState();
   }
@@ -64,6 +63,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
 
   @override
   Widget build(BuildContext context) {
+    showInterstitialAd(adCont);
     return // TODO: implement build
         Scaffold(
       appBar: AppBar(
@@ -259,6 +259,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                 top: controller.position.value.dy,
                 child: Draggable(
                   feedback: FloatingActionButton(
+                    heroTag: "filter",
                     child: Icon(
                       Icons.filter_list,
                       color: Theme.of(context).primaryColor,
