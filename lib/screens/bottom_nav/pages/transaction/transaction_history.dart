@@ -22,7 +22,38 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:intl/intl.dart';
 
-class TransactionHistory extends GetView {
+class TransactionHistory extends StatefulWidget {
+  const TransactionHistory({Key? key}) : super(key: key);
+
+  @override
+  _TransactionHistoryState createState() => _TransactionHistoryState();
+}
+
+class _TransactionHistoryState extends State<TransactionHistory> {
+  final adCont = AdController.tagged(adController);
+  final controller = TransactionEntryController.to;
+  //used for transaction filter option
+  final expController = ExpenseController.tagged(expenseController);
+  final incController = IncomeController.tagged(incomeController);
+  var date = DateTime.now();
+  late String userId;
+  @override
+  void initState() {
+    // print("month name ${date.month}");
+    // print(
+    //     "print no of days of the month ${DateTime(date.year, date.month - 4, 0).day}");
+    // DateFormat format = DateFormat.yMMMMd();
+    // print("month name ${DateTime(date.year, date.month - 6, 0).toString()}");
+
+    userId = PreferenceUtils.getString(user_id);
+
+    controller.bindTransaction(DateTime.now(), controller.expenseSource.value);
+
+    showInterstitialAd(adCont);
+    // TODO: implement initState
+    super.initState();
+  }
+
   void showInterstitialAd(AdController adCont) {
     print("  reward earned");
     //to display intertitial ad
@@ -33,25 +64,8 @@ class TransactionHistory extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    var date = DateTime.now();
-
-    // print("month name ${date.month}");
-    // print(
-    //     "print no of days of the month ${DateTime(date.year, date.month - 4, 0).day}");
-    // DateFormat format = DateFormat.yMMMMd();
-    // print("month name ${DateTime(date.year, date.month - 6, 0).toString()}");
-    final adCont = AdController.tagged(adController);
-    final controller = TransactionEntryController.to;
-    //used for transaction filter option
-    final expController = ExpenseController.tagged(expenseController);
-    final incController = IncomeController.tagged(incomeController);
-    final String userId = PreferenceUtils.getString(user_id);
-
-    controller.bindTransaction(DateTime.now(), controller.expenseSource.value);
-
-    showInterstitialAd(adCont);
-    // TODO: implement build
-    return Scaffold(
+    return // TODO: implement build
+        Scaffold(
       appBar: AppBar(
         elevation: 0,
         title: Row(
@@ -154,30 +168,51 @@ class TransactionHistory extends GetView {
                       () => (!expController.isExpLoading())
                           ? Row(
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Colors.transparent, width: 1)),
-                                  height: 35,
-                                  child: renderExpenseFilter(controller,
-                                      expController.expenseSourceList, userId),
-                                ),
-                                FilterChip(
-                                  onSelected: (b) {
-                                    //print(expenseSourceList[index].name!);
-
-                                    controller.bindTransaction(
-                                        DateTime.now(), "");
-                                  },
-                                  showCheckmark: false,
-                                  backgroundColor: Colors.grey[100],
-                                  selectedColor: Colors.grey[100],
-                                  label: Text(
-                                    "Clear",
-                                    style: kLabelStyle.copyWith(
-                                        color: Colors.black),
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.transparent,
+                                            width: 1)),
+                                    height: 35,
+                                    child: renderExpenseFilter(
+                                        controller,
+                                        expController.expenseSourceList,
+                                        userId),
                                   ),
-                                  selected: true,
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: FilterChip(
+                                    onSelected: (b) {
+                                      //print(expenseSourceList[index].name!);
+                                      controller.expenseSource.value = "";
+
+                                      controller.transactionModel.bindStream(
+                                          controller.getTransactionList(
+                                              userId,
+                                              income,
+                                              DateTime(
+                                                  date.year,
+                                                  date.month +
+                                                      controller
+                                                          .nextMonth.value,
+                                                  0),
+                                              controller.filterCats.value,
+                                              controller.expenseSource.value)!);
+                                    },
+                                    showCheckmark: false,
+                                    backgroundColor: Colors.grey[100],
+                                    selectedColor: Colors.grey[100],
+                                    label: Text(
+                                      "Clear",
+                                      style: kLabelStyle.copyWith(
+                                          color: Colors.black),
+                                    ),
+                                    selected: true,
+                                  ),
                                 ),
                               ],
                             )
@@ -335,8 +370,8 @@ class TransactionHistory extends GetView {
               //print(expenseSourceList[index].name!);
               transactionEntryController.expenseSource.value =
                   expenseSourceList[index].name!;
-              transactionEntryController.bindTransaction(DateTime.now(),
-                  transactionEntryController.expenseSource.value);
+              // transactionEntryController.bindTransaction(DateTime.now(),
+              //     transactionEntryController.expenseSource.value);
 
               transactionEntryController.transactionModel.bindStream(
                   transactionEntryController.getTransactionList(

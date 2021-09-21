@@ -63,8 +63,18 @@ class _DashboardState extends State<Dashboard> {
         return value == true;
       },
       child: Scaffold(
-        body: Obx(
-            () => TabNavigationItem.items[controller.currentIndex.value].page),
+        body: Obx(() {
+          return IndexedStack(
+            index: controller.currentIndex.value,
+            children: [
+              TabNavigationItem.items[0].page,
+              TabNavigationItem.items[1].page,
+              TabNavigationItem.items[2].page,
+              TabNavigationItem.items[3].page
+            ],
+          );
+          //return TabNavigationItem.items[controller.currentIndex.value].page;
+        }),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
