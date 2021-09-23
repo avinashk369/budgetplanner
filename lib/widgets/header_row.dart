@@ -60,8 +60,8 @@ class HeaderRow extends StatelessWidget {
                       ),
                       Text(
                         total_balance.tr.toUpperCase(),
-                        style: kLabelStyleBold.apply(
-                            color: Theme.of(context).hintColor),
+                        style: kLabelStyleBold.copyWith(
+                            color: Theme.of(context).hintColor, fontSize: 12),
                       ),
                       SizedBox(
                         height: 5,
@@ -85,8 +85,9 @@ class HeaderRow extends StatelessWidget {
                               children: [
                                 Text(
                                   total_income.tr.toUpperCase(),
-                                  style: kLabelStyleBold.apply(
-                                      color: Theme.of(context).hintColor),
+                                  style: kLabelStyleBold.copyWith(
+                                      color: Theme.of(context).hintColor,
+                                      fontSize: 12),
                                 ),
                                 SizedBox(
                                   height: 5,
@@ -118,8 +119,9 @@ class HeaderRow extends StatelessWidget {
                               children: [
                                 Text(
                                   total_expense.tr.toUpperCase(),
-                                  style: kLabelStyleBold.apply(
-                                      color: Theme.of(context).hintColor),
+                                  style: kLabelStyleBold.copyWith(
+                                      color: Theme.of(context).hintColor,
+                                      fontSize: 12),
                                 ),
                                 SizedBox(
                                   height: 5,
