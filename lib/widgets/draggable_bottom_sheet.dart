@@ -33,7 +33,7 @@ class DraggableBottomSheet {
           maxChildSize: 0.9,
           builder: (_, scrollController) => Container(
             decoration: BoxDecoration(
-                color: whiteColor,
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
             //padding: EdgeInsets.all(10),
             child: SingleChildScrollView(
@@ -44,13 +44,13 @@ class DraggableBottomSheet {
                   SizedBox(height: 15),
                   Center(
                     child: Container(
-                      width: 100,
+                      width: 70,
                       height: 5,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(
                           Radius.circular(3),
                         ),
-                        color: darkColor.withOpacity(.12),
+                        color: Theme.of(context).hintColor.withOpacity(.12),
                       ),
                     ),
                   ),

@@ -7,6 +7,7 @@ import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'custom_theme.dart';
 import 'loading_ui.dart';
 
 class FilterLayout extends StatefulWidget {
@@ -55,7 +56,9 @@ class _FilterLayoutState extends State<FilterLayout> {
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
-                      color: Colors.grey[100], //grey[100]
+                      color: (CustomTheme().currentTheme == ThemeMode.dark)
+                          ? Colors.black12
+                          : Colors.grey[100],
                     ),
                     child: ListView.builder(
                       itemCount: filterTabs.length,
@@ -74,7 +77,9 @@ class _FilterLayoutState extends State<FilterLayout> {
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
-                      color: greylightcolor, //grey[100]
+                      color: (CustomTheme().currentTheme == ThemeMode.dark)
+                          ? Colors.black12
+                          : Colors.grey[100], //grey[100]
                     ),
                     padding: EdgeInsets.symmetric(vertical: 3),
                     child: Row(
@@ -257,14 +262,22 @@ class _FilterLayoutState extends State<FilterLayout> {
     List<Widget> choices = [];
     incController.catList.forEach((item) {
       choices.add(FilterChip(
-        label: Text(item.name!),
+        label: Text(
+          item.name!,
+          style: TextStyle(
+              color: (item.isSelected)
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).hintColor),
+        ),
         elevation: 0,
         labelStyle: kLabelStyle.copyWith(
             fontSize: 14, color: (item.isSelected) ? whiteColor : darkColor),
-        checkmarkColor: whiteColor,
+        checkmarkColor: Theme.of(context).primaryColor,
         selectedColor: tealColor,
         selected: item.isSelected,
-        backgroundColor: Colors.grey[100],
+        backgroundColor: (CustomTheme().currentTheme == ThemeMode.dark)
+            ? Colors.black12
+            : Colors.grey[100],
         onSelected: (selected) {
           (selected)
               ? filterName.add(item.name!)
