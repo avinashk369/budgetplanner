@@ -279,7 +279,10 @@ class DataRepositoryImpl implements DataRepository {
 
     List<RecurranceModel> recurranceTypeList = [];
 
-    var response = await _firestore.collection(recurranceCategory).get();
+    var response = await _firestore
+        .collection(recurranceCategory)
+        .orderBy('sq', descending: false)
+        .get();
     recurranceTypeList =
         response.docs.map((e) => RecurranceModel.fromJson(e.data())).toList();
 

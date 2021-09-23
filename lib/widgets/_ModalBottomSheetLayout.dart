@@ -144,8 +144,8 @@ Future<T?> showModalBottomSheetApp<T>({
       _ModalBottomSheetRoute<T>(
         builder: builder,
         theme: currentTheme.currentTheme == ThemeMode.dark
-            ? CustomTheme.lightTheme
-            : CustomTheme.darkTheme,
+            ? CustomTheme.darkTheme
+            : CustomTheme.lightTheme,
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
         resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,

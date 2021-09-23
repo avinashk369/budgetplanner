@@ -6,11 +6,9 @@ part of 'income_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-IncomeModel _$IncomeModelFromJson(Map<String, dynamic> json) {
-  return IncomeModel()
-    ..id = json['id'] as String?
-    ..name = json['name'] as String?;
-}
+IncomeModel _$IncomeModelFromJson(Map<String, dynamic> json) => IncomeModel()
+  ..id = json['id'] as String?
+  ..name = json['name'] as String?;
 
 Map<String, dynamic> _$IncomeModelToJson(IncomeModel instance) =>
     <String, dynamic>{

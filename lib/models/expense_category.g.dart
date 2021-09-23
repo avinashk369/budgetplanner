@@ -6,11 +6,10 @@ part of 'expense_category.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ExpenseCategory _$ExpenseCategoryFromJson(Map<String, dynamic> json) {
-  return ExpenseCategory()
-    ..id = json['id'] as String?
-    ..name = json['name'] as String?;
-}
+ExpenseCategory _$ExpenseCategoryFromJson(Map<String, dynamic> json) =>
+    ExpenseCategory()
+      ..id = json['id'] as String?
+      ..name = json['name'] as String?;
 
 Map<String, dynamic> _$ExpenseCategoryToJson(ExpenseCategory instance) =>
     <String, dynamic>{

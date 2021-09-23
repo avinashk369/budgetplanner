@@ -6,38 +6,36 @@ part of 'CaffairModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CaffairModel _$CaffairModelFromJson(Map<String, dynamic> json) {
-  return CaffairModel()
-    ..id = json['id'] as int?
-    ..title = json['title'] as String?
-    ..description = json['description'] as String?
-    ..caUrl = json['ca_url'] as String?
-    ..catId = json['cat_id'] as String?
-    ..publishedDate = json['published_date'] as String?
-    ..flags = json['flags'] as String?
-    ..createdAt = json['created_at'] as String?
-    ..updatedAt = json['updated_at'] as String?
-    ..currentPage = json['current_page'] as int?
-    ..data = (json['data'] as List<dynamic>?)
-        ?.map((e) => CaffairModel.fromJson(e as Map<String, dynamic>))
-        .toList()
-    ..firstPageUrl = json['first_page_url'] as String?
-    ..from = json['from'] as int?
-    ..lastPage = json['last_page'] as int?
-    ..lastPageUrl = json['last_page_url'] as String?
-    ..links = (json['links'] as List<dynamic>?)
-        ?.map((e) => PaginationMeta.fromJson(e as Map<String, dynamic>))
-        .toList()
-    ..nextPageUrl = json['next_page_url'] as String?
-    ..path = json['path'] as String?
-    ..perPage = json['per_page'] as int?
-    ..prevPageUrl = json['prev_page_url'] as String?
-    ..to = json['to'] as int?
-    ..total = json['total'] as int?
-    ..address = json['address'] == null
-        ? null
-        : Address.fromJson(json['address'] as Map<String, dynamic>);
-}
+CaffairModel _$CaffairModelFromJson(Map<String, dynamic> json) => CaffairModel()
+  ..id = json['id'] as int?
+  ..title = json['title'] as String?
+  ..description = json['description'] as String?
+  ..caUrl = json['ca_url'] as String?
+  ..catId = json['cat_id'] as String?
+  ..publishedDate = json['published_date'] as String?
+  ..flags = json['flags'] as String?
+  ..createdAt = json['created_at'] as String?
+  ..updatedAt = json['updated_at'] as String?
+  ..currentPage = json['current_page'] as int?
+  ..data = (json['data'] as List<dynamic>?)
+      ?.map((e) => CaffairModel.fromJson(e as Map<String, dynamic>))
+      .toList()
+  ..firstPageUrl = json['first_page_url'] as String?
+  ..from = json['from'] as int?
+  ..lastPage = json['last_page'] as int?
+  ..lastPageUrl = json['last_page_url'] as String?
+  ..links = (json['links'] as List<dynamic>?)
+      ?.map((e) => PaginationMeta.fromJson(e as Map<String, dynamic>))
+      .toList()
+  ..nextPageUrl = json['next_page_url'] as String?
+  ..path = json['path'] as String?
+  ..perPage = json['per_page'] as int?
+  ..prevPageUrl = json['prev_page_url'] as String?
+  ..to = json['to'] as int?
+  ..total = json['total'] as int?
+  ..address = json['address'] == null
+      ? null
+      : Address.fromJson(json['address'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$CaffairModelToJson(CaffairModel instance) =>
     <String, dynamic>{

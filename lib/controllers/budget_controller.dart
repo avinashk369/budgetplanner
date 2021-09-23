@@ -63,7 +63,8 @@ class BudgetController extends GetxController {
 
       budgetCategories = await DataRepositoryImpl().getBudgetCategories();
       print("object ${budgetCategories.data!.length}");
-    } catch (e) {} finally {
+    } catch (e) {
+    } finally {
       Future.delayed(Duration(seconds: 1), () async {
         isLoading(false);
       });
@@ -208,13 +209,13 @@ class BudgetController extends GetxController {
               SizedBox(height: 15),
               Center(
                 child: Container(
-                  width: 100,
+                  width: 70,
                   height: 5,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
                       Radius.circular(3),
                     ),
-                    color: Theme.of(context).primaryColor.withOpacity(.12),
+                    color: Theme.of(context).hintColor.withOpacity(.12),
                   ),
                 ),
               ),
@@ -243,8 +244,8 @@ class BudgetController extends GetxController {
                                     decoration: BoxDecoration(
                                       color: (CustomTheme().currentTheme ==
                                               ThemeMode.dark)
-                                          ? Colors.grey[100]
-                                          : Colors.black12,
+                                          ? Colors.black12
+                                          : Colors.grey[100],
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(30)),
                                     ),

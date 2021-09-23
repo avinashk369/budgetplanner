@@ -6,11 +6,9 @@ part of 'expense_type_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ExpenseType _$ExpenseTypeFromJson(Map<String, dynamic> json) {
-  return ExpenseType()
-    ..id = json['id'] as String?
-    ..name = json['name'] as String?;
-}
+ExpenseType _$ExpenseTypeFromJson(Map<String, dynamic> json) => ExpenseType()
+  ..id = json['id'] as String?
+  ..name = json['name'] as String?;
 
 Map<String, dynamic> _$ExpenseTypeToJson(ExpenseType instance) =>
     <String, dynamic>{

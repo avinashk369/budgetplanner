@@ -54,7 +54,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
   }
 
   void showInterstitialAd(AdController adCont) {
-    print("  reward earned");
+    print("Avinash  reward earned");
     //to display intertitial ad
     if (adCont.isInterstitialAdReady.value) {
       adCont.interstitialAd?.show();
@@ -391,8 +391,8 @@ class _TransactionHistoryState extends State<TransactionHistory> {
               //         expenseSourceList[index].name!)!);
             },
             showCheckmark: false,
-            backgroundColor: primaries[index],
-            selectedColor: primaries[index],
+            backgroundColor: Colors.grey.shade200,
+            selectedColor: Colors.grey.shade200,
             label: Text(
               expenseSourceList[index].name!,
               style: kLabelStyle.copyWith(color: Colors.black),

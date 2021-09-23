@@ -7,6 +7,8 @@ class RecurranceModel {
   String? id;
   @JsonKey(name: "name")
   String? name;
+  @JsonKey(name: "sq")
+  String? sq;
   @JsonKey(ignore: true)
   bool isSelected = false;
   RecurranceModel();

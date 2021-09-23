@@ -6,11 +6,10 @@ part of 'saving_category.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SavingCategory _$SavingCategoryFromJson(Map<String, dynamic> json) {
-  return SavingCategory()
-    ..id = json['id'] as String?
-    ..name = json['name'] as String?;
-}
+SavingCategory _$SavingCategoryFromJson(Map<String, dynamic> json) =>
+    SavingCategory()
+      ..id = json['id'] as String?
+      ..name = json['name'] as String?;
 
 Map<String, dynamic> _$SavingCategoryToJson(SavingCategory instance) =>
     <String, dynamic>{
