@@ -274,7 +274,8 @@ class _TransactionReportState extends State<TransactionReport> {
                             TextSpan(
                               text: " " + totalExpense.toString(),
                               style: kLabelStyle.copyWith(
-                                  color: Theme.of(context).accentColor),
+                                  color:
+                                      Theme.of(context).colorScheme.secondary),
                             ),
                           ],
                         ),
@@ -290,7 +291,8 @@ class _TransactionReportState extends State<TransactionReport> {
                             TextSpan(
                               text: " " + totalIncome.toString(),
                               style: kLabelStyle.copyWith(
-                                  color: Theme.of(context).accentColor),
+                                  color:
+                                      Theme.of(context).colorScheme.secondary),
                             ),
                           ],
                         ),
@@ -307,7 +309,8 @@ class _TransactionReportState extends State<TransactionReport> {
                               text:
                                   " " + (totalIncome - totalExpense).toString(),
                               style: kLabelStyle.copyWith(
-                                  color: Theme.of(context).accentColor),
+                                  color:
+                                      Theme.of(context).colorScheme.secondary),
                             ),
                           ],
                         ),

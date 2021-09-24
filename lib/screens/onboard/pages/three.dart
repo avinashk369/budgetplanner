@@ -1,6 +1,5 @@
 import 'package:budgetplanner/screens/onboard/widgets/next_page_button.dart';
 import 'package:budgetplanner/screens/onboard/widgets/ripple.dart';
-import 'package:budgetplanner/screens/user/email_signin.dart';
 import 'package:budgetplanner/screens/user/user_login.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';

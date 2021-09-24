@@ -1,7 +1,5 @@
-import 'package:budgetplanner/screens/bottom_nav/pages/settings/language_data.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
-import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -11,8 +11,10 @@ import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/budget_shimmer.dart';
+import 'package:budgetplanner/widgets/custom_theme.dart';
 import 'package:budgetplanner/widgets/header_row.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:budgetplanner/widgets/trx_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
@@ -158,7 +160,8 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       monthly_budget.tr,
                       style: kHeaderStyle.copyWith(
-                          fontSize: 16, color: Theme.of(context).accentColor),
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.secondary),
                     ),
                   );
                 } else {
@@ -187,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                               title: lbl_no_budget.tr,
                               message: desc_no_budget.tr,
                               imageUrl: 'assets/bl4.png',
-                              index: 3,
+                              index: 2,
                               goTo: () {
                                 dashController.setindex(2);
                               },
@@ -208,20 +211,51 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SliverToBoxAdapter(
-              child: Obx(() {
-                if (transactionController.recentTransactionList.isNotEmpty) {
-                  return Container(
-                    padding: EdgeInsets.only(top: 10, bottom: 5, left: 10),
-                    child: Text(
-                      recent_transaction.tr,
-                      style: kHeaderStyle.copyWith(
-                          fontSize: 16, color: Theme.of(context).accentColor),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Obx(() {
+                      if (transactionController
+                          .recentTransactionList.isNotEmpty) {
+                        return Container(
+                          padding:
+                              EdgeInsets.only(top: 10, bottom: 5, left: 10),
+                          child: Text(
+                            recent_transaction.tr,
+                            style: kHeaderStyle.copyWith(
+                                fontSize: 16,
+                                color: Theme.of(context).colorScheme.secondary),
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: ChoiceChip(
+                      label: RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                          text: "View all ",
+                          style: kLabelStyle.copyWith(
+                              fontSize: 14, color: Theme.of(context).hintColor),
+                        ),
+                      ])),
+                      onSelected: (value) {
+                        dashController.setindex(1);
+                      },
+                      selected: true,
+                      selectedColor:
+                          CustomTheme().currentTheme == ThemeMode.dark
+                              ? kDarkGrey
+                              : Colors.grey[100],
                     ),
-                  );
-                } else {
-                  return Container();
-                }
-              }),
+                  ),
+                ],
+              ),
             ),
             SliverList(
               delegate: SliverChildListDelegate(

@@ -19,103 +19,104 @@ class CustomTheme with ChangeNotifier {
   static ThemeData get lightTheme {
     //1
     return ThemeData(
-        //2
-        primaryColor: whiteColor,
-        scaffoldBackgroundColor: whiteColor,
+      //2
+      primaryColor: whiteColor,
+      scaffoldBackgroundColor: whiteColor,
+      backgroundColor: whiteColor,
+      appBarTheme: AppBarTheme(
         backgroundColor: whiteColor,
-        accentColor: shade,
-        appBarTheme: AppBarTheme(
-          backgroundColor: whiteColor,
-          centerTitle: true,
-          elevation: 0,
-          titleTextStyle: kLabelStyleBold.copyWith(fontSize: 18),
-          foregroundColor: Colors.black,
+        centerTitle: true,
+        elevation: 0,
+        titleTextStyle: kLabelStyleBold.copyWith(fontSize: 18),
+        foregroundColor: Colors.black,
+      ),
+      tabBarTheme: TabBarTheme(
+        unselectedLabelColor: kGrey,
+        labelColor: shade,
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: shade,
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: darkColor),
         ),
-        tabBarTheme: TabBarTheme(
-          unselectedLabelColor: kGrey,
-          labelColor: shade,
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: darkColor.withOpacity(.12))),
+        errorBorder: OutlineInputBorder(borderSide: BorderSide(color: kred)),
+        focusedBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: darkColor)),
+        focusedErrorBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: kred)),
+        fillColor: Colors.transparent,
+      ),
+      hintColor: darkColor,
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedLabelStyle: TextStyle(
+          color: redColor,
+          fontSize: 14,
         ),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: shade,
+        unselectedLabelStyle: TextStyle(
+          color: darkColor,
+          fontSize: 12,
         ),
-        inputDecorationTheme: InputDecorationTheme(
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(color: darkColor),
-          ),
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: darkColor.withOpacity(.12))),
-          errorBorder: OutlineInputBorder(borderSide: BorderSide(color: kred)),
-          focusedBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: darkColor)),
-          focusedErrorBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: kred)),
-          fillColor: Colors.transparent,
+        backgroundColor: whiteColor,
+        elevation: 0,
+        selectedItemColor: shade,
+        unselectedItemColor: darkColor,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        unselectedIconTheme: IconThemeData(
+          color: darkColor,
+          size: 20,
         ),
-        hintColor: darkColor,
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          selectedLabelStyle: TextStyle(
-            color: redColor,
-            fontSize: 14,
-          ),
-          unselectedLabelStyle: TextStyle(
-            color: darkColor,
-            fontSize: 12,
-          ),
-          backgroundColor: whiteColor,
-          elevation: 0,
-          selectedItemColor: shade,
-          unselectedItemColor: darkColor,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-          unselectedIconTheme: IconThemeData(
-            color: darkColor,
-            size: 20,
-          ),
-          selectedIconTheme: IconThemeData(
-            color: orange,
-            size: 22,
-          ),
+        selectedIconTheme: IconThemeData(
+          color: orange,
+          size: 22,
         ),
-        brightness: Brightness.light,
-        fontFamily: 'Montserrat',
-        textTheme: TextTheme(
-          headline1: kTitleStyle.copyWith(color: shade),
-          headline2: kTitleStyleSmall.copyWith(color: shade),
-          headline3: kQuoteStyle.copyWith(color: shade),
-          caption: kLabelStyle.copyWith(color: shade),
-          bodyText1: TextStyle(
-            color: darkColor,
-            fontSize: 18,
-          ),
-          subtitle1: TextStyle(
-            color: darkColor,
-            fontSize: 14,
-          ),
+      ),
+      brightness: Brightness.light,
+      fontFamily: 'Montserrat',
+      textTheme: TextTheme(
+        headline1: kTitleStyle.copyWith(color: shade),
+        headline2: kTitleStyleSmall.copyWith(color: shade),
+        headline3: kQuoteStyle.copyWith(color: shade),
+        caption: kLabelStyle.copyWith(color: shade),
+        bodyText1: TextStyle(
+          color: darkColor,
+          fontSize: 18,
         ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-            style: OutlinedButton.styleFrom(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
-          minimumSize: Size(Get.height * .2, Get.height * .07),
-          //elevation: 1,
-          textStyle: TextStyle(fontSize: 18),
-          primary: darkColor,
-          side: BorderSide(color: heenColor, width: 1),
-        )),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0)),
-            primary: bulbcolor,
-          ),
+        subtitle1: TextStyle(
+          color: darkColor,
+          fontSize: 14,
         ),
-        buttonTheme: ButtonThemeData(
-          // 4
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+        minimumSize: Size(Get.height * .2, Get.height * .07),
+        //elevation: 1,
+        textStyle: TextStyle(fontSize: 18),
+        primary: darkColor,
+        side: BorderSide(color: heenColor, width: 1),
+      )),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
-          buttonColor: kBlack,
-        ));
+          primary: bulbcolor,
+        ),
+      ),
+      buttonTheme: ButtonThemeData(
+        // 4
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+        buttonColor: kBlack,
+      ),
+      colorScheme: ColorScheme.fromSwatch()
+          .copyWith(secondary: shade, brightness: Brightness.light),
+    );
   }
 
   static ThemeData get darkTheme {
@@ -124,7 +125,6 @@ class CustomTheme with ChangeNotifier {
       scaffoldBackgroundColor: darkColor,
       backgroundColor: darkColor,
       hintColor: whiteColor,
-      accentColor: heenColor,
       appBarTheme: AppBarTheme(
         backgroundColor: darkColor,
         centerTitle: true,
@@ -215,6 +215,8 @@ class CustomTheme with ChangeNotifier {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
         buttonColor: kBGreen,
       ),
+      colorScheme: ColorScheme.fromSwatch()
+          .copyWith(secondary: heenColor, brightness: Brightness.dark),
     );
   }
 }

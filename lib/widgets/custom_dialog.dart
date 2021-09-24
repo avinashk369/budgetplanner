@@ -1,5 +1,4 @@
 import 'package:budgetplanner/utils/styles.dart';
-import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 

@@ -218,7 +218,7 @@ class HeaderRow extends StatelessWidget {
                       },
                       avatar: Icon(
                         EvaIcons.barChart,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       selected: true,
                       selectedColor:

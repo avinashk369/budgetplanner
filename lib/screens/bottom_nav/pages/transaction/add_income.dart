@@ -2,7 +2,6 @@ import 'package:budgetplanner/controllers/income_controller.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/income_form.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
-import 'package:budgetplanner/widgets/quote_container.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
