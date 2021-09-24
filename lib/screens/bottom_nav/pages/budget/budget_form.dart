@@ -1,6 +1,9 @@
 import 'package:budgetplanner/controllers/budget_controller.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
+import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/category_choser.dart';
 import 'package:budgetplanner/widgets/custom_input.dart';
 import 'package:budgetplanner/widgets/dashed_rect.dart';
@@ -15,6 +18,8 @@ class BudgetForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String currancySymbol =
+        PreferenceUtils.getString(currancy_symbol, defValue: '\u20B9');
     return Column(
       children: [
         InkWell(
@@ -36,7 +41,6 @@ class BudgetForm extends StatelessWidget {
                   ? Container(
                       height: 35,
                       width: 35,
-                      margin: EdgeInsets.only(bottom: 5),
                       decoration: BoxDecoration(
                         color: DataRepositoryImpl()
                             .iconUrl(controller.budgetCatModel.value.name!)!
@@ -69,6 +73,18 @@ class BudgetForm extends StatelessWidget {
           hintText: amount.tr,
           validator: (value) => controller.validateAmount(value!),
           textInputType: TextInputType.number,
+          isPrefix: true,
+          prefixWidget: SizedBox(
+            child: Center(
+              widthFactor: 0.0,
+              child: Text(
+                currancySymbol,
+                style: kLabelStyle.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontSize: 20),
+              ),
+            ),
+          ),
         ),
         SizedBox(
           height: 10,

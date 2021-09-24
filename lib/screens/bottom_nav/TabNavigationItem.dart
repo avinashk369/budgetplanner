@@ -22,7 +22,7 @@ class TabNavigationItem {
   static List<TabNavigationItem> get items => [
         TabNavigationItem(
           page: HomePage(),
-          icon: Icon(EvaIcons.homeOutline),
+          icon: Icon(EvaIcons.home),
           title: homeTab.tr,
         ),
         TabNavigationItem(

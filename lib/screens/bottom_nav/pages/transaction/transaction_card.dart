@@ -5,6 +5,7 @@ import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/utils/date_formatter.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -100,7 +101,10 @@ class TransactionCard extends StatelessWidget {
                                     ? transactionModel.expenseSource!
                                     : income,
                                 style: kLabelStyle.copyWith(
-                                  color: Colors.black,
+                                  color: (transactionModel.transactionType ==
+                                          expense)
+                                      ? Colors.black
+                                      : Theme.of(context).hintColor,
                                   fontSize: 12,
                                 ),
                               ),
@@ -111,17 +115,42 @@ class TransactionCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  controller.currencySymbol +
-                      transactionModel.amount.toString(),
-                  style: kLabelStyle.copyWith(
-                    fontSize: 14,
-                    color: (transactionModel.transactionType == expense)
-                        ? (currentTheme.currentTheme == ThemeMode.dark)
-                            ? kPink
-                            : shade
-                        : greenbuttoncolor,
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      controller.currencySymbol +
+                          transactionModel.amount.toString(),
+                      style: kLabelStyle.copyWith(
+                        fontSize: 14,
+                        color: (transactionModel.transactionType == expense)
+                            ? (currentTheme.currentTheme == ThemeMode.dark)
+                                ? kPink
+                                : shade
+                            : greenbuttoncolor,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.schedule,
+                          size: 15,
+                          color: Theme.of(context).hintColor.withOpacity(.8),
+                        ),
+                        SizedBox(
+                          width: 3,
+                        ),
+                        Text(
+                          DateFormatter().getTime(transactionModel.createdOn!),
+                          style: kLabelStyle.copyWith(
+                              fontSize: 13,
+                              color:
+                                  Theme.of(context).hintColor.withOpacity(.8)),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),

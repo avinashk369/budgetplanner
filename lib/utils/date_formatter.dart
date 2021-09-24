@@ -31,4 +31,12 @@ class DateFormatter {
     // }
     return '$dateString';
   }
+
+  String getTime(DateTime timeString) {
+    return DateFormat('jm').format(timeString);
+  }
+
+  String getDate(DateTime timeString) {
+    return DateFormat('LLL d').format(timeString);
+  }
 }

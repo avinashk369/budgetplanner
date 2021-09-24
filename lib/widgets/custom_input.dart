@@ -7,7 +7,9 @@ class CustomInput extends GetView {
   final TextEditingController? controller;
   final TextInputType? textInputType;
   final bool isPassword;
+  final bool isPrefix;
   final int? numOfLines;
+  final Widget? prefixWidget;
   const CustomInput({
     Key? key,
     this.validator,
@@ -16,6 +18,8 @@ class CustomInput extends GetView {
     this.textInputType,
     this.numOfLines,
     this.isPassword = false,
+    this.isPrefix = false,
+    this.prefixWidget,
   }) : super(key: key);
 
   @override
@@ -36,6 +40,11 @@ class CustomInput extends GetView {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(8),
         hintText: hintText,
+        prefixIcon: isPrefix ? prefixWidget : null,
+        prefixIconConstraints: BoxConstraints(
+          minWidth: 30,
+          minHeight: 25,
+        ),
       ),
     );
   }

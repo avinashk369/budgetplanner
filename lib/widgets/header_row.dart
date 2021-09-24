@@ -1,6 +1,5 @@
 import 'package:budgetplanner/controllers/dashboard_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
-import 'package:budgetplanner/screens/bottom_nav/pages/transaction/BarChartSample5.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/transaction_report.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';

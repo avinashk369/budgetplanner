@@ -5,6 +5,8 @@ import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/category_bar_chart.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/category_constants.dart';
+import 'package:budgetplanner/utils/date_formatter.dart';
 import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
@@ -163,15 +165,84 @@ class _CategoryReportState extends State<CategoryReport> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                trxList[index].expenseSource ?? trxList[index].notes!,
-                style: kLabelStyle.copyWith(
-                  color: kGrey,
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                height: 20,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: (trxList[index].transactionType == expense)
+                      ? getTrxColor(context, trxList[index])
+                      : Theme.of(context).hintColor.withOpacity(.08),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      (trxList[index].transactionType == expense)
+                          ? trxList[index].expenseSource!
+                          : income,
+                      style: kLabelStyle.copyWith(
+                        color: (trxList[index].transactionType == expense)
+                            ? Colors.black
+                            : Theme.of(context).hintColor,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                trxList[index].createdOn!.toIso8601String().substring(0, 10),
-                style: kLabelStyle.copyWith(color: Theme.of(context).hintColor),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_today,
+                        size: 15,
+                        color: Theme.of(context).hintColor.withOpacity(.8),
+                      ),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Text(
+                        DateFormatter().getDate(trxList[index].createdOn!),
+                        style: kLabelStyle.copyWith(
+                            fontSize: 13,
+                            color: Theme.of(context).hintColor.withOpacity(.8)),
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.schedule,
+                          size: 15,
+                          color: Theme.of(context).hintColor.withOpacity(.8),
+                        ),
+                        SizedBox(
+                          width: 3,
+                        ),
+                        Text(
+                          DateFormatter().getTime(trxList[index].createdOn!),
+                          style: kLabelStyle.copyWith(
+                              fontSize: 13,
+                              color:
+                                  Theme.of(context).hintColor.withOpacity(.8)),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 5,
               ),
             ],
           ),
@@ -185,5 +256,18 @@ class _CategoryReportState extends State<CategoryReport> {
         );
       },
     );
+  }
+
+  Color getTrxColor(BuildContext context, TransactionModel transactionModel) {
+    switch (transactionModel.expenseSource) {
+      case creditCard:
+        return Colors.indigo[100]!;
+      case accounts:
+        return Colors.greenAccent;
+      case cash:
+        return Colors.orange[100]!;
+      default:
+        return Theme.of(context).hintColor;
+    }
   }
 }

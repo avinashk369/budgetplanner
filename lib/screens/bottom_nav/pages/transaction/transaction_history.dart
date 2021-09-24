@@ -15,6 +15,7 @@ import 'package:budgetplanner/widgets/draggable_bottom_sheet.dart';
 import 'package:budgetplanner/widgets/filter_modal_layout.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/no_data.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:budgetplanner/widgets/trx_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -204,12 +205,15 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                                               controller.expenseSource.value)!);
                                     },
                                     showCheckmark: false,
-                                    backgroundColor: Colors.grey[100],
-                                    selectedColor: Colors.grey[100],
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.secondary,
+                                    selectedColor:
+                                        Theme.of(context).colorScheme.secondary,
                                     label: Text(
                                       "Clear",
                                       style: kLabelStyle.copyWith(
-                                          color: Colors.black),
+                                          color:
+                                              Theme.of(context).primaryColor),
                                     ),
                                     selected: true,
                                   ),
