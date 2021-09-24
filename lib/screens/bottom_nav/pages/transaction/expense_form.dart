@@ -80,7 +80,7 @@ class ExpenseForm extends StatelessWidget {
               child: Text(
                 currancySymbol,
                 style: kLabelStyle.copyWith(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: Theme.of(context).hintColor.withOpacity(.9),
                     fontSize: 20),
               ),
             ),

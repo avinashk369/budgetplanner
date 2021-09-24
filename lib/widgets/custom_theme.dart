@@ -33,6 +33,9 @@ class CustomTheme with ChangeNotifier {
       tabBarTheme: TabBarTheme(
         unselectedLabelColor: kGrey,
         labelColor: shade,
+        indicator: UnderlineTabIndicator(
+          borderSide: BorderSide(color: shade, width: 2.0),
+        ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: shade,
@@ -135,6 +138,9 @@ class CustomTheme with ChangeNotifier {
       tabBarTheme: TabBarTheme(
         unselectedLabelColor: kGrey,
         labelColor: heenColor,
+        indicator: UnderlineTabIndicator(
+          borderSide: BorderSide(color: heenColor, width: 2.0),
+        ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: heenColor,

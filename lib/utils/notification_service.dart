@@ -91,18 +91,18 @@ class NotificationService {
       case "reminder":
         //remind morning
         for (NotificationModel notificationModel in notificationModelList) {
-          if (notificationModel.isMorning!) {
+          if (notificationModel.isMorning != null &&
+              notificationModel.isMorning!) {
             await scheduleNotification(
-                notificationModel, _nextInstanceOfNineAM());
-            return;
+                0, notificationModel, _nextInstanceOfNineAM());
           }
         }
         //remind evening
         for (NotificationModel notificationModel in notificationModelList) {
-          if (notificationModel.isEvening!) {
+          if (notificationModel.isEvening != null &&
+              notificationModel.isEvening!) {
             await scheduleNotification(
-                notificationModel, _nextInstanceOfSevenPM());
-            return;
+                1, notificationModel, _nextInstanceOfSevenPM());
           }
         }
         break;
@@ -111,7 +111,7 @@ class NotificationService {
         for (NotificationModel notificationModel in notificationModelList) {
           if (notificationModel.notificationType == challenge) {
             await scheduleNotification(
-                notificationModel, _nextInstanceOfFifthDay());
+                2, notificationModel, _nextInstanceOfFifthDay());
             return;
           }
         }
@@ -120,7 +120,7 @@ class NotificationService {
         //remind daily at 11 am
         for (NotificationModel notificationModel in notificationModelList) {
           if (notificationModel.notificationType == promotional) {
-            await scheduleNotification(
+            await scheduleNotificationAtEleven(
                 notificationModel, _nextInstanceOfElevenAMDay());
             return;
           }
@@ -261,7 +261,7 @@ class NotificationService {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     print("local time $now");
     tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, 11);
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 13);
     print("scheduled time $scheduledDate");
 
     if (scheduledDate.isBefore(now)) {
@@ -287,12 +287,32 @@ class NotificationService {
   }
 
   /**
-   * Schedule notification
+   * Schedule notification at 9:30AM
    */
-  Future<void> scheduleNotification(
+  Future<void> scheduleNotification(int notificationId,
       NotificationModel notificationModel, tz.TZDateTime tzDateTime) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
+        notificationId,
+        notificationModel.title,
+        notificationModel.desc,
+        tzDateTime,
+        NotificationDetails(
+          android: AndroidNotificationDetails(notificationModel.id!,
+              notificationModel.notificationType!, notificationModel.title!),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time);
+  }
+
+  /**
+   * Schedule notification at 9:30AM
+   */
+  Future<void> scheduleNotificationAtEleven(
+      NotificationModel notificationModel, tz.TZDateTime tzDateTime) async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        3,
         notificationModel.title,
         notificationModel.desc,
         tzDateTime,
