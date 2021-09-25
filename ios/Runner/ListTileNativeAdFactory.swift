@@ -19,8 +19,8 @@ class ListTileNativeAdFactory : FLTNativeAdFactory {
 
         (nativeAdView.headlineView as! UILabel).text = nativeAd.headline
 
-        (nativeAdView.bodyView as! UILabel).text = nativeAd.body
-        nativeAdView.bodyView!.isHidden = nativeAd.body == nil
+//        (nativeAdView.bodyView as! UILabel).text = nativeAd.body
+//        nativeAdView.bodyView!.isHidden = nativeAd.body == nil
 
         (nativeAdView.iconView as! UIImageView).image = nativeAd.icon?.image
         nativeAdView.iconView!.isHidden = nativeAd.icon == nil
