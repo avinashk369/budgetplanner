@@ -71,17 +71,11 @@ class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        pageSnapping: true,
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          (hasSeen)
-              ? (userId != '')
-                  ? Dashboard()
-                  : UserLogin() //EmailSingIn()
-              : OnboardScreen()
-        ],
-      ),
+      body: (hasSeen)
+          ? (userId!.isNotEmpty)
+              ? Dashboard()
+              : UserLogin() //EmailSingIn()
+          : OnboardScreen(),
     );
   }
 }

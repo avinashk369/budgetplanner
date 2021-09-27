@@ -112,7 +112,9 @@ class _CategoryBarChartState extends State<CategoryBarChart> {
                 ),
                 leftTitles: SideTitles(
                   interval: (MathUtils.gridSeparator(totalAmount) /
-                          ((totalAmount.toInt().toString().length + 1)))
+                          (((totalAmount.toInt().toString().length % 2 == 0)
+                              ? totalAmount.toInt().toString().length
+                              : totalAmount.toInt().toString().length + 1)))
                       .floorToDouble(),
                   showTitles: true,
                   getTextStyles: (context, value) => const TextStyle(

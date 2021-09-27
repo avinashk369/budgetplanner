@@ -21,10 +21,15 @@ class BarChartSample5State extends State<BarChartSample5> {
   @override
   void initState() {
     // TODO: implement initState
-    print("total amount received ${widget.totalAmount}");
-    interval = (MathUtils.gridSeparator(widget.totalAmount) /
-            ((widget.totalAmount.toInt().toString().length + 1)))
-        .floorToDouble();
+
+    var val = (MathUtils.gridSeparator(widget.totalAmount) /
+            ((widget.totalAmount.toString().length % 2 == 0)
+                ? widget.totalAmount.toString().length
+                : widget.totalAmount.toString().length + 1))
+        .roundToDouble();
+    //print("divider ${(val / 1000).round()}");
+    interval = ((val / 1000).round() * 1000);
+    //print("$interval Avinash ${widget.totalAmount}");
     super.initState();
   }
 
