@@ -759,10 +759,11 @@ class DataRepositoryImpl implements DataRepository {
                   DateTime(yearName, 1, 1).toIso8601String())
           .where('created_on',
               isLessThan: DateTime(yearName, 12, 31).toIso8601String());
+
       if (catName != '') {
         query = query.where('cat_name', isEqualTo: catName);
       }
-
+      query = query.orderBy('created_on', descending: true);
       var response = await query.get();
       transactionList = response.docs
           .map((e) => TransactionModel.fromJson(e.data()))

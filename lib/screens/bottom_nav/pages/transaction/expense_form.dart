@@ -74,16 +74,16 @@ class ExpenseForm extends StatelessWidget {
           validator: (value) => controller.validateAmount(value!),
           textInputType: TextInputType.number,
           isPrefix: true,
-          prefixWidget: SizedBox(
-            child: Center(
-              widthFactor: 0.0,
-              child: Text(
+          prefixWidget: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
                 currancySymbol,
                 style: kLabelStyle.copyWith(
-                    color: Theme.of(context).hintColor.withOpacity(.9),
-                    fontSize: 20),
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontSize: 18),
               ),
-            ),
+            ],
           ),
         ),
         SizedBox(
