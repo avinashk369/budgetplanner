@@ -5,11 +5,8 @@ import 'package:budgetplanner/screens/bottom_nav/pages/budget/components/build_b
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BudgetCatList extends StatelessWidget {
-  const BudgetCatList(
-      {Key? key, required this.budget, required this.budgetList})
-      : super(key: key);
-  final BudgetController budget;
+class BudgetCatList extends GetView<BudgetController> {
+  const BudgetCatList({Key? key, required this.budgetList}) : super(key: key);
   final List<BudgetModel> budgetList;
 
   @override
@@ -20,50 +17,54 @@ class BudgetCatList extends StatelessWidget {
       child: PageView.builder(
         scrollDirection: Axis.horizontal,
         padEnds: false,
-        controller: budget.pageController,
-        itemCount: budget.catList.length + 1,
+        controller: controller.pageController,
+        itemCount: controller.catList.length + 1,
         onPageChanged: (value) {
-          budget.currentIndex.value = value;
+          controller.currentIndex.value = value;
           BudgetModel budgetModel = BudgetModel();
 
           for (BudgetModel bm in budgetList) {
-            if (bm.catName == budget.catList[value].name) {
+            if (bm.catName == controller.catList[value].name) {
               budgetModel = bm;
             }
           }
-          budget.setBudget(budgetModel);
+          controller.setBudget(budgetModel);
         },
         itemBuilder: (context, index) {
           BudgetModel budgetModel = BudgetModel();
-          if (index < budget.catList.length) {
+
+          if (index < controller.catList.length) {
             for (BudgetModel bm in budgetList) {
-              if (bm.catName == budget.catList[index].name) budgetModel = bm;
+              if (bm.catName == controller.catList[index].name) {
+                budgetModel = bm;
+              }
             }
           }
-          return index < budget.catList.length
+          return index < controller.catList.length
               ? Obx(
-                  () => budget.currentIndex.value == index
+                  () => controller.currentIndex.value == index
                       ? BuildBudgetContent(
-                          move: (bm) {
-                            budget.setBudget(bm);
+                          move: () {
+                            controller.setBudget(budgetModel);
                           },
-                          budgetCategoryModel: budget.catList[index],
+                          budgetCategoryModel: controller.catList[index],
                           budgetModel: budgetModel,
                         )
                       : BudgetIcon(
-                          move: (bm) {
-                            budget.setBudget(bm);
-                            print(
-                                "Kumar ${budget.budgetDetail.value.toJson()}");
-                            budget.pageController.animateToPage(
-                                budget.currentIndex.value ==
-                                        budget.catList.length
-                                    ? budget.currentIndex.value
-                                    : budget.currentIndex.value + 1,
+                          move: () {
+                            controller.pageController.animateToPage(
+                                controller.currentIndex.value ==
+                                        controller.catList.length
+                                    ? controller.currentIndex.value
+                                    : controller.currentIndex.value + 1,
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.ease);
+                            controller.setBudget(budgetModel);
+
+                            print(
+                                "Kumar ${controller.budgetDetail.value.toJson()}");
                           },
-                          budgetCategoryModel: budget.catList[index],
+                          budgetCategoryModel: controller.catList[index],
                           budgetModel: budgetModel,
                         ),
                 )

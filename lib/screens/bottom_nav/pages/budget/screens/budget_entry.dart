@@ -51,7 +51,6 @@ class _BudgetEntryState extends State<BudgetEntry> {
                       () => transactionController.isLoading()
                           ? LoadingUI()
                           : BudgetCatList(
-                              budget: budget,
                               budgetList:
                                   transactionController.monthlyBudgetList,
                             ),

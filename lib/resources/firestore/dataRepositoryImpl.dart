@@ -773,4 +773,27 @@ class DataRepositoryImpl implements DataRepository {
     }
     return transactionList;
   }
+
+  /// get all monthly budget
+  Stream<List<BudgetModel>> getMonthlyBudget(String userId) async* {
+    var currenctMonth = DateTime.now();
+    yield* _firestore
+        .collection(userBudget)
+        .where('user_id', isEqualTo: userId)
+        .where('created_on',
+            isGreaterThanOrEqualTo:
+                DateTime(currenctMonth.year, currenctMonth.month, 1)
+                    .toIso8601String())
+        .where('created_on',
+            isLessThan: DateTime(currenctMonth.year, currenctMonth.month + 1, 1)
+                .toIso8601String())
+        .snapshots()
+        .map((query) {
+      return query.docs.map((doc) {
+        BudgetModel budget = BudgetModel.fromJson(doc.data());
+
+        return budget;
+      }).toList();
+    });
+  }
 }

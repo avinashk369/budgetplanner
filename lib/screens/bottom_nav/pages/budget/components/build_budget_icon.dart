@@ -13,13 +13,13 @@ class BudgetIcon extends GetView<BudgetController> {
     required this.budgetModel,
   }) : super(key: key);
   final BudgetCategoryModel budgetCategoryModel;
-  final Function(BudgetModel bm) move;
+  final Function move;
   final BudgetModel budgetModel;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => move(budgetModel),
+      onTap: () => move(),
       child: buildicon(budgetCategoryModel),
     );
   }

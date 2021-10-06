@@ -1,7 +1,6 @@
 import 'package:budgetplanner/controllers/budget_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/utils/styles.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +26,8 @@ class BudgetHeader extends GetView<BudgetController> {
           children: [
             Text(
               "Set up a monthly",
-              style: kLabelStyleBold.copyWith(fontSize: 20),
+              style: kLabelStyleBold.copyWith(
+                  fontSize: 20, color: Theme.of(context).hintColor),
             ),
             Text(
               "budget goal",

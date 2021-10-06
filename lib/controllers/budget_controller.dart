@@ -11,7 +11,6 @@ import 'package:budgetplanner/widgets/custom_theme.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -27,20 +26,43 @@ class BudgetController extends GetxController {
   late List<BudgetCategoryModel> catList;
   var budgetCatModel = BudgetCategoryModel().obs;
   setBudgetModel(BudgetCategoryModel income) => budgetCatModel(income);
+  var budgetDetail = BudgetModel().obs;
+  setBudget(BudgetModel budget) => budgetDetail(budget);
   static BudgetController get to => Get.find<BudgetController>();
   static BudgetController tagged(String name) =>
       Get.find<BudgetController>(tag: name);
 
+  var currentIndex = 0.obs;
+  var slidervalue = 10.0.obs;
+  RxMap message = {}.obs;
+
+  Map<String, Map<String, String>> messageKeys = {
+    'Normal': {'Normal': normalBudget},
+    'Standard': {'Standard': standardBudget},
+    'Hyper': {'Hyper': hyperBudget},
+  };
+
+  PageController pageController =
+      PageController(viewportFraction: 0.5, initialPage: 0);
+  var currencySymbol =
+      PreferenceUtils.getString(currancy_symbol, defValue: '\u20B9').obs;
+
   late String userId;
   @override
   void onInit() {
+    catList = [];
     userId = PreferenceUtils.getString(user_id);
     amountController = TextEditingController();
     notesController = TextEditingController();
+
     () async {
       catList = await getBudgetCategories();
     }();
     super.onInit();
+  }
+
+  Map<String, String> getMessage(String key) {
+    return messageKeys[key]!;
   }
 
   @override

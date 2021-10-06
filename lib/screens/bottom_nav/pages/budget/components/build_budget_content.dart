@@ -15,22 +15,26 @@ class BuildBudgetContent extends GetView<BudgetController> {
     required this.budgetModel,
   }) : super(key: key);
   final BudgetCategoryModel budgetCategoryModel;
-  final Function(BudgetModel budgetModel) move;
+  final Function move;
   final BudgetModel budgetModel;
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      if (budgetModel.catName != null) controller.setBudget(budgetModel);
+    });
+
     return InkWell(
-      onTap: () => move(budgetModel),
+      onTap: () => move(),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
-        child: budgetCard(budgetCategoryModel, budgetModel),
+        child: budgetCard(context, budgetCategoryModel, budgetModel),
       ),
     );
   }
 
-  Widget budgetCard(
+  Widget budgetCard(BuildContext context,
           BudgetCategoryModel budgetCategoryModel, BudgetModel budgetModel) =>
       Card(
         elevation: 0,
@@ -40,12 +44,12 @@ class BuildBudgetContent extends GetView<BudgetController> {
         color: DataRepositoryImpl()
             .iconUrl(budgetCategoryModel.name!)!
             .colorName
-            .withOpacity(.5),
-        child: content(budgetCategoryModel, budgetModel),
+            .withOpacity(.6),
+        child: content(context, budgetCategoryModel, budgetModel),
       );
 
-  Widget content(
-          BudgetCategoryModel budgetCategoryModel, BudgetModel budgetModel) =>
+  Widget content(BuildContext context, BudgetCategoryModel budgetCategoryModel,
+          BudgetModel budgetModel) =>
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
@@ -78,14 +82,16 @@ class BuildBudgetContent extends GetView<BudgetController> {
                   children: [
                     Text(
                       budgetCategoryModel.name!,
-                      style: kLabelStyleBold,
+                      style: kLabelStyleBold.copyWith(
+                          color: Theme.of(context).hintColor),
                     ),
                     Text(
                       budgetModel.amount.toString() == "null"
                           ? controller.currencySymbol + "0.0"
                           : controller.currencySymbol +
                               budgetModel.amount.toString(),
-                      style: kLabelStyle,
+                      style: kLabelStyle.copyWith(
+                          color: Theme.of(context).hintColor),
                     ),
                   ],
                 ),

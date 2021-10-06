@@ -81,3 +81,11 @@ const delete = "delete";
 const promotional = "Promotional";
 const challenge = "Challenge";
 const reminder = "Reminder";
+
+//message const
+const normalBudget =
+    "Make a normal budget to maintain a healthy financial lifestyle. don't make any mistake by allocating maximum budget to any single category";
+const standardBudget =
+    "Well done! Yor are curious about your finance and capital. wish you best in saving and achieving your goal";
+const hyperBudget =
+    "Are you crazy!!! This is absoulte nonsence budget. Start saving more instead of spending";

@@ -34,8 +34,13 @@ class TransactionEntryController extends GetxController {
 
   List<BudgetModel> get budgetList => budgetmodel.value;
   Rx<List<BudgetModel>> budgetmodel = Rx<List<BudgetModel>>([]);
+
+  List<BudgetModel> get monthlyBudgetList => monthlyBudgets.value;
+  Rx<List<BudgetModel>> monthlyBudgets = Rx<List<BudgetModel>>([]);
+
   var totalExpense = 0.0.obs;
   var totalIncome = 0.0.obs;
+  var totalBudget = 0.0.obs;
   setTotalExpense(double total) => totalExpense(total);
   setTotalIncome(double total) => totalIncome(total);
 
@@ -78,6 +83,18 @@ class TransactionEntryController extends GetxController {
       //     .bindStream(transactionController.getBudgetList(userId)!);
     }();
     super.onInit();
+  }
+
+  Future getMonthlyBudget() async {
+    monthlyBudgets.bindStream(getMonthlyBudgetList(userId)!);
+  }
+
+  double getTotalBudget() {
+    double totalBudget = 0.0;
+    monthlyBudgetList.forEach((element) {
+      totalBudget += element.amount!;
+    });
+    return totalBudget;
   }
 
   void bindTransaction(DateTime date, String expenseSource) {
@@ -297,6 +314,17 @@ class TransactionEntryController extends GetxController {
     try {
       isLoading(true);
       return DataRepositoryImpl().getBudgetList(userId);
+    } catch (e) {
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  //get monthly budget
+  Stream<List<BudgetModel>>? getMonthlyBudgetList(String userId) {
+    try {
+      isLoading(true);
+      return DataRepositoryImpl().getMonthlyBudget(userId);
     } catch (e) {
     } finally {
       isLoading(false);
