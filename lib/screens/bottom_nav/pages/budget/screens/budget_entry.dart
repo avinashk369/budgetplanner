@@ -1,12 +1,28 @@
+library budget_entry;
+
 import 'package:budgetplanner/controllers/budget_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
-import 'package:budgetplanner/screens/bottom_nav/pages/budget/components/budget_bottom_action.dart';
-import 'package:budgetplanner/screens/bottom_nav/pages/budget/components/budget_cat_list.dart';
-import 'package:budgetplanner/screens/bottom_nav/pages/budget/components/budget_header.dart';
+import 'package:budgetplanner/models/budget_category_model.dart';
+import 'package:budgetplanner/models/budget_model.dart';
+import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/utils/string_constants.dart';
+import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/custom_input.dart';
+import 'package:budgetplanner/widgets/custom_theme.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+part '../components/budget_input.dart';
+part '../components/budget_bottom_action.dart';
+part '../components/budget_cat_list.dart';
+part '../components/budget_header.dart';
+part '../components/build_budget_content.dart';
+part '../components/build_budget_icon.dart';
 
 class BudgetEntry extends StatefulWidget {
   const BudgetEntry({Key? key}) : super(key: key);

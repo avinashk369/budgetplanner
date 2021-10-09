@@ -1,9 +1,4 @@
-import 'package:budgetplanner/controllers/budget_controller.dart';
-import 'package:budgetplanner/models/budget_category_model.dart';
-import 'package:budgetplanner/models/budget_model.dart';
-import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+part of budget_entry;
 
 class BudgetIcon extends GetView<BudgetController> {
   const BudgetIcon({

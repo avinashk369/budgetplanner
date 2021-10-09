@@ -66,7 +66,8 @@ class TransactionEntryController extends GetxController {
       catTransactionModel(lists);
   Rx<List<TransactionModel>> catTransactionModel =
       Rx<List<TransactionModel>>([]);
-
+  var currencySymbol =
+      PreferenceUtils.getString(currancy_symbol, defValue: '\u20B9').obs;
   @override
   void onInit() {
     // TODO: implement onInit

@@ -201,7 +201,7 @@ class NotificationService {
     final android = AndroidNotificationDetails(
       'bigpic',
       'channel name',
-      'channel description',
+      channelDescription: 'channel description',
       priority: Priority.high,
       importance: Importance.max,
       styleInformation: bigPictureStyleInformation,
@@ -297,8 +297,9 @@ class NotificationService {
         notificationModel.desc,
         tzDateTime,
         NotificationDetails(
-          android: AndroidNotificationDetails(notificationModel.id!,
-              notificationModel.notificationType!, notificationModel.title!),
+          android: AndroidNotificationDetails(
+              notificationModel.id!, notificationModel.notificationType!,
+              channelDescription: notificationModel.title!),
         ),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
@@ -317,8 +318,9 @@ class NotificationService {
         notificationModel.desc,
         tzDateTime,
         NotificationDetails(
-          android: AndroidNotificationDetails(notificationModel.id!,
-              notificationModel.notificationType!, notificationModel.title!),
+          android: AndroidNotificationDetails(
+              notificationModel.id!, notificationModel.notificationType!,
+              channelDescription: notificationModel.title!),
         ),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
@@ -338,9 +340,8 @@ class NotificationService {
         _nextInstanceOfSevenPM(),
         const NotificationDetails(
           android: AndroidNotificationDetails(
-              'daily_notification_id',
-              'daily notification channel name',
-              'daily notification description'),
+              'daily_notification_id', 'daily notification channel name',
+              channelDescription: 'daily notification description'),
         ),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
@@ -364,7 +365,7 @@ class NotificationService {
         tz.TZDateTime.now(tz.local).add(const Duration(minutes: 1)),
         const NotificationDetails(
             android: AndroidNotificationDetails("daily_alert", "report_entry",
-                "make sure to enter the records")),
+                channelDescription: "make sure to enter the records")),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
@@ -377,7 +378,7 @@ class NotificationService {
     // periodically notification
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails('daily_notification_channel', 'daily_report',
-            'daily_report_description');
+            channelDescription: 'daily_report_description');
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.periodicallyShow(
@@ -408,7 +409,7 @@ class NotificationService {
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL ID 2',
       'CHANNEL NAME 2',
-      'CHANNEL DESCRIPTION 2',
+      channelDescription: 'CHANNEL DESCRIPTION 2',
       importance: Importance.high,
       priority: Priority.high,
       styleInformation: bigPictureStyleInformation,

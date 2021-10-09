@@ -33,7 +33,7 @@ class BudgetController extends GetxController {
       Get.find<BudgetController>(tag: name);
 
   var currentIndex = 0.obs;
-  var slidervalue = 10.0.obs;
+  var slidervalue = 0.0.obs;
   RxMap message = {}.obs;
 
   Map<String, Map<String, String>> messageKeys = {

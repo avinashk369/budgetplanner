@@ -1,9 +1,4 @@
-import 'package:budgetplanner/controllers/budget_controller.dart';
-import 'package:budgetplanner/models/budget_model.dart';
-import 'package:budgetplanner/screens/bottom_nav/pages/budget/components/build_budget_content.dart';
-import 'package:budgetplanner/screens/bottom_nav/pages/budget/components/build_budget_icon.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+part of budget_entry;
 
 class BudgetCatList extends GetView<BudgetController> {
   const BudgetCatList({Key? key, required this.budgetList}) : super(key: key);
@@ -29,6 +24,10 @@ class BudgetCatList extends GetView<BudgetController> {
             }
           }
           controller.setBudget(budgetModel);
+          controller.amountController.text =
+              budgetModel.amount.toString() == 'null'
+                  ? '0.0'
+                  : budgetModel.amount.toString();
         },
         itemBuilder: (context, index) {
           BudgetModel budgetModel = BudgetModel();
@@ -60,6 +59,10 @@ class BudgetCatList extends GetView<BudgetController> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.ease);
                             controller.setBudget(budgetModel);
+                            controller.amountController.text =
+                                budgetModel.amount.toString() == 'null'
+                                    ? '0.0'
+                                    : budgetModel.amount.toString();
 
                             print(
                                 "Kumar ${controller.budgetDetail.value.toJson()}");

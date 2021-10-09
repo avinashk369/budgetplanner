@@ -272,7 +272,11 @@ class _TransactionReportState extends State<TransactionReport> {
                                   color: Theme.of(context).hintColor),
                             ),
                             TextSpan(
-                              text: " " + totalExpense.toString(),
+                              text: " ",
+                            ),
+                            TextSpan(
+                              text: controller.currencySymbol.value +
+                                  totalExpense.toString(),
                               style: kLabelStyle.copyWith(
                                   color:
                                       Theme.of(context).colorScheme.secondary),
@@ -289,7 +293,11 @@ class _TransactionReportState extends State<TransactionReport> {
                                   color: Theme.of(context).hintColor),
                             ),
                             TextSpan(
-                              text: " " + totalIncome.toString(),
+                              text: " ",
+                            ),
+                            TextSpan(
+                              text: controller.currencySymbol.value +
+                                  totalIncome.toString(),
                               style: kLabelStyle.copyWith(
                                   color:
                                       Theme.of(context).colorScheme.secondary),
@@ -306,8 +314,11 @@ class _TransactionReportState extends State<TransactionReport> {
                                   color: Theme.of(context).hintColor),
                             ),
                             TextSpan(
-                              text:
-                                  " " + (totalIncome - totalExpense).toString(),
+                              text: " ",
+                            ),
+                            TextSpan(
+                              text: controller.currencySymbol.value +
+                                  (totalIncome - totalExpense).toString(),
                               style: kLabelStyle.copyWith(
                                   color:
                                       Theme.of(context).colorScheme.secondary),

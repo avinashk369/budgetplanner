@@ -115,7 +115,8 @@ class _CategoryReportState extends State<CategoryReport> {
                               style: kLabelStyleBold.copyWith(
                                   color: Theme.of(context).hintColor)),
                           TextSpan(
-                              text: totalAmount.toString(),
+                              text: controller.currencySymbol.value +
+                                  totalAmount.toString(),
                               style: kLabelStyle.copyWith(
                                   color: Theme.of(context).hintColor))
                         ],

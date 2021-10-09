@@ -1,7 +1,4 @@
-import 'package:budgetplanner/controllers/budget_controller.dart';
-import 'package:budgetplanner/utils/styles.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+part of budget_entry;
 
 class BudgetBottom extends GetView<BudgetController> {
   const BudgetBottom({Key? key}) : super(key: key);
@@ -11,10 +8,12 @@ class BudgetBottom extends GetView<BudgetController> {
     return Padding(
       padding: EdgeInsets.only(top: 15),
       child: SizedBox(
-        height: Get.height * .6 - 95,
+        height: Get.height * .6 - 93,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey[100],
+            color: CustomTheme().currentTheme == ThemeMode.dark
+                ? Colors.black26
+                : Colors.grey[100],
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(20),
             ),
@@ -24,47 +23,24 @@ class BudgetBottom extends GetView<BudgetController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Spacer(),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 25),
+              //   child: Obx(
+              //     () => Text(
+              //       controller.budgetDetail.value.amount.toString() == 'null'
+              //           ? controller.currencySymbol + '0.0'
+              //           : controller.currencySymbol +
+              //               controller.budgetDetail.value.amount.toString(),
+              //       style: kLabelStyleBold.copyWith(fontSize: 30),
+              //     ),
+              //   ),
+              // ),
+              // Spacer(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Obx(
-                  () => Text(
-                    controller.budgetDetail.value.amount.toString() == 'null'
-                        ? controller.currencySymbol + '0.0'
-                        : controller.slidervalue.value > 1
-                            ? controller.currencySymbol +
-                                controller.slidervalue.value
-                                    .roundToDouble()
-                                    .toString()
-                            : controller.currencySymbol +
-                                controller.budgetDetail.value.amount.toString(),
-                    style: kLabelStyleBold.copyWith(fontSize: 30),
-                  ),
-                ),
+                child: BudgetInput(),
               ),
               Spacer(),
-              Obx(
-                () => Slider(
-                  value: controller.slidervalue.value,
-                  onChanged: (value) {
-                    if (value > 3) {
-                      controller.message.value =
-                          controller.getMessage('Normal');
-                    }
-                    if (value > 5) {
-                      controller.message.value =
-                          controller.getMessage('Standard');
-                    }
-                    if (value > 7) {
-                      controller.message.value = controller.getMessage('Hyper');
-                    }
-
-                    controller.slidervalue.value = value;
-                  },
-                  min: 10,
-                  max: 1000,
-                  divisions: 10,
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Obx(
@@ -74,14 +50,19 @@ class BudgetBottom extends GetView<BudgetController> {
                           children: [
                             Text(
                               controller.message.keys.first,
-                              style: kLabelStyleBold.copyWith(fontSize: 20),
+                              style: kLabelStyleBold.copyWith(
+                                fontSize: 20,
+                                color: Theme.of(context).hintColor,
+                              ),
                             ),
                             SizedBox(
                               height: 10,
                             ),
                             Text(
                               controller.message.values.first,
-                              style: kLabelStyle,
+                              style: kLabelStyle.copyWith(
+                                color: Theme.of(context).hintColor,
+                              ),
                             )
                           ],
                         )
@@ -92,10 +73,11 @@ class BudgetBottom extends GetView<BudgetController> {
               Center(
                 child: OutlinedButton(
                   onPressed: () {},
+                  style: OutlinedButton.styleFrom(
+                    primary: Theme.of(context).hintColor,
+                  ),
                   child: Text(
                     "Submit",
-                    style: kLabelStyleBold.copyWith(
-                        color: Theme.of(context).primaryColor, fontSize: 18),
                   ),
                 ),
               ),

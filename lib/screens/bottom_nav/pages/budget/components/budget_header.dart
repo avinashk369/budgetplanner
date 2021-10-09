@@ -1,8 +1,4 @@
-import 'package:budgetplanner/controllers/budget_controller.dart';
-import 'package:budgetplanner/controllers/transaction_controller.dart';
-import 'package:budgetplanner/utils/styles.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+part of budget_entry;
 
 class BudgetHeader extends GetView<BudgetController> {
   const BudgetHeader({
