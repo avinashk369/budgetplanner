@@ -36,12 +36,6 @@ class BudgetController extends GetxController {
   var slidervalue = 0.0.obs;
   RxMap message = {}.obs;
 
-  Map<String, Map<String, String>> messageKeys = {
-    'Normal': {'Normal': normalBudget},
-    'Standard': {'Standard': standardBudget},
-    'Hyper': {'Hyper': hyperBudget},
-  };
-
   PageController pageController =
       PageController(viewportFraction: 0.5, initialPage: 0);
   var currencySymbol =
@@ -59,10 +53,6 @@ class BudgetController extends GetxController {
       catList = await getBudgetCategories();
     }();
     super.onInit();
-  }
-
-  Map<String, String> getMessage(String key) {
-    return messageKeys[key]!;
   }
 
   @override

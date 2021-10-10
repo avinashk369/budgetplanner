@@ -24,10 +24,9 @@ class BudgetCatList extends GetView<BudgetController> {
             }
           }
           controller.setBudget(budgetModel);
-          controller.amountController.text =
-              budgetModel.amount.toString() == 'null'
-                  ? '0.0'
-                  : budgetModel.amount.toString();
+          controller.slidervalue.value = budgetModel.amount.toString() == 'null'
+              ? 0.0
+              : budgetModel.amount!.roundToDouble();
         },
         itemBuilder: (context, index) {
           BudgetModel budgetModel = BudgetModel();
@@ -45,6 +44,10 @@ class BudgetCatList extends GetView<BudgetController> {
                       ? BuildBudgetContent(
                           move: () {
                             controller.setBudget(budgetModel);
+                            controller.slidervalue.value =
+                                budgetModel.amount.toString() == 'null'
+                                    ? 0.0
+                                    : budgetModel.amount!.roundToDouble();
                           },
                           budgetCategoryModel: controller.catList[index],
                           budgetModel: budgetModel,
@@ -59,13 +62,10 @@ class BudgetCatList extends GetView<BudgetController> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.ease);
                             controller.setBudget(budgetModel);
-                            controller.amountController.text =
+                            controller.slidervalue.value =
                                 budgetModel.amount.toString() == 'null'
-                                    ? '0.0'
-                                    : budgetModel.amount.toString();
-
-                            print(
-                                "Kumar ${controller.budgetDetail.value.toJson()}");
+                                    ? 0.0
+                                    : budgetModel.amount!.roundToDouble();
                           },
                           budgetCategoryModel: controller.catList[index],
                           budgetModel: budgetModel,

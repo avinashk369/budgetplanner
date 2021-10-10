@@ -23,23 +23,51 @@ class BudgetBottom extends GetView<BudgetController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Spacer(),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 25),
-              //   child: Obx(
-              //     () => Text(
-              //       controller.budgetDetail.value.amount.toString() == 'null'
-              //           ? controller.currencySymbol + '0.0'
-              //           : controller.currencySymbol +
-              //               controller.budgetDetail.value.amount.toString(),
-              //       style: kLabelStyleBold.copyWith(fontSize: 30),
-              //     ),
-              //   ),
-              // ),
-              // Spacer(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: BudgetInput(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Obx(
+                      () => Text(
+                        controller.budgetDetail.value.catName != null
+                            ? controller.slidervalue.value > 1
+                                ? controller.currencySymbol +
+                                    controller.slidervalue.value
+                                        .roundToDouble()
+                                        .toString()
+                                : controller.currencySymbol +
+                                    controller.budgetDetail.value.amount
+                                        .toString()
+                            : controller.currencySymbol +
+                                controller.slidervalue.value
+                                    .roundToDouble()
+                                    .toString(),
+                        style: kLabelStyleBold.copyWith(
+                            fontSize: 30, color: Theme.of(context).hintColor),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          controller.amountController.text =
+                              controller.budgetDetail.value.catName != null
+                                  ? controller.slidervalue.value > 1
+                                      ? controller.slidervalue.value
+                                          .roundToDouble()
+                                          .toString()
+                                      : controller.budgetDetail.value.amount
+                                          .toString()
+                                  : controller.slidervalue.value
+                                      .roundToDouble()
+                                      .toString();
+                          showEditBudgetSheet(context);
+                        },
+                        icon: Icon(Icons.edit))
+                  ],
+                ),
               ),
+              Spacer(),
+              BudgetSlider(),
               Spacer(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -86,6 +114,76 @@ class BudgetBottom extends GetView<BudgetController> {
           ),
         ),
       ),
+    );
+  }
+
+  showEditBudgetSheet(BuildContext context) {
+    return showModalBottomSheetApp(
+      dismissOnTap: true,
+      context: context,
+      statusBarHeight: Get.height * .55,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Spacer(),
+              Text(
+                "Please enter the amount",
+                style: kLabelStyleBold.copyWith(
+                    fontSize: 18, color: Theme.of(context).hintColor),
+              ),
+              Spacer(),
+              BudgetInput(),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Obx(
+                  () => controller.message.isNotEmpty
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              controller.message.keys.first,
+                              style: kLabelStyleBold.copyWith(
+                                fontSize: 20,
+                                color: Theme.of(context).hintColor,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              controller.message.values.first,
+                              style: kLabelStyle.copyWith(
+                                color: Theme.of(context).hintColor,
+                              ),
+                            )
+                          ],
+                        )
+                      : SizedBox(),
+                ),
+              ),
+              Spacer(),
+              Center(
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: OutlinedButton.styleFrom(
+                    primary: Theme.of(context).hintColor,
+                  ),
+                  child: Text(
+                    "Submit",
+                  ),
+                ),
+              ),
+              Spacer(),
+            ],
+          ),
+        );
+      },
     );
   }
 }

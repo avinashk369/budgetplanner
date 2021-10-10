@@ -7,9 +7,12 @@ import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
+import 'package:budgetplanner/utils/budget_messge.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
+import 'package:budgetplanner/utils/rulers/rulers.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/_ModalBottomSheetLayout.dart';
 import 'package:budgetplanner/widgets/custom_input.dart';
 import 'package:budgetplanner/widgets/custom_theme.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
@@ -23,6 +26,7 @@ part '../components/budget_cat_list.dart';
 part '../components/budget_header.dart';
 part '../components/build_budget_content.dart';
 part '../components/build_budget_icon.dart';
+part '../components/budget_slider.dart';
 
 class BudgetEntry extends StatefulWidget {
   const BudgetEntry({Key? key}) : super(key: key);

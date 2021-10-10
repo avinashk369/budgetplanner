@@ -24,20 +24,10 @@ class BudgetInput extends GetView<BudgetController> {
           ),
         ],
       ),
-      onchanged: (value) => value.isEmpty ? 0.0 : _renderMessage(value),
+      onchanged: (value) => value.isEmpty
+          ? controller.message.value = BudgetMessage.getBudgetMessage(0.0)
+          : controller.message.value =
+              BudgetMessage.getBudgetMessage(double.parse(value)),
     );
-  }
-
-  _renderMessage(String val) {
-    int value = double.parse(val).toInt();
-
-    if (value > 3000) {
-      print("3000");
-      controller.message.value = controller.getMessage("Standard");
-    }
-    if (value > 5000) {
-      print("5000");
-      controller.message.value = controller.getMessage("Hyper");
-    }
   }
 }

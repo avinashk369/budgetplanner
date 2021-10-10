@@ -10,38 +10,26 @@ class BuildBudgetContent extends GetView<BudgetController> {
   final BudgetCategoryModel budgetCategoryModel;
   final Function move;
   final BudgetModel budgetModel;
-  _renderMessage(String val) {
-    int value = double.parse(val).toInt();
-    print("${val.isEmpty} less than zero $value");
-
-    if (value < 1) {
-      print("less than zero");
-      controller.message.value = controller.getMessage("Normal");
-    }
-    if (value > 3000 && value < 4000) {
-      print("3000");
-      controller.message.value = controller.getMessage("Standard");
-    }
-    if (value > 4000) {
-      print("5000");
-      controller.message.value = controller.getMessage("Hyper");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       if (budgetModel.catName != null) {
         controller.setBudget(budgetModel);
-        controller.amountController.text =
-            budgetModel.amount.toString() == 'null'
-                ? '0.0'
-                : budgetModel.amount.toString();
-        controller.message.value = controller.getMessage("Normal");
+        // controller.amountController.text =
+        //     budgetModel.amount.toString() == 'null'
+        //         ? '0.0'
+        //         : budgetModel.amount.toString();
+        controller.slidervalue.value =
+            budgetModel.amount! > 0 ? budgetModel.amount!.roundToDouble() : 0.0;
+
+        controller.message.value =
+            BudgetMessage.getBudgetMessage(budgetModel.amount!);
       } else {
-        controller.amountController.text = '0.0';
+        // controller.amountController.text = '0.0';
+        controller.slidervalue.value = 0.0;
+        controller.message.value = BudgetMessage.getBudgetMessage(0.0);
       }
-      _renderMessage(controller.amountController.text);
     });
 
     return InkWell(
