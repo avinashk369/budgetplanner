@@ -49,41 +49,35 @@ class _BudgetEntryState extends State<BudgetEntry> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: CustomScrollView(
-        slivers: [
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BudgetHeader(
-                          transactionController: transactionController,
-                        ),
-                      ],
-                    ),
-                    Obx(
-                      () => transactionController.isLoading()
-                          ? LoadingUI()
-                          : BudgetCatList(
-                              budgetList:
-                                  transactionController.monthlyBudgetList,
-                            ),
-                    ),
-                    Obx(
-                      () => transactionController.isLoading()
-                          ? LoadingUI()
-                          : BudgetBottom(),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Spacer(),
+          Spacer(),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BudgetHeader(
+                transactionController: transactionController,
+              ),
+            ],
+          ),
+          Spacer(),
+          Spacer(),
+          Obx(
+            () => transactionController.isLoading()
+                ? LoadingUI()
+                : BudgetCatList(
+                    budgetList: transactionController.monthlyBudgetList,
+                  ),
+          ),
+          Spacer(),
+          Obx(
+            () => transactionController.isLoading()
+                ? LoadingUI()
+                : BudgetBottom(),
           ),
         ],
       ),

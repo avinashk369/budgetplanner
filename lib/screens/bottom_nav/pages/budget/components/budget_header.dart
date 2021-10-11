@@ -9,40 +9,39 @@ class BudgetHeader extends GetView<BudgetController> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: Get.height * .3,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Set up a monthly",
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            plan_month.tr,
+            style: kLabelStyle.apply(color: Theme.of(context).hintColor),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            budgetTab.tr,
+            style: Theme.of(context).textTheme.headline1,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Obx(
+            () => Text(
+              "Total budget ${controller.currencySymbol}" +
+                  transactionController.getTotalBudget().toString(),
               style: kLabelStyleBold.copyWith(
-                  fontSize: 20, color: Theme.of(context).hintColor),
-            ),
-            Text(
-              "budget goal",
-              style: Theme.of(context).textTheme.headline1,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Obx(
-              () => Text(
-                "Total budget ${controller.currencySymbol}" +
-                    transactionController.getTotalBudget().toString(),
-                style: kLabelStyleBold.copyWith(
-                  color: Theme.of(context).hintColor,
-                ),
+                color: Theme.of(context).hintColor.withOpacity(.55),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

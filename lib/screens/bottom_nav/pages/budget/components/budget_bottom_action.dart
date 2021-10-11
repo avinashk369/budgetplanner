@@ -8,7 +8,7 @@ class BudgetBottom extends GetView<BudgetController> {
     return Padding(
       padding: EdgeInsets.only(top: 15),
       child: SizedBox(
-        height: Get.height * .6 - 93,
+        height: Get.height * .5,
         child: Container(
           decoration: BoxDecoration(
             color: CustomTheme().currentTheme == ThemeMode.dark
@@ -31,7 +31,7 @@ class BudgetBottom extends GetView<BudgetController> {
                     Obx(
                       () => Text(
                         controller.budgetDetail.value.catName != null
-                            ? controller.slidervalue.value > 1
+                            ? controller.isSliding()
                                 ? controller.currencySymbol +
                                     controller.slidervalue.value
                                         .roundToDouble()
@@ -128,6 +128,19 @@ class BudgetBottom extends GetView<BudgetController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 15),
+              Center(
+                child: Container(
+                  width: 70,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(3),
+                    ),
+                    color: Theme.of(context).hintColor.withOpacity(.12),
+                  ),
+                ),
+              ),
               Spacer(),
               Text(
                 "Please enter the amount",

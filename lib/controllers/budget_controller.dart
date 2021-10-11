@@ -34,6 +34,7 @@ class BudgetController extends GetxController {
 
   var currentIndex = 0.obs;
   var slidervalue = 0.0.obs;
+  var isSliding = false.obs;
   RxMap message = {}.obs;
 
   PageController pageController =

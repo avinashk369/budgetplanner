@@ -55,6 +55,7 @@ class BudgetSlider extends GetView<BudgetController> {
             label: '${controller.slidervalue.value}',
             onChanged: (value) {
               controller.slidervalue.value = value;
+              controller.isSliding(true);
               controller.message.value =
                   BudgetMessage.getBudgetMessage(controller.slidervalue.value);
             },

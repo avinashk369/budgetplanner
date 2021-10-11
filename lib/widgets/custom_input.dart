@@ -10,22 +10,30 @@ class CustomInput extends GetView {
   final bool isPrefix;
   final int? numOfLines;
   final Widget? prefixWidget;
+  final FocusNode? focusNode;
+  final String? initialValue;
+  final Function(String value)? onchanged;
   const CustomInput({
     Key? key,
     this.validator,
     required this.hintText,
-    required this.controller,
+    this.controller,
+    this.focusNode,
     this.textInputType,
     this.numOfLines,
     this.isPassword = false,
+    this.initialValue,
     this.isPrefix = false,
     this.prefixWidget,
+    this.onchanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      initialValue: initialValue,
+      focusNode: focusNode,
       cursorColor: Theme.of(context).hintColor,
       keyboardType: textInputType ?? TextInputType.text,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -33,6 +41,7 @@ class CustomInput extends GetView {
       minLines: numOfLines,
       maxLines: numOfLines,
       obscureText: isPassword,
+      onChanged: onchanged,
       style: TextStyle(
         color: Theme.of(context).hintColor,
         height: 1.4,
@@ -43,7 +52,7 @@ class CustomInput extends GetView {
         prefixIcon: isPrefix ? prefixWidget : null,
         prefixIconConstraints: BoxConstraints(
           minWidth: 30,
-          minHeight: 25,
+          minHeight: 48,
         ),
       ),
     );
