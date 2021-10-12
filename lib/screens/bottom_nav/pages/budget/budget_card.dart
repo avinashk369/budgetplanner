@@ -41,7 +41,9 @@ class BudgetCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            Spacer(
+              flex: 2,
+            ),
             Center(
               child: Obx(
                 () => SleekCircularSlider(
@@ -108,10 +110,10 @@ class BudgetCard extends StatelessWidget {
                 ),
               ),
             ),
+            Spacer(flex: 2),
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 5,
-                vertical: 5,
               ),
               child: Text(
                 budgetModel.catName!,
@@ -119,8 +121,11 @@ class BudgetCard extends StatelessWidget {
                     color: Theme.of(context).primaryColor),
               ),
             ),
+            Spacer(flex: 1),
             Padding(
-              padding: EdgeInsets.fromLTRB(5, 0, 5, 2),
+              padding: EdgeInsets.symmetric(
+                horizontal: 5,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -161,6 +166,9 @@ class BudgetCard extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            Spacer(
+              flex: 2,
             ),
           ],
         ),

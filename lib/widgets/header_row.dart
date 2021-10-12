@@ -136,7 +136,7 @@ class HeaderRow extends StatelessWidget {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -234,4 +234,100 @@ class HeaderRow extends StatelessWidget {
       ],
     );
   }
+
+  Widget balanceCOntainer(
+          BuildContext context, DashboardController controller) =>
+      Container(
+        height: 50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        child: Stack(
+          children: [
+            Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  color: Colors.deepPurpleAccent,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          total_expense.tr.toUpperCase(),
+                          style: kLabelStyleBold.copyWith(
+                              color: Theme.of(context).hintColor, fontSize: 12),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          controller.currencySymbol + expense.toString(),
+                          style: kLabelStyleBold.copyWith(
+                            color: redColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
+            ClipPath(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  color: Colors.greenAccent,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      total_income.tr.toUpperCase(),
+                      style: kLabelStyleBold.copyWith(
+                          color: Theme.of(context).hintColor, fontSize: 12),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      controller.currencySymbol + income.toString(),
+                      style: kLabelStyleBold.copyWith(
+                        color: greenbuttoncolor,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              clipper: CustomClipPath(),
+            )
+          ],
+        ),
+      );
+}
+
+class CustomClipPath extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, 80);
+    path.lineTo(80, 80);
+    path.lineTo(120, 0);
+    path.lineTo(30, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
