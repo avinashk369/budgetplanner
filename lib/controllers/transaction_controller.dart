@@ -1,6 +1,7 @@
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/budget_model.dart';
+import 'package:budgetplanner/models/promotion_model.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/models/transaction_type_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
@@ -31,6 +32,10 @@ class TransactionEntryController extends GetxController {
       recentTransactionModel.value;
   Rx<List<TransactionModel>> recentTransactionModel =
       Rx<List<TransactionModel>>([]);
+
+  List<PromotionModel> get promotions => promotionsList.value;
+  Rx<List<PromotionModel>> promotionsList = Rx<List<PromotionModel>>([]);
+  setPromotions(List<PromotionModel> pmList) => promotionsList(pmList);
 
   List<BudgetModel> get budgetList => budgetmodel.value;
   Rx<List<BudgetModel>> budgetmodel = Rx<List<BudgetModel>>([]);
@@ -468,6 +473,16 @@ class TransactionEntryController extends GetxController {
 
       print("avinash ${testList.length}");
       yield testList;
+    } catch (e) {
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Stream<List<PromotionModel>>? getAlPromotions() {
+    try {
+      isLoading(true);
+      return DataRepositoryImpl().getAllPromotions();
     } catch (e) {
     } finally {
       isLoading(false);

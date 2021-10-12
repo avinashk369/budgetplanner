@@ -63,6 +63,8 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   collection: ^1.15.0
   workmanager: ^0.4.1
+  cached_network_image: ^3.1.0
+  url_launcher: ^6.0.12
 
 
 

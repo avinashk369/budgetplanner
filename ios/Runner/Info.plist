@@ -97,5 +97,11 @@
 	<false/>
 	<key>kTCCServiceMediaLibrary</key>
 	<string>media</string>
+
+	<key>LSApplicationQueriesSchemes</key>
+		<array>
+		<string>https</string>
+		<string>http</string>
+		</array>
 </dict>
 </plist>

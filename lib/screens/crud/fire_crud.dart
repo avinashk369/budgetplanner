@@ -4,6 +4,7 @@ import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/CaffairModel.dart';
 import 'package:budgetplanner/models/notification_model.dart';
 import 'package:budgetplanner/models/notification_type.dart';
+import 'package:budgetplanner/models/promotion_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
@@ -18,7 +19,14 @@ class FireCrud extends StatefulWidget {
 }
 
 class _FireCrudState extends State<FireCrud> {
-  List<String> actions = ['create', 'update', 'read', 'delete', 'notification'];
+  List<String> actions = [
+    'create',
+    'update',
+    'read',
+    'delete',
+    'notification',
+    'promotion'
+  ];
   UserRepositoryImpl userRepositoryImpl = UserRepositoryImpl();
   DataRepositoryImpl dataRepositoryImpl = DataRepositoryImpl();
   @override
@@ -39,13 +47,18 @@ class _FireCrudState extends State<FireCrud> {
                 borderRadius: BorderRadius.all(Radius.circular(5)),
                 color: kDarkGrey,
               ),
-              child: Center(
-                child: ElevatedButton(
-                  child: Icon(dataRepositoryImpl.iconUrl(travel)!.iconName),
-                  onPressed: () {
-                    action(actions[index]);
-                  },
-                ),
+              child: Column(
+                children: [
+                  Center(
+                    child: ElevatedButton(
+                      child: Icon(dataRepositoryImpl.iconUrl(travel)!.iconName),
+                      onPressed: () {
+                        action(actions[index]);
+                      },
+                    ),
+                  ),
+                  Text(actions[index]),
+                ],
               ),
             );
           }),
@@ -100,6 +113,21 @@ class _FireCrudState extends State<FireCrud> {
           dataRepositoryImpl.createNotifications(notificationModel);
         });
 
+        break;
+      case "promotion":
+        List<String> promotions = [
+          '{"title": " More you record more you save ", "img_url": "https://miro.medium.com/max/2000/1*clLHov-e8fX12CZr4zpKIg.png ", "src_url":"https://medium.com/flutterdevs/stepper-widget-in-flutter-37ce5b45575b",  "sq":1}',
+          '{"title": " Spend only when you have ", "img_url": "https://miro.medium.com/max/2000/1*clLHov-e8fX12CZr4zpKIg.png", "src_url":"https://medium.com/flutterdevs/stepper-widget-in-flutter-37ce5b45575b",  "sq":2}',
+          '{"title": " Investing is the new savings ", "img_url": "https://miro.medium.com/max/2000/1*clLHov-e8fX12CZr4zpKIg.png", "src_url":"https://medium.com/flutterdevs/stepper-widget-in-flutter-37ce5b45575b",  "sq":3}',
+          '{"title": " Budget planning is key of a financial freedom ", "img_url": "https://miro.medium.com/max/2000/1*clLHov-e8fX12CZr4zpKIg.png", "src_url":"https://medium.com/flutterdevs/stepper-widget-in-flutter-37ce5b45575b",  "sq":4}',
+          '{"title": " Be wise while investing", "img_url": "https://miro.medium.com/max/2000/1*clLHov-e8fX12CZr4zpKIg.png", "src_url":"https://medium.com/flutterdevs/stepper-widget-in-flutter-37ce5b45575b",  "sq":5}',
+        ];
+        promotions.forEach((element) {
+          PromotionModel promotionModel =
+              PromotionModel.fromJson(jsonDecode(element));
+          print(promotionModel.title.toString());
+          dataRepositoryImpl.creatPromotions(promotionModel);
+        });
         break;
     }
   }

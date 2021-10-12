@@ -7,6 +7,7 @@ import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/models/expense_source_model.dart';
 import 'package:budgetplanner/models/income_model.dart';
 import 'package:budgetplanner/models/notification_model.dart';
+import 'package:budgetplanner/models/promotion_model.dart';
 import 'package:budgetplanner/models/recurrance_model.dart';
 import 'package:budgetplanner/models/saving_category.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
@@ -15,10 +16,8 @@ import 'package:budgetplanner/resources/firestore/image_data.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
-import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 import 'package:intl/intl.dart';
-import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 
@@ -728,6 +727,38 @@ class DataRepositoryImpl implements DataRepository {
         .catchError((error) {
       print(error.toString());
     });
+  }
+
+  /// create promotion message
+  Future creatPromotions(PromotionModel promotionModel) async {
+    var _mainCollection = _firestore.collection(promotions).doc();
+    promotionModel.id = _mainCollection.id;
+    await _mainCollection
+        .set(
+          promotionModel.toJson(),
+          SetOptions(merge: true),
+        )
+        .whenComplete(() => print('Promotions added successfully!'))
+        .catchError((error) {
+      print(error.toString());
+    });
+  }
+
+  /// get all promotions
+  Stream<List<PromotionModel>> getAllPromotions() async* {
+    try {
+      yield* _firestore
+          .collection(promotions)
+          .orderBy('sq', descending: false)
+          .snapshots()
+          .map((query) {
+        return query.docs.map((doc) {
+          PromotionModel promotionModel = PromotionModel.fromJson(doc.data());
+
+          return promotionModel;
+        }).toList();
+      });
+    } catch (e) {}
   }
 
 /**

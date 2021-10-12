@@ -3,6 +3,7 @@ import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/budget_model.dart';
 import 'package:budgetplanner/models/expense_source_model.dart';
 import 'package:budgetplanner/models/income_model.dart';
+import 'package:budgetplanner/models/promotion_model.dart';
 import 'package:budgetplanner/models/recurrance_model.dart';
 import 'package:budgetplanner/models/saving_category.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
@@ -51,4 +52,5 @@ abstract class DataRepository {
   Future<BudgetModel?> getBudgetModel(String name, String userId);
   Future saveRequest(Map<String, dynamic> requestJson);
   Future generateCsv(List<List<String>> data);
+  Stream<List<PromotionModel>> getAllPromotions();
 }
