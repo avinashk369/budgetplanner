@@ -4,6 +4,7 @@ import 'package:budgetplanner/controllers/test_controller.dart';
 import 'package:budgetplanner/controllers/transaction_controller.dart';
 import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
+import 'package:budgetplanner/screens/bottom_nav/pages/promotional_screen.dart';
 import 'package:budgetplanner/screens/bottom_nav/pages/transaction/recent_transaction.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
@@ -73,6 +74,7 @@ class _HomePageState extends State<HomePage> {
       }
     });
     getUserData();
+    getPromotions();
     //showRewardAd();
     super.initState();
   }
@@ -92,6 +94,11 @@ class _HomePageState extends State<HomePage> {
   void getUserData() async {
     userModel = await controller.getUserDetail(userId);
     print("User info ${userModel?.email}");
+  }
+
+  Future getPromotions() async {
+    transactionController.promotionsList
+        .bindStream(transactionController.getAlPromotions()!);
   }
 
   // Future<UserModel> getUser() async {
@@ -153,21 +160,57 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SliverToBoxAdapter(
-              child: Obx(() {
-                if (transactionController.budgetList.isNotEmpty) {
-                  return Container(
-                    padding: EdgeInsets.only(top: 10, bottom: 5, left: 10),
-                    child: Text(
-                      monthly_budget.tr,
-                      style: kHeaderStyle.copyWith(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.secondary),
-                    ),
-                  );
-                } else {
-                  return Container();
-                }
-              }),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: PromotionalScreen(),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Obx(
+                () => transactionController.budgetList.isNotEmpty
+                    ? Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              padding:
+                                  EdgeInsets.only(top: 10, bottom: 5, left: 10),
+                              child: Text(
+                                monthly_budget.tr,
+                                style: kHeaderStyle.copyWith(
+                                    fontSize: 16,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: ChoiceChip(
+                              label: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: "View all ",
+                                  style: kLabelStyle.copyWith(
+                                      fontSize: 14,
+                                      color: Theme.of(context).hintColor),
+                                ),
+                              ])),
+                              onSelected: (value) {
+                                dashController.setindex(2);
+                              },
+                              selected: true,
+                              selectedColor:
+                                  CustomTheme().currentTheme == ThemeMode.dark
+                                      ? kDarkGrey
+                                      : Colors.grey[100],
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+              ),
             ),
             SliverList(
               delegate: SliverChildListDelegate(
@@ -211,50 +254,50 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SliverToBoxAdapter(
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Obx(() {
-                      if (transactionController
-                          .recentTransactionList.isNotEmpty) {
-                        return Container(
-                          padding:
-                              EdgeInsets.only(top: 10, bottom: 5, left: 10),
-                          child: Text(
-                            recent_transaction.tr,
-                            style: kHeaderStyle.copyWith(
-                                fontSize: 16,
-                                color: Theme.of(context).colorScheme.secondary),
+              child: Obx(
+                () => transactionController.recentTransactionList.isNotEmpty
+                    ? Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              padding:
+                                  EdgeInsets.only(top: 10, bottom: 5, left: 10),
+                              child: Text(
+                                recent_transaction.tr,
+                                style: kHeaderStyle.copyWith(
+                                    fontSize: 16,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                              ),
+                            ),
                           ),
-                        );
-                      } else {
-                        return Container();
-                      }
-                    }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: ChoiceChip(
-                      label: RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                          text: "View all ",
-                          style: kLabelStyle.copyWith(
-                              fontSize: 14, color: Theme.of(context).hintColor),
-                        ),
-                      ])),
-                      onSelected: (value) {
-                        dashController.setindex(1);
-                      },
-                      selected: true,
-                      selectedColor:
-                          CustomTheme().currentTheme == ThemeMode.dark
-                              ? kDarkGrey
-                              : Colors.grey[100],
-                    ),
-                  ),
-                ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: ChoiceChip(
+                              label: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: "View all ",
+                                  style: kLabelStyle.copyWith(
+                                      fontSize: 14,
+                                      color: Theme.of(context).hintColor),
+                                ),
+                              ])),
+                              onSelected: (value) {
+                                dashController.setindex(1);
+                              },
+                              selected: true,
+                              selectedColor:
+                                  CustomTheme().currentTheme == ThemeMode.dark
+                                      ? kDarkGrey
+                                      : Colors.grey[100],
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
               ),
             ),
             SliverList(
