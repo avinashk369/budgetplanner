@@ -100,12 +100,15 @@ class BudgetBottom extends GetView<BudgetController> {
               Spacer(),
               Center(
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.saveOrUpdateBudget(
+                        controller.budgetDetail.value, context);
+                  },
                   style: OutlinedButton.styleFrom(
                     primary: Theme.of(context).hintColor,
                   ),
                   child: Text(
-                    "Submit",
+                    submit.tr,
                   ),
                 ),
               ),
@@ -183,12 +186,14 @@ class BudgetBottom extends GetView<BudgetController> {
                 child: OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
+                    controller.saveOrUpdateBudget(
+                        controller.budgetDetail.value, context);
                   },
                   style: OutlinedButton.styleFrom(
                     primary: Theme.of(context).hintColor,
                   ),
                   child: Text(
-                    "Submit",
+                    submit.tr,
                   ),
                 ),
               ),

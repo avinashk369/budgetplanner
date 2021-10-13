@@ -24,6 +24,7 @@ class BudgetCatList extends GetView<BudgetController> {
             }
           }
           controller.setBudget(budgetModel);
+          controller.setBudgetModel(controller.catList[value]);
           controller.slidervalue.value = budgetModel.amount.toString() == 'null'
               ? 0.0
               : budgetModel.amount!.roundToDouble();
@@ -38,12 +39,15 @@ class BudgetCatList extends GetView<BudgetController> {
               }
             }
           }
+
           return index < controller.catList.length
               ? Obx(
                   () => controller.currentIndex.value == index
                       ? BuildBudgetContent(
                           move: () {
                             controller.setBudget(budgetModel);
+                            controller
+                                .setBudgetModel(controller.catList[index]);
                             controller.slidervalue.value =
                                 budgetModel.amount.toString() == 'null'
                                     ? 0.0
@@ -62,6 +66,8 @@ class BudgetCatList extends GetView<BudgetController> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.ease);
                             controller.setBudget(budgetModel);
+                            controller
+                                .setBudgetModel(controller.catList[index]);
                             controller.slidervalue.value =
                                 budgetModel.amount.toString() == 'null'
                                     ? 0.0

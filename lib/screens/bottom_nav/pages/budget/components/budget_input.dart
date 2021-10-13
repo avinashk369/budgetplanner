@@ -24,10 +24,13 @@ class BudgetInput extends GetView<BudgetController> {
           ),
         ],
       ),
-      onchanged: (value) => value.isEmpty
-          ? controller.message.value = BudgetMessage.getBudgetMessage(0.0)
-          : controller.message.value =
-              BudgetMessage.getBudgetMessage(double.parse(value)),
+      onchanged: (value) {
+        controller.slidervalue.value = double.parse(value).roundToDouble();
+        value.isEmpty
+            ? controller.message.value = BudgetMessage.getBudgetMessage(0.0)
+            : controller.message.value =
+                BudgetMessage.getBudgetMessage(double.parse(value));
+      },
     );
   }
 }

@@ -153,6 +153,44 @@ class BudgetController extends GetxController {
     }
   }
 
+  ///save or update budget
+  void saveOrUpdateBudget(BudgetModel budgetModel, BuildContext context) async {
+    try {
+      isLoading(true);
+      LoadingDialog.showLoadingDialog(context, keyLoader);
+
+      BudgetModel? bm = await DataRepositoryImpl()
+          .getBudgetModel(budgetCatModel.value.name!, userId);
+      if (bm != null) {
+        budgetModel.notes = budgetCatModel.value.name!;
+        bm.amount = slidervalue.value.roundToDouble();
+        bm.updatedOn = DateTime.now();
+
+        await DataRepositoryImpl().updateBudget(bm);
+      } else {
+        budgetModel.catName = budgetCatModel.value.name!;
+        budgetModel.amount = slidervalue.value.roundToDouble();
+        budgetModel.notes = budgetCatModel.value.name!;
+        budgetModel.monthName = DateFormat('LLLL').format(DateTime.now());
+        budgetModel.createdOn = DateTime.now();
+        budgetModel.userId = PreferenceUtils.getString(user_id);
+        await DataRepositoryImpl().saveBudget(budgetModel);
+      }
+    } catch (e) {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+      SnackBarDialog.displaySnackbar(
+        budgetTab.tr,
+        lbl_budget_not_saved.tr,
+      );
+    } finally {
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
+      SnackBarDialog.displaySuccessSnackbar(
+        budgetTab.tr,
+        lbl_budget_save_success.tr,
+      );
+    }
+  }
+
 /**
  * update budget
  */

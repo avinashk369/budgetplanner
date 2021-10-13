@@ -48,7 +48,7 @@ class _PromotionalScreenState extends State<PromotionalScreen> {
     return Obx(
       () => transactionController.isLoading() ||
               transactionController.promotions.isEmpty
-          ? LoadingUI()
+          ? SizedBox()
           : Column(
               children: [
                 Container(
@@ -98,12 +98,34 @@ class _PromotionalScreenState extends State<PromotionalScreen> {
                                       errorWidget: (context, url, error) =>
                                           Icon(Icons.error),
                                     ),
-                                    SizedBox(
-                                      width: Get.width * .6,
-                                      child: Text(
-                                        promotionModel.title!,
-                                        style: kLabelStyleBold.copyWith(
-                                            fontSize: 18, color: whiteColor),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.black54,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Spacer(
+                                            flex: 4,
+                                          ),
+                                          SizedBox(
+                                            width: Get.width * .6,
+                                            child: Text(
+                                              promotionModel.title!,
+                                              style: kLabelStyleBold.copyWith(
+                                                  fontSize: 18,
+                                                  color: whiteColor),
+                                            ),
+                                          ),
+                                          Spacer(),
+                                        ],
                                       ),
                                     )
                                   ],

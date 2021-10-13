@@ -14,6 +14,7 @@ class BuildBudgetContent extends GetView<BudgetController> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
+      controller.setBudgetModel(budgetCategoryModel);
       if (budgetModel.catName != null) {
         controller.setBudget(budgetModel);
         // controller.amountController.text =
