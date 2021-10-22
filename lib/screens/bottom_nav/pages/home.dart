@@ -114,14 +114,15 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
         heroTag: "transaction",
-        backgroundColor: Theme.of(context).hintColor,
+        //backgroundColor: Theme.of(context).hintColor,
         onPressed: () {
           Navigator.of(context).pushNamed(addTransactionRoute);
         },
         icon: Icon(Icons.edit, color: Theme.of(context).primaryColor),
         label: Text(
           transactionTab.tr,
-          style: kLabelStyle.copyWith(color: Theme.of(context).primaryColor),
+          style: kLabelStyleBold.copyWith(
+              color: Theme.of(context).primaryColor, letterSpacing: 1.2),
         ),
       ),
       body: NestedScrollView(
@@ -179,9 +180,7 @@ class _HomePageState extends State<HomePage> {
                                 monthly_budget.tr,
                                 style: kHeaderStyle.copyWith(
                                     fontSize: 16,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary),
+                                    color: Theme.of(context).hintColor),
                               ),
                             ),
                           ),
@@ -267,9 +266,7 @@ class _HomePageState extends State<HomePage> {
                                 recent_transaction.tr,
                                 style: kHeaderStyle.copyWith(
                                     fontSize: 16,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary),
+                                    color: Theme.of(context).hintColor),
                               ),
                             ),
                           ),

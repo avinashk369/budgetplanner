@@ -1,7 +1,6 @@
 import 'package:budgetplanner/screens/user/google_signin_button.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/styles.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 
 class UserLogin extends StatelessWidget {
@@ -10,37 +9,46 @@ class UserLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: Colors.white,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
-            height: 30,
+          Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Image.asset(
+                //   'assets/logo1.png',
+                //   height: 50,
+                // ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  appname.toUpperCase(),
+                  textAlign: TextAlign.center,
+                  style:
+                      kLabelStyleBold.copyWith(fontSize: 20, letterSpacing: 2),
+                ),
+              ],
+            ),
           ),
-          Column(
-            children: [
-              Image.asset(
-                'assets/logo1.png',
-                height: 120,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                appname,
-                textAlign: TextAlign.center,
-                style: kLabelStyleBold.copyWith(color: tealColor, fontSize: 20),
-              ),
-            ],
+          Image.asset(
+            'assets/fm.jpeg',
           ),
-          Center(
-            child: GoogleSignInButton(),
-          ),
+          Spacer(),
           Text(
-            "One touch sign in".toUpperCase(),
+            "Be finanicially discipline",
             textAlign: TextAlign.center,
-            style: kHeaderStyle.copyWith(color: darkColor, fontSize: 16),
+            style: kLabelStyleBold.copyWith(
+                color: Colors.deepPurple, fontSize: 18, letterSpacing: 1.8),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            child: GoogleSignInButton(),
           ),
         ],
       ),

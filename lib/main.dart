@@ -28,6 +28,7 @@ void main() async {
   await MobileAds.instance.initialize();
   await PreferenceUtils.getInstance();
   await NotificationService().init();
+  Paint.enableDithering = true;
   /**
    * work manager integration
    */

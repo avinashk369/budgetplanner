@@ -82,42 +82,43 @@ class One extends StatelessWidget {
               )
             ],
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.transparent, width: 0)),
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 100),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Container(
-                        width: 150.0,
-                        height: 40.0,
-                        decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Colors.transparent, width: 0),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            bottomLeft: Radius.circular(30.0),
-                          ),
-                          color: kWhite,
-                        ),
-                        child: Center(
-                            child: Text(
-                          appname,
-                          style: kLabelStyleBold.copyWith(fontSize: 18),
-                        )),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          )
+          // Column(
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   children: <Widget>[
+          //     Container(
+          //       decoration: BoxDecoration(
+          //           border: Border.all(color: Colors.transparent, width: 0)),
+          //       child: Padding(
+          //         padding: EdgeInsets.only(bottom: 100),
+          //         child: Row(
+          //           crossAxisAlignment: CrossAxisAlignment.end,
+          //           mainAxisAlignment: MainAxisAlignment.end,
+          //           children: <Widget>[
+          //             Container(
+          //               width: 150.0,
+          //               height: 40.0,
+          //               decoration: BoxDecoration(
+          //                 border:
+          //                     Border.all(color: Colors.transparent, width: 0),
+          //                 borderRadius: BorderRadius.only(
+          //                   topLeft: Radius.circular(30.0),
+          //                   bottomLeft: Radius.circular(30.0),
+          //                 ),
+          //                 color: kWhite,
+          //               ),
+          //               child: Center(
+          //                 child: Text(
+          //                   appname,
+          //                   style: kLabelStyleBold.copyWith(fontSize: 18),
+          //                 ),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // )
         ],
       ),
     );

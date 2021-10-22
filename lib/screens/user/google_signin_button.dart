@@ -5,6 +5,8 @@ import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/authentication.dart';
 import 'package:budgetplanner/utils/route_constants.dart';
+import 'package:budgetplanner/utils/styles.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -21,18 +23,22 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: _isSigningIn
-          ? CircularProgressIndicator(
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(Theme.of(context).hintColor),
+          ? Center(
+              child: CircularProgressIndicator(
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(Theme.of(context).hintColor),
+              ),
             )
-          : OutlinedButton(
+          : ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
+                minimumSize: MaterialStateProperty.all(const Size(300, 60)),
+                backgroundColor: MaterialStateProperty.all(darkColor),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+                elevation: MaterialStateProperty.all(1),
               ),
               onPressed: () async {
                 setState(() {
@@ -74,17 +80,17 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   children: <Widget>[
                     Image(
                       image: AssetImage("assets/google_logo.png"),
-                      height: 35.0,
+                      height: 30.0,
+                    ),
+                    SizedBox(
+                      width: 8,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
                         'Sign in with Google',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: kLabelStyle.copyWith(
+                            color: whiteColor, fontSize: 18),
                       ),
                     )
                   ],
