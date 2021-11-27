@@ -1,6 +1,7 @@
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/user_model.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
+import 'package:budgetplanner/screens/crud/fire_crud.dart';
 import 'package:budgetplanner/screens/onboard/onboard_screens.dart';
 import 'package:budgetplanner/screens/user/user_login.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';

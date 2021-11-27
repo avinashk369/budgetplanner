@@ -33,12 +33,12 @@ class _PromotionalScreenState extends State<PromotionalScreen> {
   Widget _indicator(bool isActive) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 150),
-      margin: EdgeInsets.symmetric(horizontal: 5.0),
-      height: 8.0,
-      width: isActive ? 24.0 : 8.0,
+      margin: EdgeInsets.symmetric(horizontal: 4.0),
+      height: 6.0,
+      width: isActive ? 20.0 : 6.0,
       decoration: BoxDecoration(
         color: isActive ? Colors.grey[700] : Colors.grey[400],
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: BorderRadius.all(Radius.circular(6)),
       ),
     );
   }
