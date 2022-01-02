@@ -14,15 +14,15 @@ class MainActivity: FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
 
         // TODO: Register the ListTileNativeAdFactory
-        GoogleMobileAdsPlugin.registerNativeAdFactory(
-                flutterEngine, "listTile", ListTileNativeAdFactory(context))
+        // GoogleMobileAdsPlugin.registerNativeAdFactory(
+        //         flutterEngine, "listTile", ListTileNativeAdFactory(context))
     }
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
         super.cleanUpFlutterEngine(flutterEngine)
 
         // TODO: Unregister the ListTileNativeAdFactory
-        GoogleMobileAdsPlugin.unregisterNativeAdFactory(flutterEngine, "listTile")
+        //GoogleMobileAdsPlugin.unregisterNativeAdFactory(flutterEngine, "listTile")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
