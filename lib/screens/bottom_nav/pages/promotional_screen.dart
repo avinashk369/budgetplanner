@@ -52,7 +52,7 @@ class _PromotionalScreenState extends State<PromotionalScreen> {
           : Column(
               children: [
                 Container(
-                  height: Get.height * .27,
+                  height: Get.height * .22,
                   child: Stack(
                     children: [
                       PageView.builder(

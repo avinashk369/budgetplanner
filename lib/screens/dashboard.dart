@@ -5,10 +5,8 @@ import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/custom_dialog.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/route_constants.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
 import 'bottom_nav/TabNavigationItem.dart';
 
@@ -26,7 +24,7 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     transactionController.onInit();
     userId = PreferenceUtils.getString(user_id);
-    print("${FirebaseAuth.instance.currentUser!.uid} user id in dashboard");
+    //print("${FirebaseAuth.instance.currentUser!.uid} user id in dashboard");
     //_currentIndex = controller.currentIndex.value;
     // TODO: implement initState
     super.initState();

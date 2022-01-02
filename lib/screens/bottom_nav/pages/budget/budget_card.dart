@@ -168,7 +168,7 @@ class BudgetCard extends StatelessWidget {
               ),
             ),
             Spacer(
-              flex: 2,
+              flex: 1,
             ),
           ],
         ),
