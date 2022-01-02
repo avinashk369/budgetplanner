@@ -14,6 +14,7 @@ import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -48,6 +49,8 @@ class _TransactionReportState extends State<TransactionReport> {
     }
     return rawIndex;
   }
+
+  int gv = 0;
 
   double totalIncome = 0;
   double totalExpense = 0;
@@ -127,9 +130,7 @@ class _TransactionReportState extends State<TransactionReport> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          DateFormat('y').format(
-            DateTime(date.year, date.month, 0),
-          ),
+          DateFormat('y').format(DateTime.now()),
           style: kLabelStyle.copyWith(
             color: Theme.of(context).hintColor,
             fontSize: 18,
@@ -149,113 +150,131 @@ class _TransactionReportState extends State<TransactionReport> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: CustomScrollView(
-              physics: BouncingScrollPhysics(),
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Obx(
-                    () => (controller.piechartDataList.isNotEmpty && isLoaded)
-                        ? BarChartSample5(
-                            dataList: trxList!,
-                            totalAmount: totalIncome,
-                          )
-                        : Container(),
-                  ),
+      body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Obx(
+                  () => (controller.piechartDataList.isNotEmpty && isLoaded)
+                      ? BarChartSample5(
+                          dataList: trxList!,
+                          totalAmount: totalIncome,
+                        )
+                      : Container(),
                 ),
-                SliverToBoxAdapter(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: 10,
-                            height: 10,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.transparent, width: 1),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                              color: Color(0xff64caad), //grey[100]
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 10,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.transparent, width: 1),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
                             ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(income),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            height: 10,
-                            width: 10,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.transparent, width: 1),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                              color: Color(0xff3b8c75), //grey[100]
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(expense),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 15,
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 0, vertical: 2),
-                        height: 40,
-                        decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Colors.transparent, width: 1),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          color: Colors.grey[100], //grey[100]
-                        ),
-                        child: ListView.builder(
-                          itemCount: filterTabs.length,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: filterTab(filterTabs[index], index),
+                            color: Color(0xff64caad), //grey[100]
                           ),
                         ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(income),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          height: 10,
+                          width: 10,
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.transparent, width: 1),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            color: Color(0xff3b8c75), //grey[100]
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(expense),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                // Center(
+                //   child: CupertinoSegmentedControl(
+                //     children: const {
+                //       0: Padding(
+                //         padding:
+                //             EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                //         child: Text(
+                //           "Income",
+                //           style: TextStyle(
+                //               fontWeight: FontWeight.bold, fontSize: 16),
+                //         ),
+                //       ),
+                //       1: Text(
+                //         "Expense",
+                //         style: TextStyle(
+                //             fontWeight: FontWeight.bold, fontSize: 16),
+                //       ),
+                //     },
+                //     onValueChanged: (int value) {
+                //       setState(() {
+                //         gv = value;
+                //       });
+                //     },
+                //     groupValue: gv,
+                //     borderColor: heenColor,
+                //     // selectedColor: Colors.black,
+                //     // unselectedColor: kLightPink.withOpacity(0.5),
+                //     pressedColor: Colors.blueGrey[50],
+                //   ),
+                // ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
+                      height: 40,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.transparent, width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        color: Colors.grey[100], //grey[100]
                       ),
-                    ],
-                  ),
+                      child: ListView.builder(
+                        itemCount: filterTabs.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: filterTab(filterTabs[index], index),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 20,
-                  ),
+                SizedBox(
+                  height: 20,
                 ),
-                SliverToBoxAdapter(
-                    child: Container(
+                Container(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   color: currentTheme.currentTheme == ThemeMode.dark
                       ? Colors.black12
@@ -328,69 +347,57 @@ class _TransactionReportState extends State<TransactionReport> {
                       ),
                     ],
                   ),
-                )),
-                SliverToBoxAdapter(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.transparent, width: 1),
-                    ),
-                    child: Obx(
-                      () => (controller.piechartDataList.length > 0)
-                          ? PieChartSample2(
-                              dataList: controller.piechartDataList,
-                            )
-                          : Container(),
-                    ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.transparent, width: 1),
+                  ),
+                  child: Obx(
+                    () => (controller.piechartDataList.length > 0)
+                        ? PieChartSample2(
+                            dataList: controller.piechartDataList,
+                          )
+                        : Container(),
                   ),
                 ),
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      Container(
-                        decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Colors.transparent, width: 1),
-                        ),
-                        child: Obx(
-                          () => (controller.piechartDataList.length > 0)
-                              ? ListView.separated(
-                                  physics: BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  separatorBuilder: (context, index) => Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 78,
-                                            bottom: kSpaceS,
-                                            right: kSpaceS),
-                                        child: Divider(
-                                          height: 1,
-                                          color: kGrey,
-                                        ),
-                                      ),
-                                  itemCount:
-                                      controller.piechartDataList.length +
-                                          ((adCont.isNativeAdReady.value &&
-                                                  controller.piechartDataList
-                                                          .length >=
-                                                      _kAdIndex)
-                                              ? 1
-                                              : 0),
-                                  itemBuilder: (context, index) {
-                                    if (adCont.isNativeAdReady.value &&
-                                        index == _kAdIndex) {
-                                      return NativeAdView();
-                                    } else {
-                                      List<String> data =
-                                          controller.piechartDataList[
-                                              _getDestinationItemIndex(index)];
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.transparent, width: 1),
+                  ),
+                  child: Obx(
+                    () => (controller.piechartDataList.length > 0)
+                        ? ListView.separated(
+                            physics: BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            separatorBuilder: (context, index) => Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 78,
+                                      bottom: kSpaceS,
+                                      right: kSpaceS),
+                                  child: Divider(
+                                    height: 1,
+                                    color: kGrey,
+                                  ),
+                                ),
+                            itemCount: controller.piechartDataList.length +
+                                ((adCont.isNativeAdReady.value &&
+                                        controller.piechartDataList.length >=
+                                            _kAdIndex)
+                                    ? 1
+                                    : 0),
+                            itemBuilder: (context, index) {
+                              if (adCont.isNativeAdReady.value &&
+                                  index == _kAdIndex) {
+                                return NativeAdView();
+                              } else {
+                                List<String> data = controller.piechartDataList[
+                                    _getDestinationItemIndex(index)];
 
-                                      return reportTile(data);
-                                    }
-                                  })
-                              : Container(),
-                        ),
-                      ),
-                    ],
+                                return reportTile(data);
+                              }
+                            })
+                        : Container(),
                   ),
                 ),
               ],

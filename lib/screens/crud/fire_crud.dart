@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:budgetplanner/models/BaseModel.dart';
 import 'package:budgetplanner/models/CaffairModel.dart';
@@ -8,8 +9,13 @@ import 'package:budgetplanner/models/promotion_model.dart';
 import 'package:budgetplanner/resources/firestore/dataRepositoryImpl.dart';
 import 'package:budgetplanner/resources/firestore/userRepositoryImpl.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
+import 'package:budgetplanner/utils/styles.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
+
+const CURVE_HEIGHT = 160.0;
+const AVATAR_RADIUS = CURVE_HEIGHT * 0.28;
+const AVATAR_DIAMETER = AVATAR_RADIUS * 2;
 
 class FireCrud extends StatefulWidget {
   const FireCrud({Key? key}) : super(key: key);
@@ -35,35 +41,41 @@ class _FireCrudState extends State<FireCrud> {
       appBar: AppBar(
         elevation: 0,
       ),
-      body: GridView.builder(
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          itemCount: actions.length,
-          itemBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.all(5),
-              height: 150,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                color: kDarkGrey,
-              ),
-              child: Column(
-                children: [
-                  Center(
-                    child: ElevatedButton(
-                      child: Icon(dataRepositoryImpl.iconUrl(travel)!.iconName),
-                      onPressed: () {
-                        action(actions[index]);
-                      },
-                    ),
-                  ),
-                  Text(actions[index]),
-                ],
-              ),
-            );
-          }),
+      body: gridTab(),
     );
   }
+
+  Widget gridTab() => GridView.builder(
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      itemCount: actions.length,
+      itemBuilder: (context, index) {
+        return Container(
+          margin: EdgeInsets.all(5),
+          height: 150,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+            color: kDarkGrey,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: ElevatedButton(
+                  child: Icon(dataRepositoryImpl.iconUrl(travel)!.iconName),
+                  onPressed: () {
+                    action(actions[index]);
+                  },
+                ),
+              ),
+              Text(
+                actions[index],
+                style: kLabelStyleBold.copyWith(color: kWhite),
+              ),
+            ],
+          ),
+        );
+      });
 
   void action(String name) async {
     switch (name) {
@@ -116,11 +128,11 @@ class _FireCrudState extends State<FireCrud> {
         break;
       case "promotion":
         List<String> promotions = [
-          '{"title": " More you record more you save ", "img_url": "https://miro.medium.com/max/2000/1*clLHov-e8fX12CZr4zpKIg.png ", "src_url":"https://medium.com/flutterdevs/stepper-widget-in-flutter-37ce5b45575b",  "sq":1}',
-          '{"title": " Spend only when you have ", "img_url": "https://miro.medium.com/max/2000/1*clLHov-e8fX12CZr4zpKIg.png", "src_url":"https://medium.com/flutterdevs/stepper-widget-in-flutter-37ce5b45575b",  "sq":2}',
-          '{"title": " Investing is the new savings ", "img_url": "https://miro.medium.com/max/2000/1*clLHov-e8fX12CZr4zpKIg.png", "src_url":"https://medium.com/flutterdevs/stepper-widget-in-flutter-37ce5b45575b",  "sq":3}',
-          '{"title": " Budget planning is key of a financial freedom ", "img_url": "https://miro.medium.com/max/2000/1*clLHov-e8fX12CZr4zpKIg.png", "src_url":"https://medium.com/flutterdevs/stepper-widget-in-flutter-37ce5b45575b",  "sq":4}',
-          '{"title": " Be wise while investing", "img_url": "https://miro.medium.com/max/2000/1*clLHov-e8fX12CZr4zpKIg.png", "src_url":"https://medium.com/flutterdevs/stepper-widget-in-flutter-37ce5b45575b",  "sq":5}',
+          '{"title": "Merry Christmas", "img_url": "https://image.freepik.com/free-vector/hand-drawn-flat-secret-santa-illustration_23-2149154977.jpg", "src_url":"https://image.freepik.com/free-vector/hand-drawn-flat-secret-santa-illustration_23-2149154977.jpg",  "sq":0}',
+          // '{"title": "Sick Of Having No Money? Do These 10 Things!", "img_url": "https://bethebudget.com/wp-content/uploads/2020/05/Sick-Of-Having-No-Money.jpg", "src_url":"https://bethebudget.com/sick-of-having-no-money/",  "sq":3}',
+          // '{"title": "10 Ways To Stop Spending Money When You’re Bored", "img_url": "https://bethebudget.com/wp-content/uploads/2020/08/Stop-Spending-When-Bored.jpg", "src_url":"https://bethebudget.com/how-to-stop-spending-money-when-bored/",  "sq":4}',
+          // '{"title": "7 tips for improving your financial health", "img_url": "https://mediafeed.org/wp-content/uploads/2020/06/iStock-1086664998.original.jpg", "src_url":"https://mediafeed.org/7-tips-for-improving-your-financial-health/",  "sq":5}',
+          // '{"title": "New version available. Please update ", "img_url": "https://image.freepik.com/free-vector/update-concept-illustration_114360-1742.jpg", "src_url":"https://play.google.com/store/apps/details?id=com.finance.budgetplanner",  "sq":0}',
         ];
         promotions.forEach((element) {
           PromotionModel promotionModel =
@@ -130,5 +142,70 @@ class _FireCrudState extends State<FireCrud> {
         });
         break;
     }
+  }
+
+  Widget lineShape() => Container(
+        width: double.infinity,
+        height: CURVE_HEIGHT,
+        child: CustomPaint(
+          painter: _MyPainter(),
+        ),
+      );
+}
+
+class _MyPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = new Paint()
+      ..style = PaintingStyle.fill
+      ..isAntiAlias = true
+      ..color = Colors.purple[700]!;
+
+    Offset circleCenter = Offset(size.width / 2, size.height - AVATAR_RADIUS);
+
+    Offset topLeft = Offset(0, 0);
+    Offset bottomLeft = Offset(0, size.height * 0.25);
+    Offset topRight = Offset(size.width, 0);
+    Offset bottomRight = Offset(size.width, size.height * 0.5);
+
+    Offset leftCurveControlPoint =
+        Offset(circleCenter.dx * 0.5, size.height - AVATAR_RADIUS * 1.5);
+    Offset rightCurveControlPoint =
+        Offset(circleCenter.dx * 1.6, size.height - AVATAR_RADIUS);
+
+    final arcStartAngle = 200 / 180 * pi;
+    final avatarLeftPointX =
+        circleCenter.dx + AVATAR_RADIUS * cos(arcStartAngle);
+    final avatarLeftPointY =
+        circleCenter.dy + AVATAR_RADIUS * sin(arcStartAngle);
+    Offset avatarLeftPoint =
+        Offset(avatarLeftPointX, avatarLeftPointY); // the left point of the arc
+
+    final arcEndAngle = -5 / 180 * pi;
+    final avatarRightPointX =
+        circleCenter.dx + AVATAR_RADIUS * cos(arcEndAngle);
+    final avatarRightPointY =
+        circleCenter.dy + AVATAR_RADIUS * sin(arcEndAngle);
+    Offset avatarRightPoint = Offset(
+        avatarRightPointX, avatarRightPointY); // the right point of the arc
+
+    Path path = Path()
+      ..moveTo(topLeft.dx,
+          topLeft.dy) // this move isn't required since the start point is (0,0)
+      ..lineTo(bottomLeft.dx, bottomLeft.dy)
+      ..quadraticBezierTo(leftCurveControlPoint.dx, leftCurveControlPoint.dy,
+          avatarLeftPoint.dx, avatarLeftPoint.dy)
+      ..arcToPoint(avatarRightPoint, radius: Radius.circular(AVATAR_RADIUS))
+      ..quadraticBezierTo(rightCurveControlPoint.dx, rightCurveControlPoint.dy,
+          bottomRight.dx, bottomRight.dy)
+      ..lineTo(topRight.dx, topRight.dy)
+      ..close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
   }
 }
