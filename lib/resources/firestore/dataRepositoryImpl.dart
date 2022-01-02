@@ -789,7 +789,8 @@ class DataRepositoryImpl implements DataRepository {
               isGreaterThanOrEqualTo:
                   DateTime(yearName, 1, 1).toIso8601String())
           .where('created_on',
-              isLessThan: DateTime(yearName, 12, 31).toIso8601String());
+              isLessThanOrEqualTo:
+                  DateTime(yearName, 12, 31).toIso8601String());
 
       if (catName != '') {
         query = query.where('cat_name', isEqualTo: catName);
