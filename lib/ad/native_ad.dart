@@ -18,7 +18,7 @@ class _NativeAdViewState extends State<NativeAdView> {
     return Obx(
       () => (controller.isNativeAdReady.value)
           ? Container(
-              child: AdWidget(ad: controller.ad!),
+              // child: AdWidget(ad: controller.ad!),
               height: 72.0,
               alignment: Alignment.center,
             )

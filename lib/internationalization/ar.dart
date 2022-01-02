@@ -1,11 +1,11 @@
 import 'package:budgetplanner/utils/string_constants.dart';
 
-const en = {
-  total_income: "Income",
-  total_expense: "Expense",
-  total_balance: "Balance",
-  recent_transaction: "Recent transactions",
-  homeTab: "Home",
+const ar = {
+  total_income: "دخل",
+  total_expense: "مصروف",
+  total_balance: "توازن",
+  recent_transaction: "التحويلات الاخيرة",
+  homeTab: "منزل، بيت",
   transactionTab: "Transaction",
   addTab: "Add",
   budgetTab: "Budget",
@@ -62,12 +62,4 @@ const en = {
   lbl_settings_cutomise: "Customise your app",
   feature_request: "Please explain your requirements",
   submit: "Submit",
-  lbl_history: "Reports",
-  monthly_budget: "Monthly budget",
-  lbl_exit_message: "Are you sure you want to exit?",
-  lbl_no: "No",
-  lbl_yes: "Yes, Exit",
-  lbl_delete_message: "Are you sure you want to delete ?",
-  cancel: "Cancel",
-  delete: "Delete",
 };

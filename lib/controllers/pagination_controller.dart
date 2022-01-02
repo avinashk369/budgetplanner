@@ -1,5 +1,9 @@
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
+import 'package:budgetplanner/models/transaction_type_model.dart';
+import 'package:budgetplanner/resources/firestore/paginationRepoImpl.dart';
+import 'package:budgetplanner/utils/PreferenceUtils.dart';
+import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +12,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 class PaginationController extends GetxController {
   late FirebaseFirestore _firestore;
-  List<TransactionModel> get transactionList => transactionModel.value;
+  List<TransactionModel> get transactionList => paginatedList.value;
   Rx<List<TransactionModel>> transactionModel = Rx<List<TransactionModel>>([]);
   Rx<List<BudgetCategoryModel>> bcm = Rx<List<BudgetCategoryModel>>([]);
   static PaginationController get to => Get.find<PaginationController>();
@@ -16,8 +20,12 @@ class PaginationController extends GetxController {
       Get.find<PaginationController>(tag: name);
   var initialLoad = true.obs;
   var isFinished = false.obs;
+  var isLoading = true.obs;
   late DocumentSnapshot lastFetchedSnapshot;
   Rx<List<DocumentSnapshot>> lastDoc = Rx<List<DocumentSnapshot>>([]);
+  Rx<List<DocumentSnapshot>> transactionSnapshot =
+      Rx<List<DocumentSnapshot>>([]);
+  Rx<List<TransactionModel>> paginatedList = Rx<List<TransactionModel>>([]);
 
   @override
   void onInit() {
@@ -25,6 +33,69 @@ class PaginationController extends GetxController {
     super.onInit();
     _firestore = FirebaseFirestore.instance;
   }
+
+  Stream<List<TransactionModel>>? getFirst() async* {
+    try {
+      String userId = PreferenceUtils.getString(user_id);
+      isLoading(true);
+      var response = PaginationRepoImpl()
+          .getTransactions(userId, transactionType, DateTime.now(), []);
+      List<TransactionModel> tlist =
+          response.then((value) => value!.docs.map((element) {
+                return TransactionModel.fromJson(element.data());
+              }).toList()) as List<TransactionModel>;
+      yield tlist;
+    } catch (e) {} finally {
+      isLoading(false);
+    }
+  }
+
+  Stream<List<TransactionModel>>? getNext() async* {
+    try {
+      String userId = PreferenceUtils.getString(user_id);
+      isLoading(true);
+      var response = PaginationRepoImpl().getNextTransactions(
+          userId, transactionType, DateTime.now(), [], lastFetchedSnapshot);
+      List<TransactionModel> tlist =
+          response.then((value) => value!.docs.map((element) {
+                return TransactionModel.fromJson(element.data());
+              }).toList()) as List<TransactionModel>;
+      //paginatedList.value.addAll(tlist);
+      yield tlist;
+    } catch (e) {} finally {
+      isLoading(false);
+    }
+  }
+
+  // void getFirst() async {
+  //   String userId = PreferenceUtils.getString(user_id);
+  //   print("Getting lists");
+  //   var response = await PaginationRepoImpl()
+  //       .getTransactions(userId, transactionType, DateTime.now(), []);
+  //   List<TransactionModel> trxList = response!.docs.map((e) {
+  //     lastFetchedSnapshot = e;
+  //     return TransactionModel.fromJson(e.data());
+  //   }).toList();
+  //   paginatedList.value.addAll(trxList);
+  //   paginatedList.value.forEach((element) {
+  //     print("avinash cat name ${element.catName}");
+  //   });
+  // }
+
+  // void getNext() async {
+  //   String userId = PreferenceUtils.getString(user_id);
+  //   print("Getting lists");
+  //   var response = await PaginationRepoImpl().getNextTransactions(
+  //       userId, transactionType, DateTime.now(), [], lastFetchedSnapshot);
+  //   List<TransactionModel> trxList = response!.docs.map((e) {
+  //     lastFetchedSnapshot = e;
+  //     return TransactionModel.fromJson(e.data());
+  //   }).toList();
+  //   paginatedList.value.addAll(trxList);
+  //   paginatedList.value.forEach((element) {
+  //     print("avinash next cat name ${element.catName}");
+  //   });
+  // }
 
   /**
  * pagination testing

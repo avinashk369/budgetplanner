@@ -20,7 +20,7 @@ class AdController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     loadBannerAd();
-    loadNativeAd();
+    //loadNativeAd();
     loadInterstitialAd();
     //_loadRewardedAd();
     super.onInit();
@@ -32,7 +32,7 @@ class AdController extends GetxController {
     super.onClose();
     interstitialAd?.dispose();
     bannerAd?.dispose();
-    ad?.dispose();
+    //ad?.dispose();
     rewardedAd?.dispose();
   }
 
@@ -121,25 +121,26 @@ class AdController extends GetxController {
     );
   }
 
-  NativeAd? ad;
-  void loadNativeAd() {
-    ad = NativeAd(
-      adUnitId: AdHelper.nativeAdUnitId,
-      factoryId: 'listTile',
-      request: AdRequest(),
-      listener: NativeAdListener(
-        onAdLoaded: (_) {
-          setNativeAdReady(true);
-        },
-        onAdFailedToLoad: (ad, error) {
-          // Releases an ad resource when it fails to load
-          ad.dispose();
-          setNativeAdReady(false);
-          print('Ad load failed (code=${error.code} message=${error.message})');
-        },
-      ),
-    );
+  /// need rework here to make this native ad work
+  // NativeAd? ad;
+  // void loadNativeAd() {
+  //   ad = NativeAd(
+  //     adUnitId: AdHelper.nativeAdUnitId,
+  //     factoryId: 'listTile',
+  //     request: AdRequest(),
+  //     listener: NativeAdListener(
+  //       onAdLoaded: (_) {
+  //         setNativeAdReady(true);
+  //       },
+  //       onAdFailedToLoad: (ad, error) {
+  //         // Releases an ad resource when it fails to load
+  //         ad.dispose();
+  //         setNativeAdReady(false);
+  //         print('Ad load failed (code=${error.code} message=${error.message})');
+  //       },
+  //     ),
+  //   );
 
-    ad?.load();
-  }
+  //   ad?.load();
+  // }
 }

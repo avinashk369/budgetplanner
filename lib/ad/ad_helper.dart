@@ -33,12 +33,13 @@ class AdHelper {
     }
   }
 
-  static String get nativeAdUnitId {
-    if (Platform.isAndroid) {
-      return androidBBNativeAdUnitId;
-    } else if (Platform.isIOS) {
-      return 'ca-app-pub-3940256099942544/3986624511';
-    }
-    throw new UnsupportedError("Unsupported platform");
-  }
+  /// its need rework as its ui is not adaptive and its not working properly
+  // static String get nativeAdUnitId {
+  //   if (Platform.isAndroid) {
+  //     return androidBBNativeAdUnitId;
+  //   } else if (Platform.isIOS) {
+  //     return 'ca-app-pub-3940256099942544/3986624511';
+  //   }
+  //   throw new UnsupportedError("Unsupported platform");
+  // }
 }

@@ -15,7 +15,7 @@ class _BannerInlinePageState extends State<BannerInlinePage> {
   static final _kAdIndex = 2;
 
   // TODO: Add a NativeAd instance
-  late NativeAd _ad;
+  //late NativeAd _ad;
 
   // TODO: Add _isAdLoaded
   bool _isAdLoaded = false;
@@ -32,27 +32,27 @@ class _BannerInlinePageState extends State<BannerInlinePage> {
   void initState() {
     super.initState();
 
-    // TODO: Create a NativeAd instance
-    _ad = NativeAd(
-      adUnitId: AdHelper.nativeAdUnitId,
-      factoryId: 'listTile',
-      request: AdRequest(),
-      listener: NativeAdListener(
-        onAdLoaded: (_) {
-          setState(() {
-            _isAdLoaded = true;
-          });
-        },
-        onAdFailedToLoad: (ad, error) {
-          // Releases an ad resource when it fails to load
-          ad.dispose();
+    // No longer required as more work is required to be done here
+    // _ad = NativeAd(
+    //   adUnitId: AdHelper.nativeAdUnitId,
+    //   factoryId: 'listTile',
+    //   request: AdRequest(),
+    //   listener: NativeAdListener(
+    //     onAdLoaded: (_) {
+    //       setState(() {
+    //         _isAdLoaded = true;
+    //       });
+    //     },
+    //     onAdFailedToLoad: (ad, error) {
+    //       // Releases an ad resource when it fails to load
+    //       ad.dispose();
 
-          print('Ad load failed (code=${error.code} message=${error.message})');
-        },
-      ),
-    );
+    //       print('Ad load failed (code=${error.code} message=${error.message})');
+    //     },
+    //   ),
+    // );
 
-    _ad.load();
+    // _ad.load();
   }
 
   @override
@@ -64,21 +64,28 @@ class _BannerInlinePageState extends State<BannerInlinePage> {
             LanguageData.getLanguageList().length + (_isAdLoaded ? 1 : 0),
         itemBuilder: (context, index) {
           // TODO: Render a banner ad
-          if (_isAdLoaded && index == _kAdIndex) {
-            return Container(
-              child: AdWidget(ad: _ad),
-              height: 72.0,
-              alignment: Alignment.center,
-            );
-          } else {
-            // TODO: Get adjusted item index from _getDestinationItemIndex()
-            LanguageDataModel item =
-                LanguageData.getLanguageList()[_getDestinationItemIndex(index)];
+          // if (_isAdLoaded && index == _kAdIndex) {
+          //   return Container(
+          //     child: AdWidget(ad: _ad),
+          //     height: 72.0,
+          //     alignment: Alignment.center,
+          //   );
+          // } else {
+          //   // TODO: Get adjusted item index from _getDestinationItemIndex()
+          //   LanguageDataModel item =
+          //       LanguageData.getLanguageList()[_getDestinationItemIndex(index)];
 
-            return ListTile(
-              title: Text(item.name),
-            );
-          }
+          //   return ListTile(
+          //     title: Text(item.name),
+          //   );
+          // }
+
+          LanguageDataModel item =
+              LanguageData.getLanguageList()[_getDestinationItemIndex(index)];
+
+          return ListTile(
+            title: Text(item.name),
+          );
         },
       ),
     );
@@ -87,7 +94,7 @@ class _BannerInlinePageState extends State<BannerInlinePage> {
   @override
   void dispose() {
     // TODO: Dispose a NativeAd object
-    _ad.dispose();
+    //_ad.dispose();
 
     super.dispose();
   }
