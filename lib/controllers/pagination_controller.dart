@@ -1,7 +1,6 @@
 import 'package:budgetplanner/models/budget_category_model.dart';
 import 'package:budgetplanner/models/transaction_model.dart';
 import 'package:budgetplanner/models/transaction_type_model.dart';
-import 'package:budgetplanner/resources/firestore/paginationRepoImpl.dart';
 import 'package:budgetplanner/utils/PreferenceUtils.dart';
 import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
@@ -38,14 +37,15 @@ class PaginationController extends GetxController {
     try {
       String userId = PreferenceUtils.getString(user_id);
       isLoading(true);
-      var response = PaginationRepoImpl()
-          .getTransactions(userId, transactionType, DateTime.now(), []);
-      List<TransactionModel> tlist =
-          response.then((value) => value!.docs.map((element) {
-                return TransactionModel.fromJson(element.data());
-              }).toList()) as List<TransactionModel>;
-      yield tlist;
-    } catch (e) {} finally {
+      // var response = PaginationRepoImpl()
+      //     .getTransactions(userId, transactionType, DateTime.now(), []);
+      // List<TransactionModel> tlist =
+      //     response.then((value) => value!.docs.map((element) {
+      //           return TransactionModel.fromJson(element.data());
+      //         }).toList()) as List<TransactionModel>;
+      // yield tlist;
+    } catch (e) {
+    } finally {
       isLoading(false);
     }
   }
@@ -54,15 +54,16 @@ class PaginationController extends GetxController {
     try {
       String userId = PreferenceUtils.getString(user_id);
       isLoading(true);
-      var response = PaginationRepoImpl().getNextTransactions(
-          userId, transactionType, DateTime.now(), [], lastFetchedSnapshot);
-      List<TransactionModel> tlist =
-          response.then((value) => value!.docs.map((element) {
-                return TransactionModel.fromJson(element.data());
-              }).toList()) as List<TransactionModel>;
-      //paginatedList.value.addAll(tlist);
-      yield tlist;
-    } catch (e) {} finally {
+      // var response = PaginationRepoImpl().getNextTransactions(
+      //     userId, transactionType, DateTime.now(), [], lastFetchedSnapshot);
+      // List<TransactionModel> tlist =
+      //     response.then((value) => value!.docs.map((element) {
+      //           return TransactionModel.fromJson(element.data());
+      //         }).toList()) as List<TransactionModel>;
+      // //paginatedList.value.addAll(tlist);
+      // yield tlist;
+    } catch (e) {
+    } finally {
       isLoading(false);
     }
   }

@@ -4,7 +4,6 @@ import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/authentication.dart';
 import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,36 +33,7 @@ class _EmailSigninState extends State<EmailSignin> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (state == AppLifecycleState.resumed) {
-      initDynamicLinks();
-    }
-  }
-
-  Future<void> initDynamicLinks() async {
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-      final Uri? deepLink = dynamicLink?.link;
-
-      if (deepLink != null) {
-        print("deep link path ${deepLink.path}");
-        // ignore: unawaited_futures
-        //Navigator.pushNamed(context, deepLink.path);
-        //Get.off(DynamicLinkScreen());
-      }
-    }, onError: (OnLinkErrorException e) async {
-      print('onLinkError');
-      print(e.message);
-    });
-
-    final PendingDynamicLinkData? data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri? deepLink = data?.link;
-
-    if (deepLink != null) {
-      // ignore: unawaited_futures
-      print("deep link path  data${deepLink.path}");
-      //Navigator.pushNamed(context, deepLink.path);
-    }
+    if (state == AppLifecycleState.resumed) {}
   }
 
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();

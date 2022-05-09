@@ -26,7 +26,7 @@ class SnackBarDialog {
       snackPosition: SnackPosition.BOTTOM,
       margin: EdgeInsets.all(15),
       isDismissible: true,
-      dismissDirection: SnackDismissDirection.HORIZONTAL,
+      dismissDirection: DismissDirection.horizontal,
       forwardAnimationCurve: Curves.easeOutBack,
       backgroundColor: redColor,
     );
@@ -54,7 +54,7 @@ class SnackBarDialog {
       snackPosition: SnackPosition.BOTTOM,
       margin: EdgeInsets.all(15),
       isDismissible: true,
-      dismissDirection: SnackDismissDirection.HORIZONTAL,
+      dismissDirection: DismissDirection.horizontal,
       forwardAnimationCurve: Curves.easeOutBack,
       backgroundColor: greyColor,
     );
@@ -64,7 +64,7 @@ class SnackBarDialog {
     return GetBar(
       borderRadius: 10,
       backgroundColor: greyColor,
-      dismissDirection: SnackDismissDirection.HORIZONTAL,
+      dismissDirection: DismissDirection.horizontal,
       icon: Container(
         margin: EdgeInsets.only(left: 5),
         height: 40,

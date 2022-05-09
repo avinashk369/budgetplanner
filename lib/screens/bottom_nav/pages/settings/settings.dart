@@ -155,7 +155,7 @@ class _SettingsState extends State<Settings> {
                                   PreferenceUtils.putString(
                                       currancy_symbol, currency.symbol);
                                   PreferenceUtils.putString(
-                                      currency_name, currency.flag);
+                                      currency_name, currency.flag!);
                                   controller.setCurrency(currency.symbol);
                                   setState(() {});
                                   print('Select currency: ${currency.symbol}');

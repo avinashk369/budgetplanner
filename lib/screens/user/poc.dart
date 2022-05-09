@@ -1,7 +1,5 @@
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 
 class Poc extends StatefulWidget {
   const Poc({Key? key}) : super(key: key);
@@ -22,69 +20,6 @@ class _PocState extends State<Poc> {
   @override
   void initState() {
     super.initState();
-    initDynamicLinks();
-  }
-
-  Future<void> initDynamicLinks() async {
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-      final Uri? deepLink = dynamicLink?.link;
-
-      if (deepLink != null) {
-        print("deep link path ${deepLink.path}");
-        // ignore: unawaited_futures
-        Navigator.pushNamed(context, deepLink.path);
-        Get.off(DynamicLinkScreen());
-      }
-    }, onError: (OnLinkErrorException e) async {
-      print('onLinkError');
-      print(e.message);
-    });
-
-    final PendingDynamicLinkData? data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri? deepLink = data?.link;
-
-    if (deepLink != null) {
-      // ignore: unawaited_futures
-      print("deep link path  data${deepLink.path}");
-      Navigator.pushNamed(context, deepLink.path);
-    }
-  }
-
-  Future<void> _createDynamicLink(bool short) async {
-    setState(() {
-      _isCreatingLink = true;
-    });
-
-    final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://mrbudget.page.link/',
-      link: Uri.parse('https://mrbudget.page.link/login'),
-      androidParameters: AndroidParameters(
-        packageName: 'com.finance.budgetplanner',
-        minimumVersion: 0,
-      ),
-      dynamicLinkParametersOptions: DynamicLinkParametersOptions(
-        shortDynamicLinkPathLength: ShortDynamicLinkPathLength.short,
-      ),
-      iosParameters: IosParameters(
-        bundleId: 'com.finance.budgetplanner',
-        minimumVersion: '0',
-      ),
-    );
-
-    Uri url;
-    if (short) {
-      final ShortDynamicLink shortLink = await parameters.buildShortLink();
-      url = shortLink.shortUrl;
-    } else {
-      url = await parameters.buildUrl();
-    }
-
-    setState(() {
-      _linkMessage = url.toString();
-      _isCreatingLink = false;
-    });
   }
 
   @override
@@ -103,9 +38,7 @@ class _PocState extends State<Poc> {
                   alignment: MainAxisAlignment.center,
                   children: <Widget>[
                     ElevatedButton(
-                      onPressed: !_isCreatingLink
-                          ? () => _createDynamicLink(true)
-                          : null,
+                      onPressed: null,
                       child: const Text('Get Short Link'),
                     ),
                   ],
