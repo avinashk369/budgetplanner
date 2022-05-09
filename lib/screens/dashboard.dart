@@ -5,6 +5,7 @@ import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/controller_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/custom_dialog.dart';
+import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/utils/route_constants.dart';
 import 'package:get/get.dart';
@@ -89,18 +90,28 @@ class _DashboardState extends State<Dashboard> {
                 topRight: Radius.circular(15.0),
               ),
               child: Obx(
-                () => BottomNavigationBar(
-                  currentIndex: controller.currentIndex.value,
-                  onTap: (int index) {
-                    checkCredsAndNavigate(index);
-                  },
-                  items: <BottomNavigationBarItem>[
-                    for (final tabItem in TabNavigationItem.items)
-                      BottomNavigationBarItem(
-                        icon: tabItem.icon,
-                        label: tabItem.title,
-                      ),
-                  ],
+                () => NavigationBarTheme(
+                  data: const NavigationBarThemeData(
+                    indicatorColor: Colors.deepPurple,
+                  ),
+                  child: NavigationBar(
+                    backgroundColor: Colors.white,
+                    height: 60,
+                    selectedIndex: controller.currentIndex.value,
+                    labelBehavior:
+                        NavigationDestinationLabelBehavior.alwaysHide,
+                    onDestinationSelected: (int index) {
+                      checkCredsAndNavigate(index);
+                    },
+                    destinations: [
+                      for (final tabItem in TabNavigationItem.items)
+                        NavigationDestination(
+                          icon: tabItem.icon,
+                          label: tabItem.title,
+                          selectedIcon: tabItem.selectedIcon,
+                        ),
+                    ],
+                  ),
                 ),
               )),
         ),

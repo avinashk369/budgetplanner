@@ -11,22 +11,32 @@ class TabNavigationItem {
   final Widget page;
   final String title;
   final Icon icon;
+  final Icon selectedIcon;
 
   TabNavigationItem({
     required this.page,
     required this.title,
     required this.icon,
+    required this.selectedIcon,
   });
 
   static List<TabNavigationItem> get items => [
         TabNavigationItem(
           page: HomePage(),
-          icon: Icon(EvaIcons.home),
+          icon: Icon(EvaIcons.homeOutline),
           title: homeTab.tr,
+          selectedIcon: Icon(
+            EvaIcons.home,
+            color: Colors.white,
+          ),
         ),
         TabNavigationItem(
           page: TransactionHistory(),
-          icon: Icon(Icons.timeline),
+          icon: Icon(Icons.timeline_outlined),
+          selectedIcon: Icon(
+            Icons.timeline,
+            color: Colors.white,
+          ),
           title: historyTab.tr,
         ),
         // TabNavigationItem(
@@ -36,12 +46,22 @@ class TabNavigationItem {
         // ),
         TabNavigationItem(
           page: BudgetEntry(),
-          icon: Icon(Icons.savings),
+          icon: Icon(
+            Icons.savings_outlined,
+          ),
+          selectedIcon: Icon(
+            Icons.savings,
+            color: Colors.white,
+          ),
           title: budgetTab.tr,
         ),
         TabNavigationItem(
           page: Settings(),
-          icon: Icon(Icons.settings),
+          icon: Icon(Icons.settings_outlined),
+          selectedIcon: Icon(
+            Icons.settings,
+            color: Colors.white,
+          ),
           title: settingsTab.tr,
         ),
       ];

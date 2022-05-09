@@ -11,14 +11,12 @@ import 'package:budgetplanner/utils/app_constants.dart';
 import 'package:budgetplanner/utils/category_constants.dart';
 import 'package:budgetplanner/utils/string_constants.dart';
 import 'package:budgetplanner/widgets/_ModalBottomSheetLayout.dart';
-import 'package:budgetplanner/widgets/config.dart';
 import 'package:budgetplanner/widgets/custom_theme.dart';
 import 'package:budgetplanner/widgets/expense_source_list.dart';
 import 'package:budgetplanner/widgets/loading_dialog.dart';
 import 'package:budgetplanner/widgets/loading_ui.dart';
 import 'package:budgetplanner/widgets/recurrance_list.dart';
 import 'package:budgetplanner/widgets/snack_bar.dart';
-import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -182,13 +180,11 @@ class ExpenseController extends BaseController {
       );
     } finally {
       isLoading(false);
-      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
 
       Get.showSnackbar(
-              SnackBarDialog.getSnanck(lbl_trx_updated.tr, transactionTab.tr))!
-          .whenComplete(() => Get.back(
-                canPop: true,
-              ));
+              SnackBarDialog.getSnanck(lbl_trx_updated.tr, transactionTab.tr))
+          .future;
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
     }
   }
 

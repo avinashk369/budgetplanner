@@ -247,13 +247,11 @@ class TransactionEntryController extends GetxController {
       );
     } finally {
       isLoading(false);
-      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
 
       Get.showSnackbar(SnackBarDialog.getSnanck(
-              lbl_budget_delete_success.tr, transactionTab.tr))!
-          .whenComplete(() => Get.back(
-                canPop: true,
-              ));
+              lbl_budget_delete_success.tr, transactionTab.tr))
+          .future;
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
     }
   }
 

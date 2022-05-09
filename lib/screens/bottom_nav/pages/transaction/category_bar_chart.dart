@@ -74,73 +74,83 @@ class _CategoryBarChartState extends State<CategoryBarChart> {
               ),
               titlesData: FlTitlesData(
                 show: true,
-                bottomTitles: SideTitles(
-                  showTitles: true,
-                  getTextStyles: (context, value) =>
-                      const TextStyle(color: Color(0xff939393), fontSize: 10),
-                  margin: 10,
-                  getTitles: (double value) {
-                    switch (value.toInt()) {
-                      case 0:
-                        return 'Jan';
-                      case 1:
-                        return 'Feb';
-                      case 2:
-                        return 'Mar';
-                      case 3:
-                        return 'Apr';
-                      case 4:
-                        return 'May';
-                      case 5:
-                        return 'Jun';
-                      case 6:
-                        return 'Jul';
-                      case 7:
-                        return 'Aug';
-                      case 8:
-                        return 'Sep';
-                      case 9:
-                        return 'Oct';
-                      case 10:
-                        return 'Nov';
-                      case 11:
-                        return 'Dec';
-                      default:
-                        return '';
-                    }
-                  },
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    getTitlesWidget: (double value, TitleMeta meta) {
+                      const style = TextStyle(
+                        color: Color(
+                          0xff939393,
+                        ),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                      );
+                      Widget text;
+                      switch (value.toInt()) {
+                        case 0:
+                          text = const Text('Jan', style: style);
+                          break;
+                        case 1:
+                          text = const Text('Feb', style: style);
+                          break;
+                        case 2:
+                          text = const Text('Mar', style: style);
+                          break;
+                        case 3:
+                          text = const Text('Apr', style: style);
+                          break;
+                        case 4:
+                          text = const Text('May', style: style);
+                          break;
+                        case 5:
+                          text = const Text('Jun', style: style);
+                          break;
+                        case 6:
+                          text = const Text('Jul', style: style);
+                          break;
+                        case 7:
+                          text = const Text('Aug', style: style);
+                          break;
+                        case 8:
+                          text = const Text('Sep', style: style);
+                          break;
+                        case 9:
+                          text = const Text('Oct', style: style);
+                          break;
+                        case 10:
+                          text = const Text('Nov', style: style);
+                          break;
+                        case 11:
+                          text = const Text('Dec', style: style);
+                          break;
+                        default:
+                          text = const Text('', style: style);
+                          break;
+                      }
+                      return Padding(
+                          padding: const EdgeInsets.only(top: 5), child: text);
+                    },
+                  ),
                 ),
-                leftTitles: SideTitles(
-                  interval: (MathUtils.gridSeparator(totalAmount) /
-                          (((totalAmount.toInt().toString().length % 2 == 0)
-                              ? totalAmount.toInt().toString().length
-                              : totalAmount.toInt().toString().length + 1)))
-                      .floorToDouble(),
-                  showTitles: true,
-                  getTextStyles: (context, value) => const TextStyle(
-                      color: Color(
-                        0xff939393,
-                      ),
-                      fontSize: 10),
-                  margin: 0,
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                      interval: (MathUtils.gridSeparator(totalAmount) /
+                              (((totalAmount.toInt().toString().length % 2 == 0)
+                                  ? totalAmount.toInt().toString().length
+                                  : totalAmount.toInt().toString().length + 1)))
+                          .floorToDouble(),
+                      showTitles: true,
+                      reservedSize: 40),
                 ),
-                rightTitles: SideTitles(
-                  showTitles: false,
-                  getTextStyles: (context, value) => const TextStyle(
-                      color: Color(
-                        0xff939393,
-                      ),
-                      fontSize: 10),
-                  margin: 0,
+                rightTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: false,
+                  ),
                 ),
-                topTitles: SideTitles(
-                  showTitles: false,
-                  getTextStyles: (context, value) => const TextStyle(
-                      color: Color(
-                        0xff939393,
-                      ),
-                      fontSize: 10),
-                  margin: 0,
+                topTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: false,
+                  ),
                 ),
               ),
               gridData: FlGridData(
@@ -175,7 +185,7 @@ class _CategoryBarChartState extends State<CategoryBarChart> {
             barRods: [
               BarChartRodData(
                   width: 20,
-                  y: element[0],
+                  toY: element[0],
                   rodStackItems: [
                     BarChartRodStackItem(0, 0, dark),
                     BarChartRodStackItem(0, 0, dark),

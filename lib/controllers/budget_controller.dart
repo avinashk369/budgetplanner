@@ -212,13 +212,11 @@ class BudgetController extends GetxController {
       );
     } finally {
       isLoading(false);
-      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
 
       Get.showSnackbar(
-              SnackBarDialog.getSnanck(lbl_budget_update.tr, budgetTab.tr))!
-          .whenComplete(() => Get.back(
-                canPop: true,
-              ));
+              SnackBarDialog.getSnanck(lbl_budget_update.tr, budgetTab.tr))
+          .future;
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
     }
   }
 
@@ -235,13 +233,11 @@ class BudgetController extends GetxController {
       );
     } finally {
       isLoading(false);
-      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
 
       Get.showSnackbar(SnackBarDialog.getSnanck(
-              lbl_budget_delete_success.tr, budgetTab.tr))!
-          .whenComplete(() => Get.back(
-                canPop: true,
-              ));
+              lbl_budget_delete_success.tr, budgetTab.tr))
+          .future;
+      Navigator.of(keyLoader.currentContext!, rootNavigator: true).pop();
     }
   }
 

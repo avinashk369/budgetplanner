@@ -106,49 +106,96 @@ class LineChartSample1State extends State<LineChartSample1> {
         show: false,
       ),
       titlesData: FlTitlesData(
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          getTextStyles: (context, value) => const TextStyle(
-            color: Color(0xff72719b),
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 22,
+            getTitlesWidget: (value, meta) {
+              const style = TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              );
+              Widget text;
+              switch (value.toInt()) {
+                case 2:
+                  text = const Text('S', style: style);
+                  break;
+                case 7:
+                  text = const Text('Feb', style: style);
+                  break;
+                case 2:
+                  text = const Text('Mar', style: style);
+                  break;
+                case 3:
+                  text = const Text('Apr', style: style);
+                  break;
+                case 4:
+                  text = const Text('May', style: style);
+                  break;
+                case 5:
+                  text = const Text('Jun', style: style);
+                  break;
+                case 6:
+                  text = const Text('Jul', style: style);
+                  break;
+                case 7:
+                  text = const Text('Aug', style: style);
+                  break;
+                case 8:
+                  text = const Text('Sep', style: style);
+                  break;
+                case 9:
+                  text = const Text('Oct', style: style);
+                  break;
+                case 10:
+                  text = const Text('Nov', style: style);
+                  break;
+                case 11:
+                  text = const Text('Dec', style: style);
+                  break;
+                default:
+                  text = const Text('', style: style);
+                  break;
+              }
+              return Padding(
+                  padding: const EdgeInsets.only(top: 16), child: text);
+            },
           ),
-          margin: 10,
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 2:
-                return 'SEPT';
-              case 7:
-                return 'OCT';
-              case 12:
-                return 'DEC';
-            }
-            return '';
-          },
         ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (context, value) => const TextStyle(
-            color: Color(0xff75729e),
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              const style = TextStyle(
+                color: Color(0xff75729e),
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              );
+              Widget text;
+              switch (value.toInt()) {
+                case 1:
+                  text = const Text('1m', style: style);
+                  break;
+                case 2:
+                  text = const Text('2m', style: style);
+                  break;
+                case 3:
+                  text = const Text('3m', style: style);
+                  break;
+                case 4:
+                  text = const Text('5m', style: style);
+                  break;
+
+                default:
+                  text = const Text('', style: style);
+                  break;
+              }
+              return Padding(
+                  padding: const EdgeInsets.only(top: 16), child: text);
+            },
+            reservedSize: 30,
           ),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '1m';
-              case 2:
-                return '2m';
-              case 3:
-                return '3m';
-              case 4:
-                return '5m';
-            }
-            return '';
-          },
-          margin: 8,
-          reservedSize: 30,
         ),
       ),
       borderData: FlBorderData(
@@ -189,9 +236,7 @@ class LineChartSample1State extends State<LineChartSample1> {
         FlSpot(13, 1.8),
       ],
       isCurved: true,
-      colors: [
-        const Color(0xff4af699),
-      ],
+      color: const Color(0xff4af699),
       barWidth: 8,
       isStrokeCapRound: true,
       dotData: FlDotData(
@@ -211,17 +256,16 @@ class LineChartSample1State extends State<LineChartSample1> {
         FlSpot(13, 3.9),
       ],
       isCurved: true,
-      colors: [
-        const Color(0xffaa4cfc),
-      ],
+      color: const Color(0xffaa4cfc),
       barWidth: 8,
       isStrokeCapRound: true,
       dotData: FlDotData(
         show: false,
       ),
-      belowBarData: BarAreaData(show: false, colors: [
-        const Color(0x00aa4cfc),
-      ]),
+      belowBarData: BarAreaData(
+        show: false,
+        color: const Color(0x00aa4cfc),
+      ),
     );
     final lineChartBarData3 = LineChartBarData(
       spots: [
@@ -232,9 +276,7 @@ class LineChartSample1State extends State<LineChartSample1> {
         FlSpot(13, 2.5),
       ],
       isCurved: true,
-      colors: const [
-        Color(0xff27b6fc),
-      ],
+      color: const Color(0xff27b6fc),
       barWidth: 8,
       isStrokeCapRound: true,
       dotData: FlDotData(
@@ -260,51 +302,62 @@ class LineChartSample1State extends State<LineChartSample1> {
         show: false,
       ),
       titlesData: FlTitlesData(
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          getTextStyles: (context, value) => const TextStyle(
-            color: Color(0xff72719b),
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 22,
+            getTitlesWidget: (value, meta) {
+              const style = TextStyle(
+                color: Color(0xff72719b),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              );
+              Widget text;
+              switch (value.toInt()) {
+                case 2:
+                  text = const Text('SEPT', style: style);
+                  break;
+                case 7:
+                  text = const Text('OCT', style: style);
+                  break;
+                case 12:
+                  text = const Text('DEC', style: style);
+                  break;
+                default:
+                  text = const Text('', style: style);
+                  break;
+              }
+              return Padding(
+                  padding: const EdgeInsets.only(top: 16), child: text);
+            },
           ),
-          margin: 10,
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 2:
-                return 'SEPT';
-              case 7:
-                return 'OCT';
-              case 12:
-                return 'DEC';
-            }
-            return '';
-          },
         ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (context, value) => const TextStyle(
-            color: Color(0xff75729e),
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              const style = TextStyle(
+                color: Color(0xff75729e),
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              );
+              Widget text;
+              switch (value.toInt()) {
+                case 1:
+                  return const Text('1m', style: style);
+                case 2:
+                  return const Text('v2m', style: style);
+                case 3:
+                  return const Text('3m', style: style);
+                case 4:
+                  return const Text('5m', style: style);
+                case 5:
+                  return const Text('v6m', style: style);
+              }
+              return const Text('', style: style);
+            },
+            reservedSize: 30,
           ),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '1m';
-              case 2:
-                return '2m';
-              case 3:
-                return '3m';
-              case 4:
-                return '5m';
-              case 5:
-                return '6m';
-            }
-            return '';
-          },
-          margin: 8,
-          reservedSize: 30,
         ),
       ),
       borderData: FlBorderData(
@@ -346,9 +399,7 @@ class LineChartSample1State extends State<LineChartSample1> {
         ],
         isCurved: true,
         curveSmoothness: 0,
-        colors: const [
-          Color(0x444af699),
-        ],
+        color: const Color(0x444af699),
         barWidth: 4,
         isStrokeCapRound: true,
         dotData: FlDotData(
@@ -368,17 +419,16 @@ class LineChartSample1State extends State<LineChartSample1> {
           FlSpot(13, 3.9),
         ],
         isCurved: true,
-        colors: const [
-          Color(0x99aa4cfc),
-        ],
+        color: const Color(0x99aa4cfc),
         barWidth: 4,
         isStrokeCapRound: true,
         dotData: FlDotData(
           show: false,
         ),
-        belowBarData: BarAreaData(show: true, colors: [
-          const Color(0x33aa4cfc),
-        ]),
+        belowBarData: BarAreaData(
+          show: true,
+          color: const Color(0x33aa4cfc),
+        ),
       ),
       LineChartBarData(
         spots: [
@@ -390,9 +440,7 @@ class LineChartSample1State extends State<LineChartSample1> {
         ],
         isCurved: true,
         curveSmoothness: 0,
-        colors: const [
-          Color(0x4427b6fc),
-        ],
+        color: const Color(0x4427b6fc),
         barWidth: 2,
         isStrokeCapRound: true,
         dotData: FlDotData(show: true),
