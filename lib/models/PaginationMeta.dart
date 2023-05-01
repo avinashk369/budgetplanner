@@ -4,11 +4,11 @@ part 'PaginationMeta.g.dart';
 @JsonSerializable()
 class PaginationMeta {
   @JsonKey(name: 'url')
-  late dynamic? url;
+  dynamic url;
   @JsonKey(name: 'label')
-  late dynamic? label;
+  dynamic label;
   @JsonKey(name: 'active')
-  late bool? active;
+  bool? active;
 
   PaginationMeta();
   factory PaginationMeta.fromJson(Map<String, dynamic> json) =>

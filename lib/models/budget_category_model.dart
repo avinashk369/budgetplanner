@@ -7,7 +7,7 @@ class BudgetCategoryModel {
   String? id;
   @JsonKey(name: "name")
   String? name;
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false)
   bool isSelected = false;
 
   BudgetCategoryModel();

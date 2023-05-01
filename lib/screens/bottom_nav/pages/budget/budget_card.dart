@@ -60,19 +60,25 @@ class BudgetCard extends StatelessWidget {
                                         budgetModel.amount!,
                                         budgetModel.totalBudgetExpense.value)
                                     .toString(),
-                                style: kTitleStyle.copyWith(
-                                    color: (currentTheme.currentTheme ==
-                                            ThemeMode.dark)
-                                        ? shade
-                                        : kPink),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineLarge!
+                                    .copyWith(
+                                        color: (currentTheme.currentTheme ==
+                                                ThemeMode.dark)
+                                            ? shade
+                                            : kPink),
                               ),
                               TextSpan(
                                   text: '%',
-                                  style: kTitleStyleSmall.copyWith(
-                                      color: (currentTheme.currentTheme ==
-                                              ThemeMode.dark)
-                                          ? shade
-                                          : kPink)),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
+                                      .copyWith(
+                                          color: (currentTheme.currentTheme ==
+                                                  ThemeMode.dark)
+                                              ? shade
+                                              : kPink)),
                             ],
                           ),
                         )
@@ -80,7 +86,7 @@ class BudgetCard extends StatelessWidget {
                     );
                   },
                   appearance: CircularSliderAppearance(
-                      size: Get.height * .16,
+                      size: Get.height * .14,
                       startAngle: 280,
                       angleRange: 350,
                       customColors: CustomSliderColors(
@@ -117,8 +123,10 @@ class BudgetCard extends StatelessWidget {
               ),
               child: Text(
                 budgetModel.catName!,
-                style: kLabelStyleBold.apply(
-                    color: Theme.of(context).primaryColor),
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).primaryColor,
+                    ),
               ),
             ),
             Spacer(flex: 1),
@@ -137,14 +145,23 @@ class BudgetCard extends StatelessWidget {
                           Text(
                             controller.currencySymbol +
                                 budgetModel.amount.toString(),
-                            style: kLabelStyle.apply(
-                                color: Theme.of(context).primaryColor),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    color: Theme.of(context).primaryColor),
                           ),
                           Obx(() => Text(
                                 controller.currencySymbol +
                                     budgetModel.totalBudgetExpense.value
                                         .toString(),
-                                style: kLabelStyle.apply(color: shade),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        color: shade),
                               )),
                         ],
                       )),

@@ -27,7 +27,7 @@ class BudgetHeader extends GetView<BudgetController> {
           ),
           Text(
             budgetTab.tr,
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.headlineLarge,
           ),
           SizedBox(
             height: 10,

@@ -50,7 +50,10 @@ class _GroupedListState extends State<GroupedList> {
                   backgroundColor: Colors.purple[600],
                   label: Text(
                     DateFormatter().getVerboseDateTimeRepresentation(value),
-                    style: kLabelStyleBold.apply(color: whiteColor),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: whiteColor,
+                          fontWeight: FontWeight.w700,
+                        ),
                   ),
                 )),
           ],

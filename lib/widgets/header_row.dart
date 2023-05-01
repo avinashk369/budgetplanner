@@ -11,6 +11,7 @@ import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
@@ -45,37 +46,42 @@ class HeaderRow extends StatelessWidget {
                 Flexible(
                   flex: 2,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const Spacer(),
                       Text(
                         DateFormat('LLL').format(DateTime.now()) +
                             " " +
                             DateFormat('d').format(DateTime.now()),
-                        style: Theme.of(context).textTheme.headline1,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineLarge!
+                            .copyWith(fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
                         height: 20,
                       ),
                       Text(
                         total_balance.tr.toUpperCase(),
-                        style: kLabelStyleBold.copyWith(
-                            color: Theme.of(context).hintColor, fontSize: 12),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Theme.of(context).hintColor.withOpacity(.8),
+                            fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 2,
                       ),
                       Text(
                           controller.currencySymbol +
                               (income - expense).toString(),
-                          style: kLabelStyleBold.copyWith(
-                            color: ((income - expense) > 0)
-                                ? greenbuttoncolor
-                                : redColor,
-                          )),
-                      SizedBox(
-                        height: 20,
-                      ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    color: ((income - expense) > 0)
+                                        ? greenbuttoncolor
+                                        : redColor,
+                                  )),
+                      const Spacer(),
                       Container(
                         child: Row(
                           children: [
@@ -84,18 +90,25 @@ class HeaderRow extends StatelessWidget {
                               children: [
                                 Text(
                                   total_income.tr.toUpperCase(),
-                                  style: kLabelStyleBold.copyWith(
-                                      color: Theme.of(context).hintColor,
-                                      fontSize: 12),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          color: darkColor.withOpacity(.8),
+                                          fontWeight: FontWeight.w700),
                                 ),
                                 SizedBox(
-                                  height: 5,
+                                  height: 2,
                                 ),
                                 Text(
                                   controller.currencySymbol + income.toString(),
-                                  style: kLabelStyleBold.copyWith(
-                                    color: greenbuttoncolor,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        color: greenbuttoncolor,
+                                      ),
                                 )
                               ],
                             ),
@@ -104,7 +117,7 @@ class HeaderRow extends StatelessWidget {
                             ),
                             Container(
                               width: 1,
-                              height: 40,
+                              height: 30,
                               color:
                                   (CustomTheme().currentTheme == ThemeMode.dark)
                                       ? Colors.black26
@@ -118,19 +131,26 @@ class HeaderRow extends StatelessWidget {
                               children: [
                                 Text(
                                   total_expense.tr.toUpperCase(),
-                                  style: kLabelStyleBold.copyWith(
-                                      color: Theme.of(context).hintColor,
-                                      fontSize: 12),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          color: darkColor.withOpacity(.8),
+                                          fontWeight: FontWeight.w700),
                                 ),
                                 SizedBox(
-                                  height: 5,
+                                  height: 2,
                                 ),
                                 Text(
                                   controller.currencySymbol +
                                       expense.toString(),
-                                  style: kLabelStyleBold.copyWith(
-                                    color: redColor,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        color: redColor,
+                                      ),
                                 ),
                               ],
                             ),
@@ -141,8 +161,9 @@ class HeaderRow extends StatelessWidget {
                   ),
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    const Spacer(),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 0),
                       child: SleekCircularSlider(
@@ -157,14 +178,20 @@ class HeaderRow extends StatelessWidget {
                                       text: MathUtils.getPercentage(
                                               income, expense)
                                           .toString(),
-                                      style:
-                                          Theme.of(context).textTheme.headline1,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineLarge!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w700),
                                     ),
                                     TextSpan(
                                         text: '%',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headline2),
+                                            .headlineMedium!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w700,
+                                                color: shade)),
                                   ],
                                 ),
                               )
@@ -172,7 +199,7 @@ class HeaderRow extends StatelessWidget {
                           );
                         },
                         appearance: CircularSliderAppearance(
-                            size: Get.height * .20,
+                            size: Get.height * .18,
                             startAngle: 280,
                             angleRange: 350,
                             customColors: CustomSliderColors(
@@ -198,20 +225,25 @@ class HeaderRow extends StatelessWidget {
                         onChangeStart: (value) {},
                       ),
                     ),
+                    const Spacer(),
                     ChoiceChip(
                       label: RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                          text: "View report ",
-                          style: kLabelStyle.copyWith(
-                              fontSize: 14, color: Theme.of(context).hintColor),
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "View report >",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      color: Theme.of(context)
+                                          .hintColor
+                                          .withOpacity(.8)),
+                            ),
+                          ],
                         ),
-                        TextSpan(
-                          text: ">",
-                          style: kLabelStyle.copyWith(
-                              fontSize: 14, color: Theme.of(context).hintColor),
-                        ),
-                      ])),
+                      ),
                       onSelected: (value) {
                         Get.to(TransactionReport());
                       },

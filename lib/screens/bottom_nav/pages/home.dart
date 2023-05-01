@@ -80,20 +80,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   void showRewardAd() {
-    print("  reward earned");
     //to display rewarded ad
     if (adCont.isRewardedAdReady.value) {
       adCont.rewardedAd?.show(
-        onUserEarnedReward: (ad, reward) {
-          print("${reward.amount} amount earned");
-        },
+        onUserEarnedReward: (ad, reward) {},
       );
     }
   }
 
   void getUserData() async {
     userModel = await controller.getUserDetail(userId);
-    print("User info ${userModel?.email}");
+    //print("User info ${userModel?.email}");
   }
 
   Future getPromotions() async {
@@ -118,215 +115,255 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.of(context).pushNamed(addTransactionRoute);
         },
-        icon: Icon(Icons.edit, color: Theme.of(context).primaryColor),
-        label: Text(
-          transactionTab.tr,
-          style: kLabelStyleBold.copyWith(
-              color: Theme.of(context).primaryColor, letterSpacing: 1.2),
+        backgroundColor: redColor,
+
+        icon: Icon(
+          Icons.edit,
+          color: Theme.of(context).primaryColor,
+          size: 18,
+        ),
+        label: Padding(
+          padding: const EdgeInsets.only(bottom: 3),
+          child: Text(
+            transactionTab.tr,
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).primaryColor,
+                letterSpacing: 1.2),
+          ),
         ),
       ),
-      body: NestedScrollView(
-        controller: _controller,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              expandedHeight: MediaQuery.of(context).size.height * .35,
-              floating: false,
-              pinned: true,
-              elevation: 0,
-              flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Text(
-                    myTitle,
-                    style: kLabelStyle.copyWith(
-                      color: Theme.of(context).hintColor,
-                      fontSize: 18,
+      body: SafeArea(
+        child: NestedScrollView(
+          controller: _controller,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                expandedHeight: MediaQuery.of(context).size.height * .28,
+                floating: false,
+                pinned: true,
+                elevation: 0,
+                flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
+                    title: Text(
+                      myTitle,
+                      style:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                color: shade,
+                                fontWeight: FontWeight.w700,
+                              ),
                     ),
-                  ),
-                  background: Obx(() => (!transactionController.isLoading())
-                      ? HeaderRow(
-                          income: transactionController.totalIncome.value,
-                          expense: transactionController.totalExpense.value,
-                        )
-                      : Container())),
-            ),
-          ];
-        },
-        body: CustomScrollView(
-          physics: BouncingScrollPhysics(),
-          slivers: [
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: 10,
+                    background: Obx(() => (!transactionController.isLoading())
+                        ? HeaderRow(
+                            income: transactionController.totalIncome.value,
+                            expense: transactionController.totalExpense.value,
+                          )
+                        : Container())),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: PromotionalScreen(),
+            ];
+          },
+          body: CustomScrollView(
+            physics: BouncingScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 0,
+                ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Obx(
-                () => transactionController.budgetList.isNotEmpty
-                    ? Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              padding:
-                                  EdgeInsets.only(top: 10, bottom: 5, left: 10),
-                              child: Text(
-                                monthly_budget.tr,
-                                style: kHeaderStyle.copyWith(
-                                    fontSize: 16,
-                                    color: Theme.of(context).hintColor),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: PromotionalScreen(),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Obx(
+                  () => transactionController.budgetList.isNotEmpty
+                      ? Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, bottom: 5, left: 10),
+                                child: Text(
+                                  monthly_budget.tr,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .hintColor
+                                              .withOpacity(.8),
+                                          fontWeight: FontWeight.w700),
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: ChoiceChip(
-                              label: RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                  text: "View all ",
-                                  style: kLabelStyle.copyWith(
-                                      fontSize: 14,
-                                      color: Theme.of(context).hintColor),
-                                ),
-                              ])),
-                              onSelected: (value) {
-                                dashController.setindex(2);
-                              },
-                              selected: true,
-                              selectedColor:
-                                  CustomTheme().currentTheme == ThemeMode.dark
-                                      ? kDarkGrey
-                                      : Colors.grey[100],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: ChoiceChip(
+                                label: RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(
+                                    text: "View all ",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          color: Theme.of(context)
+                                              .hintColor
+                                              .withOpacity(.8),
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                  ),
+                                ])),
+                                onSelected: (value) {
+                                  dashController.setindex(2);
+                                },
+                                selected: true,
+                                selectedColor:
+                                    CustomTheme().currentTheme == ThemeMode.dark
+                                        ? kDarkGrey
+                                        : Colors.grey[100],
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                    : SizedBox(),
+                          ],
+                        )
+                      : SizedBox(),
+                ),
               ),
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Obx(
-                      () => Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: (transactionController.budgetList.isNotEmpty)
-                            ? MediaQuery.of(context).size.height * .30
-                            : MediaQuery.of(context).size.height * .45,
-                        decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Colors.transparent, width: 0),
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Obx(
+                        () => Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: (transactionController.budgetList.isNotEmpty)
+                              ? MediaQuery.of(context).size.height * .30
+                              : MediaQuery.of(context).size.height * .45,
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.transparent, width: 0),
+                          ),
+                          child: Obx(() {
+                            if (transactionController.budgetList.isEmpty) {
+                              return NoData(
+                                title: lbl_no_budget.tr,
+                                message: desc_no_budget.tr,
+                                imageUrl: 'assets/bl4.png',
+                                index: 2,
+                                goTo: () {
+                                  dashController.setindex(2);
+                                },
+                              );
+                            } else {
+                              return controller.isLoading()
+                                  ? BudgetShimmer()
+                                  : BudgetList(
+                                      budgetModel:
+                                          transactionController.budgetList,
+                                    );
+                            }
+                          }),
                         ),
-                        child: Obx(() {
-                          if (transactionController.budgetList.isEmpty) {
-                            return NoData(
-                              title: lbl_no_budget.tr,
-                              message: desc_no_budget.tr,
-                              imageUrl: 'assets/bl4.png',
-                              index: 2,
-                              goTo: () {
-                                dashController.setindex(2);
-                              },
-                            );
-                          } else {
-                            return controller.isLoading()
-                                ? BudgetShimmer()
-                                : BudgetList(
-                                    budgetModel:
-                                        transactionController.budgetList,
-                                  );
-                          }
-                        }),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Obx(
-                () => transactionController.recentTransactionList.isNotEmpty
-                    ? Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              padding:
-                                  EdgeInsets.only(top: 10, bottom: 5, left: 10),
-                              child: Text(
-                                recent_transaction.tr,
-                                style: kHeaderStyle.copyWith(
-                                    fontSize: 16,
-                                    color: Theme.of(context).hintColor),
+              SliverToBoxAdapter(
+                child: Obx(
+                  () => transactionController.recentTransactionList.isNotEmpty
+                      ? Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    top: 10, bottom: 5, left: 10),
+                                child: Text(
+                                  recent_transaction.tr,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                        color: Theme.of(context)
+                                            .hintColor
+                                            .withOpacity(.8),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: ChoiceChip(
-                              label: RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                  text: "View all ",
-                                  style: kLabelStyle.copyWith(
-                                      fontSize: 14,
-                                      color: Theme.of(context).hintColor),
-                                ),
-                              ])),
-                              onSelected: (value) {
-                                dashController.setindex(1);
-                              },
-                              selected: true,
-                              selectedColor:
-                                  CustomTheme().currentTheme == ThemeMode.dark
-                                      ? kDarkGrey
-                                      : Colors.grey[100],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: ChoiceChip(
+                                label: RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(
+                                    text: "View all ",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          color: Theme.of(context)
+                                              .hintColor
+                                              .withOpacity(.8),
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                  ),
+                                ])),
+                                onSelected: (value) {
+                                  dashController.setindex(1);
+                                },
+                                selected: true,
+                                selectedColor:
+                                    CustomTheme().currentTheme == ThemeMode.dark
+                                        ? kDarkGrey
+                                        : Colors.grey[100],
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                    : SizedBox(),
+                          ],
+                        )
+                      : SizedBox(),
+                ),
               ),
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  Container(
-                    child: Obx(() {
-                      if (transactionController.recentTransactionList.isEmpty) {
-                        return NoData(
-                          title: lbl_no_transaction.tr,
-                          message: desc_no_transaction.tr,
-                          imageUrl: 'assets/grp.png',
-                          index: 2,
-                          goTo: () {
-                            Navigator.of(context)
-                                .pushNamed(addTransactionRoute);
-                          },
-                        );
-                      } else {
-                        return controller.isLoading()
-                            ? TrxShimmer()
-                            : RecentTransaction(
-                                transactionModelList:
-                                    transactionController.recentTransactionList,
-                              );
-                      }
-                    }),
-                  )
-                ],
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    Container(
+                      child: Obx(() {
+                        if (transactionController
+                            .recentTransactionList.isEmpty) {
+                          return NoData(
+                            title: lbl_no_transaction.tr,
+                            message: desc_no_transaction.tr,
+                            imageUrl: 'assets/grp.png',
+                            index: 2,
+                            goTo: () {
+                              Navigator.of(context)
+                                  .pushNamed(addTransactionRoute);
+                            },
+                          );
+                        } else {
+                          return controller.isLoading()
+                              ? TrxShimmer()
+                              : RecentTransaction(
+                                  transactionModelList: transactionController
+                                      .recentTransactionList,
+                                );
+                        }
+                      }),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -76,10 +76,11 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                 padding: EdgeInsets.only(top: 6.0),
                 child: Text(
                   lbl_history.tr,
-                  style: kLabelStyle.copyWith(
-                    color: Theme.of(context).hintColor,
-                    fontSize: 18,
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        color: Theme.of(context).hintColor.withOpacity(.8),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                 )),
           ],
         ),
@@ -91,7 +92,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                     Icons.arrow_back_ios,
                     size: 20,
                   ),
-                  color: Theme.of(context).hintColor,
+                  color: Theme.of(context).hintColor.withOpacity(.8),
                   onPressed: () {
                     controller.setNextMonth(controller.nextMonth.value - 1);
                     controller.setPrevMonth(controller.nextMonth.value + 1 - 1);
@@ -128,10 +129,11 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                           DateTime(date.year,
                               date.month + controller.nextMonth.value, 0),
                         ),
-                    style: kLabelStyle.copyWith(
-                      color: Theme.of(context).hintColor,
-                      fontSize: 18,
-                    ),
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18,
+                          color: Theme.of(context).hintColor.withOpacity(.8),
+                        ),
                   ),
                 ),
               ),
@@ -140,7 +142,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                     Icons.arrow_forward_ios,
                     size: 20,
                   ),
-                  color: Theme.of(context).hintColor,
+                  color: Theme.of(context).hintColor.withOpacity(.8),
                   onPressed: () {
                     controller.setNextMonth(controller.nextMonth.value + 1);
                     print("next month ${controller.nextMonth.value}");
@@ -209,11 +211,19 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                                         Theme.of(context).colorScheme.secondary,
                                     selectedColor:
                                         Theme.of(context).colorScheme.secondary,
-                                    label: Text(
-                                      "Clear",
-                                      style: kLabelStyle.copyWith(
-                                          color:
-                                              Theme.of(context).primaryColor),
+                                    label: Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(8, 0, 8, 3),
+                                      child: Text(
+                                        "Clear",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w700,
+                                                color: Theme.of(context)
+                                                    .primaryColor),
+                                      ),
                                     ),
                                     selected: true,
                                   ),
@@ -397,9 +407,14 @@ class _TransactionHistoryState extends State<TransactionHistory> {
             showCheckmark: false,
             backgroundColor: Colors.grey.shade200,
             selectedColor: Colors.grey.shade200,
-            label: Text(
-              expenseSourceList[index].name!,
-              style: kLabelStyle.copyWith(color: Colors.black),
+            label: Padding(
+              padding: const EdgeInsets.only(bottom: 3),
+              child: Text(
+                expenseSourceList[index].name!,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: darkColor.withOpacity(.8)),
+              ),
             ),
             selected: true,
           ),

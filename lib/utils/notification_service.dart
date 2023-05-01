@@ -56,8 +56,8 @@ class NotificationService {
     }
     final AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/logo');
-    final IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings(
+    final DarwinInitializationSettings initializationSettingsIOS =
+        DarwinInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
       requestAlertPermission: false,
@@ -73,7 +73,8 @@ class NotificationService {
     tz.setLocalLocation(tz.getLocation(timeZoneName!));
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onSelectNotification: selectNotification,
+      onDidReceiveNotificationResponse: (payload) =>
+          selectNotification(payload.payload),
     );
     // first get all the notifications
     () async {
@@ -206,8 +207,8 @@ class NotificationService {
       importance: Importance.max,
       styleInformation: bigPictureStyleInformation,
     );
-    final iOS = IOSNotificationDetails(
-        attachments: [IOSNotificationAttachment(attachmentPicturePath)]);
+    final iOS = DarwinNotificationDetails(
+        attachments: [DarwinNotificationAttachment(attachmentPicturePath)]);
     final platform = NotificationDetails(android: android, iOS: iOS);
     final json = jsonEncode(downloadStatus);
     final isSuccess = downloadStatus['isSuccess'];
@@ -396,8 +397,8 @@ class NotificationService {
   Future<void> showNotificationWithAttachment() async {
     var attachmentPicturePath = await _downloadAndSaveFile(
         'https://via.placeholder.com/800x200', 'attachment_img.jpg');
-    var iOSPlatformSpecifics = IOSNotificationDetails(
-      attachments: [IOSNotificationAttachment(attachmentPicturePath)],
+    var iOSPlatformSpecifics = DarwinNotificationDetails(
+      attachments: [DarwinNotificationAttachment(attachmentPicturePath)],
     );
     var bigPictureStyleInformation = BigPictureStyleInformation(
       FilePathAndroidBitmap(attachmentPicturePath),

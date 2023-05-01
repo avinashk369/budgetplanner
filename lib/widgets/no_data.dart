@@ -41,10 +41,10 @@ class NoData extends StatelessWidget {
                 Text(
                   title,
                   textAlign: TextAlign.left,
-                  style: TextStyle(
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: heenColor,
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic),
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
                   height: 5,
@@ -52,19 +52,20 @@ class NoData extends StatelessWidget {
                 Text(
                   message,
                   textAlign: TextAlign.left,
-                  style: kLabelStyle.copyWith(
-                    color: Theme.of(context).hintColor,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Theme.of(context).hintColor.withOpacity(.6),
+                      fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.zero,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0)),
-                    minimumSize: Size(50, 50),
-                    primary: whiteColor,
+                    minimumSize: Size(40, 40),
+                    backgroundColor: whiteColor,
                     side: BorderSide(
                       color: heenColor,
                       width: 1,
@@ -76,7 +77,8 @@ class NoData extends StatelessWidget {
                   },
                   child: Icon(
                     Icons.arrow_forward_ios,
-                    color: Theme.of(context).hintColor,
+                    color: Theme.of(context).hintColor.withOpacity(.8),
+                    size: 20,
                   ),
                 ),
                 SizedBox(

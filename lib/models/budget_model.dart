@@ -20,7 +20,7 @@ class BudgetModel {
   DateTime? createdOn;
   @JsonKey(name: "updated_on")
   DateTime? updatedOn;
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false)
   var totalBudgetExpense = 0.0.obs;
   setTotalBudgetExpense(double total) => totalBudgetExpense(total);
   BudgetModel();

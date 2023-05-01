@@ -4,6 +4,7 @@ import 'package:budgetplanner/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:budgetplanner/widgets/theme_constants.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomTheme with ChangeNotifier {
   static bool _isDarkTheme = PreferenceUtils.getBool(theme_mode);
@@ -80,20 +81,16 @@ class CustomTheme with ChangeNotifier {
         ),
       ),
       brightness: Brightness.light,
-      fontFamily: 'Montserrat',
+      fontFamily: GoogleFonts.lato().fontFamily!,
       textTheme: TextTheme(
-        headline1: kTitleStyle.copyWith(color: shade),
-        headline2: kTitleStyleSmall.copyWith(color: shade),
-        headline3: kQuoteStyle.copyWith(color: shade),
-        caption: kLabelStyle.copyWith(color: shade),
-        bodyText1: TextStyle(
-          color: darkColor,
-          fontSize: 18,
-        ),
-        subtitle1: TextStyle(
-          color: darkColor,
-          fontSize: 14,
-        ),
+        headlineSmall: kHeadlineSmall,
+        headlineMedium: kHeadlineMedium,
+        headlineLarge: kHeadlineLarge,
+        bodySmall: kBodySmall,
+        bodyLarge: kBodyLarge,
+        bodyMedium: kBodyMedium,
+        titleLarge: kTittleLarge,
+        titleMedium: kTittleMedium,
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
@@ -184,17 +181,17 @@ class CustomTheme with ChangeNotifier {
         ),
       ),
       brightness: Brightness.dark,
-      fontFamily: 'Montserrat',
+      fontFamily: GoogleFonts.lato().fontFamily!,
       textTheme: TextTheme(
-        headline1: kTitleStyle,
-        headline2: kTitleStyleSmall,
-        headline3: kQuoteStyle,
-        caption: kLabelStyle,
-        bodyText1: TextStyle(
+        headlineSmall: kHeadlineSmall,
+        headlineMedium: kHeadlineMedium,
+        headlineLarge: kHeadlineLarge,
+        bodySmall: kLabelStyle,
+        bodyLarge: TextStyle(
           color: whiteColor,
           fontSize: 18,
         ),
-        subtitle1: TextStyle(
+        titleMedium: TextStyle(
           color: whiteColor,
           fontSize: 14,
         ),

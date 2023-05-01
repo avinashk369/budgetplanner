@@ -41,10 +41,10 @@ class TransactionCard extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Container(
-                  width: 40.0,
-                  height: 40,
+                  width: 35.0,
+                  height: 35.0,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(4.0),
                     color: DataRepositoryImpl()
                         .iconUrl(transactionModel.catName!)!
                         .colorName,
@@ -67,50 +67,63 @@ class TransactionCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          transactionModel.catName.toString(),
-                          style: kLabelStyle.copyWith(
-                              fontSize: 15, color: Theme.of(context).hintColor),
-                        ),
-                        SizedBox(
-                          height: 3,
+                        Row(
+                          children: [
+                            Text(
+                              transactionModel.catName.toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    color: Theme.of(context)
+                                        .hintColor
+                                        .withOpacity(.8),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              height: 20,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(3)),
+                                color: (transactionModel.transactionType ==
+                                        expense)
+                                    ? getTrxColor(context, transactionModel)
+                                    : Theme.of(context)
+                                        .hintColor
+                                        .withOpacity(.08),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 0),
+                                child: Text(
+                                  (transactionModel.transactionType == expense)
+                                      ? transactionModel.expenseSource!
+                                      : income,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .hintColor
+                                              .withOpacity(.8)),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         Text(
                           transactionModel.notes ?? "",
-                          style: kLabelStyle.apply(
-                            color: kGrey,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(color: kGrey),
                         ),
                         SizedBox(
                           height: 3,
                         ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          height: 20,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: (transactionModel.transactionType == expense)
-                                ? getTrxColor(context, transactionModel)
-                                : Theme.of(context).hintColor.withOpacity(.08),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                (transactionModel.transactionType == expense)
-                                    ? transactionModel.expenseSource!
-                                    : income,
-                                style: kLabelStyle.copyWith(
-                                  color: (transactionModel.transactionType ==
-                                          expense)
-                                      ? Colors.black
-                                      : Theme.of(context).hintColor,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
                       ],
                     ),
                   ),
@@ -122,31 +135,38 @@ class TransactionCard extends StatelessWidget {
                     Text(
                       controller.currencySymbol +
                           transactionModel.amount.toString(),
-                      style: kLabelStyle.copyWith(
-                        fontSize: 14,
-                        color: (transactionModel.transactionType == expense)
-                            ? (currentTheme.currentTheme == ThemeMode.dark)
-                                ? kPink
-                                : shade
-                            : greenbuttoncolor,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: (transactionModel.transactionType == expense)
+                                ? (currentTheme.currentTheme == ThemeMode.dark)
+                                    ? kPink
+                                    : shade
+                                : greenbuttoncolor,
+                          ),
                     ),
                     Row(
                       children: [
-                        Icon(
-                          Icons.schedule,
-                          size: 15,
-                          color: Theme.of(context).hintColor.withOpacity(.8),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Icon(
+                            Icons.schedule,
+                            size: 12,
+                            color: Theme.of(context).hintColor.withOpacity(.8),
+                          ),
                         ),
                         SizedBox(
                           width: 3,
                         ),
                         Text(
                           DateFormatter().getTime(transactionModel.createdOn!),
-                          style: kLabelStyle.copyWith(
-                              fontSize: 13,
-                              color:
-                                  Theme.of(context).hintColor.withOpacity(.8)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context)
+                                      .hintColor
+                                      .withOpacity(.6)),
                         )
                       ],
                     ),
